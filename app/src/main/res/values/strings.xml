@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">CitasMedicas</string>
+    <string name="btnRegistrarse">Registrarse</string>
+    <string name="contrasena">Contraseña</string>
+    <string name="correo">Correo</string>
+    <string name="made">Made</string>
+    <string name="date">Date</string>
+    <string name="ejemplocorreo">Correo@ejemplo.com</string>
+    <string name="ejemploContraseña">**********</string>
+    <string name="eresMedico">¿Eres Médico?</string>
+    <string name="btnEresMedicoSi">Si</string>
+    <string name="btnEresMedicoNo">No</string>
 </resources>

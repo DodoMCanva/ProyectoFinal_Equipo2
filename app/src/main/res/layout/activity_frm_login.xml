@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.etsi.org/tools"
+    android:id="@+id/main"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    tools:context=".frmLogin">
+
+
+
+    <LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:layout_marginTop="32dp"
+    android:layout_marginBottom="32dp">
+
+      <LinearLayout
+          android:layout_width="350dp"
+          android:layout_height="match_parent">
+
+
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:gravity="left"
+              android:textStyle="bold"
+              android:textSize="48sp"
+              android:text="@string/made"
+              />
+
+          <ImageView
+              android:id="@+id/imagen_logo"
+              android:layout_width="96dp"
+              android:layout_height="96dp"
+              android:layout_gravity="center_horizontal"
+              android:contentDescription="Logo Made Date"
+              android:src="@drawable/iconoLogo" />
+
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="match_parent"
+              android:textSize="48sp"
+              android:textStyle="bold"
+              android:text="@string/date"/>
+
+
+      </LinearLayout>
+
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/etiqueta_correo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Correo"
+        android:textSize="25sp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginTop="24dp" />
+
+    <EditText
+        android:id="@+id/campo_correo"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:hint="@string/ejemplocorreo"
+        android:inputType="textEmailAddress"
+        android:background="@color/white"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginTop="2dp" />
+
+    <TextView
+        android:id="@+id/etiqueta_contrasena"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/contrasena"
+        android:textSize="25sp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginTop="2dp" />
+
+    <EditText
+        android:id="@+id/campo_contrasena"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:hint="@string/ejemploContraseña"
+        android:inputType="textPassword"
+        android:background="@color/white"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginTop="8dp" />
+
+    <TextView
+        android:id="@+id/texto_olvidaste_contrasena"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="¿Olvidaste tu contraseña?"
+        android:textSize="20sp"
+        android:clickable="true"
+        android:gravity="center"
+        android:focusable="true"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginTop="16dp" />
+
+    <Button
+        android:id="@+id/boton_iniciar_sesion"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:text="Iniciar sesión"
+        android:textSize="20sp"
+        android:layout_marginStart="48dp"
+        android:layout_marginEnd="48dp"
+        android:layout_marginTop="48dp" />
+
+    <TextView
+        android:id="@+id/texto_registrarse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="8dp"
+        android:text="@string/btnRegistrarse"
+        android:textSize="18sp" />
+</LinearLayout>
