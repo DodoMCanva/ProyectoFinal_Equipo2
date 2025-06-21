@@ -2,4 +2,15 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="azulBackground">#D4EFEA</color>
+    <color name="azulTexto">#0F5E5A</color>
+    <color name="verdeBtn">#349E7C</color>
+    <color name="amarilloBtn">#FAB23D</color>
+    <color name="rojoBtn">#FA3D3D</color>
+    <color name="azulClaroBtn">#44D3A5</color>
+    <color name="azulBackMensajes">#3B8B87</color>
+    <color name="BackCitaCompletada">#853B8B87</color>
+    <color name="BackCitaPendiente">#3B8B87</color>
+    <color name="BackCitaCancelada">#738B7F3B</color>
+    <color name="BackHorarios">#B6DFDD</color>
 </resources>
