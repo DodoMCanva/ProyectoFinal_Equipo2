@@ -3,12 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
+    android:orientation="vertical"
+    android:background="@color/azulBackground"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/azulBackground"
-    android:orientation="vertical"
-    tools:context=".frmRestablecerContrasena">
-
+    tools:context=".frmVerificaIdentidad">
 
     <TextView
         android:layout_width="wrap_content"
@@ -16,7 +15,7 @@
         android:layout_marginTop="25dp"
         android:fontFamily="@font/quicksandbold"
         android:gravity="center"
-        android:text="@string/restacontra"
+        android:text="@string/verificaTuidentidad"
         android:textColor="@color/azulTexto"
         android:textSize="@dimen/texttitulo" />
 
@@ -24,24 +23,24 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:fontFamily="@font/quicksandmedium"
+        android:fontFamily="@font/quicksandbold"
         android:gravity="center"
-        android:text="@string/textResContra"
+        android:text="@string/textVerificaTuidentidad"
         android:textColor="@color/azulTexto"
         android:textSize="@dimen/textomenu" />
-
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="80dp"
-        android:text="@string/correo"
+        android:text="@string/codigoVerificacion"
+        android:fontFamily="@font/quicksandbold"
         android:textColor="@color/azulTexto"
-        android:textSize="@dimen/textomenu" />
+        android:textSize="@dimen/textomenu"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center"/>
 
     <EditText
-        android:id="@+id/et_correoResContra"
+        android:id="@+id/et_codigoVerificacion"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginStart="32dp"
@@ -50,16 +49,39 @@
         android:background="@color/white"
         android:paddingStart="16dp"
         android:paddingEnd="16dp" />
-
     <Button
+        android:id="@+id/btnVerificar"
         android:layout_width="190dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="19dp"
         android:background="@drawable/fondo_boton_gradiente"
         android:text="@string/botonVerificar"
         android:textColor="@color/white"
         />
+    <TextView
+        android:id="@+id/tvNoRecibisteCodigo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/noRecibisteElcodigo"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/azulTexto"
+        android:textSize="@dimen/textcampo"
+        android:textAlignment="center"
+        android:fontFamily="@font/quicksandbold"
+        />
+
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/rebisaBandejaCorreo"
+    android:textSize="@dimen/textcampo"
+    android:textColor="@color/azulTexto"
+    android:layout_marginTop="15dp"
+    android:fontFamily="@font/quicksandmedium"
+    android:layout_gravity="center"
+    android:textAlignment="center"/>
 
 
 </LinearLayout>

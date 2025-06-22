@@ -16,6 +16,15 @@
             android:name=".frmDetalleCita"
             android:exported="false" />
         <activity
+            android:name=".frmRegistro"
+            android:exported="false" />
+        <activity
+            android:name=".frmNuevaContrasena"
+            android:exported="false" />
+        <activity
+            android:name=".frmVerificaIdentidad"
+            android:exported="false" />
+        <activity
             android:name=".frmRestablecerContrasena"
             android:exported="false" />
         <activity
@@ -24,9 +33,7 @@
         <activity
             android:name=".frmLogin"
             android:exported="false" />
-        <activity
-            android:name=".frm_login"
-            android:exported="false" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true">

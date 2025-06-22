@@ -19,7 +19,6 @@
             android:layout_height="@dimen/menu"
             android:background="@drawable/ic_launcher_foreground"
             />
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -28,6 +27,7 @@
             android:fontFamily="@font/quicksandbold"
             android:text="Agendar"
             android:gravity="center"/>
+
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
