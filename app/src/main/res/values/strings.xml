@@ -30,7 +30,7 @@
     <string name="textVerificaTuidentidad">Hemos enviado un código a tu correo. Escríbelo aquí para continuar</string>
     <string name="botonVerificar">Verificar</string>
     <string name="noRecibisteElcodigo">¿No recibiste el código? \nReenviar</string>
-    <string name="rebisaBandejaCorreo">Revisa tu bandeja de entrada o correo no deseado</string>
+    <string name="rebisaBandejaCorreo">Revisa tu bandeja de entrada o \ncorreo no deseado</string>
     <string name="titulonuevaContrasena">Nueva \ncontraseña</string>
     <string name="txtnuevaContrasena">Ingresa una nueva \ncontraseña para tu cuenta</string>
     <string name="nuevaContrasena">Nueva contrasena</string>
@@ -83,6 +83,9 @@
     <string name="finalizaCita">Finalizar Cita</string>
     <string name="reprogramarCita">Reprogramar Cita</string>
     <string name="cancelarCita">Cancelar Cita</string>
+    <string name="mostrarSemana">Mostrar toda la semana</string>
+    <string name="agendar">Agendar</string>
+    <string name="editarPerfil">Editar Perfil</string>
 
 
 </resources>

@@ -17,17 +17,17 @@
 
         <Button
             android:id="@+id/btnMenu"
-            android:layout_width="@dimen/menu"
-            android:layout_height="@dimen/menu"
+            android:layout_width="@dimen/menu75"
+            android:layout_height="@dimen/menu75"
             android:background="@drawable/ic_launcher_foreground"
             />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/azulTexto"
-            android:textSize="40sp"
+            android:textSize="@dimen/texttitulo45"
             android:fontFamily="@font/quicksandbold"
-            android:text="Agendar"
+            android:text="@string/agendar"
             android:gravity="center"/>
     </LinearLayout>
 

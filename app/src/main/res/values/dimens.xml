@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="menu">75sp</dimen>
-    <dimen name="textomenu">25sp</dimen>
-    <dimen name="textFormulario">25sp</dimen>
-    <dimen name="textencabezado">440sp</dimen>
-    <dimen name="textcampo">16sp</dimen>
-    <dimen name="texttitulo">45sp</dimen>
-    <dimen name="app_bar_height">180sp</dimen>
-    <dimen name="fab_margin">16sp</dimen>
-    <dimen name="text_margin">16sp</dimen>
+    <dimen name="menu75">75sp</dimen>
+    <dimen name="textomenu25">25sp</dimen>
+    <dimen name="textFormulario25">25sp</dimen>
+    <dimen name="textencabezado40">40sp</dimen>
+    <dimen name="textcampo16">16sp</dimen>
+    <dimen name="texttitulo45">45sp</dimen>
+    <dimen name="app_bar_height180">180sp</dimen>
+    <dimen name="fab_margin16">16sp</dimen>
+    <dimen name="text_margin16">16sp</dimen>
     <dimen name="text18">18sp</dimen>
 
 </resources>

@@ -18,7 +18,7 @@
         android:gravity="center"
         android:text="@string/restacontra"
         android:textColor="@color/azulTexto"
-        android:textSize="@dimen/texttitulo" />
+        android:textSize="@dimen/texttitulo45" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -28,7 +28,7 @@
         android:gravity="center"
         android:text="@string/textResContra"
         android:textColor="@color/azulTexto"
-        android:textSize="@dimen/textomenu" />
+        android:textSize="@dimen/textomenu25" />
 
 
     <TextView
@@ -38,7 +38,7 @@
         android:layout_marginTop="80dp"
         android:text="@string/correo"
         android:textColor="@color/azulTexto"
-        android:textSize="@dimen/textomenu" />
+        android:textSize="@dimen/textomenu25" />
 
     <EditText
         android:id="@+id/et_correoResContra"

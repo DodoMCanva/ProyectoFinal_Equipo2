@@ -19,18 +19,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/azulTexto"
-            android:textSize="40sp"
+            android:textSize="@dimen/texttitulo45"
             android:fontFamily="@font/quicksandbold"
-            android:text="Editar Perfil"
+            android:text="@string/editarPerfil"
             android:paddingBottom="10dp"
             android:gravity="center"/>
 
         <TextView
             android:paddingTop="10sp"
-            android:text="Nombre"
+            android:text="@string/nombre"
             android:textColor="@color/azulTexto"
             android:textStyle="bold"
-            android:textSize="20sp"
+            android:fontFamily="@font/quicksandbold"
+            android:textSize="@dimen/text18"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             />
@@ -40,35 +41,37 @@
             android:paddingTop="7sp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textSize="18sp"
+            android:textSize="@dimen/text18"
             android:background="@color/white"
             android:inputType="text"
             android:hint="Fernando Jose..."/>
 
         <TextView
             android:paddingTop="10sp"
-            android:text="Correo"
+            android:text="@string/correo"
             android:textColor="@color/azulTexto"
             android:textStyle="bold"
-            android:textSize="20sp"
+            android:fontFamily="@font/quicksandbold"
+            android:textSize="@dimen/text18"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             />
         <TextView
-            android:id="@+id/lblEditarCorreo"
+            android:id="@+id/tvEditarCorreo"
             android:layout_marginTop="5dp"
             android:paddingTop="7sp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textSize="18sp"
+            android:textSize="@dimen/text18"
             android:hint="josefer@gmail.com"
             />
         <TextView
             android:paddingTop="10sp"
-            android:text="Fecha de Nacimiento"
+            android:text="@string/fechaNacimiento"
             android:textColor="@color/azulTexto"
             android:textStyle="bold"
-            android:textSize="20sp"
+            android:fontFamily="@font/quicksandbold"
+            android:textSize="@dimen/text18"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             />
@@ -78,11 +81,11 @@
             android:orientation="horizontal"
             >
             <TextView
-                android:id="@+id/tvEditarFechaNa"
+                android:id="@+id/tvEditarFechaNacimiento"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="29/05/2025"
-                android:textSize="20sp"/>
+                android:textSize="@dimen/text18"/>
 
             <Button
                 android:id="@+id/btnEditarFecha"
@@ -91,10 +94,11 @@
         </LinearLayout>
         <TextView
             android:paddingTop="10sp"
-            android:text="Telefono"
+            android:text="@string/telefono"
             android:textColor="@color/azulTexto"
             android:textStyle="bold"
-            android:textSize="20sp"
+            android:fontFamily="@font/quicksandbold"
+            android:textSize="@dimen/text18"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             />
@@ -104,16 +108,17 @@
             android:paddingTop="7sp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textSize="18sp"
+            android:textSize="@dimen/text18"
             android:background="@color/white"
             android:inputType="text"
             android:hint="644 158 1235"/>
         <TextView
             android:paddingTop="10sp"
-            android:text="Genero"
+            android:text="@string/genero"
             android:textColor="@color/azulTexto"
             android:textStyle="bold"
-            android:textSize="20sp"
+            android:fontFamily="@font/quicksandbold"
+            android:textSize="@dimen/text18"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             />
@@ -125,14 +130,16 @@
                 android:id="@+id/cbEditarHombre"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Hombre"
+                android:text="@string/hombre"
+                android:fontFamily="@font/quicksandbold"
                 android:textColor="@color/azulTexto"
                 />
             <CheckBox
                 android:id="@+id/cbEditarMujer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Mujer"
+                android:text="@string/mujer"
+                android:fontFamily="@font/quicksandbold"
                 android:textColor="@color/azulTexto"
                 />
         </LinearLayout>
@@ -143,10 +150,11 @@
             android:orientation="vertical">
             <TextView
                 android:paddingTop="10sp"
-                android:text="@string/especialidad"
+                android:text="@string/especialidadMedica"
                 android:textColor="@color/azulTexto"
                 android:textStyle="bold"
-                android:textSize="20sp"
+                android:fontFamily="@font/quicksandbold"
+                android:textSize="@dimen/text18"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 />
@@ -163,9 +171,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="10sp"
-                android:text="Cedula"
+                android:fontFamily="@font/quicksandbold"
+                android:text="@string/cedula"
                 android:textColor="@color/azulTexto"
-                android:textSize="20sp"
+                android:textSize="@dimen/text18"
                 android:textStyle="bold" />
 
             <EditText
@@ -174,16 +183,17 @@
                 android:paddingTop="7sp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:textSize="18sp"
+                android:textSize="@dimen/text18"
                 android:background="@color/white"
                 android:inputType="text"
                 android:hint="DJS2U3CJS88"/>
             <TextView
                 android:paddingTop="10sp"
-                android:text="Estado"
+                android:text="@string/estado"
                 android:textColor="@color/azulTexto"
                 android:textStyle="bold"
-                android:textSize="20sp"
+                android:fontFamily="@font/quicksandbold"
+                android:textSize="@dimen/text18"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -199,10 +209,11 @@
                 android:hint="Sonora" />
             <TextView
                 android:paddingTop="10sp"
-                android:text="Calle"
+                android:text="@string/calle"
                 android:textColor="@color/azulTexto"
                 android:textStyle="bold"
-                android:textSize="20sp"
+                android:fontFamily="@font/quicksandbold"
+                android:textSize="@dimen/text18"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -212,16 +223,18 @@
                 android:paddingTop="7sp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:textSize="18sp"
+                android:textSize="@dimen/text18"
+                android:fontFamily="@font/quicksandbold"
                 android:background="@color/white"
                 android:inputType="text"
                 android:hint="No Releccion" />
             <TextView
                 android:paddingTop="10sp"
-                android:text="Estado"
+                android:text="@string/numero"
                 android:textColor="@color/azulTexto"
                 android:textStyle="bold"
-                android:textSize="20sp"
+                android:textSize="@dimen/text18"
+                android:fontFamily="@font/quicksandbold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -237,10 +250,11 @@
                 android:hint="2905" />
             <TextView
                 android:paddingTop="10sp"
-                android:text="Codigo Postal"
+                android:text="@string/codigoPostal"
                 android:textColor="@color/azulTexto"
                 android:textStyle="bold"
-                android:textSize="20sp"
+                android:textSize="@dimen/text18"
+                android:fontFamily="@font/quicksandbold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -264,18 +278,22 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Guardar"
+                android:text="@string/btnGuardar"
                 android:layout_marginHorizontal="15sp"
+                android:textAllCaps="false"
+
                 android:textColor="@color/white"
-                android:background="@color/azulBackMensajes"
+                android:background="@drawable/btn_azul_redondeado_si"
                 />
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Guardar"
+                android:text="@string/dialogBtnCancel"
+                android:textAllCaps="false"
+
                 android:layout_marginHorizontal="15sp"
                 android:textColor="@color/white"
-                android:background="@color/rojoBtn"
+                android:background="@drawable/btn_rojo_redondear_no"
                 />
         </LinearLayout>
 
