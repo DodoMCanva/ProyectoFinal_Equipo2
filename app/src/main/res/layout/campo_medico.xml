@@ -2,34 +2,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:orientation="vertical"
-    android:layout_height="120dp"
+    android:layout_height="70dp"
     android:padding="4dp">
 
     <LinearLayout
+        android:id="@+id/btnCampoMedico"
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/fondo_campo"
         android:orientation="vertical">
         <TextView
-            android:id="@+id/citaFecha"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:textSize="@dimens/textocampo"
-            android:gravity="center"
-            android:textColor="@color/white"
-            android:text="19 de noviembre del 2025"/>
-        <TextView
-            android:id="@+id/citaHora"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textSize="@dimens/textocampo"
-            android:textColor="@color/white"
-            android:text="00:00"/>
-        <TextView
-            android:id="@+id/citaEspecialidad"
+            android:id="@+id/medicoEspecialidad"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -38,14 +22,12 @@
             android:textColor="@color/white"
             android:text="Cardiologo"/>
         <TextView
-            android:id="@+id/citaMedico"
+            android:id="@+id/medicoNombre"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:textSize="@dimens/textocampo"
             android:gravity="center"
+            android:textSize="@dimens/textocampo"
             android:textColor="@color/white"
-            android:text="Emmanuel Quiroz Ibarra"/>
-
+            android:text="Emanuel Quiroz Soto"/>
     </LinearLayout>
 </LinearLayout>

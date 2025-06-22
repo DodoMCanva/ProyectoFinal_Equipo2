@@ -3,16 +3,18 @@
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_height="120dp"
-    android:padding="4dp">
+    android:padding="4dp"
+    >
 
     <LinearLayout
+        android:id="@+id/panelCita"
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/fondo_campo"
         android:orientation="vertical">
         <TextView
-            android:id="@+id/citaFecha"
+            android:id="@+id/citaMFecha"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -21,7 +23,7 @@
             android:textColor="@color/white"
             android:text="19 de noviembre del 2025"/>
         <TextView
-            android:id="@+id/citaHora"
+            android:id="@+id/citaMHora"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -29,23 +31,34 @@
             android:textColor="@color/white"
             android:text="00:00"/>
         <TextView
-            android:id="@+id/citaEspecialidad"
+            android:id="@+id/citaPaciente"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:textSize="@dimens/textocampo"
             android:gravity="center"
             android:textColor="@color/white"
-            android:text="Cardiologo"/>
+            android:text="Julia Quintana"/>
         <TextView
-            android:id="@+id/citaMedico"
+            android:id="@+id/citaMotivo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:textSize="@dimens/textocampo"
             android:gravity="center"
             android:textColor="@color/white"
-            android:text="Emmanuel Quiroz Ibarra"/>
+            android:text="Dolor de pie"
+            android:textStyle="italic"/>
+        <TextView
+            android:id="@+id/citaEstado"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="@dimens/textocampo"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:text="Cita Pendiente"
+            />
 
     </LinearLayout>
 </LinearLayout>
