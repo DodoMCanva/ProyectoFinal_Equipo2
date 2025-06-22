@@ -77,6 +77,12 @@
     <string name="dialogReprogramarHora">Hora</string>
     <string name="precioConsulta">Precio consulta</string>
     <string name="btnGuardar">Guardar</string>
+    <string name="paciente">Paciente:</string>
+    <string name="Edad">Edad</string>
+    <string name="Años">Años</string>
+    <string name="finalizaCita">Finalizar Cita</string>
+    <string name="reprogramarCita">Reprogramar Cita</string>
+    <string name="cancelarCita">Cancelar Cita</string>
 
 
 </resources>
