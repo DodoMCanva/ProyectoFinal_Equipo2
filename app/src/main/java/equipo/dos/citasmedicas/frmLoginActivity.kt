@@ -20,10 +20,8 @@ class frmLoginActivity : AppCompatActivity() {
         var intent : Intent
 
         btnIniciar.setOnClickListener {
-            //Aqui va la logica de inicio
-            //buscar
-            //intent = Intent(this, frmPrincipal::class.java)
-            //put extra de el tipo de sesion
+            intent = Intent(this, frmPerfilActivity::class.java)
+            startActivity(intent)
         }
         btnRegistrarse.setOnClickListener {
             intent = Intent(this, frmPerfilActivity::class.java)
