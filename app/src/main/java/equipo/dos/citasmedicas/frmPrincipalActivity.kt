@@ -1,6 +1,8 @@
 package equipo.dos.citasmedicas
 
 import android.os.Bundle
+import android.widget.ArrayAdapter
+import android.widget.ListView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -11,10 +13,30 @@ class frmPrincipalActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_frm_principal)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
+
+        val tipoUsuario = intent.getStringExtra("tipoUsuario") ?: "paciente"
+        val lvMedicos = findViewById<ListView>(R.id.lvMedicos)
+
+        if (tipoUsuario == "doctor") {
+            val citasMedico = listOf(
+                CitaMedico("21 de junio 2025", "10:00", "Luis Morales", "Chequeo general", "Completada"),
+                CitaMedico("22 de junio 2025", "11:00", "Fernanda Pérez", "Dolor abdominal", "Confirmada")
+            )
+
+            val adapter = AdapterCitaMedico(this, citasMedico)
+            lvMedicos.adapter = adapter
+        } else {
+            val citasPaciente = listOf(
+                CitaPaciente("22 de junio 2025", "14:00", "Dermatología", "Dr. Ruiz"),
+                CitaPaciente("23 de junio 2025", "09:00", "Ginecología", "Dra. Gómez")
+            )
+
+            val adapter = AdapterCitaPaciente(this, citasPaciente)
+            lvMedicos.adapter = adapter
         }
+
     }
+
+
+
 }

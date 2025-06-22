@@ -61,9 +61,9 @@
             android:layout_height="40dp"
             android:src="@drawable/date24"
             android:background="@drawable/btncalendario"
-        android:scaleType="centerInside"
-        android:contentDescription="Calendario"
-        android:layout_marginRight="10dp" />
+            android:scaleType="centerInside"
+            android:contentDescription="Calendario"
+            android:layout_marginRight="10dp" />
 
         <TextView
             android:layout_width="100dp"

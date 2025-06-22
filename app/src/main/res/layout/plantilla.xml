@@ -25,7 +25,7 @@
             android:textColor="@color/azulTexto"
             android:textSize="40sp"
             android:fontFamily="@font/quicksandbold"
-            android:text="@string/encabezadoPlantilla"
+            android:text=""
             android:gravity="center"/>
 
     </LinearLayout>

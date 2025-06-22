@@ -19,28 +19,28 @@
             android:name=".frmPrincipalActivity"
             android:exported="false" />
         <activity
-            android:name=".frmRegistroMedico"
+            android:name=".frmRegistroMedicoActivity"
             android:exported="false" />
         <activity
-            android:name=".frmDetalleCita"
+            android:name=".frmDetalleCitaActivity"
             android:exported="false" />
         <activity
-            android:name=".frmRegistro"
+            android:name=".frmRegistroActivity"
             android:exported="false" />
         <activity
-            android:name=".frmNuevaContrasena"
+            android:name=".frmNuevaContrasenaActivity"
             android:exported="false" />
         <activity
-            android:name=".frmVerificaIdentidad"
+            android:name=".frmVerificaIdentidadActivity"
             android:exported="false" />
         <activity
-            android:name=".frmRestablecerContrasena"
+            android:name=".frmRestablecerContrasenaActivity"
             android:exported="false" />
         <activity
-            android:name=".frmPerfil"
+            android:name=".frmPerfilActivity"
             android:exported="false" />
         <activity
-            android:name=".frmLogin"
+            android:name=".frmLoginActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
