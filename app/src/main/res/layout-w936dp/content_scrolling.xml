@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".frmEditar"
+    tools:context=".frmEditarActivity"
     tools:showIn="@layout/activity_frm_editar">
 
     <androidx.core.widget.NestedScrollView

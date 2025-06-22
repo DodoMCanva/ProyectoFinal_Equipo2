@@ -8,7 +8,7 @@
     android:background="@color/azulBackground"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    tools:context=".frmPerfil">
+    tools:context=".frmPerfilActivity">
 
     <TextView
         android:layout_width="match_parent"
@@ -28,6 +28,7 @@
         android:layout_marginTop="30dp"
         android:background="@drawable/btn_azul_redondeado_si"
         android:text="@string/btnEresMedicoSi"
+        android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="20sp" />
 
@@ -38,6 +39,7 @@
         android:layout_marginTop="30dp"
         android:background="@drawable/btn_rojo_redondear_no"
         android:text="@string/btnEresMedicoNo"
+        android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="20sp" />
 

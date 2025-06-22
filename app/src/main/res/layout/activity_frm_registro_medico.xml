@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/azulBackground"
     android:fillViewport="true"
-    tools:context=".frmRegistroMedico">
+    tools:context=".frmRegistroMedicoActivity">
 
 
     <LinearLayout
@@ -365,6 +365,7 @@
             android:layout_marginBottom="32dp"
             android:background="@drawable/fondo_boton_gradiente"
             android:text="@string/btnRegistrarse"
+            android:textAllCaps="false"
             android:textColor="@android:color/white"
             android:textSize="20sp"
 
