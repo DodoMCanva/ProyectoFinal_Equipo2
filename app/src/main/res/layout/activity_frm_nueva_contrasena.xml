@@ -9,6 +9,10 @@
     android:background="@color/azulBackground"
     tools:context=".frmNuevaContrasenaActivity">
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+        android:background="@drawable/fondo_barra" />
 
     <TextView
         android:layout_width="wrap_content"
