@@ -7,7 +7,7 @@
     android:background="@color/azulBackground"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".frmVerificaIdentidad">
+    tools:context=".frmVerificaIdentidadActivity">
 
     <TextView
         android:layout_width="wrap_content"
@@ -55,6 +55,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="19dp"
+        android:textAllCaps="false"
         android:background="@drawable/fondo_boton_gradiente"
         android:text="@string/botonVerificar"
         android:textColor="@color/white"

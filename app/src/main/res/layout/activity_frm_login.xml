@@ -8,7 +8,7 @@
     android:background="@color/azulBackground"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    tools:context=".frmLogin">
+    tools:context=".frmLoginActivity">
 
 
     <LinearLayout
@@ -138,6 +138,7 @@
         android:textColor="@color/white"
         android:background="@drawable/fondo_boton_gradiente"
         android:text="Iniciar sesión"
+        android:textAllCaps="false"
         android:textSize="20sp" />
 
     <TextView
