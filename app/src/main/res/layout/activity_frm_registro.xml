@@ -89,7 +89,10 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_gravity="left"
+            android:layout_marginLeft="32dp"
+            android:layout_marginTop="5dp">
 
             <TextView
                 android:id="@+id/tvFechaRegistro"
@@ -97,14 +100,20 @@
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:text="29/05/2025"
+                android:textSize="20sp"
+                android:layout_gravity="center_vertical"
+                android:padding="7sp"/>
 
-                android:textSize="20sp" />
 
-            <Button
-                android:id="@+id/btnCalendarioRegistro"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginEnd="200dp" />
+            <ImageButton
+                android:id="@+id/btnCalendarioConsultaCitas"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/date24"
+                android:background="@drawable/btncalendario"
+                android:scaleType="centerInside"
+                android:contentDescription="Calendario"
+                android:layout_marginRight="10dp" />
         </LinearLayout>
 
         <TextView

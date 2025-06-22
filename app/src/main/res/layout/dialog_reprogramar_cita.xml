@@ -39,36 +39,35 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="center_vertical"
+            android:gravity="center"
             android:background=""
             android:padding="15dp"
             android:layout_marginBottom="24dp">
 
-
             <TextView
                 android:id="@+id/tvRepFecha"
-                android:layout_width="350dp"
-                android:layout_height="40dp"
-                android:layout_weight="2"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:padding="2sp"
+                android:text="29/05/2025"
                 android:background="@color/white"
-                android:clickable="true"
-                android:focusable="true"
-                android:fontFamily="@font/quicksandregular"
-                android:foreground="?attr/selectableItemBackground"
-                android:gravity="center_vertical"
-                android:text="01/02/2025"
-                android:textColor="@color/azulTexto"
-                android:textSize="18sp" />
+                android:textSize="@dimen/textomenu"
+                android:fontFamily="@font/quicksandsemibold"
+                android:textColor="@color/black"/>
+
 
             <ImageButton
-                android:id="@+id/ivImagenCalen"
+                android:id="@+id/btnCalendarioReprogramar"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@drawable/date48"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?attr/selectableItemBackground"
-                app:tint="@color/azulTexto" />
+                android:src="@drawable/date24"
+                android:background="@drawable/btncalendarioazul"
+                android:scaleType="centerInside"
+                android:contentDescription="Calendario"
+                android:layout_marginRight="10dp" />
+
+
         </LinearLayout>
 
         <TextView
