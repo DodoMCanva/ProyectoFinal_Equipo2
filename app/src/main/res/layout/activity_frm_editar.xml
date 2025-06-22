@@ -1,303 +1,323 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".frmEditarActivity"
     android:orientation="vertical"
-    android:background="@color/azulBackground">
+    android:background="@color/azulBackground"
+    tools:context=".frmEditarActivity">
 
-    <LinearLayout
+    <View
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginHorizontal="20sp"
-        android:orientation="vertical">
-        <TextView
-            android:paddingTop="10dp"
+        android:layout_height="24dp"
+        android:background="@drawable/fondo_barra" />
+
+    <TextView
+        android:id="@+id/tvHeaderEditarPerfil"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/azulTexto"
+        android:textSize="@dimen/texttitulo45"
+        android:fontFamily="@font/quicksandbold"
+        android:text="@string/editarPerfil"
+        android:paddingTop="24dp"
+        android:paddingBottom="16dp"
+        android:gravity="center"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/azulTexto"
-            android:textSize="@dimen/texttitulo45"
-            android:fontFamily="@font/quicksandbold"
-            android:text="@string/editarPerfil"
-            android:paddingBottom="10dp"
-            android:gravity="center"/>
-
-        <TextView
-            android:paddingTop="10sp"
+            android:layout_marginHorizontal="20dp"
+            android:orientation="vertical"
+            android:paddingBottom="24dp"> <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
             android:text="@string/nombre"
             android:textColor="@color/azulTexto"
-            android:textStyle="bold"
             android:fontFamily="@font/quicksandbold"
-            android:textSize="@dimen/text18"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
-        <EditText
-            android:id="@+id/etEditarNombre"
-            android:layout_marginTop="5dp"
-            android:paddingTop="7sp"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textSize="@dimen/text18"
-            android:background="@color/white"
-            android:inputType="text"
-            android:hint="Fernando Jose..."/>
+            android:textSize="@dimen/text18" />
 
-        <TextView
-            android:paddingTop="10sp"
-            android:text="@string/correo"
-            android:textColor="@color/azulTexto"
-            android:textStyle="bold"
-            android:fontFamily="@font/quicksandbold"
-            android:textSize="@dimen/text18"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
-        <TextView
-            android:id="@+id/tvEditarCorreo"
-            android:layout_marginTop="5dp"
-            android:paddingTop="7sp"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textSize="@dimen/text18"
-            android:hint="josefer@gmail.com"
-            />
-        <TextView
-            android:paddingTop="10sp"
-            android:text="@string/fechaNacimiento"
-            android:textColor="@color/azulTexto"
-            android:textStyle="bold"
-            android:fontFamily="@font/quicksandbold"
-            android:textSize="@dimen/text18"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            >
+            <EditText
+                android:id="@+id/etEditarNombre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:padding="12dp" android:textSize="@dimen/text18"
+                android:background="@color/white"
+                android:inputType="textPersonName"
+                android:hint="Fernando Jose..."
+                android:textColor="@color/azulTexto" />
             <TextView
-                android:id="@+id/tvEditarFechaNacimiento"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="29/05/2025"
-                android:textSize="@dimen/text18"/>
-
-            <Button
-                android:id="@+id/btnEditarFecha"
-                android:layout_width="50dp"
-                android:layout_height="50dp"/>
-        </LinearLayout>
-        <TextView
-            android:paddingTop="10sp"
-            android:text="@string/telefono"
-            android:textColor="@color/azulTexto"
-            android:textStyle="bold"
-            android:fontFamily="@font/quicksandbold"
-            android:textSize="@dimen/text18"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
-        <EditText
-            android:id="@+id/etEditarTelefono"
-            android:layout_marginTop="5dp"
-            android:paddingTop="7sp"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textSize="@dimen/text18"
-            android:background="@color/white"
-            android:inputType="text"
-            android:hint="644 158 1235"/>
-        <TextView
-            android:paddingTop="10sp"
-            android:text="@string/genero"
-            android:textColor="@color/azulTexto"
-            android:textStyle="bold"
-            android:fontFamily="@font/quicksandbold"
-            android:textSize="@dimen/text18"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="10sp">
-            <CheckBox
-                android:id="@+id/cbEditarHombre"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/hombre"
-                android:fontFamily="@font/quicksandbold"
+                android:paddingTop="10dp"
+                android:text="@string/correo"
                 android:textColor="@color/azulTexto"
-                />
-            <CheckBox
+                android:fontFamily="@font/quicksandbold"
+                android:textSize="@dimen/text18" />
+            <TextView
+                android:id="@+id/tvEditarCorreo"
+                android:layout_marginTop="5dp"
+                android:paddingTop="7sp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textSize="@dimen/text18"
+                android:hint="josefer@gmail.com"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:text="@string/fechaNacimiento"
+                android:textColor="@color/azulTexto"
+                android:fontFamily="@font/quicksandbold"
+                android:textSize="@dimen/text18" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvFechaRegistroRegistro"
+                    android:layout_width="150dp"
+                    android:layout_height="45dp"
+                    android:background="@color/white"
+                    android:minHeight="48dp"
+                    android:text="29/05/2025"
+                    android:textSize="@dimen/text18"
+                    android:gravity="center"/>
+
+                <ImageButton
+                    android:id="@+id/btnCalendarioRegistroMedico"
+                    android:layout_width="50dp"
+                    android:layout_height="45dp"
+                    android:layout_marginEnd="200dp"
+                    android:background="@drawable/btncalendario"
+                    android:src="@drawable/date24" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:text="@string/telefono"
+                android:textColor="@color/azulTexto"
+                android:fontFamily="@font/quicksandbold"
+                android:textSize="@dimen/text18" />
+            <EditText
+                android:id="@+id/etEditarTelefono"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:padding="12dp"
+                android:textSize="@dimen/text18"
+                android:background="@color/white"
+                android:inputType="phone"
+                android:hint="644 158 1235"
+                android:textColor="@color/azulTexto" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:text="@string/genero"
+                android:textColor="@color/azulTexto"
+                android:fontFamily="@font/quicksandbold"
+                android:textSize="@dimen/text18" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="10dp">
+                <CheckBox
+                    android:id="@+id/cbEditarHombre"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/hombre"
+                    android:fontFamily="@font/quicksandbold"
+                    android:textColor="@color/azulTexto"
+                    android:buttonTint="@color/azulTexto" />
+                <CheckBox
                 android:id="@+id/cbEditarMujer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/mujer"
                 android:fontFamily="@font/quicksandbold"
                 android:textColor="@color/azulTexto"
-                />
-        </LinearLayout>
-        <LinearLayout
-            android:id="@+id/editarPerfilMedicoSeccion"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-            <TextView
-                android:paddingTop="10sp"
-                android:text="@string/especialidadMedica"
-                android:textColor="@color/azulTexto"
-                android:textStyle="bold"
-                android:fontFamily="@font/quicksandbold"
-                android:textSize="@dimen/text18"
+                android:layout_marginStart="16dp"
+                android:buttonTint="@color/azulTexto" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/editarPerfilMedicoSeccion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                />
-            <Spinner
-                android:id="@+id/spEditarEspecialidad"
-                android:layout_marginTop="10sp"
-                android:orientation="vertical"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="10dp"
+                    android:text="@string/especialidadMedica"
+                    android:textColor="@color/azulTexto"
+                    android:fontFamily="@font/quicksandbold"
+                    android:textSize="@dimen/text18" />
+                <Spinner
+                    android:id="@+id/spEditarEspecialidad"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:paddingVertical="12dp"
+                    android:background="@color/white"
+                    android:spinnerMode="dropdown"
+                    android:dropDownVerticalOffset="?attr/actionBarSize" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="10dp"
+                    android:fontFamily="@font/quicksandbold"
+                    android:text="@string/cedula"
+                    android:textColor="@color/azulTexto"
+                    android:textSize="@dimen/text18" />
+                <EditText
+                    android:id="@+id/etEditarCedula"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:padding="12dp"
+                    android:textSize="@dimen/text18"
+                    android:background="@color/white"
+                    android:inputType="text"
+                    android:hint="DJS2U3CJS88"
+                    android:textColor="@color/azulTexto" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="10dp"
+                    android:text="@string/estado"
+                    android:textColor="@color/azulTexto"
+                    android:fontFamily="@font/quicksandbold"
+                    android:textSize="@dimen/text18" />
+                <EditText
+                    android:id="@+id/etEditarEstado"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:padding="12dp"
+                    android:textSize="@dimen/text18"
+                    android:background="@color/white"
+                    android:inputType="text"
+                    android:hint="Sonora"
+                    android:textColor="@color/azulTexto" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="10dp"
+                    android:text="@string/calle"
+                    android:textColor="@color/azulTexto"
+                    android:fontFamily="@font/quicksandbold"
+                    android:textSize="@dimen/text18" />
+                <EditText
+                    android:id="@+id/etEditarCalle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:padding="12dp"
+                    android:textSize="@dimen/text18"
+                    android:background="@color/white"
+                    android:inputType="text"
+                    android:hint="No Releccion"
+                    android:textColor="@color/azulTexto" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="10dp"
+                    android:text="@string/numero"
+                    android:textColor="@color/azulTexto"
+                    android:fontFamily="@font/quicksandbold"
+                    android:textSize="@dimen/text18" />
+                <EditText
+                    android:id="@+id/etEditarNumero"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:padding="12dp"
+                    android:textSize="@dimen/text18"
+                    android:background="@color/white"
+                    android:inputType="number"
+                    android:hint="2905"
+                    android:textColor="@color/azulTexto" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="10dp"
+                    android:text="@string/codigoPostal"
+                    android:textColor="@color/azulTexto"
+                    android:fontFamily="@font/quicksandbold"
+                    android:textSize="@dimen/text18" />
+                <EditText
+                    android:id="@+id/etEditarCodigoPostal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:padding="12dp"
+                    android:textSize="@dimen/text18"
+                    android:background="@color/white"
+                    android:inputType="number"
+                    android:hint="8500"
+                    android:textColor="@color/azulTexto" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="40sp"
-                />
+                android:layout_marginTop="24dp"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
+                <Button
+                    android:id="@+id/btnGuardar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/btnGuardar"
+                    android:layout_marginEnd="15dp"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:background="@drawable/btn_azul_redondeado_si"
+                    android:fontFamily="@font/quicksandbold"
+                    android:paddingVertical="12dp"
+                    android:paddingHorizontal="24dp" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="10sp"
-                android:fontFamily="@font/quicksandbold"
-                android:text="@string/cedula"
-                android:textColor="@color/azulTexto"
-                android:textSize="@dimen/text18"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/etEditarCedula"
-                android:layout_marginTop="5dp"
-                android:paddingTop="7sp"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textSize="@dimen/text18"
-                android:background="@color/white"
-                android:inputType="text"
-                android:hint="DJS2U3CJS88"/>
-            <TextView
-                android:paddingTop="10sp"
-                android:text="@string/estado"
-                android:textColor="@color/azulTexto"
-                android:textStyle="bold"
-                android:fontFamily="@font/quicksandbold"
-                android:textSize="@dimen/text18"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <EditText
-                android:id="@+id/etEditarEstado"
-                android:layout_marginTop="5dp"
-                android:paddingTop="7sp"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textSize="18sp"
-                android:background="@color/white"
-                android:inputType="text"
-                android:hint="Sonora" />
-            <TextView
-                android:paddingTop="10sp"
-                android:text="@string/calle"
-                android:textColor="@color/azulTexto"
-                android:textStyle="bold"
-                android:fontFamily="@font/quicksandbold"
-                android:textSize="@dimen/text18"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <EditText
-                android:id="@+id/etEditarCalle"
-                android:layout_marginTop="5dp"
-                android:paddingTop="7sp"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textSize="@dimen/text18"
-                android:fontFamily="@font/quicksandbold"
-                android:background="@color/white"
-                android:inputType="text"
-                android:hint="No Releccion" />
-            <TextView
-                android:paddingTop="10sp"
-                android:text="@string/numero"
-                android:textColor="@color/azulTexto"
-                android:textStyle="bold"
-                android:textSize="@dimen/text18"
-                android:fontFamily="@font/quicksandbold"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <EditText
-                android:id="@+id/etEditarNumero"
-                android:layout_marginTop="5dp"
-                android:paddingTop="7sp"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textSize="18sp"
-                android:background="@color/white"
-                android:inputType="text"
-                android:hint="2905" />
-            <TextView
-                android:paddingTop="10sp"
-                android:text="@string/codigoPostal"
-                android:textColor="@color/azulTexto"
-                android:textStyle="bold"
-                android:textSize="@dimen/text18"
-                android:fontFamily="@font/quicksandbold"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <EditText
-                android:id="@+id/etEditarCodigoPostal"
-                android:layout_marginTop="5dp"
-                android:paddingTop="7sp"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textSize="18sp"
-                android:background="@color/white"
-                android:inputType="text"
-                android:hint="8500" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_marginTop="15sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            >
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/btnGuardar"
-                android:layout_marginHorizontal="15sp"
-                android:textAllCaps="false"
-
-                android:textColor="@color/white"
-                android:background="@drawable/btn_azul_redondeado_si"
-                />
-            <Button
+                <Button
+                android:id="@+id/btnCancel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/dialogBtnCancel"
                 android:textAllCaps="false"
-
-                android:layout_marginHorizontal="15sp"
+                android:layout_marginStart="15dp"
                 android:textColor="@color/white"
                 android:background="@drawable/btn_rojo_redondear_no"
-                />
+                android:fontFamily="@font/quicksandbold"
+                android:paddingVertical="12dp"
+                android:paddingHorizontal="24dp" />
+            </LinearLayout>
+
         </LinearLayout>
+    </ScrollView>
 
-    </LinearLayout>
-
-
-</ScrollView>
+</LinearLayout>
