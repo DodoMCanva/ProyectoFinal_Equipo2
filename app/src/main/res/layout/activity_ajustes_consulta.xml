@@ -44,8 +44,17 @@
         android:fontFamily="@font/quicksandsemibold"
         />
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="400dp">
 
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+        <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -54,7 +63,7 @@
         >
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:text="@string/lunes"
             android:paddingRight="15dp"
@@ -88,7 +97,7 @@
                     android:fontFamily="@font/quicksandsemibold"/>
 
                 <EditText
-                    android:id="@+id/etDeManana"
+                    android:id="@+id/etLunesDeManana"
                     android:layout_width="90dp"
                     android:layout_height="wrap_content"
                     android:background="@color/white"
@@ -117,7 +126,7 @@
                     android:fontFamily="@font/quicksandsemibold"/>
 
                 <EditText
-                    android:id="@+id/etAManana"
+                    android:id="@+id/etLunesAManana"
                     android:layout_width="90dp"
                     android:layout_height="wrap_content"
                     android:background="@color/white"
@@ -153,7 +162,7 @@
                     android:fontFamily="@font/quicksandsemibold"/>
 
                 <EditText
-                    android:id="@+id/etDeTarde"
+                    android:id="@+id/etLunesDeTarde"
                     android:layout_width="90dp"
                     android:layout_height="wrap_content"
                     android:background="@color/white"
@@ -182,7 +191,7 @@
                     android:fontFamily="@font/quicksandsemibold"/>
 
                 <EditText
-                    android:id="@+id/etATarde"
+                    android:id="@+id/etLunesATarde"
                     android:layout_width="90dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -204,8 +213,1032 @@
         </LinearLayout>
 
 
+
+
+    </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/backhorariosrounded"
+            >
+
+            <TextView
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:text="@string/martes"
+                android:paddingRight="10dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="35dp"
+                android:textSize="@dimen/textomenu"
+                android:textColor="@color/azulTexto"
+                android:fontFamily="@font/quicksandsemibold"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="10dp"
+                >
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginRight="15dp"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/de"
+                        android:textSize="@dimen/textomenu"
+                        android:textColor="@color/azulTexto"
+                        android:layout_gravity="center_vertical"
+                        android:fontFamily="@font/quicksandsemibold"/>
+
+                    <EditText
+                        android:id="@+id/etMartesDeManana"
+                        android:layout_width="90dp"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:text="09:00"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/textomenu"
+                        android:paddingHorizontal="10dp"
+                        android:gravity="center"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginVertical="10dp"
+                        android:fontFamily="@font/quicksandmedium"
+                        android:focusable="false"
+                        android:clickable="true"
+                        android:inputType="none"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:text="@string/a"
+                        android:textSize="@dimen/textomenu"
+                        android:textColor="@color/azulTexto"
+                        android:layout_gravity="center_vertical"
+                        android:fontFamily="@font/quicksandsemibold"/>
+
+                    <EditText
+                        android:id="@+id/etMartesAManana"
+                        android:layout_width="90dp"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:text="13:00"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/textomenu"
+                        android:layout_marginVertical="10dp"
+                        android:paddingHorizontal="10dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
+                        android:layout_gravity="center_vertical"
+                        android:focusable="false"
+                        android:clickable="true"
+                        android:inputType="none"
+                        android:fontFamily="@font/quicksandmedium"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="@string/de"
+                        android:textSize="@dimen/textomenu"
+                        android:layout_marginBottom="5dp"
+                        android:textColor="@color/azulTexto"
+                        android:fontFamily="@font/quicksandsemibold"/>
+
+                    <EditText
+                        android:id="@+id/etMartesDeTarde"
+                        android:layout_width="90dp"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:text="15:00"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/textomenu"
+                        android:paddingHorizontal="10dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:fontFamily="@font/quicksandmedium"
+                        android:focusable="false"
+                        android:clickable="true"
+                        android:inputType="none"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:text="@string/a"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginBottom="5dp"
+                        android:textSize="@dimen/textomenu"
+                        android:textColor="@color/azulTexto"
+                        android:fontFamily="@font/quicksandsemibold"/>
+
+                    <EditText
+                        android:id="@+id/etMartesATarde"
+                        android:layout_width="90dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:background="@color/white"
+                        android:fontFamily="@font/quicksandmedium"
+                        android:paddingHorizontal="10dp"
+                        android:text="18:00"
+                        android:gravity="center"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/textomenu"
+                        android:focusable="false"
+                        android:clickable="true"
+                        android:inputType="none"/>
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/backhorariosrounded"
+            >
+
+            <TextView
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:text="@string/miercoles"
+                android:paddingRight="15dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="35dp"
+                android:textSize="@dimen/textomenu"
+                android:textColor="@color/azulTexto"
+                android:fontFamily="@font/quicksandsemibold"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="10dp"
+                >
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginRight="15dp"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/de"
+                        android:textSize="@dimen/textomenu"
+                        android:textColor="@color/azulTexto"
+                        android:layout_gravity="center_vertical"
+                        android:fontFamily="@font/quicksandsemibold"/>
+
+                    <EditText
+                        android:id="@+id/etMiercolesDeManana"
+                        android:layout_width="90dp"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:text="09:00"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/textomenu"
+                        android:paddingHorizontal="10dp"
+                        android:gravity="center"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginVertical="10dp"
+                        android:fontFamily="@font/quicksandmedium"
+                        android:focusable="false"
+                        android:clickable="true"
+                        android:inputType="none"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:text="@string/a"
+                        android:textSize="@dimen/textomenu"
+                        android:textColor="@color/azulTexto"
+                        android:layout_gravity="center_vertical"
+                        android:fontFamily="@font/quicksandsemibold"/>
+
+                    <EditText
+                        android:id="@+id/etMiercolesAManana"
+                        android:layout_width="90dp"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:text="13:00"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/textomenu"
+                        android:layout_marginVertical="10dp"
+                        android:paddingHorizontal="10dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
+                        android:layout_gravity="center_vertical"
+                        android:focusable="false"
+                        android:clickable="true"
+                        android:inputType="none"
+                        android:fontFamily="@font/quicksandmedium"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="@string/de"
+                        android:textSize="@dimen/textomenu"
+                        android:layout_marginBottom="5dp"
+                        android:textColor="@color/azulTexto"
+                        android:fontFamily="@font/quicksandsemibold"/>
+
+                    <EditText
+                        android:id="@+id/etMiercolesDeTarde"
+                        android:layout_width="90dp"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:text="15:00"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/textomenu"
+                        android:paddingHorizontal="10dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:fontFamily="@font/quicksandmedium"
+                        android:focusable="false"
+                        android:clickable="true"
+                        android:inputType="none"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:text="@string/a"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginBottom="5dp"
+                        android:textSize="@dimen/textomenu"
+                        android:textColor="@color/azulTexto"
+                        android:fontFamily="@font/quicksandsemibold"/>
+
+                    <EditText
+                        android:id="@+id/etMiercolesATarde"
+                        android:layout_width="90dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:background="@color/white"
+                        android:fontFamily="@font/quicksandmedium"
+                        android:paddingHorizontal="10dp"
+                        android:text="18:00"
+                        android:gravity="center"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/textomenu"
+                        android:focusable="false"
+                        android:clickable="true"
+                        android:inputType="none"/>
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/backhorariosrounded"
+            >
+
+            <TextView
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:text="@string/jueves"
+                android:paddingRight="15dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="35dp"
+                android:textSize="@dimen/textomenu"
+                android:textColor="@color/azulTexto"
+                android:fontFamily="@font/quicksandsemibold"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="10dp"
+                >
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginRight="15dp"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/de"
+                        android:textSize="@dimen/textomenu"
+                        android:textColor="@color/azulTexto"
+                        android:layout_gravity="center_vertical"
+                        android:fontFamily="@font/quicksandsemibold"/>
+
+                    <EditText
+                        android:id="@+id/etJuevesDeManana"
+                        android:layout_width="90dp"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:text="09:00"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/textomenu"
+                        android:paddingHorizontal="10dp"
+                        android:gravity="center"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginVertical="10dp"
+                        android:fontFamily="@font/quicksandmedium"
+                        android:focusable="false"
+                        android:clickable="true"
+                        android:inputType="none"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:text="@string/a"
+                        android:textSize="@dimen/textomenu"
+                        android:textColor="@color/azulTexto"
+                        android:layout_gravity="center_vertical"
+                        android:fontFamily="@font/quicksandsemibold"/>
+
+                    <EditText
+                        android:id="@+id/etJuevesAManana"
+                        android:layout_width="90dp"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:text="13:00"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/textomenu"
+                        android:layout_marginVertical="10dp"
+                        android:paddingHorizontal="10dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
+                        android:layout_gravity="center_vertical"
+                        android:focusable="false"
+                        android:clickable="true"
+                        android:inputType="none"
+                        android:fontFamily="@font/quicksandmedium"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="@string/de"
+                        android:textSize="@dimen/textomenu"
+                        android:layout_marginBottom="5dp"
+                        android:textColor="@color/azulTexto"
+                        android:fontFamily="@font/quicksandsemibold"/>
+
+                    <EditText
+                        android:id="@+id/etJuevesDeTarde"
+                        android:layout_width="90dp"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:text="15:00"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/textomenu"
+                        android:paddingHorizontal="10dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:fontFamily="@font/quicksandmedium"
+                        android:focusable="false"
+                        android:clickable="true"
+                        android:inputType="none"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:text="@string/a"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginBottom="5dp"
+                        android:textSize="@dimen/textomenu"
+                        android:textColor="@color/azulTexto"
+                        android:fontFamily="@font/quicksandsemibold"/>
+
+                    <EditText
+                        android:id="@+id/etJuevesATarde"
+                        android:layout_width="90dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:background="@color/white"
+                        android:fontFamily="@font/quicksandmedium"
+                        android:paddingHorizontal="10dp"
+                        android:text="18:00"
+                        android:gravity="center"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/textomenu"
+                        android:focusable="false"
+                        android:clickable="true"
+                        android:inputType="none"/>
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/backhorariosrounded"
+            >
+
+            <TextView
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:text="@string/viernes"
+                android:paddingRight="15dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="35dp"
+                android:textSize="@dimen/textomenu"
+                android:textColor="@color/azulTexto"
+                android:fontFamily="@font/quicksandsemibold"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="10dp"
+                >
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginRight="15dp"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/de"
+                        android:textSize="@dimen/textomenu"
+                        android:textColor="@color/azulTexto"
+                        android:layout_gravity="center_vertical"
+                        android:fontFamily="@font/quicksandsemibold"/>
+
+                    <EditText
+                        android:id="@+id/etViernesDeManana"
+                        android:layout_width="90dp"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:text="09:00"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/textomenu"
+                        android:paddingHorizontal="10dp"
+                        android:gravity="center"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginVertical="10dp"
+                        android:fontFamily="@font/quicksandmedium"
+                        android:focusable="false"
+                        android:clickable="true"
+                        android:inputType="none"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:text="@string/a"
+                        android:textSize="@dimen/textomenu"
+                        android:textColor="@color/azulTexto"
+                        android:layout_gravity="center_vertical"
+                        android:fontFamily="@font/quicksandsemibold"/>
+
+                    <EditText
+                        android:id="@+id/etViernesAManana"
+                        android:layout_width="90dp"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:text="13:00"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/textomenu"
+                        android:layout_marginVertical="10dp"
+                        android:paddingHorizontal="10dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
+                        android:layout_gravity="center_vertical"
+                        android:focusable="false"
+                        android:clickable="true"
+                        android:inputType="none"
+                        android:fontFamily="@font/quicksandmedium"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="@string/de"
+                        android:textSize="@dimen/textomenu"
+                        android:layout_marginBottom="5dp"
+                        android:textColor="@color/azulTexto"
+                        android:fontFamily="@font/quicksandsemibold"/>
+
+                    <EditText
+                        android:id="@+id/etViernesDeTarde"
+                        android:layout_width="90dp"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:text="15:00"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/textomenu"
+                        android:paddingHorizontal="10dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:fontFamily="@font/quicksandmedium"
+                        android:focusable="false"
+                        android:clickable="true"
+                        android:inputType="none"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:text="@string/a"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginBottom="5dp"
+                        android:textSize="@dimen/textomenu"
+                        android:textColor="@color/azulTexto"
+                        android:fontFamily="@font/quicksandsemibold"/>
+
+                    <EditText
+                        android:id="@+id/etViernesATarde"
+                        android:layout_width="90dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:background="@color/white"
+                        android:fontFamily="@font/quicksandmedium"
+                        android:paddingHorizontal="10dp"
+                        android:text="18:00"
+                        android:gravity="center"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/textomenu"
+                        android:focusable="false"
+                        android:clickable="true"
+                        android:inputType="none"/>
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/backhorariosrounded"
+            >
+
+            <TextView
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:text="@string/sabado"
+                android:paddingRight="14dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="35dp"
+                android:textSize="@dimen/textomenu"
+                android:textColor="@color/azulTexto"
+                android:fontFamily="@font/quicksandsemibold"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="10dp"
+                >
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginRight="15dp"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/de"
+                        android:textSize="@dimen/textomenu"
+                        android:textColor="@color/azulTexto"
+                        android:layout_gravity="center_vertical"
+                        android:fontFamily="@font/quicksandsemibold"/>
+
+                    <EditText
+                        android:id="@+id/etSabadoDeManana"
+                        android:layout_width="90dp"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:text="09:00"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/textomenu"
+                        android:paddingHorizontal="10dp"
+                        android:gravity="center"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginVertical="10dp"
+                        android:fontFamily="@font/quicksandmedium"
+                        android:focusable="false"
+                        android:clickable="true"
+                        android:inputType="none"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:text="@string/a"
+                        android:textSize="@dimen/textomenu"
+                        android:textColor="@color/azulTexto"
+                        android:layout_gravity="center_vertical"
+                        android:fontFamily="@font/quicksandsemibold"/>
+
+                    <EditText
+                        android:id="@+id/etSabadoAManana"
+                        android:layout_width="90dp"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:text="13:00"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/textomenu"
+                        android:layout_marginVertical="10dp"
+                        android:paddingHorizontal="10dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
+                        android:layout_gravity="center_vertical"
+                        android:focusable="false"
+                        android:clickable="true"
+                        android:inputType="none"
+                        android:fontFamily="@font/quicksandmedium"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="@string/de"
+                        android:textSize="@dimen/textomenu"
+                        android:layout_marginBottom="5dp"
+                        android:textColor="@color/azulTexto"
+                        android:fontFamily="@font/quicksandsemibold"/>
+
+                    <EditText
+                        android:id="@+id/etSabadoDeTarde"
+                        android:layout_width="90dp"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:text="15:00"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/textomenu"
+                        android:paddingHorizontal="10dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:fontFamily="@font/quicksandmedium"
+                        android:focusable="false"
+                        android:clickable="true"
+                        android:inputType="none"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:text="@string/a"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginBottom="5dp"
+                        android:textSize="@dimen/textomenu"
+                        android:textColor="@color/azulTexto"
+                        android:fontFamily="@font/quicksandsemibold"/>
+
+                    <EditText
+                        android:id="@+id/etSabadoATarde"
+                        android:layout_width="90dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:background="@color/white"
+                        android:fontFamily="@font/quicksandmedium"
+                        android:paddingHorizontal="10dp"
+                        android:text="18:00"
+                        android:gravity="center"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/textomenu"
+                        android:focusable="false"
+                        android:clickable="true"
+                        android:inputType="none"/>
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/backhorariosrounded"
+            >
+
+            <TextView
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:text="@string/domingo"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="25dp"
+                android:textSize="@dimen/textomenu"
+                android:textColor="@color/azulTexto"
+                android:fontFamily="@font/quicksandsemibold"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="20dp"
+                >
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginRight="15dp"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/de"
+                        android:textSize="@dimen/textomenu"
+                        android:textColor="@color/azulTexto"
+                        android:layout_gravity="center_vertical"
+                        android:fontFamily="@font/quicksandsemibold"/>
+
+                    <EditText
+                        android:id="@+id/etDomingoDeManana"
+                        android:layout_width="90dp"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:text="09:00"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/textomenu"
+                        android:paddingHorizontal="10dp"
+                        android:gravity="center"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginVertical="10dp"
+                        android:fontFamily="@font/quicksandmedium"
+                        android:focusable="false"
+                        android:clickable="true"
+                        android:inputType="none"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:text="@string/a"
+                        android:textSize="@dimen/textomenu"
+                        android:textColor="@color/azulTexto"
+                        android:layout_gravity="center_vertical"
+                        android:fontFamily="@font/quicksandsemibold"/>
+
+                    <EditText
+                        android:id="@+id/etDomingoAManana"
+                        android:layout_width="90dp"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:text="13:00"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/textomenu"
+                        android:layout_marginVertical="10dp"
+                        android:paddingHorizontal="10dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
+                        android:layout_gravity="center_vertical"
+                        android:focusable="false"
+                        android:clickable="true"
+                        android:inputType="none"
+                        android:fontFamily="@font/quicksandmedium"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="@string/de"
+                        android:textSize="@dimen/textomenu"
+                        android:layout_marginBottom="5dp"
+                        android:textColor="@color/azulTexto"
+                        android:fontFamily="@font/quicksandsemibold"/>
+
+                    <EditText
+                        android:id="@+id/etDomingoDeTarde"
+                        android:layout_width="90dp"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:text="15:00"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/textomenu"
+                        android:paddingHorizontal="10dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:fontFamily="@font/quicksandmedium"
+                        android:focusable="false"
+                        android:clickable="true"
+                        android:inputType="none"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:text="@string/a"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginBottom="5dp"
+                        android:textSize="@dimen/textomenu"
+                        android:textColor="@color/azulTexto"
+                        android:fontFamily="@font/quicksandsemibold"/>
+
+                    <EditText
+                        android:id="@+id/etDomingoATarde"
+                        android:layout_width="90dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:background="@color/white"
+                        android:fontFamily="@font/quicksandmedium"
+                        android:paddingHorizontal="10dp"
+                        android:text="18:00"
+                        android:gravity="center"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/textomenu"
+                        android:focusable="false"
+                        android:clickable="true"
+                        android:inputType="none"/>
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+
+
+        </LinearLayout>
+
+
     </LinearLayout>
 
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="330dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingLeft="20dp"
+        android:paddingTop="20dp">
+
+    <TextView
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="@string/precioConsulta"
+        android:textColor="@color/azulTexto"
+        android:textSize="@dimen/textomenu"
+        android:fontFamily="@font/quicksandsemibold"
+        />
+
+        <EditText
+            android:id="@+id/etCostoCita"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:textColor="@color/black"
+            android:textSize="@dimen/textomenu"
+            android:gravity="center"
+            android:layout_gravity="center_vertical"
+            android:fontFamily="@font/quicksandmedium"
+            android:inputType="numberDecimal"
+            />
+
+    </LinearLayout>
+
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/btn_azul_redondeado_si"
+        android:text="@string/btnGuardar"
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        android:layout_gravity="center_horizontal"/>
 
 </LinearLayout>
 
