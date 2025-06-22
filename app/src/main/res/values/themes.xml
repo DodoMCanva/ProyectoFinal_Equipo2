@@ -1,18 +1,22 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
     <style name="Base.Theme.CitasMedicas" parent="Theme.AppCompat.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <!-- Colores principales -->
+        <item name="colorPrimary">@color/azulBackMensajes</item>
+
+        <item name="colorPrimaryDark">@color/azulBackMensajes</item>
+        <item name="android:windowTranslucentStatus">true</item>
+
+        <item name="colorAccent">@color/azulClaroBtn</item>
+
+
+        <item name="android:colorBackground">@color/BackCitaCompletada</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorSurface">@color/white</item>
+        <item name="colorOnSurface">@color/black</item>
+
+        <!-- Color de la barra de estado -->
+        <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
     <style name="Theme.CitasMedicas" parent="Base.Theme.CitasMedicas" />
-
-    <style name="Theme.CitasMedicas.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
-
-    <style name="Theme.CitasMedicas.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="Theme.CitasMedicas.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>
