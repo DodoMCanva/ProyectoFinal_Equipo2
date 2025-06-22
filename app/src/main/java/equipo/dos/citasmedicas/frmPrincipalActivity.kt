@@ -3,6 +3,7 @@ package equipo.dos.citasmedicas
 import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
+import android.widget.Button
 import android.widget.ListView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -17,17 +18,21 @@ class frmPrincipalActivity : AppCompatActivity() {
     private val binding by lazy {
         ActivityFrmPrincipalBinding.inflate(layoutInflater)
     }
-    
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_frm_principal)
+
+
+
         var drawerLayout = findViewById<DrawerLayout>(R.id.drawer_miscitas)
-        var toolbar = findViewById<MaterialToolbar>(R.id.btnMenu)
+        var toolbar = findViewById<Button>(R.id.btnMenu)
         toolbar.setOnClickListener(View.OnClickListener {
             drawerLayout.openDrawer(GravityCompat.START)
+            //var miscitas = drawerLayout.findViewById<>()
         })
+
 
         val tipoUsuario = intent.getStringExtra("tipoUsuario") ?: "paciente"
         val lvMedicos = findViewById<ListView>(R.id.lvMedicos)
