@@ -16,7 +16,7 @@
         android:paddingTop="10dp">
 
         <Button
-            android:id="@+id/lblMedico"
+            android:id="@+id/tvMedico"
             android:layout_width="@dimen/menu"
             android:layout_height="@dimen/menu"
             android:background="@drawable/ic_launcher_foreground" />
@@ -32,13 +32,14 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/lblAgendarNombre"
+        android:id="@+id/tvAgendarNombre"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Emmanuel Quiroz Soto"
         android:textAlignment="center"
         android:textSize="30sp"
-
+        android:textColor="@color/azulTexto"
+        android:fontFamily="@font/quicksandmedium"
         />
 
     <LinearLayout
@@ -59,24 +60,39 @@
                 android:layout_gravity="center"
                 android:text="Fecha:"
                 android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textColor="@color/azulTexto"
+                android:fontFamily="@font/quicksandbold"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_gravity="center_vertical">
+
 
                 <TextView
                     android:id="@+id/tvAgendarFecha"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:padding="2sp"
                     android:text="29/05/2025"
-                    android:textSize="20sp" />
+                    android:background="@color/white"
+                    android:textSize="@dimen/textomenu"
+                    android:fontFamily="@font/quicksandsemibold"
+                    android:textColor="@color/black"/>
 
-                <Button
+
+                <ImageButton
                     android:id="@+id/btnCalendario"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp" />
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/date24"
+                    android:background="@drawable/btncalendario"
+                    android:scaleType="centerInside"
+                    android:contentDescription="Calendario"
+                    android:layout_marginRight="10dp" />
+
             </LinearLayout>
 
         </LinearLayout>
@@ -93,7 +109,8 @@
                 android:layout_gravity="center"
                 android:text="Hora:"
                 android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textColor="@color/azulTexto"
+                android:fontFamily="@font/quicksandbold" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -123,15 +140,18 @@
             android:layout_height="wrap_content"
             android:text="Monto:"
             android:textSize="25dp"
-            android:textStyle="bold" />
+            android:textColor="@color/azulTexto"
+            android:fontFamily="@font/quicksandbold" />
 
         <TextView
             android:id="@+id/tvMonto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10sp"
-            android:text="800.00"
-            android:textSize="25dp" />
+            android:text="$500.00"
+            android:textSize="25dp"
+            android:textColor="@color/azulTexto"
+            android:fontFamily="@font/quicksandmedium"/>
     </LinearLayout>
 
     <LinearLayout
@@ -147,7 +167,8 @@
             android:text="Motivo"
             android:textAlignment="center"
             android:textSize="25sp"
-            android:textStyle="bold" />
+            android:textColor="@color/azulTexto"
+            android:fontFamily="@font/quicksandbold" />
 
         <EditText
             android:id="@+id/txtMotivo"
@@ -169,7 +190,9 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20sp"
         android:layout_marginTop="20sp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_gravity="center_horizontal"
+        android:paddingHorizontal="70dp">
 
         <Button
             android:id="@+id/btnConfirmar"
@@ -183,7 +206,7 @@
             android:id="@+id/btnCancelar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="160sp"
+            android:layout_marginLeft="30dp"
             android:backgroundTint="@color/rojoBtn"
             android:text="Cancelar"
             android:textColor="@color/white" />

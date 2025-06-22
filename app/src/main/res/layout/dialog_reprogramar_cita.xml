@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -10,11 +11,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="24dp">
-
+        android:padding="15dp">
 
         <TextView
-            android:id="@+id/tvDialogTitulo"
+            android:id="@+id/tvDialogRepTitulo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/dialogReprogramarTitulo"
@@ -22,59 +22,118 @@
             android:textSize="@dimen/texttitulo"
             android:fontFamily="@font/quicksandbold"
             android:gravity="center_horizontal"
-            android:layout_marginBottom="16dp"/>
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/quicksandbold"
+            android:text="@string/dialogReprogramarFecha"
+            android:textColor="@color/white"
+            android:textSize="25sp"
+            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="center_vertical"
+            android:gravity="center"
             android:background=""
-            android:padding="12dp"
+            android:padding="15dp"
             android:layout_marginBottom="24dp">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:id="@+id/tvRepFecha"
+                android:layout_width="160dp"
                 android:layout_height="wrap_content"
-                android:text="@string/dialogReprogramarFecha"
-                android:textColor="@color/white"
-                android:textSize="20sp"
-                android:fontFamily="@font/quicksandregular"
-                android:layout_marginBottom="8dp"/>
-
-            <TextView
-                android:id="@+id/tvFecha"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="01/02/2025"
-                android:textColor="@color/azulTexto"
-                android:textSize="18sp"
+                android:textAlignment="center"
+                android:padding="2sp"
+                android:text="29/05/2025"
                 android:background="@color/white"
-                android:fontFamily="@font/quicksandregular"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?attr/selectableItemBackground" />
+                android:textSize="@dimen/textomenu"
+                android:fontFamily="@font/quicksandsemibold"
+                android:textColor="@color/black"/>
 
-            <ImageView
-            android:id="@+id/ivDatePicker"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:src="@drawable/date48"
-                android:tint="@color/azulTexto"
-            android:clickable="true"
-            android:focusable="true"
-            android:foreground="?attr/selectableItemBackground" />
+
+            <ImageButton
+                android:id="@+id/btnCalendarioReprogramar"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/date24"
+                android:background="@drawable/btncalendarioazul"
+                android:scaleType="centerInside"
+                android:contentDescription="Calendario"
+                android:layout_marginRight="10dp" />
+
+
         </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/dialogReprogramarFecha"
+            android:text="@string/dialogReprogramarHora"
             android:textColor="@color/white"
-            android:textSize="20sp"
-            android:fontFamily="@font/quicksandregular"
-            android:layout_marginBottom="8dp"/>
+            android:textSize="25sp"
+            android:fontFamily="@font/quicksandbold"
+            android:layout_marginBottom="8dp"
+            android:layout_gravity="center_horizontal"/>
+
+        <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:padding="15dp"
+        android:layout_marginBottom="50dp">
+
+            <Spinner
+                android:id="@+id/spRepHora"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="0dp"
+                android:paddingStart="0dp"
+                android:paddingLeft="0dp"
+                android:paddingEnd="0dp"
+                android:paddingRight="0dp"
+                android:spinnerMode="dropdown" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/btnCompletarRep"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/btnConfirmarRep"
+                android:background="@drawable/btn_azulclaro_redondeado"
+                android:textColor="@android:color/white"
+                android:paddingVertical="12dp"
+                android:textSize="18sp"
+                android:fontFamily="@font/quicksandbold"
+                android:layout_marginEnd="8dp"/>
+
+            <Button
+                android:id="@+id/btnCancelarRep"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/dialogBtnCancel"
+                android:background="@drawable/btn_amarillo_redondeado"
+                android:textColor="@android:color/white"
+                android:paddingVertical="12dp"
+                android:textSize="18sp"
+                android:fontFamily="@font/quicksandbold"
+                android:layout_marginStart="8dp"/>
+        </LinearLayout>
+    </LinearLayout>
 
 
 
