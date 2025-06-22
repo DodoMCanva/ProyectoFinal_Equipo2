@@ -51,7 +51,6 @@
     <string name="dialogCancelarTexto">¿Seguro que desea cancelar su cita?</string>
     <string name="btnDialogConfirmar">Confirmar</string>
     <string name="btnDialogAtras">Atrás</string>
-
     <string name="registro">Registro</string>
     <string name="nombre">Nombre</string>
     <string name="fechaNacimiento">Fecha de nacimiento</string>
@@ -59,7 +58,6 @@
     <string name="genero">Género</string>
     <string name="hombre">Hombre</string>
     <string name="mujer">Mujer</string>
-
     <string name="dialogRecetaTitulo">Receta</string>
     <string name="dialogSubirImagen">Subir imagen</string>
     <string name="dialogRutaImagen">Ruta de la imagen</string>
@@ -77,6 +75,8 @@
     <string name="dialogReprogramarTitulo">Reprogramar</string>
     <string name="dialogReprogramarFecha">Fecha</string>
     <string name="dialogReprogramarHora">Hora</string>
+    <string name="precioConsulta">Precio consulta</string>
+    <string name="btnGuardar">Guardar</string>
 
 
 </resources>
