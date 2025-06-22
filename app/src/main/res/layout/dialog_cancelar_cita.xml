@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:text="@string/dialogCancelarTitulo"
         android:textColor="@color/white"
-        android:textSize="40sp"
+        android:textSize="@dimen/texttitulo"
         android:fontFamily="@font/quicksandbold"
         android:gravity="center_horizontal"
         android:layout_marginBottom="16dp"/>
@@ -61,3 +61,4 @@
             android:fontFamily="@font/quicksandbold"
             android:layout_marginStart="8dp"/>
     </LinearLayout>
+</LinearLayout>
