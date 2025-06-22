@@ -30,9 +30,7 @@
         <activity
             android:name=".frmLogin"
             android:exported="false" />
-        <activity
-            android:name=".frm_login"
-            android:exported="false" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true">
