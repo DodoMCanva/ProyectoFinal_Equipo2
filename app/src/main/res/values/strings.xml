@@ -86,6 +86,7 @@
     <string name="mostrarSemana">Mostrar toda la semana</string>
     <string name="agendar">Agendar</string>
     <string name="editarPerfil">Editar Perfil</string>
+    <string name="largetext">Editar Perfil</string>
 
 
 </resources>

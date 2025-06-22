@@ -776,7 +776,7 @@
                             android:paddingHorizontal="10dp"
                             android:text="13:00"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/textomenu " />
+                            android:textSize="@dimen/textomenu25" />
                     </LinearLayout>
 
                     <LinearLayout
