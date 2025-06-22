@@ -6,14 +6,17 @@
     android:background="@color/azulBackground"
     android:orientation="vertical"
     tools:context=".frmAgendarMedicoActivity">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+        android:background="@drawable/fondo_barra" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_lef="20dp"
         android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingTop="10dp">
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/tvMedico"

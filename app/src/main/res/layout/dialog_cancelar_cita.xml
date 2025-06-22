@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:text="@string/dialogCancelarTitulo"
         android:textColor="@color/white"
-        android:textSize="@dimen/texttitulo"
+        android:textSize="@dimen/texttitulo45"
         android:fontFamily="@font/quicksandbold"
         android:gravity="center_horizontal"
         android:layout_marginBottom="16dp"/>
@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:text="@string/dialogCancelarTexto"
         android:textColor="@color/white"
-        android:textSize="30sp"
+        android:textSize="@dimen/textomenu25"
         android:fontFamily="@font/quicksandregular"
         android:gravity="center_horizontal"
         android:layout_marginBottom="40dp"/>
@@ -44,7 +44,7 @@
             android:background="@drawable/btn_azulclaro_redondeado"
             android:textColor="@android:color/white"
             android:paddingVertical="12dp"
-            android:textSize="18sp"
+            android:textSize="@dimen/text18"
             android:fontFamily="@font/quicksandbold"
             android:layout_marginEnd="8dp"/>
 
@@ -57,7 +57,7 @@
             android:background="@drawable/btn_amarillo_redondeado"
             android:textColor="@android:color/white"
             android:paddingVertical="12dp"
-            android:textSize="18sp"
+            android:textSize="@dimen/text18"
             android:fontFamily="@font/quicksandbold"
             android:layout_marginStart="8dp"/>
     </LinearLayout>

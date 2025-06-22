@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:text="@string/dialogReprogramarTitulo"
             android:textColor="@color/white"
-            android:textSize="@dimen/texttitulo"
+            android:textSize="@dimen/texttitulo45"
             android:fontFamily="@font/quicksandbold"
             android:gravity="center_horizontal"
             android:layout_marginBottom="16dp" />
@@ -32,7 +32,7 @@
             android:fontFamily="@font/quicksandbold"
             android:text="@string/dialogReprogramarFecha"
             android:textColor="@color/white"
-            android:textSize="25sp"
+            android:textSize="@dimen/textomenu25"
             android:textStyle="bold" />
 
         <LinearLayout
@@ -52,7 +52,7 @@
                 android:padding="2sp"
                 android:text="29/05/2025"
                 android:background="@color/white"
-                android:textSize="@dimen/textomenu"
+                android:textSize="@dimen/text18"
                 android:fontFamily="@font/quicksandsemibold"
                 android:textColor="@color/black"/>
 
@@ -75,7 +75,7 @@
             android:layout_height="wrap_content"
             android:text="@string/dialogReprogramarHora"
             android:textColor="@color/white"
-            android:textSize="25sp"
+            android:textSize="@dimen/textomenu25"
             android:fontFamily="@font/quicksandbold"
             android:layout_marginBottom="8dp"
             android:layout_gravity="center_horizontal"/>
@@ -98,7 +98,8 @@
                 android:paddingLeft="0dp"
                 android:paddingEnd="0dp"
                 android:paddingRight="0dp"
-                android:spinnerMode="dropdown" />
+                android:spinnerMode="dropdown"
+                android:textSize="@dimen/text18"/>
         </LinearLayout>
 
         <LinearLayout
@@ -112,11 +113,11 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/btnConfirmarRep"
+                android:text="@string/btnDialogConfirmar"
                 android:background="@drawable/btn_azulclaro_redondeado"
                 android:textColor="@android:color/white"
                 android:paddingVertical="12dp"
-                android:textSize="18sp"
+                android:textSize="@dimen/text18"
                 android:fontFamily="@font/quicksandbold"
                 android:layout_marginEnd="8dp"/>
 
@@ -129,7 +130,7 @@
                 android:background="@drawable/btn_amarillo_redondeado"
                 android:textColor="@android:color/white"
                 android:paddingVertical="12dp"
-                android:textSize="18sp"
+                android:textSize="@dimen/text18"
                 android:fontFamily="@font/quicksandbold"
                 android:layout_marginStart="8dp"/>
         </LinearLayout>

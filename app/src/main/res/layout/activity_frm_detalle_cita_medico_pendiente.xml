@@ -8,6 +8,8 @@
     android:background="@color/azulBackground"
     android:orientation="vertical"
     tools:context=".frmDetalleCitaMedicoPendienteActivity">
+
+
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
