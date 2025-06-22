@@ -1,0 +1,49 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="300dp"
+    android:layout_height="500dp"
+    android:background="@color/backFiltro">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="0dp"
+        android:layout_margin="0dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingStart="15dp"
+            android:layout_gravity="center_vertical"
+            android:text="Especialidad"
+            android:fontFamily="@font/quicksandbold"
+            android:textColor="@color/white"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:layout_margin="0dp" />
+
+        <Button
+            android:id="@+id/btnFiltrar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/filtrar"
+            android:textColor="@color/azulBackground"
+            android:fontFamily="@font/quicksandsemibold"
+            android:layout_margin="0dp"
+            android:padding="0dp"
+            android:textSize="12sp"
+            android:backgroundTint="filtroBtn"
+            android:layout_gravity="top" />
+    </LinearLayout>
+
+
+    <ListView
+        android:id="@+id/lvEspecialidades"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:divider="@null"
+        android:dividerHeight="0dp" />
+</LinearLayout>
