@@ -3,45 +3,67 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/azulBackground"
-    android:orientation="vertical"
-    tools:context=".frmRestablecerContrasena">
+    tools:context=".frmNuevaContrasena">
 
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="30dp"
         android:fontFamily="@font/quicksandbold"
-        android:gravity="center"
-        android:text="@string/restacontra"
+        android:layout_gravity="center"
+        android:text="@string/titulonuevaContrasena"
         android:textColor="@color/azulTexto"
+        android:textAlignment="center"
         android:textSize="@dimen/texttitulo" />
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:fontFamily="@font/quicksandmedium"
-        android:gravity="center"
-        android:text="@string/textResContra"
+        android:fontFamily="@font/quicksandbold"
+        android:layout_gravity="center"
+        android:text="@string/txtnuevaContrasena"
+        android:textAlignment="center"
         android:textColor="@color/azulTexto"
         android:textSize="@dimen/textomenu" />
-
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="80dp"
-        android:text="@string/correo"
+        android:text="@string/nuevaContrasena"
+        android:fontFamily="@font/quicksandbold"
         android:textColor="@color/azulTexto"
-        android:textSize="@dimen/textomenu" />
+        android:textSize="@dimen/textomenu"
+        android:layout_marginTop="29dp"
+        android:layout_gravity="center"/>
 
     <EditText
-        android:id="@+id/et_correoResContra"
+        android:id="@+id/et_nuevaContrasena"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="32dp"
+        android:background="@color/white"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/confirContrasena"
+        android:fontFamily="@font/quicksandbold"
+        android:textColor="@color/azulTexto"
+        android:textSize="@dimen/textomenu"
+        android:layout_marginTop="29dp"
+        android:layout_gravity="center"/>
+
+    <EditText
+        android:id="@+id/et_confirmarConrasena"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginStart="32dp"
@@ -52,14 +74,13 @@
         android:paddingEnd="16dp" />
 
     <Button
+        android:id="@+id/btnCambiarContra"
         android:layout_width="190dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="80dp"
         android:background="@drawable/fondo_boton_gradiente"
-        android:text="@string/botonVerificar"
+        android:text="@string/cambiarContra"
         android:textColor="@color/white"
         />
-
-
 </LinearLayout>
