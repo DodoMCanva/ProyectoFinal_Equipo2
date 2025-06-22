@@ -5,5 +5,6 @@
     <dimen name="textFormulario">25dp</dimen>
     <dimen name="textencabezado">440sp</dimen>
     <dimen name="textcampo">16sp</dimen>
+    <dimen name="texttitulo">45sp</dimen>
 
 </resources>

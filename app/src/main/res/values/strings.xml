@@ -10,4 +10,18 @@
     <string name="eresMedico">¿Eres Médico?</string>
     <string name="btnEresMedicoSi">Si</string>
     <string name="btnEresMedicoNo">No</string>
+    <string name="misCitas">Mis Citas</string>
+    <string name="restacontra">Restablecer contraseña</string>
+    <string name="textResContra">Ingresa tu correo electrónico y te enviaremos un código para restablecer tu contraseña</string>
+    <string name="botonEnviarCodigo">Enviar código</string>
+    <string name="encabezadoDetallesCita">Detalle Cita</string>
+    <string name="labelEstado">Estado:</string>
+    <string name="labelMedico">Médico:</string>
+    <string name="labelEspecialidad">Especialidad:</string>
+    <string name="labelFecha">Fecha:</string>
+    <string name="labelHora">Hora:</string>
+    <string name="labelMotivo">Motivo:</string>
+    <string name="labelReceta">Receta:</string>
+    <string name="especialidad">Especialidad</string>
+    <string name="filtrar">Filtrar</string>
 </resources>

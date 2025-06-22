@@ -5,8 +5,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center_horizontal"
     android:background="@color/azulBackground"
+    android:gravity="center_horizontal"
     android:orientation="vertical"
     tools:context=".frmLogin">
 
@@ -27,10 +27,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/quicksandbold"
                 android:gravity="left"
                 android:text="@string/made"
                 android:textSize="48sp"
-                android:fontFamily="@font/quicksandbold"
                 android:textStyle="bold" />
 
             <ImageView
@@ -44,9 +44,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:fontFamily="@font/quicksandbold"
                 android:text="@string/date"
                 android:textSize="48sp"
-                android:fontFamily="@font/quicksandbold"
                 android:textStyle="bold" />
 
 
@@ -62,13 +62,13 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="2dp"
         android:layout_marginEnd="32dp"
-        android:textColor="@color/azulTexto"
-        android:text="Correo"
         android:fontFamily="@font/quicksandbold"
+        android:text="Correo"
+        android:textColor="@color/azulTexto"
         android:textSize="@dimen/textomenu" />
 
     <EditText
-        android:id="@+id/campo_correo"
+        android:id="@+id/et_correo"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginStart="32dp"
@@ -87,13 +87,13 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="2dp"
         android:layout_marginEnd="32dp"
+        android:fontFamily="@font/quicksandbold"
         android:text="@string/contrasena"
         android:textColor="@color/azulTexto"
-        android:fontFamily="@font/quicksandbold"
         android:textSize="@dimen/textomenu" />
 
     <EditText
-        android:id="@+id/campo_contrasena"
+        android:id="@+id/et_contrasena"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginStart="32dp"
@@ -106,7 +106,7 @@
         android:paddingEnd="16dp" />
 
     <TextView
-        android:id="@+id/texto_olvidaste_contrasena"
+        android:id="@+id/tvOlvidasteContra"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -117,20 +117,19 @@
         android:fontFamily="@font/quicksandbold"
         android:gravity="center"
         android:paddingTop="8dp"
-        android:textColor="@color/azulTexto"
         android:paddingBottom="8dp"
         android:text="¿Olvidaste tu contraseña?"
+        android:textColor="@color/azulTexto"
         android:textSize="@dimen/textomenu" />
+
     <View
         android:layout_width="280dp"
         android:layout_height="2dp"
-        android:background="@color/azulTexto"
-        />
-
+        android:background="@color/azulTexto" />
 
 
     <Button
-        android:id="@+id/boton_iniciar_sesion"
+        android:id="@+id/btnIniciarSesion"
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:layout_marginStart="48dp"
@@ -141,20 +140,20 @@
         android:textSize="20sp" />
 
     <TextView
-        android:id="@+id/texto_registrarse"
+        android:id="@+id/tvRegistrarse"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:clickable="true"
         android:focusable="true"
-        android:padding="8dp"
-        android:textColor="@color/azulTexto"
         android:fontFamily="@font/quicksandbold"
+        android:padding="8dp"
         android:text="@string/btnRegistrarse"
+        android:textColor="@color/azulTexto"
         android:textSize="18sp" />
+
     <View
         android:layout_width="150dp"
         android:layout_height="2dp"
-        android:background="@color/azulTexto"
-        />
+        android:background="@color/azulTexto" />
 </LinearLayout>
