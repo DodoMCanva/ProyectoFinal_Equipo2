@@ -11,7 +11,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        var intent : Intent = Intent(this, frmLogin::class.java)
+
+        var intent : Intent = Intent(this, frmLoginActivity::class.java)
         startActivity(intent)
     }
 }
