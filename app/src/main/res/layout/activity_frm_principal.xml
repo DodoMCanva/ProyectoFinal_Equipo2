@@ -8,20 +8,17 @@
     android:layout_height="match_parent"
     tools:context=".frmPrincipalActivity">
 
-    <!-- CONTENIDO PRINCIPAL -->
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/azulBackground">
 
-        <!-- Barra superior de color -->
         <View
             android:layout_width="match_parent"
             android:layout_height="24dp"
             android:background="@drawable/fondo_barra" />
 
-        <!-- Encabezado con botón + título -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -45,7 +42,6 @@
                 android:gravity="center" />
         </LinearLayout>
 
-        <!-- Fecha y opciones -->
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -90,7 +86,6 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
 
-        <!-- Rango de fechas -->
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -126,7 +121,6 @@
                 android:textColor="@color/azulTexto" />
         </LinearLayout>
 
-        <!-- Lista -->
         <ListView
             android:id="@+id/lvMedicos"
             android:layout_width="match_parent"
@@ -136,7 +130,6 @@
             android:layout_marginTop="20dp"/>
     </LinearLayout>
 
-    <!-- NavigationView como menú lateral -->
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navegacion_menu"
         android:layout_width="wrap_content"
