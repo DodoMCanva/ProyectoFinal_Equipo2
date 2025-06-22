@@ -158,15 +158,16 @@
                 android:layout_height="wrap_content"
                 android:paddingLeft="40sp"
                 />
+
             <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:paddingTop="10sp"
                 android:text="Cedula"
                 android:textColor="@color/azulTexto"
-                android:textStyle="bold"
                 android:textSize="20sp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                />
+                android:textStyle="bold" />
+
             <EditText
                 android:id="@+id/etEditarCedula"
                 android:layout_marginTop="5dp"
@@ -177,8 +178,107 @@
                 android:background="@color/white"
                 android:inputType="text"
                 android:hint="DJS2U3CJS88"/>
-            <
+            <TextView
+                android:paddingTop="10sp"
+                android:text="Estado"
+                android:textColor="@color/azulTexto"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:id="@+id/etEditarEstado"
+                android:layout_marginTop="5dp"
+                android:paddingTop="7sp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textSize="18sp"
+                android:background="@color/white"
+                android:inputType="text"
+                android:hint="Sonora" />
+            <TextView
+                android:paddingTop="10sp"
+                android:text="Calle"
+                android:textColor="@color/azulTexto"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:id="@+id/etEditarCalle"
+                android:layout_marginTop="5dp"
+                android:paddingTop="7sp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textSize="18sp"
+                android:background="@color/white"
+                android:inputType="text"
+                android:hint="No Releccion" />
+            <TextView
+                android:paddingTop="10sp"
+                android:text="Estado"
+                android:textColor="@color/azulTexto"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:id="@+id/etEditarNumero"
+                android:layout_marginTop="5dp"
+                android:paddingTop="7sp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textSize="18sp"
+                android:background="@color/white"
+                android:inputType="text"
+                android:hint="2905" />
+            <TextView
+                android:paddingTop="10sp"
+                android:text="Codigo Postal"
+                android:textColor="@color/azulTexto"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:id="@+id/etEditarCodigoPostal"
+                android:layout_marginTop="5dp"
+                android:paddingTop="7sp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textSize="18sp"
+                android:background="@color/white"
+                android:inputType="text"
+                android:hint="8500" />
         </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="15sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            >
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Guardar"
+                android:layout_marginHorizontal="15sp"
+                android:textColor="@color/white"
+                android:background="@color/azulBackMensajes"
+                />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Guardar"
+                android:layout_marginHorizontal="15sp"
+                android:textColor="@color/white"
+                android:background="@color/rojoBtn"
+                />
+        </LinearLayout>
+
     </LinearLayout>
 
 
