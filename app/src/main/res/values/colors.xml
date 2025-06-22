@@ -16,4 +16,5 @@
     <color name="colorAzulDegra">#2FF6EC</color>
     <color name="backFiltro">#45B5B0</color>
     <color name="filtroBtn">#66CDC8</color>
+    <color name="grisTexto">##CCCCCC</color>
 </resources>

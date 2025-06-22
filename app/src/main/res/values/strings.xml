@@ -58,6 +58,25 @@
     <string name="genero">Género</string>
     <string name="hombre">Hombre</string>
     <string name="mujer">Mujer</string>
+    <string name="dialogRecetaTitulo">Receta</string>
+    <string name="dialogSubirImagen">Subir imagen</string>
+    <string name="dialogRutaImagen">Ruta de la imagen</string>
+    <string name="dialoBtnBuscar">Buscar</string>
+    <string name="dialogNota">Notas</string>
+    <string name="dialogTextoNotas">Escriba aquí las notas de la receta...</string>
+    <string name="dialogRecetaCompleta">Completar</string>
+    <string name="dialogBtnCancel">Cancelar</string>
+    <string name="especialidadMedica">Especialidad Médica</string>
+    <string name="cedula">Cédula</string>
+    <string name="estado">Estado</string>
+    <string name="calle">Calle</string>
+    <string name="numero">Numero</string>
+    <string name="codigoPostal">Codigo Postal</string>
+    <string name="dialogReprogramarTitulo">Reprogramar</string>
+    <string name="dialogReprogramarFecha">Fecha</string>
+    <string name="dialogReprogramarHora">Hora</string>
+    <string name="precioConsulta">Precio consulta</string>
+    <string name="btnGuardar">Guardar</string>
 
 
 </resources>

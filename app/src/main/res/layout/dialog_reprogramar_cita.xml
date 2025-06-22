@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/fondo_campo"
+    android:padding="24dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+
+        <TextView
+            android:id="@+id/tvDialogTitulo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/dialogReprogramarTitulo"
+            android:textColor="@color/white"
+            android:textSize="@dimen/texttitulo"
+            android:fontFamily="@font/quicksandbold"
+            android:gravity="center_horizontal"
+            android:layout_marginBottom="16dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:background=""
+            android:padding="12dp"
+            android:layout_marginBottom="24dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/dialogReprogramarFecha"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:fontFamily="@font/quicksandregular"
+                android:layout_marginBottom="8dp"/>
+
+            <TextView
+                android:id="@+id/tvFecha"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="01/02/2025"
+                android:textColor="@color/azulTexto"
+                android:textSize="18sp"
+                android:background="@color/white"
+                android:fontFamily="@font/quicksandregular"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground" />
+
+            <ImageView
+            android:id="@+id/ivDatePicker"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/date48"
+                android:tint="@color/azulTexto"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/dialogReprogramarFecha"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:fontFamily="@font/quicksandregular"
+            android:layout_marginBottom="8dp"/>
+
+
+
+</LinearLayout>

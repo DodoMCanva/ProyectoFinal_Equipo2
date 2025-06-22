@@ -3,8 +3,7 @@
     android:layout_width="350sp"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/azulBackMensajes"
-    >
+    android:background="@color/azulBackMensajes">
     <Button
         android:id="@+id/btnMenu"
         android:layout_gravity="end"

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/azulBackground"
     android:fillViewport="true"
-    tools:context=".frmRegistro">
+    tools:context=".frmRegistroMedico">
 
 
     <LinearLayout
@@ -39,7 +39,7 @@
             android:textSize="@dimen/text18" />
 
         <EditText
-            android:id="@+id/etNombreRegistro"
+            android:id="@+id/etNombreRegistroMedico"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginStart="32dp"
@@ -63,7 +63,7 @@
             android:textSize="@dimen/text18" />
 
         <EditText
-            android:id="@+id/etRegistroCorreo"
+            android:id="@+id/etRegistroCorreoMedico"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginStart="32dp"
@@ -92,7 +92,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/tvFechaRegistro"
+                android:id="@+id/tvFechaRegistroRegistro"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
@@ -101,7 +101,7 @@
                 android:textSize="20sp" />
 
             <Button
-                android:id="@+id/btnCalendarioRegistro"
+                android:id="@+id/btnCalendarioRegistroMedico"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginEnd="200dp" />
@@ -119,7 +119,7 @@
             android:textSize="@dimen/text18" />
 
         <EditText
-            android:id="@+id/etContraRegistro"
+            android:id="@+id/etContraRegistroMedico"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginStart="32dp"
@@ -144,7 +144,7 @@
             android:textSize="@dimen/text18" />
 
         <EditText
-            android:id="@+id/etnuevaContraRegistro"
+            android:id="@+id/etnuevaContraRegistroMedico"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginStart="32dp"
@@ -168,7 +168,7 @@
             android:textSize="@dimen/text18" />
 
         <EditText
-            android:id="@+id/etTelefonoRegistro"
+            android:id="@+id/etTelefonoRegistroMedico"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginStart="32dp"
@@ -200,7 +200,7 @@
             android:orientation="horizontal">
 
             <CheckBox
-                android:id="@+id/cbHombreRegistro"
+                android:id="@+id/cbHombreRegistroMedico"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="24dp"
@@ -210,17 +210,153 @@
                 android:textSize="@dimen/text18" />
 
             <CheckBox
-                android:id="@+id/cbMujerRegistro"
+                android:id="@+id/cbMujerRegistroMedico"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/quicksandbold"
                 android:text="@string/mujer"
                 android:textColor="@color/azulTexto"
                 android:textSize="@dimen/text18" />
+
+
         </LinearLayout>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="32dp"
+            android:fontFamily="@font/quicksandbold"
+            android:text="@string/especialidadMedica"
+            android:textColor="@color/azulTexto"
+            android:textSize="@dimen/text18" />
+
+        <Spinner
+            android:id="@+id/spEspecialidad"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="32dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="32dp"
+            android:fontFamily="@font/quicksandbold"
+            android:text="@string/cedula"
+            android:textColor="@color/azulTexto"
+            android:textSize="@dimen/text18" />
+
+        <EditText
+            android:id="@+id/etCedulaMedico"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="32dp"
+            android:background="@color/white"
+            android:inputType="text"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="32dp"
+            android:fontFamily="@font/quicksandbold"
+            android:text="@string/estado"
+            android:textColor="@color/azulTexto"
+            android:textSize="@dimen/text18" />
+
+        <EditText
+            android:id="@+id/etEstadoMedico"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="32dp"
+            android:background="@color/white"
+            android:inputType="text"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="32dp"
+            android:fontFamily="@font/quicksandbold"
+            android:text="@string/calle"
+            android:textColor="@color/azulTexto"
+            android:textSize="@dimen/text18" />
+
+        <EditText
+            android:id="@+id/etCalleMedico"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="32dp"
+            android:background="@color/white"
+            android:inputType="text"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="32dp"
+            android:fontFamily="@font/quicksandbold"
+            android:text="@string/numero"
+            android:textColor="@color/azulTexto"
+            android:textSize="@dimen/text18" />
+
+        <EditText
+            android:id="@+id/etNumeroMedico"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="32dp"
+            android:background="@color/white"
+            android:inputType="text"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="32dp"
+            android:fontFamily="@font/quicksandbold"
+            android:text="@string/codigoPostal"
+            android:textColor="@color/azulTexto"
+            android:textSize="@dimen/text18" />
+
+        <EditText
+            android:id="@+id/etCodigoPostalMedico"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="32dp"
+            android:background="@color/white"
+            android:inputType="text"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp" />
+
+
         <Button
-            android:id="@+id/btnRegistrarse"
+            android:id="@+id/btnRegistrarseMedico"
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:layout_marginStart="48dp"
@@ -230,7 +366,9 @@
             android:background="@drawable/fondo_boton_gradiente"
             android:text="@string/btnRegistrarse"
             android:textColor="@android:color/white"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+
+            />
 
     </LinearLayout>
 </ScrollView>

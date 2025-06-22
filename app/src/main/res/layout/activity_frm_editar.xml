@@ -1,48 +1,143 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".frmEditar">
+    tools:context=".frmEditar"
+    android:orientation="vertical"
+    android:background="@color/azulBackground">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/app_bar"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/app_bar_height"
-        android:fitsSystemWindows="true"
-        android:theme="@style/Theme.CitasMedicas.AppBarOverlay">
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="20sp"
+        android:orientation="vertical">
+        <TextView
+            android:paddingTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/azulTexto"
+            android:textSize="40sp"
+            android:fontFamily="@font/quicksandbold"
+            android:text="Editar Perfil"
+            android:paddingBottom="10dp"
+            android:gravity="center"/>
 
-        <com.google.android.material.appbar.CollapsingToolbarLayout
-            android:id="@+id/toolbar_layout"
-            style="@style/Widget.MaterialComponents.Toolbar.Primary"
+        <TextView
+            android:paddingTop="10sp"
+            android:text="Nombre"
+            android:textColor="@color/azulTexto"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+        <EditText
+            android:id="@+id/etEditarNombre"
+            android:layout_marginTop="5dp"
+            android:paddingTop="7sp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fitsSystemWindows="true"
-            app:contentScrim="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            app:toolbarId="@+id/toolbar">
+            android:textSize="18sp"
+            android:background="@color/white"
+            android:inputType="text"
+            android:hint="Fernando Jose..."/>
 
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin"
-                app:popupTheme="@style/Theme.CitasMedicas.PopupOverlay" />
+        <TextView
+            android:paddingTop="10sp"
+            android:text="Correo"
+            android:textColor="@color/azulTexto"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+        <TextView
+            android:id="@+id/lblEditarCorreo"
+            android:layout_marginTop="5dp"
+            android:paddingTop="7sp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="18sp"
+            android:hint="josefer@gmail.com"
+            />
+        <TextView
+            android:paddingTop="10sp"
+            android:text="Fecha de Nacimiento"
+            android:textColor="@color/azulTexto"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <TextView
+                android:id="@+id/tvEditarFechaNa"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="29/05/2025"
+                android:textSize="20sp"/>
 
-        </com.google.android.material.appbar.CollapsingToolbarLayout>
-    </com.google.android.material.appbar.AppBarLayout>
+            <Button
+                android:id="@+id/btnEditarFecha"
+                android:layout_width="50dp"
+                android:layout_height="50dp"/>
+        </LinearLayout>
+        <TextView
+            android:paddingTop="10sp"
+            android:text="Telefono"
+            android:textColor="@color/azulTexto"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+        <EditText
+            android:id="@+id/etEditarTelefono"
+            android:layout_marginTop="5dp"
+            android:paddingTop="7sp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="18sp"
+            android:background="@color/white"
+            android:inputType="text"
+            android:hint="644 158 1235"/>
+        <TextView
+            android:paddingTop="10sp"
+            android:text="Genero"
+            android:textColor="@color/azulTexto"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10sp">
+            <CheckBox
+                android:id="@+id/cbEditarHombre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hombre"
+                android:textColor="@color/azulTexto"
+                />
+            <CheckBox
+                android:id="@+id/cbEditarMujer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mujer"
+                android:textColor="@color/azulTexto"
+                />
+        </LinearLayout>
+        
+    </LinearLayout>
 
-    <include layout="@layout/content_scrolling" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/fab_margin"
-        app:layout_anchor="@id/app_bar"
-        app:layout_anchorGravity="bottom|end"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</ScrollView>
