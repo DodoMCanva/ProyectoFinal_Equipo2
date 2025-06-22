@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginHorizontal="20dp"
+        android:layout_lef="20dp"
         android:paddingTop="10dp"
         android:gravity="center_vertical">
 
@@ -27,7 +27,7 @@
             android:textSize="40sp"
             android:fontFamily="@font/quicksandbold"
             android:text="Agendar"
-            android:gravity="center"/>
+            android:paddingLeft="50sp"/>
     </LinearLayout>
     <TextView
         android:id="@+id/lblAgendarNombre"
@@ -35,42 +35,150 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Emmanuel Quiroz Soto"
-        android:textSize="20sp"
+        android:textSize="30sp"
+
         />
+    <LinearLayout
+        android:paddingTop="20sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginHorizontal="20sp">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fecha:"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_gravity="center"/>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+                <TextView
+                    android:id="@+id/tvAgendarFecha"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="29/05/2025"
+                    android:textSize="20sp"/>
+
+                <Button
+                    android:id="@+id/btnCalendario"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"/>
+            </LinearLayout>
+
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="40sp"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hora:"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:layout_gravity="center"/>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+                <Spinner
+                    android:id="@+id/spHora"
+                    android:layout_marginTop="10sp"
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="40sp"
+                    />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:paddingTop="20sp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20sp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="25dp"
+            android:text="Monto:"
+            android:textStyle="bold"
+            />
+        <TextView
+            android:id="@+id/tvMonto"
+            android:layout_marginLeft="10sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="25dp"
+            android:text="800.00"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15sp"
+        android:layout_marginHorizontal="20sp"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Motivo"
+            android:textStyle="bold"
+            android:textSize="25sp"
+            android:textAlignment="center"
+            />
+
+        <EditText
+            android:id="@+id/txtMotivo"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:hint="Escribe tu mensaje aquí..."
+            android:gravity="top|start"
+            android:inputType="textMultiLine"
+            android:lines="6"
+            android:scrollbars="vertical"
+            android:overScrollMode="always"
+            android:background="@android:drawable/edit_text"
+            android:padding="12dp"
+            android:textSize="16sp"
+            />
+    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginHorizontal="20dp"
-        android:paddingTop="30dp"
-        android:gravity="center_vertical">
-        <EditText
-            android:id="@+id/etBuscarMedico"
-            android:layout_width="250dp"
-            android:textSize="20sp"
-            android:inputType="text"
-            android:layout_height="wrap_content"
-            android:hint="Nombre del medico"/>
+        android:layout_marginTop="20sp"
+        android:layout_marginHorizontal="20sp">
+
         <Button
-            android:id="@+id/btnBuscar"
-            android:layout_width="50sp"
-            android:layout_height="50sp"
-            android:background="@drawable/ic_launcher_foreground"
-            />
-        <Button
-            android:id="@+id/btnFiltros"
+            android:id="@+id/btnConfirmar"
             android:layout_width="wrap_content"
-            android:layout_height="50sp"
-            android:backgroundTint="@color/white"
-            android:text="Filtro"
-            />
+            android:layout_height="wrap_content"
+            android:text="Confirmar"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/azulBackMensajes"/>
+        <Button
+            android:id="@+id/btnCancelar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cancelar"
+            android:textColor="@color/white"
+            android:layout_marginLeft="160sp"
+            android:backgroundTint="@color/rojoBtn"/>
+
     </LinearLayout>
-
-    <ListView
-        android:id="@+id/lvMedicos"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginHorizontal="20dp" />
-
 
 </LinearLayout>
