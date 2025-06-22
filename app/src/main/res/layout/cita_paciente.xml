@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textSize="@dimen/textcampo"
+            android:textSize="@dimen/textcampo16"
             android:gravity="center"
             android:textColor="@color/white"
             android:text="19 de noviembre del 2025"/>
@@ -25,7 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:textSize="@dimen/textocampo"
+            android:textSize="@dimen/textcampo16"
             android:textColor="@color/white"
             android:text="00:00"/>
         <TextView
@@ -33,7 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textSize="@dimen/textcampo"
+            android:textSize="@dimen/textcampo16"
             android:gravity="center"
             android:textColor="@color/white"
             android:text="Cardiologo"/>
@@ -42,7 +42,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textSize="@dimen/textcampo"
+            android:textSize="@dimen/textcampo16"
             android:gravity="center"
             android:textColor="@color/white"
             android:text="Emmanuel Quiroz Ibarra"/>
