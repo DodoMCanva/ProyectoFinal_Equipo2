@@ -3,53 +3,54 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.etsi.org/tools"
     android:id="@+id/main"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
+    android:background="@color/azulBackground"
+    android:orientation="vertical"
     tools:context=".frmLogin">
 
 
-
     <LinearLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:gravity="center_horizontal"
-    android:layout_marginTop="32dp"
-    android:layout_marginBottom="32dp">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="32dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
 
-      <LinearLayout
-          android:layout_width="350dp"
-          android:layout_height="match_parent">
-
-
-          <TextView
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:gravity="left"
-              android:textStyle="bold"
-              android:textSize="48sp"
-              android:text="@string/made"
-              />
-
-          <ImageView
-              android:id="@+id/imagen_logo"
-              android:layout_width="96dp"
-              android:layout_height="96dp"
-              android:layout_gravity="center_horizontal"
-              android:contentDescription="Logo Made Date"
-              android:src="@drawable/iconoLogo" />
-
-          <TextView
-              android:layout_width="wrap_content"
-              android:layout_height="match_parent"
-              android:textSize="48sp"
-              android:textStyle="bold"
-              android:text="@string/date"/>
+        <LinearLayout
+            android:layout_width="350dp"
+            android:layout_height="match_parent">
 
 
-      </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:text="@string/made"
+                android:textSize="48sp"
+                android:fontFamily="@font/quicksandbold"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/imagen_logo"
+                android:layout_width="96dp"
+                android:layout_height="96dp"
+                android:layout_gravity="center_horizontal"
+                android:contentDescription="Logo Made Date"
+                android:src="@drawable/logo100" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/date"
+                android:textSize="48sp"
+                android:fontFamily="@font/quicksandbold"
+                android:textStyle="bold" />
+
+
+        </LinearLayout>
 
 
     </LinearLayout>
@@ -58,72 +59,86 @@
         android:id="@+id/etiqueta_correo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Correo"
-        android:textSize="25sp"
         android:layout_marginStart="32dp"
+        android:layout_marginTop="2dp"
         android:layout_marginEnd="32dp"
-        android:layout_marginTop="24dp" />
+        android:textColor="@color/azulTexto"
+        android:text="Correo"
+        android:fontFamily="@font/quicksandbold"
+        android:textSize="@dimen/textomenu" />
 
     <EditText
         android:id="@+id/campo_correo"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="32dp"
+        android:background="@color/white"
         android:hint="@string/ejemplocorreo"
         android:inputType="textEmailAddress"
-        android:background="@color/white"
         android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginTop="2dp" />
+        android:paddingEnd="16dp" />
 
     <TextView
         android:id="@+id/etiqueta_contrasena"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/contrasena"
-        android:textSize="25sp"
         android:layout_marginStart="32dp"
+        android:layout_marginTop="2dp"
         android:layout_marginEnd="32dp"
-        android:layout_marginTop="2dp" />
+        android:text="@string/contrasena"
+        android:textColor="@color/azulTexto"
+        android:fontFamily="@font/quicksandbold"
+        android:textSize="@dimen/textomenu" />
 
     <EditText
         android:id="@+id/campo_contrasena"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        android:background="@color/white"
         android:hint="@string/ejemploContraseña"
         android:inputType="textPassword"
-        android:background="@color/white"
         android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginTop="8dp" />
+        android:paddingEnd="16dp" />
 
     <TextView
         android:id="@+id/texto_olvidaste_contrasena"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="¿Olvidaste tu contraseña?"
-        android:textSize="20sp"
-        android:clickable="true"
-        android:gravity="center"
-        android:focusable="true"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
         android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
-        android:layout_marginTop="16dp" />
+        android:clickable="true"
+        android:focusable="true"
+        android:fontFamily="@font/quicksandbold"
+        android:gravity="center"
+        android:paddingTop="8dp"
+        android:textColor="@color/azulTexto"
+        android:paddingBottom="8dp"
+        android:text="¿Olvidaste tu contraseña?"
+        android:textSize="@dimen/textomenu" />
+    <View
+        android:layout_width="280dp"
+        android:layout_height="2dp"
+        android:background="@color/azulTexto"
+        />
+
+
 
     <Button
         android:id="@+id/boton_iniciar_sesion"
         android:layout_width="match_parent"
         android:layout_height="55dp"
-        android:text="Iniciar sesión"
-        android:textSize="20sp"
         android:layout_marginStart="48dp"
+        android:layout_marginTop="48dp"
         android:layout_marginEnd="48dp"
-        android:layout_marginTop="48dp" />
+        android:background="@drawable/fondo_boton_gradiente"
+        android:text="Iniciar sesión"
+        android:textSize="20sp" />
 
     <TextView
         android:id="@+id/texto_registrarse"
@@ -133,6 +148,13 @@
         android:clickable="true"
         android:focusable="true"
         android:padding="8dp"
+        android:textColor="@color/azulTexto"
+        android:fontFamily="@font/quicksandbold"
         android:text="@string/btnRegistrarse"
         android:textSize="18sp" />
+    <View
+        android:layout_width="150dp"
+        android:layout_height="2dp"
+        android:background="@color/azulTexto"
+        />
 </LinearLayout>

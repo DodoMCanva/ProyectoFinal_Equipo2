@@ -2,4 +2,8 @@
 <resources>
     <dimen name="menu">75dp</dimen>
     <dimen name="textomenu">25dp</dimen>
+    <dimen name="textFormulario">25dp</dimen>
+    <dimen name="textencabezado">440sp</dimen>
+    <dimen name="textcampo">16sp</dimen>
+
 </resources>
