@@ -1,6 +1,7 @@
 package equipo.dos.citasmedicas
 
 import Persistencia.fakebd
+import Persistencia.medico
 import Persistencia.paciente
 import android.content.Intent
 import android.os.Bundle
@@ -11,30 +12,44 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 
 class frmLoginActivity : AppCompatActivity() {
-    var bd : fakebd? = null
+    private lateinit var bd: fakebd
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_frm_login)
-        val correo : EditText = findViewById(R.id.et_correo)
-        val contrasena : EditText = findViewById(R.id.et_contrasena)
+        bd = fakebd()
 
-        val btnIniciar : Button = findViewById(R.id.btnIniciarSesion)
-        val btnRegistrarse : TextView = findViewById(R.id.tvRegistrarse)
-        val btnCntr : TextView = findViewById(R.id.tvOlvidasteContra)
+        val correo: EditText = findViewById(R.id.et_correo)
+        val contrasena: EditText = findViewById(R.id.et_contrasena)
 
-        var intent : Intent
+        val btnIniciar: Button = findViewById(R.id.btnIniciarSesion)
+        val btnRegistrarse: TextView = findViewById(R.id.tvRegistrarse)
+        val btnCntr: TextView = findViewById(R.id.tvOlvidasteContra)
+
+
+        var intent: Intent
 
         btnIniciar.setOnClickListener {
-            intent = Intent(this, frmPrincipalActivity::class.java)
+            val email = correo.text.toString()
+            val contra = contrasena.text.toString()
 
-            if (auntenticarPaciente(correo.text.toString(), contrasena.text.toString()) != null){
-                intent.putExtra("sesion", auntenticarPaciente(correo.text.toString(), contrasena.text.toString()))
+            val pacienteAutenticado =
+                autenticarPaciente(email ,contra)
+
+            if (pacienteAutenticado != null) {
+                val intent = Intent(this, frmPrincipalActivity::class.java)
+                intent.putExtra("sesion", pacienteAutenticado)
                 startActivity(intent)
+                return@setOnClickListener
             }
-
-
+            val medicoAutenticado = autenticarMedico(email,contra)
+            if (medicoAutenticado != null) {
+                val intent = Intent(this, frmPrincipalActivity::class.java)
+                intent.putExtra("sesion", medicoAutenticado)
+                startActivity(intent)
+                return@setOnClickListener
+            }
 
 
         }
@@ -47,15 +62,22 @@ class frmLoginActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
-    fun llenarBD(){
 
+
+    fun autenticarPaciente(correo: String, contrasena: String): paciente? {
+        for (p in bd.pacientes) {
+            if (p.correo == correo && p.contrasena == contrasena) {
+                return p
+            }
+        }
+        return null
     }
 
-    fun auntenticarPaciente(correo : String,contrasena : String ): paciente?{
-        var lista : ArrayList<paciente> = ArrayList<paciente>()
-        for (p in lista){
-            if (p.correo == correo && p.contrasena == contrasena)
-            return p
+    fun autenticarMedico(correo: String, contrasena: String): medico? {
+        for (m in bd.medicos) {
+            if (m.correo == correo && m.contrasena == contrasena) {
+                return m
+            }
         }
         return null
     }
