@@ -13,10 +13,8 @@
         android:theme="@style/Theme.CitasMedicas"
         tools:targetApi="31">
         <activity
-            android:name=".frmEditar"
-            android:exported="false"
-            android:label="@string/title_activity_frm_editar"
-            android:theme="@style/Theme.CitasMedicas.NoActionBar" />
+            android:name=".frmRegistro"
+            android:exported="false" />
         <activity
             android:name=".frmNuevaContrasena"
             android:exported="false" />
