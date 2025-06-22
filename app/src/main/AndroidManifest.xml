@@ -13,6 +13,12 @@
         android:theme="@style/Theme.CitasMedicas"
         tools:targetApi="31">
         <activity
+            android:name=".frmNuevaContrasena"
+            android:exported="false" />
+        <activity
+            android:name=".frmVerificaIdentidad"
+            android:exported="false" />
+        <activity
             android:name=".frmRestablecerContrasena"
             android:exported="false" />
         <activity

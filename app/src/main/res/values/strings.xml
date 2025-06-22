@@ -22,6 +22,20 @@
     <string name="labelHora">Hora:</string>
     <string name="labelMotivo">Motivo:</string>
     <string name="labelReceta">Receta:</string>
+    <string name="btnCancelarCita">Cancelar Cita</string>
     <string name="especialidad">Especialidad</string>
     <string name="filtrar">Filtrar</string>
+    <string name="verificaTuidentidad">Verifica tu identidad</string>
+    <string name="codigoVerificacion">Código de verificación</string>
+    <string name="textVerificaTuidentidad">Hemos enviado un código a tu correo. Escríbelo aquí para continuar</string>
+    <string name="botonVerificar">Verificar</string>
+    <string name="noRecibisteElcodigo">¿No recibiste el código? \nReenviar</string>
+    <string name="rebisaBandejaCorreo">Revisa tu bandeja de entrada o \ncorreo no deseado</string>
+    <string name="titulonuevaContrasena">Nueva \ncontraseña</string>
+    <string name="txtnuevaContrasena">Ingresa una nueva \ncontraseña para tu cuenta</string>
+    <string name="nuevaContrasena">Nueva contrasena</string>
+    <string name="confirContrasena">Confirmar contraseña</string>
+    <string name="cambiarContra">Cambiar contraseña</string>
+
+
 </resources>
