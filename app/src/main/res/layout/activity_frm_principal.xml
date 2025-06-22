@@ -17,17 +17,17 @@
 
         <Button
             android:id="@+id/btnMenu"
-            android:layout_width="@dimen/menu"
-            android:layout_height="@dimen/menu"
+            android:layout_width="@dimen/menu75"
+            android:layout_height="@dimen/menu75"
             android:background="@drawable/ic_launcher_foreground"
             />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/azulTexto"
-            android:textSize="40sp"
+            android:textSize="@dimen/texttitulo45"
             android:fontFamily="@font/quicksandbold"
-            android:text="@string/encabezadoMisCitas"
+            android:text="@string/misCitas"
             android:gravity="center"/>
     </LinearLayout>
 
@@ -47,7 +47,7 @@
             android:padding="1sp"
             android:text="29/05/2025"
             android:background="@color/white"
-            android:textSize="@dimen/textomenu"
+            android:textSize="@dimen/textomenu25"
             android:fontFamily="@font/quicksandsemibold"
             android:textColor="@color/black"/>
 
@@ -95,7 +95,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="01/05/2025"
-            android:textSize="@dimen/textomenu"
+            android:textSize="@dimen/textomenu25"
             android:fontFamily="@font/quicksandbold"
             android:textColor="@color/azulTexto"/>
         <TextView
@@ -103,7 +103,7 @@
             android:layout_height="wrap_content"
             android:text=" – "
             android:layout_marginHorizontal="5dp"
-            android:textSize="@dimen/textomenu"
+            android:textSize="@dimen/textomenu25"
             android:fontFamily="@font/quicksandbold"
             android:textColor="@color/azulTexto"/>
         <TextView
@@ -111,7 +111,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="01/05/2025"
-            android:textSize="@dimen/textomenu"
+            android:textSize="@dimen/textomenu25"
             android:fontFamily="@font/quicksandbold"
             android:textColor="@color/azulTexto"/>
 

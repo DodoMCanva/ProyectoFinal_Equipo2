@@ -17,7 +17,7 @@
         android:gravity="center"
         android:text="@string/verificaTuidentidad"
         android:textColor="@color/azulTexto"
-        android:textSize="@dimen/texttitulo" />
+        android:textSize="@dimen/texttitulo45" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -27,7 +27,7 @@
         android:gravity="center"
         android:text="@string/textVerificaTuidentidad"
         android:textColor="@color/azulTexto"
-        android:textSize="@dimen/textomenu" />
+        android:textSize="@dimen/textomenu25" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -35,7 +35,7 @@
         android:text="@string/codigoVerificacion"
         android:fontFamily="@font/quicksandbold"
         android:textColor="@color/azulTexto"
-        android:textSize="@dimen/textomenu"
+        android:textSize="@dimen/textomenu25"
         android:layout_marginTop="20dp"
         android:layout_gravity="center"/>
 
@@ -68,7 +68,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
         android:textColor="@color/azulTexto"
-        android:textSize="@dimen/textcampo"
+        android:textSize="@dimen/textcampo16"
         android:textAlignment="center"
         android:fontFamily="@font/quicksandbold"
         />
@@ -77,7 +77,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:text="@string/rebisaBandejaCorreo"
-    android:textSize="@dimen/textcampo"
+    android:textSize="@dimen/textcampo16"
     android:textColor="@color/azulTexto"
     android:layout_marginTop="15dp"
     android:fontFamily="@font/quicksandmedium"

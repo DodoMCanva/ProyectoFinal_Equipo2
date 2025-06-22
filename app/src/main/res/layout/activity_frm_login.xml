@@ -65,7 +65,7 @@
         android:fontFamily="@font/quicksandbold"
         android:text="Correo"
         android:textColor="@color/azulTexto"
-        android:textSize="@dimen/textomenu" />
+        android:textSize="@dimen/textomenu25" />
 
     <EditText
         android:id="@+id/et_correo"
@@ -90,7 +90,7 @@
         android:fontFamily="@font/quicksandbold"
         android:text="@string/contrasena"
         android:textColor="@color/azulTexto"
-        android:textSize="@dimen/textomenu" />
+        android:textSize="@dimen/textomenu25" />
 
     <EditText
         android:id="@+id/et_contrasena"
@@ -120,7 +120,7 @@
         android:paddingBottom="8dp"
         android:text="¿Olvidaste tu contraseña?"
         android:textColor="@color/azulTexto"
-        android:textSize="@dimen/textomenu" />
+        android:textSize="@dimen/textomenu25" />
 
     <View
         android:layout_width="280dp"

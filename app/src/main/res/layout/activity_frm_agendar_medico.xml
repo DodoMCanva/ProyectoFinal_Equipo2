@@ -17,8 +17,8 @@
 
         <Button
             android:id="@+id/tvMedico"
-            android:layout_width="@dimen/menu"
-            android:layout_height="@dimen/menu"
+            android:layout_width="@dimen/menu75"
+            android:layout_height="@dimen/menu75"
             android:background="@drawable/ic_launcher_foreground" />
 
         <TextView
@@ -28,7 +28,7 @@
             android:paddingLeft="50sp"
             android:text="Agendar"
             android:textColor="@color/azulTexto"
-            android:textSize="40sp" />
+            android:textSize="@dimen/texttitulo45" />
     </LinearLayout>
 
     <TextView
@@ -59,7 +59,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="Fecha:"
-                android:textSize="20sp"
+                android:textSize="@dimen/text18"
                 android:textColor="@color/azulTexto"
                 android:fontFamily="@font/quicksandbold"/>
 
@@ -78,7 +78,7 @@
                     android:padding="2sp"
                     android:text="29/05/2025"
                     android:background="@color/white"
-                    android:textSize="@dimen/textomenu"
+                    android:textSize="@dimen/textomenu25"
                     android:fontFamily="@font/quicksandsemibold"
                     android:textColor="@color/black"/>
 
@@ -108,7 +108,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="Hora:"
-                android:textSize="20sp"
+                android:textSize="@dimen/text18"
                 android:textColor="@color/azulTexto"
                 android:fontFamily="@font/quicksandbold" />
 
@@ -198,8 +198,9 @@
             android:id="@+id/btnConfirmar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/azulBackMensajes"
+            android:background="@drawable/btn_azul_redondeado_si"
             android:text="Confirmar"
+            android:textAllCaps="false"
             android:textColor="@color/white" />
 
         <Button
@@ -207,7 +208,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
-            android:backgroundTint="@color/rojoBtn"
+            android:background="@drawable/btn_rojo_redondear_no"
+            android:textAllCaps="false"
             android:text="Cancelar"
             android:textColor="@color/white" />
 
