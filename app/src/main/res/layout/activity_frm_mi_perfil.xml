@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/azulBackground"
+    android:gravity="center_horizontal"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginHorizontal="20dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="20sp"
+        android:gravity="center_vertical">
+
+        <Button
+            android:id="@+id/btnMenu"
+            android:layout_width="@dimen/menu"
+            android:layout_height="@dimen/menu"
+            android:background="@drawable/ic_launcher_foreground"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/azulTexto"
+            android:textSize="40sp"
+            android:fontFamily="@font/quicksandbold"
+            android:text="Perfil"
+            android:gravity="center"/>
+    </LinearLayout>
+    <ImageView
+        android:id="@+id/imagenPerfil"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="@drawable/fotoperfil"
+        />
+    <TextView
+        android:layout_marginTop="30dp"
+        android:id="@+id/perfilNombre"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        android:textColor="@color/azulTexto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Jose Fernando Quinteroz Rojas"
+        />
+    <TextView
+        android:layout_marginTop="30dp"
+        android:id="@+id/perfilNumero"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        android:textColor="@color/azulTexto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="644 158 1235"
+        />
+    <TextView
+        android:layout_marginTop="30dp"
+        android:id="@+id/perfilFechaNa"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        android:textColor="@color/azulTexto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="10 de enero del 1980"
+        />
+    <TextView
+        android:layout_marginTop="30dp"
+        android:id="@+id/perfilGenero"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        android:textColor="@color/azulTexto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hombre"
+        />
+
+    <Button
+        android:layout_marginTop="60sp"
+        android:id="@+id/btnEditarPerfil"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" Editar Perfil "
+        android:textColor="@color/white"
+        android:background="@color/azulBackMensajes"/>
+
+    <Button
+        android:layout_marginTop="20sp"
+        android:id="@+id/btnCerrarSesion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" Cerrar Sesion "
+        android:textColor="@color/white"
+        android:background="@color/rojoBtn"/>
+
+</LinearLayout>
