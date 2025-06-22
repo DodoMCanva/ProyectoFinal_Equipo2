@@ -16,7 +16,7 @@
             android:name=".frmRegistroMedicoActivity"
             android:exported="false" />
         <activity
-            android:name=".frmDetalleCita"
+            android:name=".frmDetalleCitaActivity"
             android:exported="false" />
         <activity
             android:name=".frmRegistroActivity"
