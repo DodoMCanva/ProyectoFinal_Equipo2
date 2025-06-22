@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/azulBackground">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginHorizontal="20dp"
+        android:paddingTop="30dp"
+        android:gravity="center_vertical">
+
+        <View
+            android:layout_width="25dp"
+            android:layout_height="40dp"
+            android:background="@color/azulTexto"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/azulTexto"
+            android:textSize="40sp"
+            android:fontFamily="@font/quicksandbold"
+            android:text="@string/encabezadoDetallesCita"
+            android:gravity="center"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="24dp"
+        android:paddingBottom="24dp"
+        android:layout_marginTop="15dp">
+
+        <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/labelMedico"
+        android:textSize="20sp"
+        android:fontFamily="@font/quicksandbold"
+        android:textColor="@color/azulTexto" />
+
+        <TextView
+            android:id="@+id/tvMedico"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Medico"
+            android:textSize="18sp"
+            android:textColor="@color/azulTexto"
+            android:fontFamily="@font/quicksandregular"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/labelEspecialidad"
+            android:textSize="20sp"
+            android:fontFamily="@font/quicksandbold"
+            android:textColor="@color/azulTexto" />
+
+        <TextView
+            android:id="@+id/tvEspecialidad"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Especialidad"
+            android:textSize="18sp"
+            android:textColor="@color/azulTexto"
+            android:fontFamily="@font/quicksandregular"
+            android:layout_marginBottom="16dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/labelFecha"
+                android:textSize="20sp"
+                android:fontFamily="@font/quicksandbold"
+                android:textColor="@color/azulTexto" />
+
+            <TextView
+                android:id="@+id/tvFecha"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="DD/MM/AAAA"
+                android:textSize="18sp"
+                android:textColor="@color/azulTexto"
+                android:fontFamily="@font/quicksandregular"
+                android:layout_marginStart="8dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/labelHora"
+                android:textSize="20sp"
+                android:fontFamily="@font/quicksandbold"
+                android:textColor="@color/azulTexto" />
+
+            <TextView
+                android:id="@+id/tvHora"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="00:00"
+                android:textSize="18sp"
+                android:textColor="@color/azulTexto"
+                android:fontFamily="@font/quicksandregular"
+                android:layout_marginStart="8dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/labelEstado"
+                android:textSize="20sp"
+                android:fontFamily="@font/quicksandbold"
+                android:textColor="@color/azulTexto" />
+
+            <TextView
+                android:id="@+id/tvEstado"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Estado"
+                android:textSize="18sp"
+                android:textColor="@color/azulTexto"
+                android:fontFamily="@font/quicksandregular"
+                android:layout_marginStart="8dp" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/labelMotivo"
+            android:textSize="20sp"
+            android:fontFamily="@font/quicksandbold"
+            android:textColor="@color/azulTexto" />
+
+        <TextView
+            android:id="@+id/tvMotivo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minLines="3"
+            android:maxLines="5"
+            android:scrollbars="vertical"
+            android:text="Motivo"
+            android:textSize="18sp"
+            android:textColor="@color/azulTexto"
+            android:gravity="top|start"
+            android:layout_marginBottom="24dp"
+            android:fontFamily="@font/quicksandregular" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/labelReceta"
+            android:textSize="20sp"
+            android:fontFamily="@font/quicksandbold"
+            android:textColor="@color/azulTexto"
+            android:layout_marginBottom="8dp"/>
+
+    </LinearLayout>
+
+
+
+</LinearLayout>
