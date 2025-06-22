@@ -6,6 +6,9 @@ plugins {
 android {
     namespace = "equipo.dos.citasmedicas"
     compileSdk = 35
+    buildFeatures{
+        viewBinding = true
+    }
 
     defaultConfig {
         applicationId = "equipo.dos.citasmedicas"

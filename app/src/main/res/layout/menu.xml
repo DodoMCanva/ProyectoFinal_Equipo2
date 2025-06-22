@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="350sp"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/azulBackMensajes">
@@ -21,82 +21,5 @@
         android:layout_height="100dp"
         android:background="@drawable/fotoperfil"
         />
-
-    <LinearLayout
-        android:id="@+id/citas"
-        android:layout_marginTop="15sp"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <ImageView
-            android:layout_marginLeft="50dp"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:background="@drawable/home48"
-            />
-        <TextView
-            android:layout_marginLeft="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:text="Mis Citas"
-            android:textStyle="bold"
-            android:textColor="@color/white"
-            android:textSize="@dimen/textomenu25"
-            />
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/Mutable"
-        android:layout_marginTop="15sp"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <ImageView
-            android:id="@+id/imagenMutable"
-            android:layout_marginLeft="50dp"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:background="@drawable/ic_launcher_foreground"
-            />
-        <TextView
-            android:id="@+id/textoMutable"
-            android:layout_marginLeft="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:textColor="@color/white"
-            android:text="Otra Opcion"
-            android:textStyle="bold"
-            android:textSize="@dimen/textomenu25"
-            />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/btnCerrarSesion"
-        android:layout_marginTop="350dp"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <ImageView
-            android:layout_marginLeft="50dp"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:background="@drawable/exit30"
-            />
-        <TextView
-            android:layout_marginLeft="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:text="Cerrar Sesion"
-            android:textColor="@color/white"
-            android:textSize="@dimen/textomenu25"
-            android:textStyle="bold"
-            />
-    </LinearLayout>
-
-
-
-
 
 </LinearLayout>
