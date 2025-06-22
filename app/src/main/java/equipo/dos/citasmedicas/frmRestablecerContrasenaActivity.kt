@@ -8,13 +8,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 
 class frmRestablecerContrasenaActivity : AppCompatActivity() {
-    //se va usar poco
-    //var bd : fakebd =
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -24,28 +22,29 @@ class frmRestablecerContrasenaActivity : AppCompatActivity() {
         val btnEnviarCodigo = findViewById<Button>(R.id.btnEnviarCodigo)
 
         btnEnviarCodigo.setOnClickListener {
-            val intent = Intent(this, frmVerificaIdentidadActivity::class.java)
-            if (buscarCorreo(etCorreo.text.toString())){
-                intent.putExtra("correo", etCorreo.text.toString()) // ahora sí existe
+            val correoIngresado = etCorreo.text.toString().trim()
+
+            if (correoIngresado.isEmpty()) {
+                Toast.makeText(this, "Por favor, ingresa tu correo.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            if (buscarCorreo(correoIngresado)) {
+                val intent = Intent(this, frmVerificaIdentidadActivity::class.java)
+                intent.putExtra("correo", correoIngresado)
                 startActivity(intent)
+            } else {
+                Toast.makeText(this, "El correo no está registrado.", Toast.LENGTH_SHORT).show()
             }
         }
-
     }
 
-    fun buscarCorreo( correo : String):Boolean{
-        //
-        var listaPacientes : ArrayList<paciente> = ArrayList<paciente>()
-        var listaMedicos : ArrayList<medico> = ArrayList<medico>()
-        val paciente = listaPacientes.find { it.correo == correo }
-        val medico = listaMedicos.find { it.correo == correo }
-        if (paciente != null){
-            return true
-        }
-        if (medico != null){
-            return true
-        }
-        return false
-    }
 
+    fun buscarCorreo(correo: String): Boolean {
+
+        val pacienteEncontrado = fakebd.pacientes.find { it.correo == correo }
+        val medicoEncontrado = fakebd.medicos.find { it.correo == correo }
+
+        return pacienteEncontrado != null || medicoEncontrado != null
+    }
 }

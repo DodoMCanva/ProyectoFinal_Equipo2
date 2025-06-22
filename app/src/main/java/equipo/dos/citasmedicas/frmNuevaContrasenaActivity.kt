@@ -12,11 +12,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 
 class frmNuevaContrasenaActivity : AppCompatActivity() {
-
-//mientras
-    var listaPacientes : ArrayList<paciente> = ArrayList<paciente>()
-    var listaMedicos : ArrayList<medico> = ArrayList<medico>()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -28,9 +23,15 @@ class frmNuevaContrasenaActivity : AppCompatActivity() {
 
         val correo = intent.getStringExtra("correo") ?: ""
 
+        if (correo.isEmpty()) {
+            Toast.makeText(this, "Error: Correo no proporcionado.", Toast.LENGTH_LONG).show()
+            finish()
+            return
+        }
+
         btnCambiar.setOnClickListener {
-            val nueva = etNuevaContrasena.text.toString()
-            val confirmar = etConfirmarContrasena.text.toString()
+            val nueva = etNuevaContrasena.text.toString().trim()
+            val confirmar = etConfirmarContrasena.text.toString().trim()
 
             if (nueva.isEmpty() || confirmar.isEmpty()) {
                 Toast.makeText(this, "No dejes campos vacíos", Toast.LENGTH_SHORT).show()
@@ -42,25 +43,29 @@ class frmNuevaContrasenaActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            //val paciente = fakebd.pacientes.find { it.correo == correo }
-            val paciente = listaPacientes.find { it.correo == correo }
+
+            var usuarioEncontrado = false
+
+            val paciente = fakebd.pacientes.find { it.correo == correo }
             if (paciente != null) {
                 paciente.contrasena = nueva
+                usuarioEncontrado = true
             } else {
-                //val medico = fakebd.medicos.find { it.correo == correo }
-                val medico = listaMedicos.find { it.correo == correo }
+                val medico = fakebd.medicos.find { it.correo == correo }
                 if (medico != null) {
-                    //medico.contrasena = nueva**********************************************
-                } else {
-                    Toast.makeText(this, "Correo no encontrado", Toast.LENGTH_SHORT).show()
-                    return@setOnClickListener
+                    medico.contrasena = nueva
+                    usuarioEncontrado = true
                 }
             }
 
-            Toast.makeText(this, "Contraseña actualizada", Toast.LENGTH_SHORT).show()
-            val intent = Intent(this, frmLoginActivity::class.java)
-            startActivity(intent)
-            finish()
+            if (usuarioEncontrado) {
+                Toast.makeText(this, "Contraseña actualizada exitosamente.", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, frmLoginActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+            } else {
+                Toast.makeText(this, "Error: Usuario no encontrado para el correo proporcionado.", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 }

@@ -1,6 +1,6 @@
 package Persistencia
 
-class fakebd {
+object fakebd {
     val pacientes: ArrayList<paciente> = ArrayList()
     val medicos: ArrayList<medico> = ArrayList()
 
