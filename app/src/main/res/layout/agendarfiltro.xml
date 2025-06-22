@@ -17,10 +17,10 @@
             android:layout_weight="1"
             android:paddingStart="15dp"
             android:layout_gravity="center_vertical"
-            android:text="Especialidad"
+            android:text="@string/especialidad"
             android:fontFamily="@font/quicksandbold"
             android:textColor="@color/white"
-            android:textSize="25sp"
+            android:textSize="@dimen/textomenu25"
             android:textStyle="bold"
             android:layout_margin="0dp" />
 
@@ -34,7 +34,7 @@
             android:layout_margin="0dp"
             android:padding="0dp"
             android:textSize="12sp"
-            android:backgroundTint="filtroBtn"
+            android:backgroundTint="@color/filtroBtn"
             android:layout_gravity="top" />
     </LinearLayout>
 
