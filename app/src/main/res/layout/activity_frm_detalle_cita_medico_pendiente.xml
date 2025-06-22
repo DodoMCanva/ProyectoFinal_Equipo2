@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
@@ -9,306 +9,326 @@
     android:orientation="vertical"
     tools:context=".frmDetalleCitaMedicoPendienteActivity">
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+        android:background="@drawable/fondo_barra" />
 
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:gravity="center_horizontal"
-    android:orientation="vertical"
-    android:paddingTop="24dp"
-    android:paddingBottom="24dp">
-    <TextView
+    <LinearLayout
+        android:id="@+id/fixedHeaderLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/quicksandbold"
-        android:gravity="center"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:text="@string/encabezadoDetallesCita"
-        android:textColor="@color/azulTexto"
-        android:textSize="40sp" />
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingTop="24dp"
+        android:paddingBottom="16dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/quicksandbold"
+            android:gravity="center"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="@string/encabezadoDetallesCita"
+            android:textColor="@color/azulTexto"
+            android:textSize="40sp" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="vertical"
+        android:paddingHorizontal="20dp"
+        android:paddingBottom="24dp">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
-            android:fontFamily="@font/quicksandbold"
-            android:text="@string/paciente"
-            android:textColor="@color/azulTexto"
-            android:textSize="@dimen/text18" />
+            android:orientation="horizontal"
+            android:layout_marginBottom="8dp">
 
-        <TextView
-            android:id="@+id/tvPacienteDetalleCitaMedico"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="20dp"
-            android:fontFamily="@font/quicksandmedium"
-            android:hint="Fernando Jose"
-            android:textSize="@dimen/text18" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/quicksandbold"
+                android:text="@string/paciente"
+                android:textColor="@color/azulTexto"
+                android:textSize="@dimen/text18" />
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/tvPacienteDetalleCitaMedico"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="15dp"
+                android:fontFamily="@font/quicksandmedium"
+                android:hint="Fernando Jose"
+                android:textColor="@color/azulTexto"
+                android:textSize="@dimen/text18" />
+        </LinearLayout>
 
     <ImageView
         android:id="@+id/imagenPerfilDetalleCitaMedico"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_gravity="center"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp"
+        android:layout_marginBottom="16dp"
         android:background="@drawable/fotoperfil" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/quicksandbold"
-            android:text="@string/Edad"
-            android:layout_marginLeft="20dp"
-            android:textColor="@color/azulTexto"
-            android:textSize="@dimen/text18" />
+            android:layout_marginBottom="16dp"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/tvEdadDetalleCitaMedico"
-            android:layout_width="wrap_content"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/quicksandbold"
+                android:text="@string/Edad"
+                android:textColor="@color/azulTexto"
+                android:textSize="@dimen/text18" />
+
+            <TextView
+                android:id="@+id/tvEdadDetalleCitaMedico"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:fontFamily="@font/quicksandmedium"
+                android:hint="29"
+                android:textColor="@color/azulTexto"
+                android:textSize="@dimen/text18" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="@string/Años"
+                android:textSize="@dimen/text18"
+                android:textColor="@color/azulTexto"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:fontFamily="@font/quicksandmedium"
-            android:hint="29"
-            android:textColor="@color/azulTexto"
-            android:textSize="@dimen/text18" />
+            android:layout_marginBottom="16dp"
+            android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="wrap_content"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/quicksandbold"
+                android:text="@string/genero"
+                android:textColor="@color/azulTexto"
+                android:textSize="@dimen/text18" />
+
+            <TextView
+                android:id="@+id/tvGeneroDetalleCitaMedico"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/quicksandmedium"
+                android:hint="Mujere"
+                android:textColor="@color/azulTexto"
+                android:textSize="@dimen/text18" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="12dp"
-            android:text="@string/Años"
-            android:textSize="@dimen/text18"/>
-    </LinearLayout>
+            android:layout_marginBottom="16dp"
+            android:orientation="horizontal">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/quicksandbold"
+                android:text="@string/telefono"
+                android:textColor="@color/azulTexto"
+                android:textSize="@dimen/text18" />
 
-        <TextView
-            android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/tvTelefonoDetalleCitaMedico"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/quicksandmedium"
+                android:hint="6121212332"
+                android:textColor="@color/azulTexto"
+                android:textSize="@dimen/text18" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/quicksandbold"
-            android:text="@string/genero"
-            android:layout_marginLeft="20dp"
-            android:textColor="@color/azulTexto"
-            android:textSize="@dimen/text18" />
+            android:layout_marginBottom="16dp"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/tvGeneroDetalleCitaMedico"
-            android:layout_width="0dp"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/quicksandbold"
+                android:text="@string/labelFecha"
+                android:textColor="@color/azulTexto"
+                android:textSize="@dimen/text18" />
+
+            <TextView
+                android:id="@+id/tvFechaDetalleCitaMedico"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/quicksandmedium"
+                android:hint="19/7/2025"
+                android:textColor="@color/azulTexto"
+                android:textSize="@dimen/text18" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_weight="1"
-            android:fontFamily="@font/quicksandmedium"
-            android:hint="Mujere"
-            android:textColor="@color/azulTexto"
-            android:textSize="@dimen/text18" />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:orientation="horizontal">
+            android:layout_marginBottom="16dp"
+            android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="wrap_content"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/quicksandbold"
+                android:text="@string/labelHora"
+                android:textColor="@color/azulTexto"
+                android:textSize="@dimen/text18" />
+
+            <TextView
+                android:id="@+id/tvHoraDetalleCitaMedico"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/quicksandmedium"
+                android:hint="14:00"
+                android:textColor="@color/azulTexto"
+                android:textSize="@dimen/text18" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/quicksandbold"
-            android:text="@string/telefono"
-            android:layout_marginLeft="20dp"
-            android:textColor="@color/azulTexto"
-            android:textSize="@dimen/text18" />
+            android:layout_marginBottom="16dp"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/tvTelefonoDetalleCitaMedico"
-            android:layout_width="0dp"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/quicksandbold"
+                android:text="@string/estado"
+                android:textColor="@color/azulTexto"
+                android:textSize="@dimen/text18" />
+
+            <TextView
+                android:id="@+id/tvEstadoDetalleCitaMedico"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/quicksandmedium"
+                android:hint="Pendiente"
+                android:textColor="@color/azulTexto"
+                android:textSize="@dimen/text18" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_weight="1"
-            android:fontFamily="@font/quicksandmedium"
-            android:hint="6121212332"
-            android:textColor="@color/azulTexto"
-            android:textSize="@dimen/text18" />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:orientation="horizontal">
+            android:layout_marginBottom="16dp"
+            android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="wrap_content"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/quicksandbold"
+                android:text="@string/labelMotivo"
+                android:textColor="@color/azulTexto"
+                android:textSize="@dimen/text18" />
+
+            <TextView
+                android:id="@+id/tvMotivoDetalleCitaMedico"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:hint="Motivo de la consulta"
+                android:fontFamily="@font/quicksandmedium"
+                android:textColor="@color/azulTexto"
+                android:textSize="@dimen/text18" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/quicksandbold"
-            android:text="@string/genero"
-            android:layout_marginLeft="20dp"
-            android:textColor="@color/azulTexto"
-            android:textSize="@dimen/text18" />
-
-        <TextView
-            android:id="@+id/tvFechaDetalleCitaMedico"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_weight="1"
-            android:fontFamily="@font/quicksandmedium"
-            android:hint="19/7/2025"
-            android:textColor="@color/azulTexto"
-            android:textSize="@dimen/text18" />
-    </LinearLayout> <LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="16dp"
-    android:orientation="horizontal">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/quicksandbold"
-        android:text="@string/labelHora"
-        android:layout_marginLeft="20dp"
-        android:textColor="@color/azulTexto"
-        android:textSize="@dimen/text18" />
-
-    <TextView
-        android:id="@+id/tvHoraDetalleCitaMedico"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_weight="1"
-        android:fontFamily="@font/quicksandmedium"
-        android:hint="Mujere"
-        android:textColor="@color/azulTexto"
-        android:textSize="@dimen/text18" />
-</LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/quicksandbold"
-            android:text="@string/estado"
-            android:layout_marginLeft="20dp"
-            android:textColor="@color/azulTexto"
-            android:textSize="@dimen/text18" />
-
-        <TextView
-            android:id="@+id/tvEstadoDetalleCitaMedico"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_weight="1"
-            android:fontFamily="@font/quicksandmedium"
-            android:hint="Pendiente"
-            android:textColor="@color/azulTexto"
-            android:textSize="@dimen/text18" />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/quicksandbold"
-            android:text="@string/labelMotivo"
-            android:layout_marginLeft="20dp"
-            android:textColor="@color/azulTexto"
-            android:textSize="@dimen/text18" />
-
-        <TextView
-            android:id="@+id/tvMotivoDetalleCitaMedico"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_weight="1"
-            android:hint="Motivo de la consulta"
-            android:fontFamily="@font/quicksandmedium"
-            android:textColor="@color/azulTexto"
-            android:textSize="@dimen/text18" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:orientation="vertical">
+            android:layout_marginBottom="24dp"
+            android:orientation="vertical"
+            android:gravity="center_horizontal">
 
         <Button
             android:id="@+id/btnFinalizarDetallesCitaMedico"
             android:layout_width="150dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:text="@string/finalizaCita"
             android:fontFamily="@font/quicksandbold"
             android:background="@drawable/btn_azul_redondeado_si"
             android:textColor="@color/white"
             android:textAllCaps="false"
-            android:layout_gravity="center"
-            />
+            android:paddingVertical="12dp"
+            android:layout_marginBottom="10dp" />
+
         <Button
             android:id="@+id/btnReprogramarDetallesMedico"
             android:layout_width="150dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:text="@string/reprogramarCita"
             android:fontFamily="@font/quicksandbold"
             android:textAllCaps="false"
-            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:textColor="@color/white"
             android:background="@drawable/btn_amarillo_redondeado"
-            android:layout_gravity="center"
-            />
+            android:paddingVertical="12dp" />
 
         <Button
             android:id="@+id/btnCancelarDetallesMedico"
             android:layout_width="150dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
+            android:layout_height="wrap_content"
             android:fontFamily="@font/quicksandbold"
-            android:layout_marginTop="10dp"
             android:background="@drawable/btn_rojo_redondear_no"
             android:text="@string/cancelarCita"
             android:textAllCaps="false"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:paddingVertical="12dp" />
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/labelReceta"
-            android:textSize="20sp"
-            android:fontFamily="@font/quicksandbold"
-            android:textColor="@color/azulTexto"
-            android:layout_marginBottom="8dp"/>
+            android:layout_marginBottom="16dp"
+            android:orientation="vertical"
+            android:gravity="center_horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/labelReceta"
+                android:textSize="20sp"
+                android:fontFamily="@font/quicksandbold"
+                android:textColor="@color/azulTexto"
+                android:layout_marginBottom="8dp"/>
 
         <ImageView
             android:id="@+id/ivRecetaDetallesCitaMedico"
@@ -317,11 +337,9 @@
             android:layout_gravity="center"
             android:src="@drawable/receta_detalle_cita_medico"
             />
-
-
+        </LinearLayout>
 
     </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>
-
-</ScrollView>
