@@ -3,6 +3,7 @@
     android:layout_width="350sp"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/azulBackMensajes"
     >
     <Button
         android:id="@+id/btnMenu"
@@ -32,7 +33,7 @@
             android:layout_marginLeft="50dp"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:background="@drawable/ic_launcher_foreground"
+            android:background="@drawable/home48"
             />
         <TextView
             android:layout_marginLeft="20dp"
@@ -40,6 +41,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:text="Mis Citas"
+            android:textStyle="bold"
+            android:textColor="@color/white"
             android:textSize="@dimen/textomenu"
             />
     </LinearLayout>
@@ -62,7 +65,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:textColor="@color/white"
             android:text="Otra Opcion"
+            android:textStyle="bold"
             android:textSize="@dimen/textomenu"
             />
     </LinearLayout>
@@ -77,7 +82,7 @@
             android:layout_marginLeft="50dp"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:background="@drawable/ic_launcher_foreground"
+            android:background="@drawable/exit30"
             />
         <TextView
             android:layout_marginLeft="20dp"
@@ -85,7 +90,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:text="Cerrar Sesion"
+            android:textColor="@color/white"
             android:textSize="@dimen/textomenu"
+            android:textStyle="bold"
             />
     </LinearLayout>
 
