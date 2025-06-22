@@ -1,183 +1,190 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/azulBackground">
+    android:background="@color/azulBackground"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_lef="20dp"
-        android:paddingTop="10dp"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingTop="10dp">
 
         <Button
             android:id="@+id/lblMedico"
             android:layout_width="@dimen/menu"
             android:layout_height="@dimen/menu"
-            android:background="@drawable/ic_launcher_foreground"
-            />
+            android:background="@drawable/ic_launcher_foreground" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/azulTexto"
-            android:textSize="40sp"
             android:fontFamily="@font/quicksandbold"
+            android:paddingLeft="50sp"
             android:text="Agendar"
-            android:paddingLeft="50sp"/>
+            android:textColor="@color/azulTexto"
+            android:textSize="40sp" />
     </LinearLayout>
+
     <TextView
         android:id="@+id/lblAgendarNombre"
-        android:textAlignment="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Emmanuel Quiroz Soto"
+        android:textAlignment="center"
         android:textSize="30sp"
 
         />
+
     <LinearLayout
-        android:paddingTop="20sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20sp"
         android:orientation="horizontal"
-        android:layout_marginHorizontal="20sp">
+        android:paddingTop="20sp">
+
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            >
+            android:orientation="vertical">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:text="Fecha:"
                 android:textSize="20sp"
-                android:textStyle="bold"
-                android:layout_gravity="center"/>
+                android:textStyle="bold" />
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                >
+                android:orientation="horizontal">
+
                 <TextView
                     android:id="@+id/tvAgendarFecha"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="29/05/2025"
-                    android:textSize="20sp"/>
+                    android:textSize="20sp" />
 
                 <Button
                     android:id="@+id/btnCalendario"
                     android:layout_width="50dp"
-                    android:layout_height="50dp"/>
+                    android:layout_height="50dp" />
             </LinearLayout>
 
         </LinearLayout>
+
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="40sp"
-            >
+            android:orientation="vertical"
+            android:paddingLeft="40sp">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:text="Hora:"
-                android:textStyle="bold"
                 android:textSize="20sp"
-                android:layout_gravity="center"/>
+                android:textStyle="bold" />
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                >
+                android:orientation="horizontal">
+
                 <Spinner
                     android:id="@+id/spHora"
-                    android:layout_marginTop="10sp"
-                    android:orientation="vertical"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="40sp"
-                    />
+                    android:layout_marginTop="10sp"
+                    android:orientation="vertical"
+                    android:paddingLeft="40sp" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
+
     <LinearLayout
-        android:paddingTop="20sp"
-        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20sp">
+        android:layout_marginHorizontal="20sp"
+        android:orientation="horizontal"
+        android:paddingTop="20sp">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="25dp"
             android:text="Monto:"
-            android:textStyle="bold"
-            />
+            android:textSize="25dp"
+            android:textStyle="bold" />
+
         <TextView
             android:id="@+id/tvMonto"
-            android:layout_marginLeft="10sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="25dp"
+            android:layout_marginLeft="10sp"
             android:text="800.00"
-            />
+            android:textSize="25dp" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15sp"
         android:layout_marginHorizontal="20sp"
+        android:layout_marginTop="15sp"
         android:orientation="vertical">
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Motivo"
-            android:textStyle="bold"
-            android:textSize="25sp"
             android:textAlignment="center"
-            />
+            android:textSize="25sp"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/txtMotivo"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:hint="Escribe tu mensaje aquí..."
+            android:background="@android:drawable/edit_text"
             android:gravity="top|start"
+            android:hint="Escribe tu mensaje aquí..."
             android:inputType="textMultiLine"
             android:lines="6"
-            android:scrollbars="vertical"
             android:overScrollMode="always"
-            android:background="@android:drawable/edit_text"
             android:padding="12dp"
-            android:textSize="16sp"
-            />
+            android:scrollbars="vertical"
+            android:textSize="16sp" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:layout_marginHorizontal="20sp"
         android:layout_marginTop="20sp"
-        android:layout_marginHorizontal="20sp">
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/btnConfirmar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/azulBackMensajes"
             android:text="Confirmar"
-            android:textColor="@color/white"
-            android:backgroundTint="@color/azulBackMensajes"/>
+            android:textColor="@color/white" />
+
         <Button
             android:id="@+id/btnCancelar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cancelar"
-            android:textColor="@color/white"
             android:layout_marginLeft="160sp"
-            android:backgroundTint="@color/rojoBtn"/>
+            android:backgroundTint="@color/rojoBtn"
+            android:text="Cancelar"
+            android:textColor="@color/white" />
 
     </LinearLayout>
 
