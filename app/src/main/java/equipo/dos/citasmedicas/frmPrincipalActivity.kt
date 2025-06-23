@@ -54,11 +54,11 @@ class frmPrincipalActivity : AppCompatActivity() {
         nav.setNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.btnMenuMisCitas -> {
-                    Toast.makeText(this, "Mis citas", Toast.LENGTH_SHORT).show()
+                    var inte : Intent = Intent(this, frmPrincipalActivity::class.java)
                     drawerLayout.closeDrawer(GravityCompat.START)
+                    startActivity(inte)
                     true
                 }
-
                 R.id.btnMenuOpcion -> {
                     var inte : Intent
                     if (tipoSesion == "paciente") {
@@ -70,10 +70,10 @@ class frmPrincipalActivity : AppCompatActivity() {
                     startActivity(inte)
                     true
                 }
-
                 R.id.btnMenuCerrarSesion -> {
-                    Toast.makeText(this, "Sesión cerrada", Toast.LENGTH_SHORT).show()
+                    var inte : Intent = Intent(this, frmLoginActivity::class.java)
                     drawerLayout.closeDrawer(GravityCompat.START)
+                    startActivity(inte)
                     true
                 }
 
