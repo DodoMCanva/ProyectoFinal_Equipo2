@@ -5,13 +5,17 @@ import Persistencia.AdapterMedico
 import Persistencia.fakebd
 import Persistencia.medico
 import Persistencia.paciente
+import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
 import android.preference.PreferenceActivity
 import android.view.View
 import android.widget.Button
+import android.widget.DatePicker
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.ListView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -19,6 +23,7 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import equipo.dos.citasmedicas.databinding.ActivityFrmPrincipalBinding
+import java.util.Calendar
 
 class frmPrincipalActivity : AppCompatActivity() {
 
@@ -31,8 +36,6 @@ class frmPrincipalActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_frm_principal)
-
-
 
         val sesion = intent.getSerializableExtra("sesion")
         val tipoSesion: String = when (sesion) {
@@ -106,6 +109,23 @@ class frmPrincipalActivity : AppCompatActivity() {
             drawerLayout.closeDrawer(GravityCompat.START)
             startActivity(inte)
             true
+        }
+        //calendario
+        val btnCalendario = findViewById<ImageButton>(R.id.btnCalendarioConsultaCitas)
+        val tvFecha = findViewById<TextView>(R.id.tvConsultaFecha)
+
+        btnCalendario.setOnClickListener {
+            val calendario = Calendar.getInstance()
+            val anio = calendario.get(Calendar.YEAR)
+            val mes = calendario.get(Calendar.MONTH)
+            val dia = calendario.get(Calendar.DAY_OF_MONTH)
+
+            val datePicker = DatePickerDialog(this, { _: DatePicker, year: Int, month: Int, dayOfMonth: Int ->
+                val fechaSeleccionada = String.format("%02d/%02d/%04d", dayOfMonth, month + 1, year)
+                tvFecha.text = fechaSeleccionada
+            }, anio, mes, dia)
+
+            datePicker.show()
         }
 
         btnMenuCerrar.setOnClickListener{

@@ -16,6 +16,9 @@
             android:name=".frmDetalleCitaMedicoPendienteActivity"
             android:exported="false" />
         <activity
+            android:name=".frmEditarActivity"
+            android:exported="false" />
+        <activity
             android:name=".frmAgendarActivity"
             android:exported="false" />
         <activity

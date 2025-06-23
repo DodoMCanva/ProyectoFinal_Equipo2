@@ -5,9 +5,12 @@ import Persistencia.paciente
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -28,8 +31,48 @@ class frmDetalleCitaMedicoPendienteActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-
         setContentView(binding.root)
+
+
+        val campoNombre: TextView = findViewById(R.id.tvPacienteDetalleCitaMedico)
+        val campoEdad: TextView = findViewById(R.id.tvEdadDetalleCitaMedico)
+        val campoGenero: TextView = findViewById(R.id.tvGeneroDetalleCitaMedico)
+        val campoTelefono: TextView = findViewById(R.id.tvTelefonoDetalleCitaMedico)
+        val campoFecha: TextView = findViewById(R.id.tvFechaDetalleCitaMedico)
+        val campoHora: TextView = findViewById(R.id.tvHoraDetalleCitaMedico)
+        val campoEstado: TextView = findViewById(R.id.tvEstadoDetalleCitaMedico)
+        val campoMotivo: TextView = findViewById(R.id.tvMotivoDetalleCitaMedico)
+
+        val seccionReceta: LinearLayout = findViewById(R.id.llSeccionRecteaDetalleCita)
+        val seccionBotones: LinearLayout = findViewById(R.id.llSeccionOpcionesDetallesCita)
+
+        var estado = intent.getStringExtra("estado")
+        when (estado) {
+
+            "Pendiente" -> {
+                seccionReceta.visibility = View.INVISIBLE
+            }
+
+            "Completada" -> {
+                seccionBotones.visibility = View.INVISIBLE
+            }
+
+            "Cancelada" -> {
+                seccionBotones.visibility = View.INVISIBLE
+                seccionReceta.visibility = View.INVISIBLE
+            }
+
+            else -> Toast.makeText(this, "Se mando", Toast.LENGTH_SHORT).show()
+        }
+
+        campoNombre.setText(intent.getStringExtra("nombre"))
+        campoEdad.setText(intent.getStringExtra("edad"))
+        campoGenero.setText(intent.getStringExtra("genero"))
+        campoTelefono.setText(intent.getStringExtra("telefono"))
+        campoFecha.setText(intent.getStringExtra("fecha"))
+        campoHora.setText(intent.getStringExtra("hora"))
+        campoEstado.setText(intent.getStringExtra("estado"))
+        campoMotivo.setText(intent.getStringExtra("motivo"))
 
         val sesion = intent.getSerializableExtra("sesion")
         val tipoSesion: String = when (sesion) {

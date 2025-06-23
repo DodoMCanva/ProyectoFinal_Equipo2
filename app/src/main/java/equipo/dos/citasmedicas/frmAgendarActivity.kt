@@ -4,8 +4,10 @@ import Persistencia.AdapterMedico
 import Persistencia.fakebd
 import Persistencia.medico
 import Persistencia.paciente
+import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.ListView
@@ -27,8 +29,6 @@ class frmAgendarActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_frm_agendar)
-
-
 
 
         val sesion = intent.getSerializableExtra("sesion")
@@ -109,6 +109,8 @@ class frmAgendarActivity : AppCompatActivity() {
         adapter = AdapterMedico(this, fakebd.medicos)
         var listaMedicos: ListView= findViewById(R.id.lvMedicos)
         listaMedicos.adapter=adapter
+
+
 
     }
 }

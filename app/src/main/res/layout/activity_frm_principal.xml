@@ -58,6 +58,7 @@
                 android:text="29/05/2025"
                 android:background="@color/white"
                 android:textSize="@dimen/textomenu25"
+                android:enabled="false"
                 android:fontFamily="@font/quicksandsemibold"
                 android:textColor="@color/black" />
 
