@@ -60,13 +60,14 @@ class frmPrincipalActivity : AppCompatActivity() {
                 }
 
                 R.id.btnMenuOpcion -> {
-                    val intent = if (tipoSesion == "paciente") {
-                        Intent(this, frmAgendarActivity::class.java)
+                    var inte : Intent
+                    if (tipoSesion == "paciente") {
+                        inte = Intent(this, frmAgendarActivity::class.java)
                     } else {
-                        Intent(this, AjustesConsultaActivity::class.java)
+                        inte = Intent(this, AjustesConsultaActivity::class.java)
                     }
-                    startActivity(intent)
                     drawerLayout.closeDrawer(GravityCompat.START)
+                    startActivity(inte)
                     true
                 }
 
