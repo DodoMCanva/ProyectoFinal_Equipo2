@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/drawer_miscitas"
+    android:id="@+id/drawer_detalle_cita_medico"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".frmDetalleCitaMedicoPendienteActivity">
@@ -24,10 +24,16 @@
         android:id="@+id/fixedHeaderLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
         android:paddingTop="24dp"
         android:paddingBottom="16dp">
+
+        <Button
+            android:id="@+id/btnMenu"
+            android:layout_width="@dimen/menu75"
+            android:layout_height="@dimen/menu75"
+            android:background="@drawable/ic_launcher_foreground" />
 
         <TextView
             android:layout_width="match_parent"
