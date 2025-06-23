@@ -85,6 +85,7 @@ class frmLoginActivity : AppCompatActivity() {
     fun autenticarMedico(correo: String, contrasena: String): medico? {
         for (m in fakebd.medicos) {
             if (m.correo == correo && m.contrasena == contrasena) {
+                sesion.asignarSesion(m)
                 return m
             }
         }
