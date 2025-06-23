@@ -106,7 +106,8 @@
                 android:minHeight="48dp"
                 android:text="29/05/2025"
                 android:textSize="@dimen/text18"
-                android:gravity="center_vertical"/>
+                android:gravity="center_vertical"
+                android:enabled="false"/>
 
             <ImageButton
                 android:id="@+id/btnCalendarioRegistroMedico"
@@ -184,6 +185,7 @@
                 android:inputType="phone"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
+                android:maxLength="10"
                 android:textColor="@color/azulTexto"
                 android:textSize="@dimen/text18" />
 
@@ -288,6 +290,28 @@
                 android:paddingEnd="16dp"
                 android:textColor="@color/azulTexto"
                 android:textSize="@dimen/text18" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/quicksandbold"
+                android:text="@string/estado"
+                android:textColor="@color/azulTexto"
+                android:textSize="@dimen/text18" />
+
+            <EditText
+                android:id="@+id/etCiudadMedico"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="48dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/white"
+                android:inputType="text"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:textColor="@color/azulTexto"
+                android:textSize="@dimen/text18" />
+
 
             <TextView
                 android:layout_width="match_parent"

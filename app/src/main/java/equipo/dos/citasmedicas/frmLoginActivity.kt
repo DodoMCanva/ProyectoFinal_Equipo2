@@ -3,6 +3,7 @@ package equipo.dos.citasmedicas
 import Persistencia.fakebd
 import Persistencia.medico
 import Persistencia.paciente
+import Persistencia.sesion
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
@@ -74,6 +75,7 @@ class frmLoginActivity : AppCompatActivity() {
     fun autenticarPaciente(correo: String, contrasena: String): paciente? {
         for (p in fakebd.pacientes) {
             if (p.correo == correo && p.contrasena == contrasena) {
+                sesion.setSesion(p)
                 return p
             }
         }
