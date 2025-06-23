@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:text="@string/dialogConfirmarTitulo"
         android:textColor="@color/white"
-        android:textSize="@dimen/texttitulo45"
+        android:textSize="@dimen/titulo_dialogo"
         android:fontFamily="@font/quicksandbold"
         android:gravity="center_horizontal"
         android:layout_marginBottom="16dp"/>
@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:text="@string/dialogConfirmacionTexto"
         android:textColor="@color/white"
-        android:textSize="@dimen/textomenu25"
+        android:textSize="@dimen/textcampo16"
         android:fontFamily="@font/quicksandregular"
         android:gravity="center_horizontal"
         android:layout_marginBottom="40dp"/>
