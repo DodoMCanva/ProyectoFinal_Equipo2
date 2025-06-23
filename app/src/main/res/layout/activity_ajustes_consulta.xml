@@ -14,10 +14,9 @@
         android:layout_height="match_parent"
         android:background="@color/azulBackground">
 
-
     <View
         android:layout_width="match_parent"
-        android:layout_height="24dp"
+        android:layout_height="35dp"
         android:background="@drawable/fondo_barra" />
 
     <LinearLayout
@@ -25,8 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:orientation="horizontal"
-        android:gravity="top|center_vertical"
-        >
+        android:gravity="top|center_vertical">
 
         <Button
             android:id="@+id/btnMenu"
@@ -81,7 +79,7 @@
                     android:paddingRight="15dp"
                     android:text="@string/lunes"
                     android:textColor="@color/azulTexto"
-                    android:textSize="@dimen/textomenu25" />
+                    android:textSize="@dimen/text22" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -102,7 +100,7 @@
                             android:fontFamily="@font/quicksandsemibold"
                             android:text="@string/de"
                             android:textColor="@color/azulTexto"
-                            android:textSize="@dimen/textomenu25" />
+                            android:textSize="@dimen/text22" />
 
                         <EditText
                             android:id="@+id/etLunesDeManana"
@@ -121,7 +119,7 @@
                             android:paddingHorizontal="10dp"
                             android:text="09:00"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/textomenu25" />
+                            android:textSize="@dimen/text22" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -131,7 +129,7 @@
                             android:fontFamily="@font/quicksandsemibold"
                             android:text="@string/a"
                             android:textColor="@color/azulTexto"
-                            android:textSize="@dimen/textomenu25" />
+                            android:textSize="@dimen/text22" />
 
                         <EditText
                             android:id="@+id/etLunesAManana"
@@ -150,7 +148,7 @@
                             android:paddingHorizontal="10dp"
                             android:text="13:00"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/textomenu25" />
+                            android:textSize="@dimen/text22" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -167,7 +165,7 @@
                             android:fontFamily="@font/quicksandsemibold"
                             android:text="@string/de"
                             android:textColor="@color/azulTexto"
-                            android:textSize="@dimen/textomenu25" />
+                            android:textSize="@dimen/text22" />
 
                         <EditText
                             android:id="@+id/etLunesDeTarde"
@@ -185,7 +183,7 @@
                             android:paddingHorizontal="10dp"
                             android:text="15:00"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/textomenu25" />
+                            android:textSize="@dimen/text22" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -196,7 +194,7 @@
                             android:fontFamily="@font/quicksandsemibold"
                             android:text="@string/a"
                             android:textColor="@color/azulTexto"
-                            android:textSize="@dimen/textomenu25" />
+                            android:textSize="@dimen/text22" />
 
                         <EditText
                             android:id="@+id/etLunesATarde"
@@ -214,13 +212,9 @@
                             android:paddingHorizontal="10dp"
                             android:text="18:00"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/textomenu25" />
+                            android:textSize="@dimen/text22" />
                     </LinearLayout>
-
-
                 </LinearLayout>
-
-
             </LinearLayout>
 
             <LinearLayout
@@ -240,7 +234,7 @@
                     android:paddingRight="10dp"
                     android:text="@string/martes"
                     android:textColor="@color/azulTexto"
-                    android:textSize="@dimen/textomenu25" />
+                    android:textSize="@dimen/text22" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -261,7 +255,7 @@
                             android:fontFamily="@font/quicksandsemibold"
                             android:text="@string/de"
                             android:textColor="@color/azulTexto"
-                            android:textSize="@dimen/textomenu25" />
+                            android:textSize="@dimen/text22" />
 
                         <EditText
                             android:id="@+id/etMartesDeManana"
@@ -280,7 +274,7 @@
                             android:paddingHorizontal="10dp"
                             android:text="09:00"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/textomenu25" />
+                            android:textSize="@dimen/text22" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -290,7 +284,7 @@
                             android:fontFamily="@font/quicksandsemibold"
                             android:text="@string/a"
                             android:textColor="@color/azulTexto"
-                            android:textSize="@dimen/textomenu25" />
+                            android:textSize="@dimen/text22" />
 
                         <EditText
                             android:id="@+id/etMartesAManana"
@@ -309,7 +303,7 @@
                             android:paddingHorizontal="10dp"
                             android:text="13:00"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/textomenu25" />
+                            android:textSize="@dimen/text22" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -326,7 +320,7 @@
                             android:fontFamily="@font/quicksandsemibold"
                             android:text="@string/de"
                             android:textColor="@color/azulTexto"
-                            android:textSize="@dimen/textomenu25" />
+                            android:textSize="@dimen/text22" />
 
                         <EditText
                             android:id="@+id/etMartesDeTarde"
@@ -344,7 +338,7 @@
                             android:paddingHorizontal="10dp"
                             android:text="15:00"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/textomenu25" />
+                            android:textSize="@dimen/text22" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -355,7 +349,7 @@
                             android:fontFamily="@font/quicksandsemibold"
                             android:text="@string/a"
                             android:textColor="@color/azulTexto"
-                            android:textSize="@dimen/textomenu25" />
+                            android:textSize="@dimen/text22" />
 
                         <EditText
                             android:id="@+id/etMartesATarde"
@@ -373,13 +367,9 @@
                             android:paddingHorizontal="10dp"
                             android:text="18:00"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/textomenu25" />
+                            android:textSize="@dimen/text22" />
                     </LinearLayout>
-
-
                 </LinearLayout>
-
-
             </LinearLayout>
 
             <LinearLayout
@@ -399,7 +389,7 @@
                     android:paddingRight="15dp"
                     android:text="@string/miercoles"
                     android:textColor="@color/azulTexto"
-                    android:textSize="@dimen/textomenu25" />
+                    android:textSize="@dimen/text22" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -420,7 +410,7 @@
                             android:fontFamily="@font/quicksandsemibold"
                             android:text="@string/de"
                             android:textColor="@color/azulTexto"
-                            android:textSize="@dimen/textomenu25" />
+                            android:textSize="@dimen/text22" />
 
                         <EditText
                             android:id="@+id/etMiercolesDeManana"
@@ -439,7 +429,7 @@
                             android:paddingHorizontal="10dp"
                             android:text="09:00"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/textomenu25" />
+                            android:textSize="@dimen/text22" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -449,7 +439,7 @@
                             android:fontFamily="@font/quicksandsemibold"
                             android:text="@string/a"
                             android:textColor="@color/azulTexto"
-                            android:textSize="@dimen/textomenu25" />
+                            android:textSize="@dimen/text22" />
 
                         <EditText
                             android:id="@+id/etMiercolesAManana"
@@ -468,7 +458,7 @@
                             android:paddingHorizontal="10dp"
                             android:text="13:00"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/textomenu25" />
+                            android:textSize="@dimen/text22" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -485,7 +475,7 @@
                             android:fontFamily="@font/quicksandsemibold"
                             android:text="@string/de"
                             android:textColor="@color/azulTexto"
-                            android:textSize="@dimen/textomenu25" />
+                            android:textSize="@dimen/text22" />
 
                         <EditText
                             android:id="@+id/etMiercolesDeTarde"
@@ -503,7 +493,7 @@
                             android:paddingHorizontal="10dp"
                             android:text="15:00"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/textomenu25" />
+                            android:textSize="@dimen/text22" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -514,7 +504,7 @@
                             android:fontFamily="@font/quicksandsemibold"
                             android:text="@string/a"
                             android:textColor="@color/azulTexto"
-                            android:textSize="@dimen/textomenu25" />
+                            android:textSize="@dimen/text22" />
 
                         <EditText
                             android:id="@+id/etMiercolesATarde"
@@ -532,13 +522,9 @@
                             android:paddingHorizontal="10dp"
                             android:text="18:00"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/textomenu25" />
+                            android:textSize="@dimen/text22" />
                     </LinearLayout>
-
-
                 </LinearLayout>
-
-
             </LinearLayout>
 
             <LinearLayout
@@ -558,7 +544,7 @@
                     android:paddingRight="15dp"
                     android:text="@string/jueves"
                     android:textColor="@color/azulTexto"
-                    android:textSize="@dimen/textomenu25" />
+                    android:textSize="@dimen/text22" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -579,7 +565,7 @@
                             android:fontFamily="@font/quicksandsemibold"
                             android:text="@string/de"
                             android:textColor="@color/azulTexto"
-                            android:textSize="@dimen/textomenu25" />
+                            android:textSize="@dimen/text22" />
 
                         <EditText
                             android:id="@+id/etJuevesDeManana"
@@ -598,7 +584,7 @@
                             android:paddingHorizontal="10dp"
                             android:text="09:00"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/textomenu25" />
+                            android:textSize="@dimen/text22" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -627,7 +613,7 @@
                             android:paddingHorizontal="10dp"
                             android:text="13:00"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/textomenu25" />
+                            android:textSize="@dimen/text22" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -644,7 +630,7 @@
                             android:fontFamily="@font/quicksandsemibold"
                             android:text="@string/de"
                             android:textColor="@color/azulTexto"
-                            android:textSize="@dimen/textomenu25" />
+                            android:textSize="@dimen/text22" />
 
                         <EditText
                             android:id="@+id/etJuevesDeTarde"
@@ -662,7 +648,7 @@
                             android:paddingHorizontal="10dp"
                             android:text="15:00"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/textomenu25" />
+                            android:textSize="@dimen/text22" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -673,7 +659,7 @@
                             android:fontFamily="@font/quicksandsemibold"
                             android:text="@string/a"
                             android:textColor="@color/azulTexto"
-                            android:textSize="@dimen/textomenu25" />
+                            android:textSize="@dimen/text22" />
 
                         <EditText
                             android:id="@+id/etJuevesATarde"
@@ -691,13 +677,9 @@
                             android:paddingHorizontal="10dp"
                             android:text="18:00"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/textomenu25" />
+                            android:textSize="@dimen/text22" />
                     </LinearLayout>
-
-
                 </LinearLayout>
-
-
             </LinearLayout>
 
             <LinearLayout
@@ -717,7 +699,7 @@
                     android:paddingRight="15dp"
                     android:text="@string/viernes"
                     android:textColor="@color/azulTexto"
-                    android:textSize="@dimen/textomenu25" />
+                    android:textSize="@dimen/text22" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -738,7 +720,7 @@
                             android:fontFamily="@font/quicksandsemibold"
                             android:text="@string/de"
                             android:textColor="@color/azulTexto"
-                            android:textSize="@dimen/textomenu25" />
+                            android:textSize="@dimen/text22" />
 
                         <EditText
                             android:id="@+id/etViernesDeManana"
@@ -757,7 +739,7 @@
                             android:paddingHorizontal="10dp"
                             android:text="09:00"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/textomenu25" />
+                            android:textSize="@dimen/text22" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -767,7 +749,7 @@
                             android:fontFamily="@font/quicksandsemibold"
                             android:text="@string/a"
                             android:textColor="@color/azulTexto"
-                            android:textSize="@dimen/textomenu25" />
+                            android:textSize="@dimen/text22" />
 
                         <EditText
                             android:id="@+id/etViernesAManana"
@@ -786,7 +768,7 @@
                             android:paddingHorizontal="10dp"
                             android:text="13:00"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/textomenu25" />
+                            android:textSize="@dimen/text22" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -803,7 +785,7 @@
                             android:fontFamily="@font/quicksandsemibold"
                             android:text="@string/de"
                             android:textColor="@color/azulTexto"
-                            android:textSize="@dimen/textomenu25" />
+                            android:textSize="@dimen/text22" />
 
                         <EditText
                             android:id="@+id/etViernesDeTarde"
@@ -821,7 +803,7 @@
                             android:paddingHorizontal="10dp"
                             android:text="15:00"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/textomenu25" />
+                            android:textSize="@dimen/text22" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -832,7 +814,7 @@
                             android:fontFamily="@font/quicksandsemibold"
                             android:text="@string/a"
                             android:textColor="@color/azulTexto"
-                            android:textSize="@dimen/textomenu25" />
+                            android:textSize="@dimen/text22" />
 
                         <EditText
                             android:id="@+id/etViernesATarde"
@@ -850,13 +832,9 @@
                             android:paddingHorizontal="10dp"
                             android:text="18:00"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/textomenu25" />
+                            android:textSize="@dimen/text22" />
                     </LinearLayout>
-
-
                 </LinearLayout>
-
-
             </LinearLayout>
 
             <LinearLayout
@@ -876,7 +854,7 @@
                     android:paddingRight="14dp"
                     android:text="@string/sabado"
                     android:textColor="@color/azulTexto"
-                    android:textSize="@dimen/textomenu25" />
+                    android:textSize="@dimen/text22" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -897,7 +875,7 @@
                             android:fontFamily="@font/quicksandsemibold"
                             android:text="@string/de"
                             android:textColor="@color/azulTexto"
-                            android:textSize="@dimen/textomenu25" />
+                            android:textSize="@dimen/text22" />
 
                         <EditText
                             android:id="@+id/etSabadoDeManana"
@@ -916,7 +894,7 @@
                             android:paddingHorizontal="10dp"
                             android:text="09:00"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/textomenu25" />
+                            android:textSize="@dimen/text22" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -926,7 +904,7 @@
                             android:fontFamily="@font/quicksandsemibold"
                             android:text="@string/a"
                             android:textColor="@color/azulTexto"
-                            android:textSize="@dimen/textomenu25" />
+                            android:textSize="@dimen/text22" />
 
                         <EditText
                             android:id="@+id/etSabadoAManana"
@@ -945,7 +923,7 @@
                             android:paddingHorizontal="10dp"
                             android:text="13:00"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/textomenu25" />
+                            android:textSize="@dimen/text22" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -962,7 +940,7 @@
                             android:fontFamily="@font/quicksandsemibold"
                             android:text="@string/de"
                             android:textColor="@color/azulTexto"
-                            android:textSize="@dimen/textomenu25" />
+                            android:textSize="@dimen/text22" />
 
                         <EditText
                             android:id="@+id/etSabadoDeTarde"
@@ -980,7 +958,7 @@
                             android:paddingHorizontal="10dp"
                             android:text="15:00"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/textomenu25" />
+                            android:textSize="@dimen/text22" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -991,7 +969,7 @@
                             android:fontFamily="@font/quicksandsemibold"
                             android:text="@string/a"
                             android:textColor="@color/azulTexto"
-                            android:textSize="@dimen/textomenu25" />
+                            android:textSize="@dimen/text22" />
 
                         <EditText
                             android:id="@+id/etSabadoATarde"
@@ -1009,13 +987,9 @@
                             android:paddingHorizontal="10dp"
                             android:text="18:00"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/textomenu25" />
+                            android:textSize="@dimen/text22" />
                     </LinearLayout>
-
-
                 </LinearLayout>
-
-
             </LinearLayout>
 
             <LinearLayout
@@ -1034,7 +1008,7 @@
                     android:fontFamily="@font/quicksandsemibold"
                     android:text="@string/domingo"
                     android:textColor="@color/azulTexto"
-                    android:textSize="@dimen/textomenu25" />
+                    android:textSize="@dimen/text22" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -1055,7 +1029,7 @@
                             android:fontFamily="@font/quicksandsemibold"
                             android:text="@string/de"
                             android:textColor="@color/azulTexto"
-                            android:textSize="@dimen/textomenu25" />
+                            android:textSize="@dimen/text22" />
 
                         <EditText
                             android:id="@+id/etDomingoDeManana"
@@ -1074,7 +1048,7 @@
                             android:paddingHorizontal="10dp"
                             android:text="09:00"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/textomenu25" />
+                            android:textSize="@dimen/text22" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -1084,7 +1058,7 @@
                             android:fontFamily="@font/quicksandsemibold"
                             android:text="@string/a"
                             android:textColor="@color/azulTexto"
-                            android:textSize="@dimen/textomenu25" />
+                            android:textSize="@dimen/text22" />
 
                         <EditText
                             android:id="@+id/etDomingoAManana"
@@ -1103,7 +1077,7 @@
                             android:paddingHorizontal="10dp"
                             android:text="13:00"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/textomenu25" />
+                            android:textSize="@dimen/text22" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -1120,7 +1094,7 @@
                             android:fontFamily="@font/quicksandsemibold"
                             android:text="@string/de"
                             android:textColor="@color/azulTexto"
-                            android:textSize="@dimen/textomenu25" />
+                            android:textSize="@dimen/text22" />
 
                         <EditText
                             android:id="@+id/etDomingoDeTarde"
@@ -1138,7 +1112,7 @@
                             android:paddingHorizontal="10dp"
                             android:text="15:00"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/textomenu25" />
+                            android:textSize="@dimen/text22" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -1149,7 +1123,7 @@
                             android:fontFamily="@font/quicksandsemibold"
                             android:text="@string/a"
                             android:textColor="@color/azulTexto"
-                            android:textSize="@dimen/textomenu25" />
+                            android:textSize="@dimen/text22" />
 
                         <EditText
                             android:id="@+id/etDomingoATarde"
@@ -1167,16 +1141,10 @@
                             android:paddingHorizontal="10dp"
                             android:text="18:00"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/textomenu25" />
+                            android:textSize="@dimen/text22" />
                     </LinearLayout>
-
-
                 </LinearLayout>
-
-
             </LinearLayout>
-
-
         </LinearLayout>
 
     </ScrollView>
@@ -1194,7 +1162,7 @@
             android:fontFamily="@font/quicksandsemibold"
             android:text="@string/precioConsulta"
             android:textColor="@color/azulTexto"
-            android:textSize="@dimen/textomenu25" />
+            android:textSize="@dimen/text22" />
 
         <EditText
             android:id="@+id/etCostoCita"
@@ -1206,19 +1174,20 @@
             android:gravity="center"
             android:inputType="numberDecimal"
             android:textColor="@color/black"
-            android:textSize="@dimen/textomenu25" />
+            android:textSize="@dimen/text22" />
 
     </LinearLayout>
 
-    <Button
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/btn_azul_redondeado_si"
-        android:text="@string/btnGuardar"
-        android:textColor="@color/white"
-        android:textSize="20sp" />
+        <Button
+            android:id="@+id/btnGuardarConsulta"
+            android:layout_width="150dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/btn_azul_redondeado_si"
+            android:text="@string/btnGuardar"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
 
 </LinearLayout>
 
