@@ -25,9 +25,10 @@ class AdapterMedico(context: Context, val lista: ArrayList<medico>): ArrayAdapte
         var selecMedico: LinearLayout= vista.findViewById(R.id.btnCampoMedico)
         selecMedico.setOnClickListener {
             var intent: Intent= Intent(context, frmAgendarMedicoActivity::class.java)
+            intent.putExtra("medico", me)
             context!!.startActivity(intent)
         }
-       return vista
+        return vista
     }
 
 }
