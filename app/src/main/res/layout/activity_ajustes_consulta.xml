@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/drawer_miscitas"
+    android:id="@+id/drawer_ajustes_consultas"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AjustesConsultaActivity">
@@ -28,10 +28,12 @@
         android:orientation="horizontal"
         >
 
-        <View
-            android:layout_width="25dp"
-            android:layout_height="40dp"
-            android:background="@color/azulTexto" />
+        <Button
+            android:id="@+id/btnMenu"
+            android:layout_width="@dimen/menu75"
+            android:layout_height="@dimen/menu75"
+            android:background="@drawable/ic_launcher_foreground"
+            />
 
         <TextView
             android:layout_width="match_parent"
