@@ -1,0 +1,4 @@
+package Persistencia
+
+class AdapterPaciente {
+}

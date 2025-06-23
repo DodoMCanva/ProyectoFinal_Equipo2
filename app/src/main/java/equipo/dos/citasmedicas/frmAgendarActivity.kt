@@ -1,10 +1,13 @@
 package equipo.dos.citasmedicas
 
+import Persistencia.AdapterMedico
+import Persistencia.fakebd
 import Persistencia.medico
 import Persistencia.paciente
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ListView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
@@ -14,6 +17,7 @@ import equipo.dos.citasmedicas.databinding.ActivityFrmPrincipalBinding
 
 class frmAgendarActivity : AppCompatActivity() {
 
+    var adapter: AdapterMedico?= null
     private val binding by lazy {
         ActivityFrmPrincipalBinding.inflate(layoutInflater)
     }
@@ -21,6 +25,17 @@ class frmAgendarActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_frm_agendar)
+
+        adapter= AdapterMedico(this, fakebd.medicos)
+        var listaMedicos: ListView= findViewById(R.id.lvMedicos)
+        listaMedicos.adapter=adapter
+
+
+
+
+
+
+
 
         val sesion = intent.getSerializableExtra("sesion")
         val tipoSesion: String = when (sesion) {
@@ -77,6 +92,10 @@ class frmAgendarActivity : AppCompatActivity() {
                 else -> false
             }
         }
+
+        //adapter
+
+
     }
 }
 

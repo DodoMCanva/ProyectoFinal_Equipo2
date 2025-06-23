@@ -19,6 +19,9 @@
             android:name=".frmAgendarActivity"
             android:exported="false" />
         <activity
+            android:name=".frmAgendarMedicoActivity"
+            android:exported="false" />
+        <activity
             android:name=".AjustesConsultaActivity"
             android:exported="false" />
         <activity
