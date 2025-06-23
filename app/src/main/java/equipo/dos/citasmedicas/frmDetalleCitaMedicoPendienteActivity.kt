@@ -152,6 +152,11 @@ class frmDetalleCitaMedicoPendienteActivity : AppCompatActivity() {
             dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
             val width = (resources.displayMetrics.widthPixels * 0.90).toInt()
             dialog.window?.setLayout(width, ViewGroup.LayoutParams.WRAP_CONTENT)
+
+            val btnCancelarReceta = dialog.findViewById<Button>(R.id.btnCancelarForm)
+            btnCancelarReceta.setOnClickListener {
+                dialog.dismiss()
+            }
             dialog.show()
         }
 
@@ -161,6 +166,11 @@ class frmDetalleCitaMedicoPendienteActivity : AppCompatActivity() {
             dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
             val width = (resources.displayMetrics.widthPixels * 0.90).toInt()
             dialog.window?.setLayout(width, ViewGroup.LayoutParams.WRAP_CONTENT)
+
+            val btnCancelarReprogramacion = dialog.findViewById<Button>(R.id.btnCancelarRep)
+            btnCancelarReprogramacion.setOnClickListener {
+            dialog.dismiss()
+            }
             dialog.show()
         }
 
@@ -172,6 +182,10 @@ class frmDetalleCitaMedicoPendienteActivity : AppCompatActivity() {
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT
             )
+            val btnAtras = dialog.findViewById<Button>(R.id.btnAtrasCancelacion)
+            btnAtras.setOnClickListener {
+                dialog.dismiss()
+            }
             dialog.show()
         }
 
