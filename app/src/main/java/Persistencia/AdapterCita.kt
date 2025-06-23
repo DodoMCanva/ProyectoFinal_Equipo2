@@ -17,35 +17,35 @@ class AdapterCita(context: Context, val lista: ArrayList<cita>, tipo : String): 
     val tipo : String = tipo
     override fun getView(position: Int, converterView: View?, parent: ViewGroup): View {
         val c = lista[position]
-        val vista : View = converterView?: LayoutInflater.from(context).inflate(R.layout.cita_paciente, parent, false)
+        val vista: View
+
         if (tipo == "medico") {
-            val vista = converterView?: LayoutInflater.from(context).inflate(R.layout.cita_medico, parent, false)
+            vista = converterView?: LayoutInflater.from(context).inflate(R.layout.cita_medico, parent, false)
             vista.findViewById<TextView>(R.id.citaMFecha).text = c.fecha
             vista.findViewById<TextView>(R.id.citaMHora).text = c.hora
             vista.findViewById<TextView>(R.id.citaPaciente).text = c.paciente.nombre
             vista.findViewById<TextView>(R.id.citaMotivo).text = c.motivo
             vista.findViewById<TextView>(R.id.citaEstado).text = c.estado
-            val layoutPanel = vista.findViewById<LinearLayout>(R.id.panelCitaMedico)
-            var selCita: LinearLayout = vista.findViewById(R.id.panelCitaMedico)
+
+            val selCita = vista.findViewById<LinearLayout>(R.id.panelCitaMedico)
             selCita.setOnClickListener {
-                var intent: Intent = Intent(context, frmDetalleCitaMedicoPendienteActivity::class.java)
-                context!!.startActivity(intent)
+                val intent = Intent(context, frmDetalleCitaMedicoPendienteActivity::class.java)
+                context.startActivity(intent)
             }
 
-        }else{
-            val vista = converterView?: LayoutInflater.from(context).inflate(R.layout.cita_paciente, parent, false)
+        } else {
+            vista = converterView?: LayoutInflater.from(context).inflate(R.layout.cita_paciente, parent, false)
             vista.findViewById<TextView>(R.id.citaFecha).text = c.fecha
             vista.findViewById<TextView>(R.id.citaHora).text = c.hora
             vista.findViewById<TextView>(R.id.citaEspecialidad).text = c.medico.especialidad
             vista.findViewById<TextView>(R.id.citaMedico).text = c.medico.nombre
-            val layoutPanel= vista.findViewById<LinearLayout>(R.id.panelCitaPaciente)
-            var selecMedico: LinearLayout = vista.findViewById(R.id.panelCitaPaciente)
+
+            val selecMedico = vista.findViewById<LinearLayout>(R.id.panelCitaPaciente)
             selecMedico.setOnClickListener {
-                var intent: Intent = Intent(context, frmDetalleCitaActivity::class.java)
-                context!!.startActivity(intent)
+                val intent = Intent(context, frmDetalleCitaActivity::class.java)
+                context.startActivity(intent)
             }
         }
-
 
         return vista
     }
