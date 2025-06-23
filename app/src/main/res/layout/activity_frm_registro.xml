@@ -106,7 +106,9 @@
                     android:minHeight="48dp"
                     android:text="29/05/2025"
                     android:textSize="@dimen/text18"
-                    android:gravity="center_vertical"/>
+                    android:gravity="center_vertical"
+                    android:enabled="false"
+                    />
 
                 <ImageButton
                     android:id="@+id/btnCalendarioRegistroMedico"

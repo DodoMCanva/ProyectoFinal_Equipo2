@@ -4,8 +4,10 @@ import Persistencia.AdapterMedico
 import Persistencia.fakebd
 import Persistencia.medico
 import Persistencia.paciente
+import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ListView
 import android.widget.Toast
@@ -29,8 +31,6 @@ class frmAgendarActivity : AppCompatActivity() {
         adapter= AdapterMedico(this, fakebd.medicos)
         var listaMedicos: ListView= findViewById(R.id.lvMedicos)
         listaMedicos.adapter=adapter
-
-
 
 
 
@@ -94,6 +94,8 @@ class frmAgendarActivity : AppCompatActivity() {
         }
 
         //adapter
+
+
 
 
     }
