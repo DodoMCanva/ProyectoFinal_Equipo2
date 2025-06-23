@@ -80,8 +80,10 @@ class frmPrincipalActivity : AppCompatActivity() {
                     var inte : Intent
                     if (tipoSesion == "paciente") {
                         inte = Intent(this, frmAgendarActivity::class.java)
+                        inte.putExtra("sesion", sesion)
                     } else {
                         inte = Intent(this, AjustesConsultaActivity::class.java)
+                        inte.putExtra("sesion", sesion)
                     }
                     drawerLayout.closeDrawer(GravityCompat.START)
                     startActivity(inte)
@@ -99,7 +101,6 @@ class frmPrincipalActivity : AppCompatActivity() {
         }
 
         val headerView = nav.getHeaderView(0)
-
         val btnPerfil = headerView.findViewById<ImageView>(R.id.btnPerfil)
         val btnMenuCerrar = headerView.findViewById<Button>(R.id.btnMenuCerrarMenu)
 
@@ -109,6 +110,13 @@ class frmPrincipalActivity : AppCompatActivity() {
             drawerLayout.closeDrawer(GravityCompat.START)
             startActivity(inte)
             true
+        }
+
+        btnMenuCerrar.setOnClickListener{
+            drawerLayout.closeDrawer(GravityCompat.START)
+            val intent = Intent(this, frmLoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
         }
         //calendario
         val btnCalendario = findViewById<ImageButton>(R.id.btnCalendarioConsultaCitas)
@@ -128,9 +136,7 @@ class frmPrincipalActivity : AppCompatActivity() {
             datePicker.show()
         }
 
-        btnMenuCerrar.setOnClickListener{
-            drawerLayout.closeDrawer(GravityCompat.START)
-        }
+
 
     }
 }
