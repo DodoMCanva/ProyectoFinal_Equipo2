@@ -53,11 +53,44 @@ class frmAgendarMedicoActivity : AppCompatActivity() {
 
         //spinner hora
         val spHora = findViewById<Spinner>(R.id.spHora)
-        val horasDisponibles = listOf("09:00 AM", "10:00 AM", "11:00 AM", "01:00 PM", "03:00 PM", "04:30 PM")
+                fun generarHorasCada30Min(): List<String> {
+            val horas = mutableListOf<String>()
+            var hora = 7
+            var minuto = 0
+
+            while (hora < 19 || (hora == 19 && minuto == 0)) {
+                val amPm = if (hora < 12) "AM" else "PM"
+                val hora12 = if (hora % 12 == 0) 12 else hora % 12
+                val horaFormateada = String.format("%d:%02d %s", hora12, minuto, amPm)
+                horas.add(horaFormateada)
+
+                minuto += 30
+                if (minuto >= 60) {
+                    minuto = 0
+                    hora++
+                }
+            }
+
+            return horas
+        }
+
+        val horasDisponibles = generarHorasCada30Min()
 
         val adapterHoras = ArrayAdapter(this, android.R.layout.simple_spinner_item, horasDisponibles)
         adapterHoras.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spHora.adapter = adapterHoras
+
+        val tvHoraSeleccionada = findViewById<TextView>(R.id.tvHoraSeleccionada)
+        spHora.onItemSelectedListener = object : android.widget.AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: android.widget.AdapterView<*>, view: android.view.View?, position: Int, id: Long) {
+                val horaSeleccionada = parent.getItemAtPosition(position).toString()
+                tvHoraSeleccionada.text = horaSeleccionada
+            }
+
+            override fun onNothingSelected(parent: android.widget.AdapterView<*>) {
+
+            }
+        }
 
         //btnConfirmar
 
@@ -76,19 +109,18 @@ class frmAgendarMedicoActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            // Mostrar el diálogo personalizado
+            //mostrar el diálogo
             val dialog = Dialog(this)
             dialog.setContentView(R.layout.dialog_confirmacion_cita) 
             dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
             dialog.window?.setLayout(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
+                (resources.displayMetrics.widthPixels * 0.9).toInt(),  // 90% ancho pantalla
+                ViewGroup.LayoutParams.WRAP_CONTENT                     // alto ajustado al contenido
             )
 
             val btnAceptar = dialog.findViewById<Button>(R.id.btnConfirmarCancelacion)
 
             btnAceptar.setOnClickListener {
-                // Ir a frmPrincipalActivity con los datos
                 val intent = Intent(this, frmPrincipalActivity::class.java)
                 intent.putExtra("fecha", fecha)
                 intent.putExtra("hora", hora)
