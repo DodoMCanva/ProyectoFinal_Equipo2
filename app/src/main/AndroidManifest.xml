@@ -55,9 +55,6 @@
             android:name=".frmLoginActivity"
             android:exported="false" />
         <activity
-            android:name=".frmAgendarMedicoActivity"
-            android:exported="false" />
-        <activity
             android:name=".MainActivity"
             android:exported="true" >
             <intent-filter>
