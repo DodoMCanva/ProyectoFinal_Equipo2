@@ -23,14 +23,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:paddingLeft="20dp"
         android:orientation="horizontal">
 
         <Button
             android:id="@+id/btnMenu"
             android:layout_width="@dimen/menu50"
             android:layout_height="@dimen/menu50"
-            android:background="@drawable/menuazul100" />
+            android:background="@drawable/ic_launcher_foreground" />
 
         <TextView
             android:layout_width="match_parent"
@@ -112,7 +111,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingLeft="40sp">
+            android:paddingLeft="10sp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -126,13 +125,28 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:paddingTop="0dp"
+                android:layout_gravity="center_vertical"
+                >
+
+                <TextView
+                    android:id="@+id/tvHoraSeleccionada"
+                    android:layout_width="85dp"
+                    android:layout_height="40dp"
+                    android:text="09:00"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:background="@color/white"
+                    android:textSize="@dimen/textomenu25"
+                    android:fontFamily="@font/quicksandsemibold"
+                    android:layout_marginRight="5sp"/>
 
                 <Spinner
                     android:id="@+id/spHora"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10sp"
+                    android:layout_width="30dp"
+                    android:layout_height="40dp"
+                    android:backgroundTint="@color/azulBackMensajes"
                     android:orientation="vertical"
                     android:paddingLeft="40sp" />
             </LinearLayout>
@@ -203,7 +217,7 @@
         android:layout_marginTop="20sp"
         android:orientation="horizontal"
         android:layout_gravity="center_horizontal"
-        android:paddingHorizontal="70dp">
+        android:paddingHorizontal="50dp">
 
         <Button
             android:id="@+id/btnConfirmar"

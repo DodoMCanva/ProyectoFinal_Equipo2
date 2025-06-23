@@ -7,6 +7,7 @@ import Persistencia.paciente
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.ListView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -14,6 +15,7 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import equipo.dos.citasmedicas.databinding.ActivityFrmPrincipalBinding
+import java.io.Serializable
 
 class frmAgendarActivity : AppCompatActivity() {
 
@@ -25,14 +27,6 @@ class frmAgendarActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_frm_agendar)
-
-        adapter= AdapterMedico(this, fakebd.medicos)
-        var listaMedicos: ListView= findViewById(R.id.lvMedicos)
-        listaMedicos.adapter=adapter
-
-
-
-
 
 
 
@@ -47,6 +41,7 @@ class frmAgendarActivity : AppCompatActivity() {
         val drawerLayout = findViewById<DrawerLayout>(R.id.drawer_agendar)
         val toolbar = findViewById<Button>(R.id.btnMenu)
         val nav = findViewById<NavigationView>(R.id.navegacion_menu)
+
 
         toolbar.setOnClickListener {
             drawerLayout.openDrawer(GravityCompat.START)
@@ -93,9 +88,31 @@ class frmAgendarActivity : AppCompatActivity() {
             }
         }
 
-        //adapter
+        val headerView = nav.getHeaderView(0)
 
+        val btnPerfil = headerView.findViewById<ImageView>(R.id.btnPerfil)
+        val btnMenuCerrar = headerView.findViewById<Button>(R.id.btnMenuCerrarMenu)
+
+        btnPerfil.setOnClickListener{
+            var inte : Intent = Intent(this, frmMiPerfilActivity::class.java)
+            drawerLayout.closeDrawer(GravityCompat.START)
+            startActivity(inte)
+            true
+        }
+
+        btnMenuCerrar.setOnClickListener{
+            drawerLayout.closeDrawer(GravityCompat.START)
+        }
+
+
+        //adapter
+        adapter = AdapterMedico(this, fakebd.medicos)
+        var listaMedicos: ListView= findViewById(R.id.lvMedicos)
+        listaMedicos.adapter=adapter
 
     }
 }
+
+
+
 
