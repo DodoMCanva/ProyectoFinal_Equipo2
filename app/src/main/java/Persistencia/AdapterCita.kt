@@ -2,12 +2,14 @@ package Persistencia
 
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import equipo.dos.citasmedicas.R
 import equipo.dos.citasmedicas.frmAgendarMedicoActivity
 import equipo.dos.citasmedicas.frmDetalleCitaActivity
@@ -15,6 +17,8 @@ import equipo.dos.citasmedicas.frmDetalleCitaMedicoPendienteActivity
 
 class AdapterCita(context: Context, val lista: ArrayList<cita>, tipo : String): ArrayAdapter<cita>(context,0, lista) {
     val tipo : String = tipo
+
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun getView(position: Int, converterView: View?, parent: ViewGroup): View {
         val c = lista[position]
         val vista: View
@@ -30,7 +34,16 @@ class AdapterCita(context: Context, val lista: ArrayList<cita>, tipo : String): 
             val selCita = vista.findViewById<LinearLayout>(R.id.panelCitaMedico)
             selCita.setOnClickListener {
                 val intent = Intent(context, frmDetalleCitaMedicoPendienteActivity::class.java)
-                context.startActivity(intent)
+                intent.putExtra("nombre", c.paciente.nombre)
+                intent.putExtra("genero", c.paciente.genero)
+                intent.putExtra("telefono", c.paciente.telefono)
+                intent.putExtra("fecha", c.fecha)
+                intent.putExtra("hora", c.hora)
+                intent.putExtra("estado", c.estado)
+                intent.putExtra("motivo", c.motivo)
+                intent.putExtra("edad", c.paciente.calcularEdad())
+
+                context!!.startActivity(intent)
             }
 
         } else {
@@ -43,7 +56,8 @@ class AdapterCita(context: Context, val lista: ArrayList<cita>, tipo : String): 
             val selecMedico = vista.findViewById<LinearLayout>(R.id.panelCitaPaciente)
             selecMedico.setOnClickListener {
                 val intent = Intent(context, frmDetalleCitaActivity::class.java)
-                context.startActivity(intent)
+
+                context!!.startActivity(intent)
             }
         }
 
