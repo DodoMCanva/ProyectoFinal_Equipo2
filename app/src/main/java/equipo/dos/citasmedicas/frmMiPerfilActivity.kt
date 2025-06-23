@@ -12,12 +12,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
+import equipo.dos.citasmedicas.databinding.ActivityFrmMiPerfilBinding
+import equipo.dos.citasmedicas.databinding.ActivityFrmPerfilBinding
 import equipo.dos.citasmedicas.databinding.ActivityFrmPrincipalBinding
 
 class frmMiPerfilActivity : AppCompatActivity() {
 
     private val binding by lazy {
-        ActivityFrmPrincipalBinding.inflate(layoutInflater)
+        ActivityFrmMiPerfilBinding.inflate(layoutInflater)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,6 +42,7 @@ class frmMiPerfilActivity : AppCompatActivity() {
         val editar : TextView = findViewById(R.id.btnEditarPerfil)
 
 
+        //
         val drawerLayout = findViewById<DrawerLayout>(R.id.drawer_mi_perfil)
         val toolbar = findViewById<Button>(R.id.btnMenu)
         val nav = findViewById<NavigationView>(R.id.navegacion_menu)
@@ -61,7 +64,8 @@ class frmMiPerfilActivity : AppCompatActivity() {
             }
             opcion.setIcon(R.drawable.date48)
             opcion.title = "Agendar"
-        } else {
+        }
+        if(tipoSesion == "medico") {
             m = sesion as medico?
             if (m != null) {
                 nombre.text = m.nombre
@@ -83,7 +87,6 @@ class frmMiPerfilActivity : AppCompatActivity() {
             finish()
         }
 
-
         nav.setNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.btnMenuMisCitas -> {
@@ -96,8 +99,10 @@ class frmMiPerfilActivity : AppCompatActivity() {
                     var inte : Intent
                     if (tipoSesion == "paciente") {
                         inte = Intent(this, frmAgendarActivity::class.java)
+                        inte.putExtra("sesion", sesion)
                     } else {
                         inte = Intent(this, AjustesConsultaActivity::class.java)
+                        inte.putExtra("sesion", sesion)
                     }
                     drawerLayout.closeDrawer(GravityCompat.START)
                     startActivity(inte)
@@ -109,17 +114,17 @@ class frmMiPerfilActivity : AppCompatActivity() {
                     startActivity(inte)
                     true
                 }
-
                 else -> false
             }
         }
-        val headerView = nav.getHeaderView(0)
 
+        val headerView = nav.getHeaderView(0)
         val btnPerfil = headerView.findViewById<ImageView>(R.id.btnPerfil)
         val btnMenuCerrar = headerView.findViewById<Button>(R.id.btnMenuCerrarMenu)
 
         btnPerfil.setOnClickListener{
             var inte : Intent = Intent(this, frmMiPerfilActivity::class.java)
+            inte.putExtra("sesion", sesion)
             drawerLayout.closeDrawer(GravityCompat.START)
             startActivity(inte)
             true
@@ -127,6 +132,9 @@ class frmMiPerfilActivity : AppCompatActivity() {
 
         btnMenuCerrar.setOnClickListener{
             drawerLayout.closeDrawer(GravityCompat.START)
+            val intent = Intent(this, frmLoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
         }
 
     }
