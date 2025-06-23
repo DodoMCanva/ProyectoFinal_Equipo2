@@ -46,7 +46,13 @@
             android:name=".frmPerfilActivity"
             android:exported="false" />
         <activity
+            android:name=".frmMiPerfilActivity"
+            android:exported="false" />
+        <activity
             android:name=".frmLoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".frmAgendarMedicoActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

@@ -26,14 +26,14 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingTop="24dp"
+android:paddingLeft="20dp"
         android:paddingBottom="16dp">
 
         <Button
             android:id="@+id/btnMenu"
-            android:layout_width="@dimen/menu75"
-            android:layout_height="@dimen/menu75"
-            android:background="@drawable/ic_launcher_foreground" />
+            android:layout_width="@dimen/menu50"
+            android:layout_height="@dimen/menu50"
+            android:background="@drawable/menuazul100" />
 
         <TextView
             android:layout_width="match_parent"

@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:background="@color/azulBackMensajes">
     <Button
-        android:id="@+id/btnMenu"
+        android:id="@+id/btnMenuCerrarMenu"
         android:layout_gravity="end"
         android:layout_marginTop="15sp"
         android:layout_marginRight="15sp"
