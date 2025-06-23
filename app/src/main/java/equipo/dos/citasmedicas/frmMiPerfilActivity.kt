@@ -78,6 +78,7 @@ class frmMiPerfilActivity : AppCompatActivity() {
         }
         editar.setOnClickListener(){
             var inte : Intent = Intent(this, frmEditarActivity::class.java)
+            inte.putExtra("sesion", intent.getSerializableExtra("sesion"))
             startActivity(inte)
         }
         cerrar.setOnClickListener(){
@@ -99,10 +100,10 @@ class frmMiPerfilActivity : AppCompatActivity() {
                     var inte : Intent
                     if (tipoSesion == "paciente") {
                         inte = Intent(this, frmAgendarActivity::class.java)
-                        inte.putExtra("sesion", sesion)
+                        inte.putExtra("sesion", intent.getSerializableExtra("sesion"))
                     } else {
                         inte = Intent(this, AjustesConsultaActivity::class.java)
-                        inte.putExtra("sesion", sesion)
+                        inte.putExtra("sesion", intent.getSerializableExtra("sesion"))
                     }
                     drawerLayout.closeDrawer(GravityCompat.START)
                     startActivity(inte)
@@ -124,7 +125,7 @@ class frmMiPerfilActivity : AppCompatActivity() {
 
         btnPerfil.setOnClickListener{
             var inte : Intent = Intent(this, frmMiPerfilActivity::class.java)
-            inte.putExtra("sesion", sesion)
+            inte.putExtra("sesion", intent.getSerializableExtra("sesion"))
             drawerLayout.closeDrawer(GravityCompat.START)
             startActivity(inte)
             true
