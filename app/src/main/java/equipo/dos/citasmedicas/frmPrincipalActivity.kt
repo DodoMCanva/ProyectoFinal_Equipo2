@@ -102,6 +102,7 @@ class frmPrincipalActivity : AppCompatActivity() {
 
         btnPerfil.setOnClickListener{
             var inte : Intent = Intent(this, frmMiPerfilActivity::class.java)
+            inte.putExtra("sesion", sesion)
             drawerLayout.closeDrawer(GravityCompat.START)
             startActivity(inte)
             true
