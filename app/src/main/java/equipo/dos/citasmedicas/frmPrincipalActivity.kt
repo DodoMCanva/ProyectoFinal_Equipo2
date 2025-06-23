@@ -4,8 +4,10 @@ import Persistencia.medico
 import Persistencia.paciente
 import android.content.Intent
 import android.os.Bundle
+import android.preference.PreferenceActivity
 import android.view.View
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -36,6 +38,7 @@ class frmPrincipalActivity : AppCompatActivity() {
         val drawerLayout = findViewById<DrawerLayout>(R.id.drawer_miscitas)
         val toolbar = findViewById<Button>(R.id.btnMenu)
         val nav = findViewById<NavigationView>(R.id.navegacion_menu)
+
 
         toolbar.setOnClickListener {
             drawerLayout.openDrawer(GravityCompat.START)
@@ -81,5 +84,22 @@ class frmPrincipalActivity : AppCompatActivity() {
                 else -> false
             }
         }
+
+        val headerView = nav.getHeaderView(0)
+
+        val btnPerfil = headerView.findViewById<ImageView>(R.id.btnPerfil)
+        val btnMenuCerrar = headerView.findViewById<Button>(R.id.btnMenuCerrarMenu)
+
+        btnPerfil.setOnClickListener{
+            var inte : Intent = Intent(this, frmMiPerfilActivity::class.java)
+            drawerLayout.closeDrawer(GravityCompat.START)
+            startActivity(inte)
+            true
+        }
+
+        btnMenuCerrar.setOnClickListener{
+            drawerLayout.closeDrawer(GravityCompat.START)
+        }
+
     }
 }

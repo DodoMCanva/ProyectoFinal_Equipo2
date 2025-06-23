@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="menu75">75sp</dimen>
+    <dimen name="menu50">50sp</dimen>
     <dimen name="textomenu25">25sp</dimen>
     <dimen name="textFormulario25">25sp</dimen>
     <dimen name="textencabezado40">40sp</dimen>
