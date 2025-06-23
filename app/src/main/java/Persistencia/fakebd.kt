@@ -4,8 +4,8 @@ object fakebd {
     val pacientes: ArrayList<paciente> = ArrayList()
     val medicos: ArrayList<medico> = ArrayList()
 
-    init {
 
+    init {
         pacientes.add(paciente("Cesar", "cesard@gmail.com", "612220781", "123456", "14-07-2002", "Masculino"));
         pacientes.add(paciente("Ana", "ana_lopez@gmail.com", "664112233", "ana123", "23-03-1995", "Femenino"));
         pacientes.add(paciente("Luis", "luis_mendez@hotmail.com", "618334455", "luispass", "09-11-1988", "Masculino"));
