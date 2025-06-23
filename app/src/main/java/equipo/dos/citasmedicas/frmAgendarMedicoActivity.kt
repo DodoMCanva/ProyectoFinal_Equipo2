@@ -3,8 +3,10 @@ package equipo.dos.citasmedicas
 import Persistencia.medico
 import Persistencia.paciente
 import android.app.DatePickerDialog
+import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
+import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.DatePicker
@@ -62,6 +64,8 @@ class frmAgendarMedicoActivity : AppCompatActivity() {
         val btnConfirmar = findViewById<Button>(R.id.btnConfirmar)
         val txtMotivo = findViewById<EditText>(R.id.txtMotivo)
 
+
+
         btnConfirmar.setOnClickListener {
             val fecha = tvFecha.text.toString()
             val hora = spHora.selectedItem.toString()
@@ -72,14 +76,29 @@ class frmAgendarMedicoActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            val intent = Intent(this, frmPrincipalActivity::class.java)//aqui cambiar al layout de confirmacion
-            intent.putExtra("fecha", fecha)
-            intent.putExtra("hora", hora)
-            intent.putExtra("motivo", motivo)
-            startActivity(intent)
+            // Mostrar el diálogo personalizado
+            val dialog = Dialog(this)
+            dialog.setContentView(R.layout.dialog_confirmacion_cita) 
+            dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+            dialog.window?.setLayout(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            )
+
+            val btnAceptar = dialog.findViewById<Button>(R.id.btnConfirmarCancelacion)
+
+            btnAceptar.setOnClickListener {
+                // Ir a frmPrincipalActivity con los datos
+                val intent = Intent(this, frmPrincipalActivity::class.java)
+                intent.putExtra("fecha", fecha)
+                intent.putExtra("hora", hora)
+                intent.putExtra("motivo", motivo)
+                startActivity(intent)
+                dialog.dismiss() // cerrar el diálogo
+            }
+
+            dialog.show()
         }
-
-
 
         val btnCancelar = findViewById<Button>(R.id.btnCancelar)
         btnCancelar.setOnClickListener{
@@ -173,6 +192,8 @@ class frmAgendarMedicoActivity : AppCompatActivity() {
         btnMenuCerrar.setOnClickListener{
             drawerLayout.closeDrawer(GravityCompat.START)
         }
+
+
 
 
 

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_gravity="center_horizontal"
+    android:background="@drawable/fondo_campo"
+    android:padding="24dp">
+
+    <TextView
+        android:id="@+id/tvDialogTitulo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/dialogConfirmarTitulo"
+        android:textColor="@color/white"
+        android:textSize="@dimen/texttitulo45"
+        android:fontFamily="@font/quicksandbold"
+        android:gravity="center_horizontal"
+        android:layout_marginBottom="16dp"/>
+
+    <TextView
+        android:id="@+id/tvDialogMensaje"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/dialogConfirmacionTexto"
+        android:textColor="@color/white"
+        android:textSize="@dimen/textomenu25"
+        android:fontFamily="@font/quicksandregular"
+        android:gravity="center_horizontal"
+        android:layout_marginBottom="40dp"/>
+
+
+
+        <Button
+            android:id="@+id/btnConfirmarCancelacion"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="@string/btnDialogAceptar"
+            android:background="@drawable/btn_azulclaro_redondeado"
+            android:textColor="@android:color/white"
+            android:paddingVertical="12dp"
+            android:textSize="@dimen/text18"
+            android:fontFamily="@font/quicksandbold"
+            android:layout_gravity="center_horizontal" />
+
+
+</LinearLayout>

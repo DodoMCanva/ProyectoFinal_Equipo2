@@ -3,9 +3,9 @@ package Persistencia
 import java.io.Serializable
 
 object sesion {
-    var sesion : Serializable? = null
+    var sesion: Serializable? = null
 
-    fun setSesion(s : Serializable?){
+    fun asignarSesion(s: Serializable?) {
         sesion = s
     }
     fun getSesionPaciente(): Serializable? {
