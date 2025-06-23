@@ -1,5 +1,8 @@
 package equipo.dos.citasmedicas
 
+import Persistencia.AdapterCita
+import Persistencia.AdapterMedico
+import Persistencia.fakebd
 import Persistencia.medico
 import Persistencia.paciente
 import android.content.Intent
@@ -8,6 +11,7 @@ import android.preference.PreferenceActivity
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.ListView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -18,6 +22,7 @@ import equipo.dos.citasmedicas.databinding.ActivityFrmPrincipalBinding
 
 class frmPrincipalActivity : AppCompatActivity() {
 
+    var adapter:AdapterCita? = null
 
     private val binding by lazy {
         ActivityFrmPrincipalBinding.inflate(layoutInflater)
@@ -25,8 +30,9 @@ class frmPrincipalActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_frm_principal)
+
+
 
         val sesion = intent.getSerializableExtra("sesion")
         val tipoSesion: String = when (sesion) {
@@ -34,6 +40,10 @@ class frmPrincipalActivity : AppCompatActivity() {
             is medico -> "medico"
             else -> "no asignado"
         }
+
+        adapter= AdapterCita(this, fakebd.citas, tipoSesion)
+        var listaCitas: ListView = findViewById(R.id.lvCitas)
+        listaCitas.adapter=adapter
 
         val drawerLayout = findViewById<DrawerLayout>(R.id.drawer_miscitas)
         val toolbar = findViewById<Button>(R.id.btnMenu)

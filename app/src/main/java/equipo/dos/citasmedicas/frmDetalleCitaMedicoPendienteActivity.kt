@@ -2,8 +2,10 @@ package equipo.dos.citasmedicas
 
 import Persistencia.medico
 import Persistencia.paciente
+import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
@@ -14,19 +16,20 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
+import equipo.dos.citasmedicas.databinding.ActivityFrmDetalleCitaMedicoPendienteBinding
 import equipo.dos.citasmedicas.databinding.ActivityFrmPrincipalBinding
 
 class frmDetalleCitaMedicoPendienteActivity : AppCompatActivity() {
 
     private val binding by lazy {
-        ActivityFrmPrincipalBinding.inflate(layoutInflater)
+        ActivityFrmDetalleCitaMedicoPendienteBinding.inflate(layoutInflater)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_frm_detalle_cita_medico_pendiente)
 
+        setContentView(binding.root)
 
         val sesion = intent.getSerializableExtra("sesion")
         val tipoSesion: String = when (sesion) {
@@ -35,9 +38,11 @@ class frmDetalleCitaMedicoPendienteActivity : AppCompatActivity() {
             else -> "no asignado"
         }
 
-        val drawerLayout = findViewById<DrawerLayout>(R.id.drawer_detalle_cita_medico)
-        val toolbar = findViewById<Button>(R.id.btnMenu)
-        val nav = findViewById<NavigationView>(R.id.navegacion_menu)
+        val drawerLayout = binding.drawerDetalleCitaMedico
+        val toolbar =
+            binding.btnMenu
+        val nav =
+            binding.navegacionMenu
 
         toolbar.setOnClickListener {
             drawerLayout.openDrawer(GravityCompat.START)
@@ -63,7 +68,7 @@ class frmDetalleCitaMedicoPendienteActivity : AppCompatActivity() {
                 }
 
                 R.id.btnMenuOpcion -> {
-                    var inte : Intent
+                    val inte: Intent
                     if (tipoSesion == "paciente") {
                         inte = Intent(this, frmAgendarActivity::class.java)
                     } else {
@@ -88,15 +93,47 @@ class frmDetalleCitaMedicoPendienteActivity : AppCompatActivity() {
         val btnPerfil = headerView.findViewById<ImageView>(R.id.btnPerfil)
         val btnMenuCerrar = headerView.findViewById<Button>(R.id.btnMenuCerrarMenu)
 
-        btnPerfil.setOnClickListener{
-            var inte : Intent = Intent(this, frmMiPerfilActivity::class.java)
+        btnPerfil.setOnClickListener {
+            val inte = Intent(this, frmMiPerfilActivity::class.java)
             drawerLayout.closeDrawer(GravityCompat.START)
             startActivity(inte)
-            true
         }
 
-        btnMenuCerrar.setOnClickListener{
+        btnMenuCerrar.setOnClickListener {
             drawerLayout.closeDrawer(GravityCompat.START)
+        }
+
+        binding.btnFinalizarDetallesCitaMedico.setOnClickListener {
+            val dialog = Dialog(this)
+            dialog.setContentView(R.layout.dialog_subir_receta)
+            dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+            dialog.window?.setLayout(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            )
+            dialog.show()
+        }
+
+        binding.btnReprogramarDetallesMedico.setOnClickListener {
+            val dialog = Dialog(this)
+            dialog.setContentView(R.layout.dialog_reprogramar_cita)
+            dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+            dialog.window?.setLayout(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            )
+            dialog.show()
+        }
+
+        binding.btnCancelarDetallesMedico.setOnClickListener {
+            val dialog = Dialog(this)
+            dialog.setContentView(R.layout.dialog_cancelar_cita)
+            dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+            dialog.window?.setLayout(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            )
+            dialog.show()
         }
 
     }
