@@ -13,4 +13,8 @@
     <dimen name="menu75">75sp</dimen>
     <dimen name="titulo_dialogo">35sp</dimen>
 
+    <dimen name="text22">22sp</dimen>
+
+
+
 </resources>
