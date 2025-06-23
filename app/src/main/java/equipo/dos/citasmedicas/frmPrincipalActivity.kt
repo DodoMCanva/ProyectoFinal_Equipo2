@@ -16,6 +16,7 @@ import equipo.dos.citasmedicas.databinding.ActivityFrmPrincipalBinding
 
 class frmPrincipalActivity : AppCompatActivity() {
 
+
     private val binding by lazy {
         ActivityFrmPrincipalBinding.inflate(layoutInflater)
     }
