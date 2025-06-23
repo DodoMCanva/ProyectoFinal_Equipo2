@@ -40,7 +40,6 @@ class frmPrincipalActivity : AppCompatActivity() {
             drawerLayout.openDrawer(GravityCompat.START)
         }
 
-        // Personaliza la opción según el tipo de sesión
         val menu = nav.menu
         val opcion = menu.findItem(R.id.btnMenuOpcion)
 
@@ -52,7 +51,6 @@ class frmPrincipalActivity : AppCompatActivity() {
             opcion.title = "Ajustes de Consulta"
         }
 
-        // Manejo de clics en el menú lateral
         nav.setNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.btnMenuMisCitas -> {
@@ -74,7 +72,6 @@ class frmPrincipalActivity : AppCompatActivity() {
 
                 R.id.btnMenuCerrarSesion -> {
                     Toast.makeText(this, "Sesión cerrada", Toast.LENGTH_SHORT).show()
-                    // Redirigir a login si es necesario
                     drawerLayout.closeDrawer(GravityCompat.START)
                     true
                 }
