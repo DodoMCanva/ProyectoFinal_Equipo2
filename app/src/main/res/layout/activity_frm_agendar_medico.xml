@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/drawer_miscitas"
+    android:id="@+id/drawer_agendar_medico"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".frmAgendarMedicoActivity">
@@ -26,7 +26,7 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/tvMedico"
+            android:id="@+id/btnMenu"
             android:layout_width="@dimen/menu75"
             android:layout_height="@dimen/menu75"
             android:background="@drawable/ic_launcher_foreground" />
