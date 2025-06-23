@@ -12,4 +12,8 @@
     <dimen name="text18">18sp</dimen>
     <dimen name="menu75">75sp</dimen>
 
+    <dimen name="text22">22sp</dimen>
+
+
+
 </resources>
