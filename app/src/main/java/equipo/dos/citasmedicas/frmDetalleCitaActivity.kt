@@ -69,42 +69,57 @@ class frmDetalleCitaActivity : AppCompatActivity() {
         }
 
         val menu = nav.menu
-        val opcion = menu.findItem(R.id.btnMenuAjusteConsulta)
+        val opcion = menu.findItem(R.id.btnOpcion)
 
-        opcion.isVisible = false
+        if (sesion.tipoSesion() == "paciente") {
+            opcion.setTitle("Agendar")
+            opcion.setIcon(R.drawable.date48)
+        } else {
+            opcion.setTitle("Ajustar Consulta")
+            opcion.setIcon(R.drawable.settings30)
+        }
 
         nav.setNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.btnMenuMisCitas -> {
-                    var inte : Intent = Intent(this, frmPrincipalActivity::class.java)
+                    var inte: Intent = Intent(this, frmPrincipalActivity::class.java)
                     drawerLayout.closeDrawer(GravityCompat.START)
                     startActivity(inte)
                     true
                 }
+
                 R.id.btnMenuHistorial -> {
-                    var inte : Intent
+                    var inte: Intent
                     inte = Intent(this, frmHistorialActivity::class.java)
                     drawerLayout.closeDrawer(GravityCompat.START)
                     startActivity(inte)
                     true
                 }
-                R.id.btnMenuAjusteConsulta -> {
-                    var inte : Intent
-                    inte = Intent(this, AjustesConsultaActivity::class.java)
+
+                R.id.btnOpcion -> {
+                    var inte: Intent
+                    if (sesion.tipoSesion() == "paciente") {
+                        inte = Intent(this, frmAgendarActivity::class.java)
+                    } else {
+                        inte = Intent(this, AjustesConsultaActivity::class.java)
+                    }
                     drawerLayout.closeDrawer(GravityCompat.START)
                     startActivity(inte)
                     true
                 }
+
                 R.id.btnMenuCerrarSesion -> {
-                    var inte : Intent = Intent(this, frmLoginActivity::class.java)
+                    var inte: Intent = Intent(this, frmLoginActivity::class.java)
                     drawerLayout.closeDrawer(GravityCompat.START)
                     sesion.cerrarSesion()
                     startActivity(inte)
                     true
                 }
+
                 else -> false
             }
         }
+
 
         val headerView = nav.getHeaderView(0)
 

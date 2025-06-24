@@ -40,10 +40,14 @@ class frmAgendarActivity : AppCompatActivity() {
         }
 
         val menu = nav.menu
-        val opcion = menu.findItem(R.id.btnMenuAjusteConsulta)
+        val opcion = menu.findItem(R.id.btnOpcion)
 
         if (sesion.tipoSesion() == "paciente") {
-            opcion.isVisible = false
+            opcion.setTitle("Agendar")
+            opcion.setIcon(R.drawable.date48)
+        } else {
+            opcion.setTitle("Ajustar Consulta")
+            opcion.setIcon(R.drawable.settings30)
         }
 
         nav.setNavigationItemSelectedListener { item ->
@@ -61,9 +65,13 @@ class frmAgendarActivity : AppCompatActivity() {
                     startActivity(inte)
                     true
                 }
-                R.id.btnMenuAjusteConsulta -> {
+                R.id.btnOpcion -> {
                     var inte : Intent
-                    inte = Intent(this, AjustesConsultaActivity::class.java)
+                    if (sesion.tipoSesion() == "paciente"){
+                        inte = Intent(this, frmAgendarActivity::class.java)
+                    }else{
+                        inte = Intent(this, AjustesConsultaActivity::class.java)
+                    }
                     drawerLayout.closeDrawer(GravityCompat.START)
                     startActivity(inte)
                     true
@@ -78,6 +86,7 @@ class frmAgendarActivity : AppCompatActivity() {
                 else -> false
             }
         }
+
 
         val headerView = nav.getHeaderView(0)
 
