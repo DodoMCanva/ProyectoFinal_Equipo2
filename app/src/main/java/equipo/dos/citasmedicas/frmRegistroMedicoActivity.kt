@@ -3,6 +3,7 @@ package equipo.dos.citasmedicas
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
+import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
@@ -61,6 +62,21 @@ class frmRegistroMedicoActivity : AppCompatActivity() {
         cbMujer.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) cbHombre.isChecked = false
         }
+
+        // Llenar el spinner con las especialidades médicas
+        val especialidades = listOf(
+            "Cardiología", "Pediatría", "Dermatología", "Ginecología",
+            "Neurología", "Psiquiatría", "Oftalmología", "Medicina General"
+        )
+
+        val adapterEspecialidades = ArrayAdapter(
+            this,
+            android.R.layout.simple_spinner_item,
+            especialidades
+        )
+        adapterEspecialidades.setDropDownViewResource(R.layout.item_spinner_especialidad)
+        spEspecialidad.adapter = adapterEspecialidades
+
 
         btnRegistrarseMedico.setOnClickListener {
             val nombre = etNombre.text.toString().trim()
@@ -125,7 +141,7 @@ class frmRegistroMedicoActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            val intent = Intent(this, frmPrincipalActivity::class.java)
+            val intent = Intent(this, frmLoginActivity::class.java)
             intent.putExtra("tipoUsuario", "doctor")
             startActivity(intent)
         }
