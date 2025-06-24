@@ -3,8 +3,8 @@
     <string name="btnRegistrarse">Registrarse</string>
     <string name="contrasena">Contraseña</string>
     <string name="correo">Correo</string>
-    <string name="made">Hecho por</string>
-    <string name="date">Fecha</string>
+    <string name="made">Made</string>
+    <string name="date">Date</string>
     <string name="ejemplocorreo">correo@ejemplo.com</string>
     <string name="ejemploContraseña">**********</string>
     <string name="eresMedico">¿Eres médico?</string>
@@ -56,8 +56,8 @@
     <string name="fechaNacimiento">Fecha de nacimiento</string>
     <string name="telefono">Teléfono</string>
     <string name="genero">Género</string>
-    <string name="hombre">Hombre</string>
-    <string name="mujer">Mujer</string>
+    <string name="hombre">Masculino</string>
+    <string name="mujer">Femenino</string>
     <string name="dialogRecetaTitulo">Receta</string>
     <string name="dialogSubirImagen">Subir imagen</string>
     <string name="dialogRutaImagen">Ruta de la imagen</string>
@@ -91,4 +91,5 @@
     <string name="dialogConfirmacionTexto">Tu cita ha sido agendada exitosamente.</string>
     <string name="btnDialogAceptar">Aceptar</string>
     <string name="historial">Historial</string>
+    <string name="dialogConfirmacionEdicionTexto">Tus datos se han guardado exitosamente</string>
 </resources>
