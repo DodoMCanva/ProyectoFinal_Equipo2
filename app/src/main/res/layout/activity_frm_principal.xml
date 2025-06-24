@@ -133,6 +133,8 @@
             android:layout_marginTop="20dp"/>
     </LinearLayout>
 
+
+
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navegacion_menu"
         android:layout_width="wrap_content"
