@@ -33,12 +33,46 @@
         android:layout_weight="1"
         android:fillViewport="true">
 
+
+
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
             android:orientation="vertical"
             android:paddingBottom="24dp">
+
+
+            <LinearLayout
+                android:layout_width="250dp"
+                android:layout_height="100dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingTop="10dp">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/imgFotoPerfil"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:src="@drawable/usuario"
+                    android:contentDescription="Foto de perfil"
+                    app:shapeAppearanceOverlay="@style/CircularImage"
+                    android:scaleType="centerCrop" />
+
+                <Button
+                    android:id="@+id/btnCambiarFoto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Cambiar Foto"
+                    android:layout_marginLeft="10dp"
+                    android:textColor="@color/white"
+                    android:textAllCaps="false"
+                    android:backgroundTint="@color/azulBackMensajes"
+                    android:fontFamily="@font/quicksandbold" />
+            </LinearLayout>
+
 
             <TextView
                 android:layout_width="match_parent"

@@ -16,4 +16,5 @@ data class medico(var nombre : String,
                   var ciudad : String,
                   var calle : String,
                   var numero : String,
-                  var cp : String): Serializable
+                  var cp : String,
+                  var fotoPerfil: String = ""): Serializable

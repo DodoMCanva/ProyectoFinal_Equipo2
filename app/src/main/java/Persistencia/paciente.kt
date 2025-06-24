@@ -14,8 +14,8 @@ data class paciente(
     var telefono: String,
     var contrasena: String,
     var fechaNacimiento: String,
-    var genero: String
-) : Serializable {
+    var genero: String,
+    var fotoPerfil: String = "") : Serializable {
 
 
     @RequiresApi(Build.VERSION_CODES.O)

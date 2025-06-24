@@ -23,9 +23,12 @@ class frmMiPerfilActivity : AppCompatActivity() {
         ActivityFrmMiPerfilBinding.inflate(layoutInflater)
     }
 
+    private lateinit var imgFotoPerfil: ImageView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_frm_mi_perfil)
+
+        imgFotoPerfil = findViewById(R.id.imgFotoPerfil)
 
         var p : paciente? = null
         var m : medico? = null
@@ -58,6 +61,10 @@ class frmMiPerfilActivity : AppCompatActivity() {
                 genero.text = s.genero
                 opcion.setIcon(R.drawable.date48)
                 opcion.title = "Historial"
+                val fotoResId = resources.getIdentifier(s.fotoPerfil, "drawable", packageName)
+                if (fotoResId != 0) {
+                    imgFotoPerfil.setImageResource(fotoResId)
+                }
             }
             is medico -> {
                 nombre.text = s.nombre
@@ -66,6 +73,10 @@ class frmMiPerfilActivity : AppCompatActivity() {
                 genero.text = s.genero
                 opcion.setIcon(R.drawable.settings30)
                 opcion.title = "Ajustes de Consulta"
+                val fotoResId = resources.getIdentifier(s.fotoPerfil, "drawable", packageName)
+                if (fotoResId != 0) {
+                    imgFotoPerfil.setImageResource(fotoResId)
+                }
             }
             else -> {
                 Toast.makeText(this, "no se cargo correctamente la sesion", Toast.LENGTH_SHORT).show()

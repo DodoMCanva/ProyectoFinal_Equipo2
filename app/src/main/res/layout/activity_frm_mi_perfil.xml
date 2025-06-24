@@ -43,12 +43,14 @@
             android:text="Perfil"
             android:gravity="center"/>
     </LinearLayout>
-    <ImageView
-        android:id="@+id/imagenPerfil"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:background="@drawable/fotoperfil"
-        />
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imgFotoPerfil"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/usuario"
+            android:contentDescription="Foto de perfil"
+            app:shapeAppearanceOverlay="@style/CircularImage"
+            android:scaleType="centerCrop" />
     <TextView
         android:layout_marginTop="30dp"
         android:id="@+id/perfilNombre"

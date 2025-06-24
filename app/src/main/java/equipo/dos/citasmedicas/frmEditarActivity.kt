@@ -13,6 +13,7 @@ import android.widget.CheckBox
 import android.widget.DatePicker
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Spinner
 import android.widget.TextView
@@ -24,10 +25,16 @@ import java.util.Calendar
 
 class frmEditarActivity : AppCompatActivity() {
 
+    private lateinit var imgFotoPerfil: ImageView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_frm_editar)
+
+
+
 // Obtener referencia de todos los campos
+        imgFotoPerfil = findViewById(R.id.imgFotoPerfil)
         val etNombre = findViewById<EditText>(R.id.etEditarNombre)
         val tvCorreo = findViewById<TextView>(R.id.tvEditarCorreo)
         val tvFecha = findViewById<TextView>(R.id.tvFechaRegistroRegistro)
@@ -75,6 +82,11 @@ class frmEditarActivity : AppCompatActivity() {
             is medico -> {
                 val m = sesion
 
+                val fotoResId = resources.getIdentifier(m.fotoPerfil, "drawable", packageName)
+                if (fotoResId != 0) {
+                    imgFotoPerfil.setImageResource(fotoResId)
+                }
+
                 etNombre.setText(m.nombre)
                 tvCorreo.text = m.correo
                 tvFecha.text = m.fechaNacimiento
@@ -113,6 +125,11 @@ class frmEditarActivity : AppCompatActivity() {
 
             is paciente -> {
                 val p = sesion
+
+                val fotoResId = resources.getIdentifier(p.fotoPerfil, "drawable", packageName)
+                if (fotoResId != 0) {
+                    imgFotoPerfil.setImageResource(fotoResId)
+                }
 
                 etNombre.setText(p.nombre)
                 tvCorreo.text = p.correo
