@@ -51,7 +51,7 @@ class frmMiPerfilActivity : AppCompatActivity() {
         }
 
         val menu = nav.menu
-        val opcion = menu.findItem(R.id.btnMenuAjusteConsulta)
+        val opcion = menu.findItem(R.id.btnOpcion)
 
         when (val s = sesion.obtenerSesion()) {
             is paciente -> {
@@ -59,7 +59,8 @@ class frmMiPerfilActivity : AppCompatActivity() {
                 numero.text = s.correo
                 fecha.text = s.fechaNacimiento
                 genero.text = s.genero
-                opcion.isVisible = false
+                opcion.setTitle("Agendar")
+                opcion.setIcon(R.drawable.date48)
                 val fotoResId = resources.getIdentifier(s.fotoPerfil, "drawable", packageName)
                 if (fotoResId != 0) {
                     imgFotoPerfil.setImageResource(fotoResId)
@@ -70,6 +71,8 @@ class frmMiPerfilActivity : AppCompatActivity() {
                 numero.text = s.correo
                 fecha.text = s.fechaNacimiento
                 genero.text = s.genero
+                opcion.setIcon(R.drawable.settings30)
+                opcion.title = "Ajustes de Consulta"
                 val fotoResId = resources.getIdentifier(s.fotoPerfil, "drawable", packageName)
                 if (fotoResId != 0) {
                     imgFotoPerfil.setImageResource(fotoResId)
@@ -107,9 +110,13 @@ class frmMiPerfilActivity : AppCompatActivity() {
                     startActivity(inte)
                     true
                 }
-                R.id.btnMenuAjusteConsulta -> {
+                R.id.btnOpcion -> {
                     var inte : Intent
-                    inte = Intent(this, AjustesConsultaActivity::class.java)
+                    if (sesion.tipoSesion() == "paciente"){
+                        inte = Intent(this, frmAgendarActivity::class.java)
+                    }else{
+                        inte = Intent(this, AjustesConsultaActivity::class.java)
+                    }
                     drawerLayout.closeDrawer(GravityCompat.START)
                     startActivity(inte)
                     true

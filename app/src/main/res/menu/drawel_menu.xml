@@ -8,11 +8,11 @@
     <item
         android:id="@+id/btnMenuHistorial"
         android:title="Historial"
-        android:icon="@drawable/date48"/>
+        android:icon="@drawable/usuario"/>
     <item
-        android:id="@+id/btnMenuAjusteConsulta"
-        android:title="Ajuste Consulta"
-        android:icon="@drawable/settings30"/>
+        android:id="@+id/btnOpcion"
+        android:title="Opcion de Sesion"
+        android:icon="@drawable/ic_launcher_foreground"/>
     <item
         android:id="@+id/btnMenuCerrarSesion"
         android:title="Logout"
