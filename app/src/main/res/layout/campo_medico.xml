@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:fontFamily="@font/quicksandmedium"
+            android:fontFamily="@font/quicksandbold"
             android:textSize="@dimen/textcampo16"
             android:gravity="center"
             android:textColor="@color/white"
