@@ -48,30 +48,27 @@ class frmMiPerfilActivity : AppCompatActivity() {
         }
 
         val menu = nav.menu
-        val opcion = menu.findItem(R.id.btnMenuOpcion)
+        val opcion = menu.findItem(R.id.btnMenuAjusteConsulta)
 
-        if (sesion.tipoSesion() == "paciente") {
-            p = sesion as paciente?
-            if (p != null) {
-                nombre.text = p.nombre
-                numero.text = p.correo
-                fecha.text = p.fechaNacimiento
-                genero.text = p.genero
+        when (val s = sesion.obtenerSesion()) {
+            is paciente -> {
+                nombre.text = s.nombre
+                numero.text = s.correo
+                fecha.text = s.fechaNacimiento
+                genero.text = s.genero
+                opcion.isVisible = false
             }
-            opcion.setIcon(R.drawable.date48)
-            opcion.title = "Agendar"
-        }
-        if(sesion.tipoSesion() == "medico") {
-            m = sesion as medico?
-            if (m != null) {
-                nombre.text = m.nombre
-                numero.text = m.correo
-                fecha.text = m.fechaNacimiento
-                genero.text = m.genero
+            is medico -> {
+                nombre.text = s.nombre
+                numero.text = s.correo
+                fecha.text = s.fechaNacimiento
+                genero.text = s.genero
             }
-            opcion.setIcon(R.drawable.settings30)
-            opcion.title = "Ajustes de Consulta"
+            else -> {
+                Toast.makeText(this, "no se cargo correctamente la sesion", Toast.LENGTH_SHORT).show()
+            }
         }
+
         editar.setOnClickListener(){
             var inte : Intent = Intent(this, frmEditarActivity::class.java)
             startActivity(inte)
@@ -92,13 +89,16 @@ class frmMiPerfilActivity : AppCompatActivity() {
                     startActivity(inte)
                     true
                 }
-                R.id.btnMenuOpcion -> {
+                R.id.btnMenuHistorial -> {
                     var inte : Intent
-                    if (sesion.tipoSesion() == "paciente") {
-                        inte = Intent(this, frmHistorialActivity::class.java)
-                    } else {
-                        inte = Intent(this, AjustesConsultaActivity::class.java)
-                    }
+                    inte = Intent(this, frmHistorialActivity::class.java)
+                    drawerLayout.closeDrawer(GravityCompat.START)
+                    startActivity(inte)
+                    true
+                }
+                R.id.btnMenuAjusteConsulta -> {
+                    var inte : Intent
+                    inte = Intent(this, AjustesConsultaActivity::class.java)
                     drawerLayout.closeDrawer(GravityCompat.START)
                     startActivity(inte)
                     true
@@ -129,6 +129,7 @@ class frmMiPerfilActivity : AppCompatActivity() {
             drawerLayout.closeDrawer(GravityCompat.START)
             val intent = Intent(this, frmLoginActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            sesion.cerrarSesion()
             startActivity(intent)
         }
 

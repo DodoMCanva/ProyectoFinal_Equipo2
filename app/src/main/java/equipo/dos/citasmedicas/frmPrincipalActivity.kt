@@ -29,7 +29,6 @@ import java.util.Calendar
 
 class frmPrincipalActivity : AppCompatActivity() {
 
-    var adapter:AdapterCita? = null
 
     private val binding by lazy {
         ActivityFrmPrincipalBinding.inflate(layoutInflater)
@@ -39,28 +38,22 @@ class frmPrincipalActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_frm_principal)
 
-        adapter = AdapterCita(this, fakebd.citas, sesion.tipoSesion())
-        var listaCitas: ListView = findViewById(R.id.lvCitas1)
-        listaCitas.adapter=adapter
-
-
         val toolbar = findViewById<Button>(R.id.btnMenu)
         val drawerLayout = findViewById<DrawerLayout>(R.id.drawer_miscitas)
         val nav = findViewById<NavigationView>(R.id.navegacion_menu)
+        val btnAgendar: FloatingActionButton = findViewById(R.id.btnAgendar)
 
         toolbar.setOnClickListener {
             drawerLayout.openDrawer(GravityCompat.START)
         }
 
         val menu = nav.menu
-        val opcion = menu.findItem(R.id.btnMenuOpcion)
+        val opcion = menu.findItem(R.id.btnMenuAjusteConsulta)
 
         if (sesion.tipoSesion() == "paciente") {
-            opcion.setIcon(R.drawable.date48)
-            opcion.title = "Historial"
+            opcion.isVisible = false
         } else {
-            opcion.setIcon(R.drawable.settings30)
-            opcion.title = "Ajustes de Consulta"
+            btnAgendar.visibility = View.GONE
         }
 
         nav.setNavigationItemSelectedListener { item ->
@@ -71,13 +64,16 @@ class frmPrincipalActivity : AppCompatActivity() {
                     startActivity(inte)
                     true
                 }
-                R.id.btnMenuOpcion -> {
+                R.id.btnMenuHistorial -> {
                     var inte : Intent
-                    if (sesion.tipoSesion() == "paciente") {
-                        inte = Intent(this, frmHistorialActivity::class.java)
-                    } else {
-                        inte = Intent(this, AjustesConsultaActivity::class.java)
-                    }
+                    inte = Intent(this, frmHistorialActivity::class.java)
+                    drawerLayout.closeDrawer(GravityCompat.START)
+                    startActivity(inte)
+                    true
+                }
+                R.id.btnMenuAjusteConsulta -> {
+                    var inte : Intent
+                    inte = Intent(this, AjustesConsultaActivity::class.java)
                     drawerLayout.closeDrawer(GravityCompat.START)
                     startActivity(inte)
                     true
@@ -126,12 +122,24 @@ class frmPrincipalActivity : AppCompatActivity() {
             datePicker.show()
         }
 
-        val btnAgendar: FloatingActionButton = findViewById(R.id.btnAgendar)
-
         btnAgendar.setOnClickListener(){
             var inte : Intent = Intent(this, frmAgendarActivity::class.java)
             drawerLayout.closeDrawer(GravityCompat.START)
             startActivity(inte)
         }
+    }
+    var adapter1:AdapterCita? = null
+    var adapter2:AdapterCita? = null
+
+    fun cargarCitas(){
+        //se tienen que surtir
+        adapter1 = AdapterCita(this, fakebd.citas, sesion.tipoSesion())
+        var lista1Citas: ListView = findViewById(R.id.lvCitas1)
+        lista1Citas.adapter=adapter1
+
+//        adapter2 = AdapterCita(this, fakebd.citas, sesion.tipoSesion())
+//        var lista2Citas: ListView = findViewById(R.id.lvCitas2)
+//        lista2Citas.adapter = adapter1
+
     }
 }
