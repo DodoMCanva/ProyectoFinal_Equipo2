@@ -59,8 +59,7 @@ class frmMiPerfilActivity : AppCompatActivity() {
                 numero.text = s.correo
                 fecha.text = s.fechaNacimiento
                 genero.text = s.genero
-                opcion.setIcon(R.drawable.date48)
-                opcion.title = "Historial"
+                opcion.isVisible = false
                 val fotoResId = resources.getIdentifier(s.fotoPerfil, "drawable", packageName)
                 if (fotoResId != 0) {
                     imgFotoPerfil.setImageResource(fotoResId)
@@ -71,8 +70,6 @@ class frmMiPerfilActivity : AppCompatActivity() {
                 numero.text = s.correo
                 fecha.text = s.fechaNacimiento
                 genero.text = s.genero
-                opcion.setIcon(R.drawable.settings30)
-                opcion.title = "Ajustes de Consulta"
                 val fotoResId = resources.getIdentifier(s.fotoPerfil, "drawable", packageName)
                 if (fotoResId != 0) {
                     imgFotoPerfil.setImageResource(fotoResId)
