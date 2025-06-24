@@ -15,7 +15,6 @@
         android:layout_height="35dp"
         android:background="@drawable/fondo_barra" />
 
-
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -28,7 +27,6 @@
             android:layout_width="350dp"
             android:layout_height="match_parent">
 
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -37,7 +35,8 @@
                 android:text="@string/made"
                 android:textColor="@color/azulTexto"
                 android:textSize="@dimen/tituloLogin"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:layout_gravity="center_vertical"/>
 
             <ImageView
                 android:id="@+id/imagen_logo"
@@ -49,14 +48,13 @@
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:fontFamily="@font/quicksandbold"
                 android:text="@string/date"
                 android:textColor="@color/azulTexto"
                 android:textSize="@dimen/tituloLogin"
-                android:textStyle="bold" />
-
-
+                android:textStyle="bold"
+                android:layout_gravity="center_vertical"/>
         </LinearLayout>
 
 
@@ -127,13 +125,13 @@
         android:paddingBottom="8dp"
         android:text="¿Olvidaste tu contraseña?"
         android:textColor="@color/azulTexto"
-        android:textSize="@dimen/textomenu25" />
+        android:textSize="@dimen/text18" />
+
 
     <View
-        android:layout_width="280dp"
+        android:layout_width="210dp"
         android:layout_height="2dp"
         android:background="@color/azulTexto" />
-
 
     <Button
         android:id="@+id/btnIniciarSesion"
@@ -159,10 +157,10 @@
         android:padding="8dp"
         android:text="@string/btnRegistrarse"
         android:textColor="@color/azulTexto"
-        android:textSize="18sp" />
+        android:textSize="@dimen/text18" />
 
     <View
-        android:layout_width="150dp"
+        android:layout_width="100dp"
         android:layout_height="2dp"
         android:background="@color/azulTexto" />
 </LinearLayout>
