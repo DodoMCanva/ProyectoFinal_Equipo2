@@ -42,9 +42,8 @@ class frmAgendarActivity : AppCompatActivity() {
         val menu = nav.menu
         val opcion = menu.findItem(R.id.btnMenuAjusteConsulta)
 
-        if (sesion.tipoSesion() == "paciente") {
-            opcion.isVisible = false
-        }
+        opcion.isVisible = false
+
 
         nav.setNavigationItemSelectedListener { item ->
             when (item.itemId) {

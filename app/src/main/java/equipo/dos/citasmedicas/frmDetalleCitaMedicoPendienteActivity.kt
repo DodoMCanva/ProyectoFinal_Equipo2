@@ -95,9 +95,8 @@ class frmDetalleCitaMedicoPendienteActivity : AppCompatActivity() {
             drawerLayout.openDrawer(GravityCompat.START)
         }
 
-        val menu = nav.menu
-        val opcion = menu.findItem(R.id.btnMenuAjusteConsulta)
-
+        //val menu = nav.menu
+        //val opcion = menu.findItem(R.id.btnMenuAjusteConsulta)
 
         nav.setNavigationItemSelectedListener { item ->
             when (item.itemId) {
