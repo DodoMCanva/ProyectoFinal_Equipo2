@@ -50,28 +50,28 @@ class frmMiPerfilActivity : AppCompatActivity() {
         val menu = nav.menu
         val opcion = menu.findItem(R.id.btnMenuOpcion)
 
-        if (sesion.tipoSesion() == "paciente") {
-            p = sesion as paciente?
-            if (p != null) {
-                nombre.text = p.nombre
-                numero.text = p.correo
-                fecha.text = p.fechaNacimiento
-                genero.text = p.genero
+        when (val s = sesion.obtenerSesion()) {
+            is paciente -> {
+                nombre.text = s.nombre
+                numero.text = s.correo
+                fecha.text = s.fechaNacimiento
+                genero.text = s.genero
+                opcion.setIcon(R.drawable.date48)
+                opcion.title = "Historial"
             }
-            opcion.setIcon(R.drawable.date48)
-            opcion.title = "Agendar"
-        }
-        if(sesion.tipoSesion() == "medico") {
-            m = sesion as medico?
-            if (m != null) {
-                nombre.text = m.nombre
-                numero.text = m.correo
-                fecha.text = m.fechaNacimiento
-                genero.text = m.genero
+            is medico -> {
+                nombre.text = s.nombre
+                numero.text = s.correo
+                fecha.text = s.fechaNacimiento
+                genero.text = s.genero
+                opcion.setIcon(R.drawable.settings30)
+                opcion.title = "Ajustes de Consulta"
             }
-            opcion.setIcon(R.drawable.settings30)
-            opcion.title = "Ajustes de Consulta"
+            else -> {
+                Toast.makeText(this, "no se cargo correctamente la sesion", Toast.LENGTH_SHORT).show()
+            }
         }
+
         editar.setOnClickListener(){
             var inte : Intent = Intent(this, frmEditarActivity::class.java)
             startActivity(inte)
@@ -129,6 +129,7 @@ class frmMiPerfilActivity : AppCompatActivity() {
             drawerLayout.closeDrawer(GravityCompat.START)
             val intent = Intent(this, frmLoginActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            sesion.cerrarSesion()
             startActivity(intent)
         }
 

@@ -43,9 +43,7 @@ class frmPrincipalActivity : AppCompatActivity() {
         adapter1 = AdapterCita(this, fakebd.citas, sesion.tipoSesion())
         var lista1Citas: ListView = findViewById(R.id.lvCitas1)
         lista1Citas.adapter=adapter1
-        adapter2 = AdapterCita(this, fakebd.citas, sesion.tipoSesion())
-        var lista2Citas: ListView = findViewById(R.id.lvCitas2)
-        lista2Citas.adapter=adapter2
+        
 
 
         val toolbar = findViewById<Button>(R.id.btnMenu)
