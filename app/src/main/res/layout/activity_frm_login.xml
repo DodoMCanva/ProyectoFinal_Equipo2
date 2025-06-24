@@ -12,7 +12,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="24dp"
+        android:layout_height="35dp"
         android:background="@drawable/fondo_barra" />
 
 
@@ -36,7 +36,7 @@
                 android:gravity="left"
                 android:text="@string/made"
                 android:textColor="@color/azulTexto"
-                android:textSize="48sp"
+                android:textSize="@dimen/tituloLogin"
                 android:textStyle="bold" />
 
             <ImageView
@@ -53,7 +53,7 @@
                 android:fontFamily="@font/quicksandbold"
                 android:text="@string/date"
                 android:textColor="@color/azulTexto"
-                android:textSize="48sp"
+                android:textSize="@dimen/tituloLogin"
                 android:textStyle="bold" />
 
 

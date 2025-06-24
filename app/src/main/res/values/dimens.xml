@@ -14,7 +14,7 @@
     <dimen name="titulo_dialogo">35sp</dimen>
 
     <dimen name="text22">22sp</dimen>
-
+    <dimen name="tituloLogin">45sp</dimen>
 
 
 </resources>
