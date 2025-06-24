@@ -16,7 +16,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="24dp"
+                android:layout_height="35dp"
                 android:background="@drawable/fondo_barra" />
 
             <LinearLayout
@@ -210,15 +210,16 @@
                 />
         </LinearLayout>
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/btnAgendar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|end"
-                android:layout_margin="16dp"
-                android:src="@drawable/date48"
-                android:background="@drawable/btncalendarioamarillo"
-                app:tint="@color/white" />
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btnAgendar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="16dp"
+            android:src="@drawable/date48"
+            app:backgroundTint="@color/amarilloBtn"
+            app:tint="@color/white" />
+
         </LinearLayout>
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navegacion_menu"

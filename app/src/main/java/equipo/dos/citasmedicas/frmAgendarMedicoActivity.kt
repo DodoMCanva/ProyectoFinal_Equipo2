@@ -79,7 +79,7 @@ class frmAgendarMedicoActivity : AppCompatActivity() {
         val horasDisponibles = generarHorasCada30Min()
 
         val adapterHoras = ArrayAdapter(this, android.R.layout.simple_spinner_item, horasDisponibles)
-        adapterHoras.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        adapterHoras.setDropDownViewResource(R.layout.spinner_item_custom_hora)
         spHora.adapter = adapterHoras
 
         val tvHoraSeleccionada = findViewById<TextView>(R.id.tvHoraSeleccionada)
