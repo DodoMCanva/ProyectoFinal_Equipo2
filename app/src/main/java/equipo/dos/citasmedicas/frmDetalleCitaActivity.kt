@@ -46,20 +46,37 @@ class frmDetalleCitaActivity : AppCompatActivity() {
         val receta : ImageView = findViewById(R.id.ivRecetaDetallesCita)
         val cancelar : TextView = findViewById(R.id.btnCancelarCita)
 
-        val imgFotoPerfil = findViewById<ShapeableImageView>(R.id.imgFotoPerfil)
-
-        nm.setText(intent.getStringExtra("nombre"))
-        esp.setText(intent.getStringExtra("especialidad"))
-        fecha.setText(intent.getStringExtra("fecha"))
-        hora.setText(intent.getStringExtra("hora"))
-        estado.setText(intent.getStringExtra("estado"))
-        motivo.setText(intent.getStringExtra("motivo"))
-
-        if (intent.getStringExtra("estado") != "Completada"){
-            seccion.visibility = View.GONE
-            cancelar.visibility = View.GONE
+        cancelar.setOnClickListener {
+            mostrarDialogDeCancelacion()
         }
 
+        nm.text = intent.getStringExtra("nombre")
+        esp.text = intent.getStringExtra("especialidad")
+        fecha.text = intent.getStringExtra("fecha")
+        hora.text = intent.getStringExtra("hora")
+        motivo.text = intent.getStringExtra("motivo")
+
+        val estadoCita = intent.getStringExtra("estado")
+        estado.text = estadoCita
+
+        when (estadoCita) {
+            "Pendiente" -> {
+                seccion.visibility = View.GONE
+                cancelar.visibility = View.VISIBLE
+            }
+            "Completada" -> {
+                seccion.visibility = View.VISIBLE
+                cancelar.visibility = View.GONE
+            }
+            "Cancelada" -> {
+                seccion.visibility = View.GONE
+                cancelar.visibility = View.GONE
+            }
+            else -> {
+                seccion.visibility = View.GONE
+                cancelar.visibility = View.GONE
+            }
+        }
         val drawerLayout = findViewById<DrawerLayout>(R.id.drawer_detalle_cita)
         val toolbar = findViewById<Button>(R.id.btnMenu)
         val nav = findViewById<NavigationView>(R.id.navegacion_menu)
@@ -156,4 +173,36 @@ class frmDetalleCitaActivity : AppCompatActivity() {
         }
 
     }
+    private fun mostrarDialogDeCancelacion() {
+        val dialog = Dialog(this)
+        dialog.setContentView(R.layout.dialog_cancelar_cita)
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+
+        val btnConfirmar = dialog.findViewById<Button>(R.id.btnConfirmarCancelacion)
+        val btnAtras = dialog.findViewById<Button>(R.id.btnAtrasCancelacion)
+
+        btnConfirmar.setOnClickListener {
+            dialog.dismiss()
+            actualizarCancelado()
+        }
+
+        btnAtras.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.show()
+    }
+
+    private fun actualizarCancelado() {
+        val estado: TextView = findViewById(R.id.tvEstadoD)
+        val seccion: LinearLayout = findViewById(R.id.sdr)
+        val cancelar: TextView = findViewById(R.id.btnCancelarCita)
+
+        estado.text = "Cancelada"
+        seccion.visibility = View.GONE
+        cancelar.visibility = View.GONE
+
+        Toast.makeText(this, "Cita cancelada", Toast.LENGTH_SHORT).show()
+    }
 }
+
