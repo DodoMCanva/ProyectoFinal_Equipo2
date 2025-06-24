@@ -8,7 +8,7 @@
     <item
         android:id="@+id/btnMenuHistorial"
         android:title="Historial"
-        android:icon="@drawable/usuario"/>
+        android:icon="@drawable/historialblanco"/>
     <item
         android:id="@+id/btnOpcion"
         android:title="Opcion de Sesion"
