@@ -3,10 +3,16 @@ package equipo.dos.citasmedicas
 import Persistencia.medico
 import Persistencia.paciente
 import Persistencia.sesion
+import android.annotation.SuppressLint
+import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -23,11 +29,33 @@ class frmDetalleCitaActivity : AppCompatActivity() {
         ActivityFrmPrincipalBinding.inflate(layoutInflater)
     }
 
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_frm_detalle_cita)
 
+        val nm : TextView = findViewById(R.id.tvMedicoD)
+        val esp : TextView = findViewById(R.id.tvEspecialidadD)
+        val fecha : TextView = findViewById(R.id.tvFechaD)
+        val hora : TextView = findViewById(R.id.tvHoraD)
+        val estado : TextView = findViewById(R.id.tvEstadoD)
+        val motivo : TextView = findViewById(R.id.tvMotivoD)
+        val seccion : LinearLayout = findViewById(R.id.sdr)
+        val receta : ImageView = findViewById(R.id.ivRecetaDetallesCita)
+        val cancelar : TextView = findViewById(R.id.btnCancelarCita)
+
+        nm.setText(intent.getStringExtra("nombre"))
+        esp.setText(intent.getStringExtra("especialidad"))
+        fecha.setText(intent.getStringExtra("fecha"))
+        hora.setText(intent.getStringExtra("hora"))
+        estado.setText(intent.getStringExtra("estado"))
+        motivo.setText(intent.getStringExtra("motivo"))
+
+        if (intent.getStringExtra("estado") != "Completada"){
+            seccion.visibility = View.GONE
+            cancelar.visibility = View.GONE
+        }
 
         val drawerLayout = findViewById<DrawerLayout>(R.id.drawer_detalle_cita)
         val toolbar = findViewById<Button>(R.id.btnMenu)
@@ -38,15 +66,9 @@ class frmDetalleCitaActivity : AppCompatActivity() {
         }
 
         val menu = nav.menu
-        val opcion = menu.findItem(R.id.btnMenuOpcion)
+        val opcion = menu.findItem(R.id.btnMenuAjusteConsulta)
 
-        if (sesion.tipoSesion() == "paciente") {
-            opcion.setIcon(R.drawable.date48)
-            opcion.title = "Historial"
-        } else {
-            opcion.setIcon(R.drawable.settings30)
-            opcion.title = "Ajustes de Consulta"
-        }
+        opcion.isVisible = false
 
         nav.setNavigationItemSelectedListener { item ->
             when (item.itemId) {
@@ -56,7 +78,7 @@ class frmDetalleCitaActivity : AppCompatActivity() {
                     startActivity(inte)
                     true
                 }
-                R.id.btnMenuOpcion -> {
+                R.id.btnMenuAjusteConsulta -> {
                     var inte : Intent
                     if (sesion.tipoSesion() == "paciente") {
                         inte = Intent(this, frmHistorialActivity::class.java)

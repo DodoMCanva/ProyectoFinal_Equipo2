@@ -29,8 +29,7 @@ import java.util.Calendar
 
 class frmPrincipalActivity : AppCompatActivity() {
 
-    var adapter1:AdapterCita? = null
-    var adapter2:AdapterCita? = null
+    var adapter:AdapterCita? = null
 
     private val binding by lazy {
         ActivityFrmPrincipalBinding.inflate(layoutInflater)
@@ -39,12 +38,7 @@ class frmPrincipalActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_frm_principal)
-
-        adapter1 = AdapterCita(this, fakebd.citas, sesion.tipoSesion())
-        var lista1Citas: ListView = findViewById(R.id.lvCitas1)
-        lista1Citas.adapter=adapter1
-        
-
+        cargarCitas()
 
         val toolbar = findViewById<Button>(R.id.btnMenu)
         val drawerLayout = findViewById<DrawerLayout>(R.id.drawer_miscitas)
@@ -56,15 +50,11 @@ class frmPrincipalActivity : AppCompatActivity() {
         }
 
         val menu = nav.menu
-        val opcion = menu.findItem(R.id.btnMenuOpcion)
+        val opcion = menu.findItem(R.id.btnMenuAjusteConsulta)
 
         if (sesion.tipoSesion() == "paciente") {
-            opcion.setIcon(R.drawable.date48)
-            opcion.title = "Historial"
-
+            opcion.isVisible = false
         } else {
-            opcion.setIcon(R.drawable.settings30)
-            opcion.title = "Ajustes de Consulta"
             btnAgendar.visibility = View.GONE
         }
 
@@ -76,13 +66,16 @@ class frmPrincipalActivity : AppCompatActivity() {
                     startActivity(inte)
                     true
                 }
-                R.id.btnMenuOpcion -> {
+                R.id.btnMenuHistorial -> {
                     var inte : Intent
-                    if (sesion.tipoSesion() == "paciente") {
-                        inte = Intent(this, frmHistorialActivity::class.java)
-                    } else {
-                        inte = Intent(this, AjustesConsultaActivity::class.java)
-                    }
+                    inte = Intent(this, frmHistorialActivity::class.java)
+                    drawerLayout.closeDrawer(GravityCompat.START)
+                    startActivity(inte)
+                    true
+                }
+                R.id.btnMenuAjusteConsulta -> {
+                    var inte : Intent
+                    inte = Intent(this, AjustesConsultaActivity::class.java)
                     drawerLayout.closeDrawer(GravityCompat.START)
                     startActivity(inte)
                     true
@@ -136,5 +129,10 @@ class frmPrincipalActivity : AppCompatActivity() {
             drawerLayout.closeDrawer(GravityCompat.START)
             startActivity(inte)
         }
+    }
+    fun cargarCitas() {
+        adapter = AdapterCita(this, fakebd.citas, sesion.tipoSesion())
+        var listaCitas: ListView = findViewById(R.id.lvCitas)
+        listaCitas.adapter = adapter
     }
 }

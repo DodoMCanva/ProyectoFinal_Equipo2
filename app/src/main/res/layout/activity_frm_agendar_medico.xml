@@ -27,9 +27,12 @@
 
         <Button
             android:id="@+id/btnMenu"
+            android:layout_marginLeft="15dp"
             android:layout_width="@dimen/menu50"
             android:layout_height="@dimen/menu50"
-            android:background="@drawable/ic_launcher_foreground" />
+            android:background="@drawable/menuazul100"
+            android:layout_marginTop="0dp"/>
+
 
         <TextView
             android:layout_width="match_parent"

@@ -92,12 +92,8 @@ class frmAgendarMedicoActivity : AppCompatActivity() {
             }
         }
 
-        //btnConfirmar
-
         val btnConfirmar = findViewById<Button>(R.id.btnConfirmar)
         val txtMotivo = findViewById<EditText>(R.id.txtMotivo)
-
-
 
         btnConfirmar.setOnClickListener {
             val fecha = tvFecha.text.toString()
@@ -114,8 +110,8 @@ class frmAgendarMedicoActivity : AppCompatActivity() {
             dialog.setContentView(R.layout.dialog_confirmacion_cita) 
             dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
             dialog.window?.setLayout(
-                (resources.displayMetrics.widthPixels * 0.9).toInt(),  // 90% ancho pantalla
-                ViewGroup.LayoutParams.WRAP_CONTENT                     // alto ajustado al contenido
+                (resources.displayMetrics.widthPixels * 0.9).toInt(),
+                ViewGroup.LayoutParams.WRAP_CONTENT
             )
 
             val btnAceptar = dialog.findViewById<Button>(R.id.btnConfirmarCancelacion)
@@ -138,27 +134,16 @@ class frmAgendarMedicoActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-
-
-        //menu desplegable
         val medico = intent.getSerializableExtra("medico") as? medico
 
         if (medico != null) {
             val tvNombre = findViewById<TextView>(R.id.tvAgendarNombre)
             val tvMonto = findViewById<TextView>(R.id.tvMonto)
-
             tvNombre.text = medico.nombre
             tvMonto.text = "$${medico.costoConsulta}"
         } else {
             Toast.makeText(this, "Médico no recibido", Toast.LENGTH_SHORT).show()
             finish()
-        }
-
-        val sesion = intent.getSerializableExtra("sesion")
-        val tipoSesion: String = when (sesion) {
-            is paciente -> "paciente"
-            is medico -> "medico"
-            else -> "no asignado"
         }
 
         val drawerLayout = findViewById<DrawerLayout>(R.id.drawer_agendar_medico)
@@ -170,15 +155,9 @@ class frmAgendarMedicoActivity : AppCompatActivity() {
         }
 
         val menu = nav.menu
-        val opcion = menu.findItem(R.id.btnMenuOpcion)
+        val opcion = menu.findItem(R.id.btnMenuAjusteConsulta)
 
-        if (tipoSesion == "paciente") {
-            opcion.setIcon(R.drawable.date48)
-            opcion.title = "Agendar"
-        } else {
-            opcion.setIcon(R.drawable.settings30)
-            opcion.title = "Ajustes de Consulta"
-        }
+        opcion.isVisible = false
 
         nav.setNavigationItemSelectedListener { item ->
             when (item.itemId) {
@@ -188,13 +167,16 @@ class frmAgendarMedicoActivity : AppCompatActivity() {
                     startActivity(inte)
                     true
                 }
-                R.id.btnMenuOpcion -> {
+                R.id.btnMenuHistorial -> {
                     var inte : Intent
-                    if (tipoSesion == "paciente") {
-                        inte = Intent(this, frmAgendarActivity::class.java)
-                    } else {
-                        inte = Intent(this, AjustesConsultaActivity::class.java)
-                    }
+                    inte = Intent(this, frmHistorialActivity::class.java)
+                    drawerLayout.closeDrawer(GravityCompat.START)
+                    startActivity(inte)
+                    true
+                }
+                R.id.btnMenuAjusteConsulta -> {
+                    var inte : Intent
+                    inte = Intent(this, AjustesConsultaActivity::class.java)
                     drawerLayout.closeDrawer(GravityCompat.START)
                     startActivity(inte)
                     true
@@ -202,10 +184,10 @@ class frmAgendarMedicoActivity : AppCompatActivity() {
                 R.id.btnMenuCerrarSesion -> {
                     var inte : Intent = Intent(this, frmLoginActivity::class.java)
                     drawerLayout.closeDrawer(GravityCompat.START)
+                    Persistencia.sesion.cerrarSesion()
                     startActivity(inte)
                     true
                 }
-
                 else -> false
             }
         }
@@ -224,11 +206,5 @@ class frmAgendarMedicoActivity : AppCompatActivity() {
         btnMenuCerrar.setOnClickListener{
             drawerLayout.closeDrawer(GravityCompat.START)
         }
-
-
-
-
-
-
     }
 }

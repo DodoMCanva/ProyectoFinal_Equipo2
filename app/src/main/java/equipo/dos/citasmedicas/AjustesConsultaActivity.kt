@@ -43,14 +43,10 @@ class AjustesConsultaActivity : AppCompatActivity() {
         }
 
         val menu = nav.menu
-        val opcion = menu.findItem(R.id.btnMenuOpcion)
+        val opcion = menu.findItem(R.id.btnMenuAjusteConsulta)
 
         if (tipoSesion == "paciente") {
-            opcion.setIcon(R.drawable.date48)
-            opcion.title = "Agendar"
-        } else {
-            opcion.setIcon(R.drawable.settings30)
-            opcion.title = "Ajustes de Consulta"
+            opcion.isVisible = false
         }
 
         nav.setNavigationItemSelectedListener { item ->
@@ -61,13 +57,16 @@ class AjustesConsultaActivity : AppCompatActivity() {
                     startActivity(inte)
                     true
                 }
-                R.id.btnMenuOpcion -> {
+                R.id.btnMenuHistorial -> {
                     var inte : Intent
-                    if (tipoSesion == "paciente") {
-                        inte = Intent(this, frmAgendarActivity::class.java)
-                    } else {
-                        inte = Intent(this, AjustesConsultaActivity::class.java)
-                    }
+                    inte = Intent(this, frmHistorialActivity::class.java)
+                    drawerLayout.closeDrawer(GravityCompat.START)
+                    startActivity(inte)
+                    true
+                }
+                R.id.btnMenuAjusteConsulta -> {
+                    var inte : Intent
+                    inte = Intent(this, AjustesConsultaActivity::class.java)
                     drawerLayout.closeDrawer(GravityCompat.START)
                     startActivity(inte)
                     true
@@ -75,10 +74,10 @@ class AjustesConsultaActivity : AppCompatActivity() {
                 R.id.btnMenuCerrarSesion -> {
                     var inte : Intent = Intent(this, frmLoginActivity::class.java)
                     drawerLayout.closeDrawer(GravityCompat.START)
+                    Persistencia.sesion.cerrarSesion()
                     startActivity(inte)
                     true
                 }
-
                 else -> false
             }
         }
