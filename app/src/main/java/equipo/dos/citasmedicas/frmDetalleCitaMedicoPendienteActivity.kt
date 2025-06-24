@@ -157,6 +157,15 @@ class frmDetalleCitaMedicoPendienteActivity : AppCompatActivity() {
             btnCancelarReceta.setOnClickListener {
                 dialog.dismiss()
             }
+            val btnCompletar = dialog.findViewById<Button>(R.id.btnCompletar)
+            btnCompletar.setOnClickListener {
+
+                seccionReceta.visibility = View.VISIBLE
+
+                seccionBotones.visibility = View.GONE
+                dialog.dismiss()
+                actualizarUIACompletada()
+            }
             dialog.show()
         }
 
@@ -169,7 +178,8 @@ class frmDetalleCitaMedicoPendienteActivity : AppCompatActivity() {
 
             val btnCancelarReprogramacion = dialog.findViewById<Button>(R.id.btnCancelarRep)
             btnCancelarReprogramacion.setOnClickListener {
-            dialog.dismiss()
+                dialog.dismiss()
+
             }
             dialog.show()
         }
@@ -178,16 +188,44 @@ class frmDetalleCitaMedicoPendienteActivity : AppCompatActivity() {
             val dialog = Dialog(this)
             dialog.setContentView(R.layout.dialog_cancelar_cita)
             dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-            dialog.window?.setLayout(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-            )
+
+            val width = (resources.displayMetrics.widthPixels * 0.90).toInt()
+            dialog.window?.setLayout(width, ViewGroup.LayoutParams.WRAP_CONTENT)
             val btnAtras = dialog.findViewById<Button>(R.id.btnAtrasCancelacion)
             btnAtras.setOnClickListener {
                 dialog.dismiss()
             }
+
+
+            val btnConfirmar = dialog.findViewById<Button>(R.id.btnConfirmarCancelacion)
+            btnConfirmar.setOnClickListener {
+                dialog.dismiss()
+                actualizarUIAcancelado()
+            }
+
+
+
             dialog.show()
         }
 
+    }
+
+    private fun actualizarUIAcancelado() {
+        val campoEstado: TextView = findViewById(R.id.tvEstadoDetalleCitaMedico)
+        val seccionBotones: LinearLayout = findViewById(R.id.llSeccionOpcionesDetallesCita)
+        val seccionReceta: LinearLayout = findViewById(R.id.llSeccionRecteaDetalleCita)
+
+        campoEstado.text = "Cancelada"
+        seccionBotones.visibility = View.GONE
+        seccionReceta.visibility = View.GONE
+
+        Toast.makeText(this, "Cita cancelada", Toast.LENGTH_SHORT).show()
+
+    }
+
+    private fun actualizarUIACompletada() {
+        val campoEstado: TextView = findViewById(R.id.tvEstadoDetalleCitaMedico)
+        campoEstado.text = "Completada"
+        Toast.makeText(this, "Cita completada y receta lista!", Toast.LENGTH_SHORT).show()
     }
 }
