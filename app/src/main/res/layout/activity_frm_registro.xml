@@ -11,7 +11,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="24dp"
+        android:layout_height="35dp"
         android:background="@drawable/fondo_barra" />
 
     <TextView
@@ -107,8 +107,7 @@
                     android:text="29/05/2025"
                     android:textSize="@dimen/text18"
                     android:gravity="center_vertical"
-                    android:enabled="false"
-                    />
+                    android:enabled="false" />
 
                 <ImageButton
                     android:id="@+id/btnCalendarioRegistroMedico"
