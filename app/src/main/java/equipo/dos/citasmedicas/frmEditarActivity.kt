@@ -2,11 +2,17 @@ package equipo.dos.citasmedicas
 
 import Persistencia.medico
 import Persistencia.paciente
+import android.app.DatePickerDialog
+import android.app.Dialog
+import android.content.Intent
 import android.os.Bundle
+import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.CheckBox
+import android.widget.DatePicker
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.Spinner
 import android.widget.TextView
@@ -14,6 +20,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import equipo.dos.citasmedicas.databinding.ActivityFrmEditarBinding
 import equipo.dos.citasmedicas.databinding.ActivityFrmPrincipalBinding
+import java.util.Calendar
 
 class frmEditarActivity : AppCompatActivity() {
 
@@ -37,6 +44,29 @@ class frmEditarActivity : AppCompatActivity() {
         val etNumero = findViewById<EditText>(R.id.etEditarNumero)
         val etCP = findViewById<EditText>(R.id.etEditarCodigoPostal)
 
+
+        //calendario
+        val btnCalendario = findViewById<ImageButton>(R.id.btnCalendarioRegistroMedico)
+
+        btnCalendario.setOnClickListener {
+            val calendario = Calendar.getInstance()
+            val anio = calendario.get(Calendar.YEAR)
+            val mes = calendario.get(Calendar.MONTH)
+            val dia = calendario.get(Calendar.DAY_OF_MONTH)
+
+            val datePicker = DatePickerDialog(this, { _: DatePicker, year: Int, month: Int, dayOfMonth: Int ->
+                val fechaSeleccionada = String.format("%02d/%02d/%04d", dayOfMonth, month + 1, year)
+                tvFecha.text = fechaSeleccionada
+            }, anio, mes, dia)
+
+            datePicker.show()
+        }
+
+
+
+        cbHombre.setOnCheckedChangeListener(null)
+        cbMujer.setOnCheckedChangeListener(null)
+
         // Recuperar objeto recibido
         val sesion = Persistencia.sesion.sesion
 
@@ -50,8 +80,11 @@ class frmEditarActivity : AppCompatActivity() {
                 tvFecha.text = m.fechaNacimiento
                 etTelefono.setText(m.telefono)
 
-                if (m.genero.equals("Hombre", ignoreCase = true)) cbHombre.isChecked = true
-                else if (m.genero.equals("Mujer", ignoreCase = true)) cbMujer.isChecked = true
+                // Cargar género correctamente
+                when (m.genero.trim().lowercase()) {
+                    "masculino" -> cbHombre.isChecked = true
+                    "femenino" -> cbMujer.isChecked = true
+                }
 
                 seccionMedico.visibility = LinearLayout.VISIBLE
 
@@ -65,7 +98,7 @@ class frmEditarActivity : AppCompatActivity() {
                     android.R.layout.simple_spinner_item,
                     especialidades
                 )
-                adapterEspecialidades.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                adapterEspecialidades.setDropDownViewResource(R.layout.item_spinner_especialidad)
                 spEspecialidad.adapter = adapterEspecialidades
 
                 val posicion = adapterEspecialidades.getPosition(m.especialidad)
@@ -86,18 +119,25 @@ class frmEditarActivity : AppCompatActivity() {
                 tvFecha.text = p.fechaNacimiento
                 etTelefono.setText(p.telefono)
 
-                if (p.genero.equals("Hombre", ignoreCase = true)) cbHombre.isChecked = true
-                else if (p.genero.equals("Mujer", ignoreCase = true)) cbMujer.isChecked = true
+                // Cargar género correctamente
+                when (p.genero.trim().lowercase()) {
+                    "masculino" -> cbHombre.isChecked = true
+                    "femenino" -> cbMujer.isChecked = true
+                }
 
                 seccionMedico.visibility = LinearLayout.GONE
             }
-
-
-
             else -> {
                 Toast.makeText(this, "No se pudo cargar la sesión", Toast.LENGTH_SHORT).show()
                 finish()
             }
+        }
+
+        cbHombre.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) cbMujer.isChecked = false
+        }
+        cbMujer.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) cbHombre.isChecked = false
         }
 
         // Botón cancelar (volver)
@@ -107,8 +147,55 @@ class frmEditarActivity : AppCompatActivity() {
 
         // Botón guardar
         findViewById<Button>(R.id.btnGuardar).setOnClickListener {
-            // Aquí colocas la lógica para guardar cambios (ya sea en base de datos o en memoria temporal)
-            Toast.makeText(this, "Cambios guardados (falta implementar lógica)", Toast.LENGTH_SHORT).show()
+
+            //mostrar el diálogo
+            val dialog = Dialog(this)
+            dialog.setContentView(R.layout.dialog_confirmacion_edicion)
+            dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+            dialog.window?.setLayout(
+                (resources.displayMetrics.widthPixels * 0.9).toInt(),  // 90% ancho pantalla
+                ViewGroup.LayoutParams.WRAP_CONTENT                     // alto ajustado al contenido
+            )
+
+            val btnAceptar = dialog.findViewById<Button>(R.id.btnConfirmarEdicion)
+
+            btnAceptar.setOnClickListener {
+                val nombre = etNombre.text.toString().trim()
+                val telefono = etTelefono.text.toString().trim()
+                val generoSeleccionado = when {
+                    cbHombre.isChecked -> "Masculino"
+                    cbMujer.isChecked -> "Femenino"
+                    else -> ""
+                }
+
+                if (sesion is medico) {
+                    val m = sesion
+                    m.nombre = nombre
+                    m.telefono = telefono
+                    m.genero = generoSeleccionado
+                    m.especialidad = spEspecialidad.selectedItem.toString()
+                    m.cedula = etCedula.text.toString().trim()
+                    m.estado = etEstado.text.toString().trim()
+                    m.calle = etCalle.text.toString().trim()
+                    m.numero = etNumero.text.toString().trim()
+                    m.cp = etCP.text.toString().trim()
+                    m.fechaNacimiento = tvFecha.text.toString().trim()
+                } else if (sesion is paciente) {
+                    val p = sesion
+                    p.nombre = nombre
+                    p.telefono = telefono
+                    p.genero = generoSeleccionado
+                }
+                val intent = Intent(this, frmMiPerfilActivity::class.java)
+                intent.putExtra("sesion", sesion)
+                startActivity(intent)
+                dialog.dismiss()
+
+            }
+
+            dialog.show()
+
+            Toast.makeText(this, "Cambios guardados correctamente", Toast.LENGTH_SHORT).show()
         }
     }
 }

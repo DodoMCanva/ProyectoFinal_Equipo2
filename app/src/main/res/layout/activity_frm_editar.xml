@@ -38,14 +38,16 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
             android:orientation="vertical"
-            android:paddingBottom="24dp"> <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="10dp"
-            android:text="@string/nombre"
-            android:textColor="@color/azulTexto"
-            android:fontFamily="@font/quicksandbold"
-            android:textSize="@dimen/text18" />
+            android:paddingBottom="24dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:text="@string/nombre"
+                android:textColor="@color/azulTexto"
+                android:fontFamily="@font/quicksandbold"
+                android:textSize="@dimen/text18" />
 
             <EditText
                 android:id="@+id/etEditarNombre"
@@ -56,7 +58,7 @@
                 android:background="@color/white"
                 android:inputType="textPersonName"
                 android:hint="Fernando Jose..."
-                android:textColor="@color/azulTexto" />
+                android:textColor="@color/black" />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -96,6 +98,7 @@
                     android:minHeight="48dp"
                     android:text="29/05/2025"
                     android:textSize="@dimen/text18"
+                    android:textColor="@color/black"
                     android:gravity="center"/>
 
                 <ImageButton
@@ -125,7 +128,8 @@
                 android:background="@color/white"
                 android:inputType="phone"
                 android:hint="644 158 1235"
-                android:textColor="@color/azulTexto" />
+                android:textColor="@color/black"
+                />
 
             <TextView
                 android:layout_width="match_parent"
@@ -181,6 +185,7 @@
                     android:paddingVertical="12dp"
                     android:background="@color/white"
                     android:spinnerMode="dropdown"
+                    android:textColor="@color/black"
                     android:dropDownVerticalOffset="?attr/actionBarSize" />
 
                 <TextView
@@ -201,7 +206,7 @@
                     android:background="@color/white"
                     android:inputType="text"
                     android:hint="DJS2U3CJS88"
-                    android:textColor="@color/azulTexto" />
+                    android:textColor="@color/black" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -221,7 +226,7 @@
                     android:background="@color/white"
                     android:inputType="text"
                     android:hint="Sonora"
-                    android:textColor="@color/azulTexto" />
+                    android:textColor="@color/black"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -241,7 +246,7 @@
                     android:background="@color/white"
                     android:inputType="text"
                     android:hint="No Releccion"
-                    android:textColor="@color/azulTexto" />
+                    android:textColor="@color/black" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -261,7 +266,7 @@
                     android:background="@color/white"
                     android:inputType="number"
                     android:hint="2905"
-                    android:textColor="@color/azulTexto" />
+                    android:textColor="@color/black" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -281,7 +286,7 @@
                     android:background="@color/white"
                     android:inputType="number"
                     android:hint="8500"
-                    android:textColor="@color/azulTexto" />
+                    android:textColor="@color/black"/>
             </LinearLayout>
 
             <LinearLayout

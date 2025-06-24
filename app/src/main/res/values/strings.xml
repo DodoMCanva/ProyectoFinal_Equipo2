@@ -89,6 +89,6 @@
     <string name="largetext">Editar Perfil</string>
     <string name="dialogConfirmarTitulo">Confirmación</string>
     <string name="dialogConfirmacionTexto">Tu cita ha sido agendada exitosamente</string>
-    <string name="btnDialogAceptar">Aceptar</string>
+
 
 </resources>
