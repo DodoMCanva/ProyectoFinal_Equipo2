@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
 import equipo.dos.citasmedicas.R
 import equipo.dos.citasmedicas.frmAgendarMedicoActivity
 import equipo.dos.citasmedicas.frmDetalleCitaActivity
@@ -29,6 +30,17 @@ class AdapterCita(context: Context, val lista: ArrayList<cita>, tipo : String): 
             vista.findViewById<TextView>(R.id.citaPaciente).text = c.paciente.nombre
             vista.findViewById<TextView>(R.id.citaMotivo).text = c.motivo
             vista.findViewById<TextView>(R.id.citaEstado).text = c.estado
+            when (c.estado) {
+                "Completada" -> {
+                    vista.setBackgroundColor(ContextCompat.getColor(context, R.color.BackCitaCompletada))
+                }
+                "Pendiente" -> {
+                    vista.setBackgroundColor(ContextCompat.getColor(context, R.color.BackCitaPendiente))
+                }
+                "Cancelada" -> {
+                    vista.setBackgroundColor(ContextCompat.getColor(context, R.color.BackCitaCancelada))
+                }
+            }
             val selCita = vista.findViewById<LinearLayout>(R.id.panelCitaMedico)
             selCita.setOnClickListener {
                 val intent = Intent(context, frmDetalleCitaMedicoPendienteActivity::class.java)
