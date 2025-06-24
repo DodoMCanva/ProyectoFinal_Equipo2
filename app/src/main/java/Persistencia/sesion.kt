@@ -8,7 +8,19 @@ object sesion {
     fun asignarSesion(s: Serializable?) {
         sesion = s
     }
-    fun getSesionPaciente(): Serializable? {
+    fun obtenerSesion(): Serializable? {
         return sesion
+    }
+
+    fun tipoSesion():String{
+        return when (sesion) {
+            is paciente -> "paciente"
+            is medico -> "medico"
+            else -> "no asignado"
+        }
+    }
+
+    fun cerrarSesion(){
+        sesion = null
     }
 }

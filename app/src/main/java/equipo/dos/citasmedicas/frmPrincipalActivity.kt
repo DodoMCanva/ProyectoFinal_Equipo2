@@ -5,6 +5,7 @@ import Persistencia.AdapterMedico
 import Persistencia.fakebd
 import Persistencia.medico
 import Persistencia.paciente
+import Persistencia.sesion
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
@@ -21,6 +22,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import equipo.dos.citasmedicas.databinding.ActivityFrmPrincipalBinding
 import java.util.Calendar
@@ -37,21 +39,14 @@ class frmPrincipalActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_frm_principal)
 
-        val sesion = intent.getSerializableExtra("sesion")
-        val tipoSesion: String = when (sesion) {
-            is paciente -> "paciente"
-            is medico -> "medico"
-            else -> "no asignado"
-        }
-
-        adapter= AdapterCita(this, fakebd.citas, tipoSesion)
-        var listaCitas: ListView = findViewById(R.id.lvCitas)
+        adapter = AdapterCita(this, fakebd.citas, sesion.tipoSesion())
+        var listaCitas: ListView = findViewById(R.id.lvCitas1)
         listaCitas.adapter=adapter
 
-        val drawerLayout = findViewById<DrawerLayout>(R.id.drawer_miscitas)
-        val toolbar = findViewById<Button>(R.id.btnMenu)
-        val nav = findViewById<NavigationView>(R.id.navegacion_menu)
 
+        val toolbar = findViewById<Button>(R.id.btnMenu)
+        val drawerLayout = findViewById<DrawerLayout>(R.id.drawer_miscitas)
+        val nav = findViewById<NavigationView>(R.id.navegacion_menu)
 
         toolbar.setOnClickListener {
             drawerLayout.openDrawer(GravityCompat.START)
@@ -60,9 +55,9 @@ class frmPrincipalActivity : AppCompatActivity() {
         val menu = nav.menu
         val opcion = menu.findItem(R.id.btnMenuOpcion)
 
-        if (tipoSesion == "paciente") {
+        if (sesion.tipoSesion() == "paciente") {
             opcion.setIcon(R.drawable.date48)
-            opcion.title = "Agendar"
+            opcion.title = "Historial"
         } else {
             opcion.setIcon(R.drawable.settings30)
             opcion.title = "Ajustes de Consulta"
@@ -78,12 +73,10 @@ class frmPrincipalActivity : AppCompatActivity() {
                 }
                 R.id.btnMenuOpcion -> {
                     var inte : Intent
-                    if (tipoSesion == "paciente") {
-                        inte = Intent(this, frmAgendarActivity::class.java)
-                        inte.putExtra("sesion", intent.getSerializableExtra("sesion"))
+                    if (sesion.tipoSesion() == "paciente") {
+                        inte = Intent(this, frmHistorialActivity::class.java)
                     } else {
                         inte = Intent(this, AjustesConsultaActivity::class.java)
-                        inte.putExtra("sesion", intent.getSerializableExtra("sesion"))
                     }
                     drawerLayout.closeDrawer(GravityCompat.START)
                     startActivity(inte)
@@ -95,7 +88,6 @@ class frmPrincipalActivity : AppCompatActivity() {
                     startActivity(inte)
                     true
                 }
-
                 else -> false
             }
         }
@@ -106,7 +98,6 @@ class frmPrincipalActivity : AppCompatActivity() {
 
         btnPerfil.setOnClickListener{
             var inte : Intent = Intent(this, frmMiPerfilActivity::class.java)
-            inte.putExtra("sesion", intent.getSerializableExtra("sesion"))
             drawerLayout.closeDrawer(GravityCompat.START)
             startActivity(inte)
             true
@@ -114,11 +105,9 @@ class frmPrincipalActivity : AppCompatActivity() {
 
         btnMenuCerrar.setOnClickListener{
             drawerLayout.closeDrawer(GravityCompat.START)
-            val intent = Intent(this, frmLoginActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(intent)
+            true
         }
-        //calendario
+
         val btnCalendario = findViewById<ImageButton>(R.id.btnCalendarioConsultaCitas)
         val tvFecha = findViewById<TextView>(R.id.tvConsultaFecha)
 
@@ -136,7 +125,12 @@ class frmPrincipalActivity : AppCompatActivity() {
             datePicker.show()
         }
 
+        val btnAgendar: FloatingActionButton = findViewById(R.id.btnAgendar)
 
-
+        btnAgendar.setOnClickListener(){
+            var inte : Intent = Intent(this, frmAgendarActivity::class.java)
+            drawerLayout.closeDrawer(GravityCompat.START)
+            startActivity(inte)
+        }
     }
 }
