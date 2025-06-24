@@ -2,6 +2,7 @@ package equipo.dos.citasmedicas
 
 import Persistencia.medico
 import Persistencia.paciente
+import Persistencia.sesion
 import android.app.DatePickerDialog
 import android.app.Dialog
 import android.content.Intent
@@ -80,12 +81,7 @@ class frmDetalleCitaMedicoPendienteActivity : AppCompatActivity() {
         campoEstado.setText(intent.getStringExtra("estado"))
         campoMotivo.setText(intent.getStringExtra("motivo"))
 
-        val sesion = intent.getSerializableExtra("sesion")
-        val tipoSesion: String = when (sesion) {
-            is paciente -> "paciente"
-            is medico -> "medico"
-            else -> "no asignado"
-        }
+
 
         val drawerLayout = binding.drawerDetalleCitaMedico
         val toolbar =
@@ -100,9 +96,9 @@ class frmDetalleCitaMedicoPendienteActivity : AppCompatActivity() {
         val menu = nav.menu
         val opcion = menu.findItem(R.id.btnMenuOpcion)
 
-        if (tipoSesion == "paciente") {
+        if (sesion.tipoSesion() == "paciente") {
             opcion.setIcon(R.drawable.date48)
-            opcion.title = "Agendar"
+            opcion.title = "Historial"
         } else {
             opcion.setIcon(R.drawable.settings30)
             opcion.title = "Ajustes de Consulta"
@@ -111,15 +107,15 @@ class frmDetalleCitaMedicoPendienteActivity : AppCompatActivity() {
         nav.setNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.btnMenuMisCitas -> {
-                    Toast.makeText(this, "Mis citas", Toast.LENGTH_SHORT).show()
+                    var inte : Intent = Intent(this, frmPrincipalActivity::class.java)
                     drawerLayout.closeDrawer(GravityCompat.START)
+                    startActivity(inte)
                     true
                 }
-
                 R.id.btnMenuOpcion -> {
-                    val inte: Intent
-                    if (tipoSesion == "paciente") {
-                        inte = Intent(this, frmAgendarActivity::class.java)
+                    var inte : Intent
+                    if (sesion.tipoSesion() == "paciente") {
+                        inte = Intent(this, frmHistorialActivity::class.java)
                     } else {
                         inte = Intent(this, AjustesConsultaActivity::class.java)
                     }
@@ -127,13 +123,13 @@ class frmDetalleCitaMedicoPendienteActivity : AppCompatActivity() {
                     startActivity(inte)
                     true
                 }
-
                 R.id.btnMenuCerrarSesion -> {
-                    Toast.makeText(this, "Sesión cerrada", Toast.LENGTH_SHORT).show()
+                    var inte : Intent = Intent(this, frmLoginActivity::class.java)
                     drawerLayout.closeDrawer(GravityCompat.START)
+                    sesion.cerrarSesion()
+                    startActivity(inte)
                     true
                 }
-
                 else -> false
             }
         }

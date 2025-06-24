@@ -56,14 +56,12 @@ class frmLoginActivity : AppCompatActivity() {
             val pacienteAutenticado = autenticarPaciente(email, contra)
             if (pacienteAutenticado != null) {
                 val intent = Intent(this, frmPrincipalActivity::class.java)
-                intent.putExtra("sesion", pacienteAutenticado)
                 startActivity(intent)
                 return@setOnClickListener
             }
             val medicoAutenticado = autenticarMedico(email, contra)
             if (medicoAutenticado != null) {
                 val intent = Intent(this, frmPrincipalActivity::class.java)
-                intent.putExtra("sesion", medicoAutenticado)
                 startActivity(intent)
                 return@setOnClickListener
             }

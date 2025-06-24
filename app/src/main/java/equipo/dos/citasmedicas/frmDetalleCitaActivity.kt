@@ -2,6 +2,7 @@ package equipo.dos.citasmedicas
 
 import Persistencia.medico
 import Persistencia.paciente
+import Persistencia.sesion
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
@@ -27,12 +28,6 @@ class frmDetalleCitaActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_frm_detalle_cita)
 
-        val sesion = intent.getSerializableExtra("sesion")
-        val tipoSesion: String = when (sesion) {
-            is paciente -> "paciente"
-            is medico -> "medico"
-            else -> "no asignado"
-        }
 
         val drawerLayout = findViewById<DrawerLayout>(R.id.drawer_detalle_cita)
         val toolbar = findViewById<Button>(R.id.btnMenu)
@@ -45,9 +40,9 @@ class frmDetalleCitaActivity : AppCompatActivity() {
         val menu = nav.menu
         val opcion = menu.findItem(R.id.btnMenuOpcion)
 
-        if (tipoSesion == "paciente") {
+        if (sesion.tipoSesion() == "paciente") {
             opcion.setIcon(R.drawable.date48)
-            opcion.title = "Agendar"
+            opcion.title = "Historial"
         } else {
             opcion.setIcon(R.drawable.settings30)
             opcion.title = "Ajustes de Consulta"
@@ -56,15 +51,15 @@ class frmDetalleCitaActivity : AppCompatActivity() {
         nav.setNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.btnMenuMisCitas -> {
-                    Toast.makeText(this, "Mis citas", Toast.LENGTH_SHORT).show()
+                    var inte : Intent = Intent(this, frmPrincipalActivity::class.java)
                     drawerLayout.closeDrawer(GravityCompat.START)
+                    startActivity(inte)
                     true
                 }
-
                 R.id.btnMenuOpcion -> {
                     var inte : Intent
-                    if (tipoSesion == "paciente") {
-                        inte = Intent(this, frmAgendarActivity::class.java)
+                    if (sesion.tipoSesion() == "paciente") {
+                        inte = Intent(this, frmHistorialActivity::class.java)
                     } else {
                         inte = Intent(this, AjustesConsultaActivity::class.java)
                     }
@@ -72,16 +67,17 @@ class frmDetalleCitaActivity : AppCompatActivity() {
                     startActivity(inte)
                     true
                 }
-
                 R.id.btnMenuCerrarSesion -> {
-                    Toast.makeText(this, "Sesión cerrada", Toast.LENGTH_SHORT).show()
+                    var inte : Intent = Intent(this, frmLoginActivity::class.java)
                     drawerLayout.closeDrawer(GravityCompat.START)
+                    sesion.cerrarSesion()
+                    startActivity(inte)
                     true
                 }
-
                 else -> false
             }
         }
+
         val headerView = nav.getHeaderView(0)
 
         val btnPerfil = headerView.findViewById<ImageView>(R.id.btnPerfil)

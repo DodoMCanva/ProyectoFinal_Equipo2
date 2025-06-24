@@ -22,7 +22,6 @@ class AdapterCita(context: Context, val lista: ArrayList<cita>, tipo : String): 
     override fun getView(position: Int, converterView: View?, parent: ViewGroup): View {
         val c = lista[position]
         val vista: View
-
         if (tipo == "medico") {
             vista = converterView?: LayoutInflater.from(context).inflate(R.layout.cita_medico, parent, false)
             vista.findViewById<TextView>(R.id.citaMFecha).text = c.fecha
@@ -30,7 +29,6 @@ class AdapterCita(context: Context, val lista: ArrayList<cita>, tipo : String): 
             vista.findViewById<TextView>(R.id.citaPaciente).text = c.paciente.nombre
             vista.findViewById<TextView>(R.id.citaMotivo).text = c.motivo
             vista.findViewById<TextView>(R.id.citaEstado).text = c.estado
-
             val selCita = vista.findViewById<LinearLayout>(R.id.panelCitaMedico)
             selCita.setOnClickListener {
                 val intent = Intent(context, frmDetalleCitaMedicoPendienteActivity::class.java)
@@ -42,10 +40,8 @@ class AdapterCita(context: Context, val lista: ArrayList<cita>, tipo : String): 
                 intent.putExtra("estado", c.estado)
                 intent.putExtra("motivo", c.motivo)
                 intent.putExtra("edad", c.paciente.calcularEdad())
-
                 context!!.startActivity(intent)
             }
-
         } else {
             vista = converterView?: LayoutInflater.from(context).inflate(R.layout.cita_paciente, parent, false)
             vista.findViewById<TextView>(R.id.citaFecha).text = c.fecha

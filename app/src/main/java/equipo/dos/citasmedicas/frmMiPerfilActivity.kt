@@ -2,6 +2,7 @@ package equipo.dos.citasmedicas
 
 import Persistencia.medico
 import Persistencia.paciente
+import Persistencia.sesion
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
@@ -25,14 +26,9 @@ class frmMiPerfilActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_frm_mi_perfil)
+
         var p : paciente? = null
         var m : medico? = null
-        val sesion = intent.getSerializableExtra("sesion")
-        val tipoSesion: String = when (sesion) {
-            is paciente -> "paciente"
-            is medico -> "medico"
-            else -> "no asignado"
-        }
 
         val nombre : TextView = findViewById(R.id.perfilNombre)
         val numero : TextView = findViewById(R.id.perfilNumero)
@@ -54,7 +50,7 @@ class frmMiPerfilActivity : AppCompatActivity() {
         val menu = nav.menu
         val opcion = menu.findItem(R.id.btnMenuOpcion)
 
-        if (tipoSesion == "paciente") {
+        if (sesion.tipoSesion() == "paciente") {
             p = sesion as paciente?
             if (p != null) {
                 nombre.text = p.nombre
@@ -65,7 +61,7 @@ class frmMiPerfilActivity : AppCompatActivity() {
             opcion.setIcon(R.drawable.date48)
             opcion.title = "Agendar"
         }
-        if(tipoSesion == "medico") {
+        if(sesion.tipoSesion() == "medico") {
             m = sesion as medico?
             if (m != null) {
                 nombre.text = m.nombre
@@ -78,12 +74,12 @@ class frmMiPerfilActivity : AppCompatActivity() {
         }
         editar.setOnClickListener(){
             var inte : Intent = Intent(this, frmEditarActivity::class.java)
-            inte.putExtra("sesion", intent.getSerializableExtra("sesion"))
             startActivity(inte)
         }
         cerrar.setOnClickListener(){
             val inte = Intent(this, frmLoginActivity::class.java)
             inte.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            sesion.cerrarSesion()
             startActivity(inte)
             finish()
         }
@@ -98,12 +94,10 @@ class frmMiPerfilActivity : AppCompatActivity() {
                 }
                 R.id.btnMenuOpcion -> {
                     var inte : Intent
-                    if (tipoSesion == "paciente") {
-                        inte = Intent(this, frmAgendarActivity::class.java)
-                        inte.putExtra("sesion", intent.getSerializableExtra("sesion"))
+                    if (sesion.tipoSesion() == "paciente") {
+                        inte = Intent(this, frmHistorialActivity::class.java)
                     } else {
                         inte = Intent(this, AjustesConsultaActivity::class.java)
-                        inte.putExtra("sesion", intent.getSerializableExtra("sesion"))
                     }
                     drawerLayout.closeDrawer(GravityCompat.START)
                     startActivity(inte)
@@ -112,6 +106,7 @@ class frmMiPerfilActivity : AppCompatActivity() {
                 R.id.btnMenuCerrarSesion -> {
                     var inte : Intent = Intent(this, frmLoginActivity::class.java)
                     drawerLayout.closeDrawer(GravityCompat.START)
+                    sesion.cerrarSesion()
                     startActivity(inte)
                     true
                 }
@@ -125,7 +120,6 @@ class frmMiPerfilActivity : AppCompatActivity() {
 
         btnPerfil.setOnClickListener{
             var inte : Intent = Intent(this, frmMiPerfilActivity::class.java)
-            inte.putExtra("sesion", intent.getSerializableExtra("sesion"))
             drawerLayout.closeDrawer(GravityCompat.START)
             startActivity(inte)
             true
