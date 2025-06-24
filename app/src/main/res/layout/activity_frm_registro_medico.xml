@@ -10,7 +10,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="24dp"
+        android:layout_height="35dp"
         android:background="@drawable/fondo_barra" />
 
     <TextView
@@ -104,10 +104,11 @@
                 android:layout_height="45dp"
                 android:background="@color/white"
                 android:minHeight="48dp"
-                android:text="29/05/2025"
+                android:text="dd/mm/aaaa"
                 android:textSize="@dimen/text18"
                 android:gravity="center_vertical"
-                android:enabled="false"/>
+                android:enabled="false"
+                android:textColor="@color/azulTexto"/>
 
             <ImageButton
                 android:id="@+id/btnCalendarioRegistroMedico"
@@ -274,6 +275,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:fontFamily="@font/quicksandbold"
+                android:text="@string/direccion"
+                android:textColor="@color/azulTexto"
+                android:textSize="@dimen/text22" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/quicksandbold"
                 android:text="@string/estado"
                 android:textColor="@color/azulTexto"
                 android:textSize="@dimen/text18" />
@@ -295,7 +305,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:fontFamily="@font/quicksandbold"
-                android:text="@string/estado"
+                android:text="@string/ciudad"
                 android:textColor="@color/azulTexto"
                 android:textSize="@dimen/text18" />
 

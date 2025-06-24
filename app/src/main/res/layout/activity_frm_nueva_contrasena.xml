@@ -11,7 +11,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="24dp"
+        android:layout_height="35dp"
         android:background="@drawable/fondo_barra" />
 
     <TextView
@@ -77,7 +77,7 @@
         android:background="@color/white"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
-        />
+        android:inputType="textPassword"/>
 
     <Button
         android:id="@+id/btnCambiarContra"

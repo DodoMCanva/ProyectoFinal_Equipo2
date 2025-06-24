@@ -111,7 +111,7 @@
                     android:textColor="@color/azulTexto"/>
 
                 <ImageButton
-                    android:id="@+id/btnCalendarioRegistroMedico"
+                    android:id="@+id/btnCalendarioRegistroPaciente"
                     android:layout_width="50dp"
                     android:layout_height="45dp"
                     android:layout_marginEnd="200dp"

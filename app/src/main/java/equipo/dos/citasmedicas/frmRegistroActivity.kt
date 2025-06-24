@@ -28,7 +28,7 @@ class frmRegistroActivity : AppCompatActivity() {
         val cbHombre: CheckBox = findViewById(R.id.cbHombreRegistro)
         val cbMujer: CheckBox = findViewById(R.id.cbMujerRegistro)
         val btnRegistrarse: Button = findViewById(R.id.btnRegistrarse)
-        val btnCalendario: ImageButton = findViewById(R.id.btnCalendarioRegistroMedico)
+        val btnCalendario: ImageButton = findViewById(R.id.btnCalendarioRegistroPaciente)
 
         btnCalendario.setOnClickListener {
             val calendario = Calendar.getInstance()
