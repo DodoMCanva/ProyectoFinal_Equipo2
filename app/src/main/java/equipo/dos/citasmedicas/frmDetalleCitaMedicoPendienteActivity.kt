@@ -59,16 +59,16 @@ class frmDetalleCitaMedicoPendienteActivity : AppCompatActivity() {
         when (estado) {
 
             "Pendiente" -> {
-                seccionReceta.visibility = View.INVISIBLE
+                seccionReceta.visibility = View.GONE
             }
 
             "Completada" -> {
-                seccionBotones.visibility = View.INVISIBLE
+                seccionBotones.visibility = View.GONE
             }
 
             "Cancelada" -> {
-                seccionBotones.visibility = View.INVISIBLE
-                seccionReceta.visibility = View.INVISIBLE
+                seccionBotones.visibility = View.GONE
+                seccionReceta.visibility = View.GONE
             }
 
             else -> Toast.makeText(this, "Se mando", Toast.LENGTH_SHORT).show()
@@ -107,13 +107,16 @@ class frmDetalleCitaMedicoPendienteActivity : AppCompatActivity() {
                     startActivity(inte)
                     true
                 }
+                R.id.btnMenuHistorial -> {
+                    var inte : Intent
+                    inte = Intent(this, frmHistorialActivity::class.java)
+                    drawerLayout.closeDrawer(GravityCompat.START)
+                    startActivity(inte)
+                    true
+                }
                 R.id.btnMenuAjusteConsulta -> {
                     var inte : Intent
-                    if (sesion.tipoSesion() == "paciente") {
-                        inte = Intent(this, frmHistorialActivity::class.java)
-                    } else {
-                        inte = Intent(this, AjustesConsultaActivity::class.java)
-                    }
+                    inte = Intent(this, AjustesConsultaActivity::class.java)
                     drawerLayout.closeDrawer(GravityCompat.START)
                     startActivity(inte)
                     true

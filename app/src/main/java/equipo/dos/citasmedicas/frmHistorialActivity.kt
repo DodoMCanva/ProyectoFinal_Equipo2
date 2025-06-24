@@ -113,6 +113,7 @@ class frmHistorialActivity : AppCompatActivity() {
 
         btnMenuCerrar.setOnClickListener{
             drawerLayout.closeDrawer(GravityCompat.START)
+            sesion.cerrarSesion()
             true
         }
 
