@@ -29,8 +29,6 @@ import java.util.Calendar
 
 class frmPrincipalActivity : AppCompatActivity() {
 
-    var adapter1:AdapterCita? = null
-    var adapter2:AdapterCita? = null
 
     private val binding by lazy {
         ActivityFrmPrincipalBinding.inflate(layoutInflater)
@@ -39,12 +37,6 @@ class frmPrincipalActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_frm_principal)
-
-        adapter1 = AdapterCita(this, fakebd.citas, sesion.tipoSesion())
-        var lista1Citas: ListView = findViewById(R.id.lvCitas1)
-        lista1Citas.adapter=adapter1
-        
-
 
         val toolbar = findViewById<Button>(R.id.btnMenu)
         val drawerLayout = findViewById<DrawerLayout>(R.id.drawer_miscitas)
@@ -135,5 +127,19 @@ class frmPrincipalActivity : AppCompatActivity() {
             drawerLayout.closeDrawer(GravityCompat.START)
             startActivity(inte)
         }
+    }
+    var adapter1:AdapterCita? = null
+    var adapter2:AdapterCita? = null
+
+    fun cargarCitas(){
+        //se tienen que surtir
+        adapter1 = AdapterCita(this, fakebd.citas, sesion.tipoSesion())
+        var lista1Citas: ListView = findViewById(R.id.lvCitas1)
+        lista1Citas.adapter=adapter1
+
+//        adapter2 = AdapterCita(this, fakebd.citas, sesion.tipoSesion())
+//        var lista2Citas: ListView = findViewById(R.id.lvCitas2)
+//        lista2Citas.adapter = adapter1
+
     }
 }
