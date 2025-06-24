@@ -45,6 +45,15 @@ class frmRegistroActivity : AppCompatActivity() {
             selectorFecha.show()
         }
 
+        //checkBox de genero
+        cbHombre.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) cbMujer.isChecked = false
+        }
+
+        cbMujer.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) cbHombre.isChecked = false
+        }
+
         btnRegistrarse.setOnClickListener {
             val nombre = etNombre.text.toString().trim()
             val correo = etCorreo.text.toString().trim()

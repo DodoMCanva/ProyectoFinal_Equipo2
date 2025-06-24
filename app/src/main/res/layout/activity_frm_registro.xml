@@ -107,7 +107,8 @@
                     android:text="29/05/2025"
                     android:textSize="@dimen/text18"
                     android:gravity="center_vertical"
-                    android:enabled="false" />
+                    android:enabled="false"
+                    android:textColor="@color/azulTexto"/>
 
                 <ImageButton
                     android:id="@+id/btnCalendarioRegistroMedico"
