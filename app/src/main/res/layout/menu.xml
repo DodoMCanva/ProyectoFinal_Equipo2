@@ -11,7 +11,7 @@
         android:layout_marginRight="15sp"
         android:layout_width="@dimen/menu75"
         android:layout_height="@dimen/menu75"
-        android:background="@drawable/ic_launcher_foreground"
+        android:background="@drawable/menublanco100"
         />
 
     <ImageView

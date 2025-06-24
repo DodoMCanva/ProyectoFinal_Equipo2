@@ -48,7 +48,7 @@ class frmMiPerfilActivity : AppCompatActivity() {
         }
 
         val menu = nav.menu
-        val opcion = menu.findItem(R.id.btnMenuOpcion)
+        val opcion = menu.findItem(R.id.btnMenuAjusteConsulta)
 
         when (val s = sesion.obtenerSesion()) {
             is paciente -> {
@@ -56,16 +56,13 @@ class frmMiPerfilActivity : AppCompatActivity() {
                 numero.text = s.correo
                 fecha.text = s.fechaNacimiento
                 genero.text = s.genero
-                opcion.setIcon(R.drawable.date48)
-                opcion.title = "Historial"
+                opcion.isVisible = false
             }
             is medico -> {
                 nombre.text = s.nombre
                 numero.text = s.correo
                 fecha.text = s.fechaNacimiento
                 genero.text = s.genero
-                opcion.setIcon(R.drawable.settings30)
-                opcion.title = "Ajustes de Consulta"
             }
             else -> {
                 Toast.makeText(this, "no se cargo correctamente la sesion", Toast.LENGTH_SHORT).show()
@@ -92,13 +89,16 @@ class frmMiPerfilActivity : AppCompatActivity() {
                     startActivity(inte)
                     true
                 }
-                R.id.btnMenuOpcion -> {
+                R.id.btnMenuHistorial -> {
                     var inte : Intent
-                    if (sesion.tipoSesion() == "paciente") {
-                        inte = Intent(this, frmHistorialActivity::class.java)
-                    } else {
-                        inte = Intent(this, AjustesConsultaActivity::class.java)
-                    }
+                    inte = Intent(this, frmHistorialActivity::class.java)
+                    drawerLayout.closeDrawer(GravityCompat.START)
+                    startActivity(inte)
+                    true
+                }
+                R.id.btnMenuAjusteConsulta -> {
+                    var inte : Intent
+                    inte = Intent(this, AjustesConsultaActivity::class.java)
                     drawerLayout.closeDrawer(GravityCompat.START)
                     startActivity(inte)
                     true

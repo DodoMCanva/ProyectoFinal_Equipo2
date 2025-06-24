@@ -94,15 +94,8 @@ class frmDetalleCitaMedicoPendienteActivity : AppCompatActivity() {
         }
 
         val menu = nav.menu
-        val opcion = menu.findItem(R.id.btnMenuOpcion)
+        val opcion = menu.findItem(R.id.btnMenuAjusteConsulta)
 
-        if (sesion.tipoSesion() == "paciente") {
-            opcion.setIcon(R.drawable.date48)
-            opcion.title = "Historial"
-        } else {
-            opcion.setIcon(R.drawable.settings30)
-            opcion.title = "Ajustes de Consulta"
-        }
 
         nav.setNavigationItemSelectedListener { item ->
             when (item.itemId) {
@@ -112,7 +105,7 @@ class frmDetalleCitaMedicoPendienteActivity : AppCompatActivity() {
                     startActivity(inte)
                     true
                 }
-                R.id.btnMenuOpcion -> {
+                R.id.btnMenuAjusteConsulta -> {
                     var inte : Intent
                     if (sesion.tipoSesion() == "paciente") {
                         inte = Intent(this, frmHistorialActivity::class.java)

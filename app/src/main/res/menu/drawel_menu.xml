@@ -6,9 +6,13 @@
         android:icon="@drawable/home48"
         />
     <item
-        android:id="@+id/btnMenuOpcion"
-        android:title="Otra Opcion"
-        android:icon="@drawable/ic_launcher_foreground"/>
+        android:id="@+id/btnMenuHistorial"
+        android:title="Historial"
+        android:icon="@drawable/date48"/>
+    <item
+        android:id="@+id/btnMenuAjusteConsulta"
+        android:title="Ajuste Consulta"
+        android:icon="@drawable/settings30"/>
     <item
         android:id="@+id/btnMenuCerrarSesion"
         android:title="Logout"
