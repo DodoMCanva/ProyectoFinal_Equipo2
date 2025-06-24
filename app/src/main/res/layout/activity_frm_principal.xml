@@ -7,12 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".frmPrincipalActivity">
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true">
-        <LinearLayout
+    <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -130,63 +125,13 @@
                     android:textColor="@color/azulTexto" />
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/llEncabezadoCita1"
-                android:orientation="horizontal">
-                <TextView
-                    android:id="@+id/tvEncabezadoFecha1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/azulBackMensajes"
-                    android:textSize="16sp"
-                    android:padding="12dp"
-                    android:text="Fecha" />
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:paddingBottom="20sp"
-                    android:background="@color/azulBackMensajes"
-                    android:layout_marginHorizontal="15dp"
-                    android:layout_marginTop="33dp" />
-            </LinearLayout>
-            <ListView
-                android:id="@+id/lvCitas1"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:layout_marginHorizontal="20dp"
-                android:layout_marginTop="20dp"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/llEncabezadoCita2"
-                android:orientation="horizontal">
-                <TextView
-                    android:id="@+id/tvEncabezadoFecha2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/azulBackMensajes"
-                    android:textSize="16sp"
-                    android:padding="12dp"
-                    android:text="Fecha" />
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:paddingBottom="20sp"
-                    android:background="@color/azulBackMensajes"
-                    android:layout_marginHorizontal="15dp"
-                    android:layout_marginTop="33dp" />
-            </LinearLayout>
-            <ListView
-                android:id="@+id/lvCitas2"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:layout_marginHorizontal="20dp"
-                android:layout_marginTop="20dp"/>
+        <ListView
+            android:id="@+id/lvCitas"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="20dp"/>
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/btnAgendar"
@@ -198,7 +143,6 @@
                 android:background="@drawable/btncalendarioamarillo"
                 app:tint="@color/white" />
         </LinearLayout>
-    </ScrollView>
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navegacion_menu"
         android:layout_width="wrap_content"
