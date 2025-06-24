@@ -4,6 +4,7 @@ import Persistencia.AdapterMedico
 import Persistencia.fakebd
 import Persistencia.medico
 import Persistencia.paciente
+import Persistencia.sesion
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
@@ -30,18 +31,9 @@ class frmAgendarActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_frm_agendar)
 
-
-        val sesion = intent.getSerializableExtra("sesion")
-        val tipoSesion: String = when (sesion) {
-            is paciente -> "paciente"
-            is medico -> "medico"
-            else -> "no asignado"
-        }
-
         val drawerLayout = findViewById<DrawerLayout>(R.id.drawer_agendar)
         val toolbar = findViewById<Button>(R.id.btnMenu)
         val nav = findViewById<NavigationView>(R.id.navegacion_menu)
-
 
         toolbar.setOnClickListener {
             drawerLayout.openDrawer(GravityCompat.START)
@@ -50,9 +42,9 @@ class frmAgendarActivity : AppCompatActivity() {
         val menu = nav.menu
         val opcion = menu.findItem(R.id.btnMenuOpcion)
 
-        if (tipoSesion == "paciente") {
+        if (sesion.tipoSesion() == "paciente") {
             opcion.setIcon(R.drawable.date48)
-            opcion.title = "Agendar"
+            opcion.title = "Historial"
         } else {
             opcion.setIcon(R.drawable.settings30)
             opcion.title = "Ajustes de Consulta"
@@ -68,8 +60,8 @@ class frmAgendarActivity : AppCompatActivity() {
                 }
                 R.id.btnMenuOpcion -> {
                     var inte : Intent
-                    if (tipoSesion == "paciente") {
-                        inte = Intent(this, frmAgendarActivity::class.java)
+                    if (sesion.tipoSesion() == "paciente") {
+                        inte = Intent(this, frmHistorialActivity::class.java)
                     } else {
                         inte = Intent(this, AjustesConsultaActivity::class.java)
                     }
@@ -80,10 +72,10 @@ class frmAgendarActivity : AppCompatActivity() {
                 R.id.btnMenuCerrarSesion -> {
                     var inte : Intent = Intent(this, frmLoginActivity::class.java)
                     drawerLayout.closeDrawer(GravityCompat.START)
+                    sesion.cerrarSesion()
                     startActivity(inte)
                     true
                 }
-
                 else -> false
             }
         }

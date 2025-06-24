@@ -85,6 +85,7 @@ class frmPrincipalActivity : AppCompatActivity() {
                 R.id.btnMenuCerrarSesion -> {
                     var inte : Intent = Intent(this, frmLoginActivity::class.java)
                     drawerLayout.closeDrawer(GravityCompat.START)
+                    sesion.cerrarSesion()
                     startActivity(inte)
                     true
                 }
