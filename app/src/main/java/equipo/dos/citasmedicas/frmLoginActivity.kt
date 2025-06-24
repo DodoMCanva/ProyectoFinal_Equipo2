@@ -26,13 +26,13 @@ class frmLoginActivity : AppCompatActivity() {
         val btnRegistrarse: TextView = findViewById(R.id.tvRegistrarse)
         val btnCntr: TextView = findViewById(R.id.tvOlvidasteContra)
 
-
         var intent: Intent
 
         btnIniciar.setOnClickListener {
             val email = correo.text.toString().trim()
             val contra = contrasena.text.toString().trim()
 
+            // valida que los campos no esten vacios
             if (email.isEmpty() || contra.isEmpty()) {
                 Toast.makeText(
                     this,
@@ -42,9 +42,18 @@ class frmLoginActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
+            // valida el formato del correo
+            val emailRegex = Regex("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$")
+            if (!emailRegex.matches(email)) {
+                Toast.makeText(
+                    this,
+                    "Por favor, ingresa un correo válido.",
+                    Toast.LENGTH_SHORT
+                ).show()
+                return@setOnClickListener
+            }
 
-            val pacienteAutenticado =autenticarPaciente(email, contra)
-
+            val pacienteAutenticado = autenticarPaciente(email, contra)
             if (pacienteAutenticado != null) {
                 val intent = Intent(this, frmPrincipalActivity::class.java)
                 startActivity(intent)
@@ -57,8 +66,13 @@ class frmLoginActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-
+            Toast.makeText(
+                this,
+                "Correo o contraseña incorrectos.",
+                Toast.LENGTH_SHORT
+            ).show()
         }
+
         btnRegistrarse.setOnClickListener {
             intent = Intent(this, frmPerfilActivity::class.java)
             startActivity(intent)
@@ -68,7 +82,6 @@ class frmLoginActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
-
 
     fun autenticarPaciente(correo: String, contrasena: String): paciente? {
         for (p in fakebd.pacientes) {
