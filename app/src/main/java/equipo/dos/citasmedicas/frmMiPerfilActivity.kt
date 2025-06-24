@@ -100,13 +100,16 @@ class frmMiPerfilActivity : AppCompatActivity() {
                     startActivity(inte)
                     true
                 }
+                R.id.btnMenuHistorial -> {
+                    var inte : Intent
+                    inte = Intent(this, frmHistorialActivity::class.java)
+                    drawerLayout.closeDrawer(GravityCompat.START)
+                    startActivity(inte)
+                    true
+                }
                 R.id.btnMenuAjusteConsulta -> {
                     var inte : Intent
-                    if (sesion.tipoSesion() == "paciente") {
-                        inte = Intent(this, frmHistorialActivity::class.java)
-                    } else {
-                        inte = Intent(this, AjustesConsultaActivity::class.java)
-                    }
+                    inte = Intent(this, AjustesConsultaActivity::class.java)
                     drawerLayout.closeDrawer(GravityCompat.START)
                     startActivity(inte)
                     true

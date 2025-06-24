@@ -8,10 +8,10 @@
     <Button
         android:id="@+id/btnMenuCerrarMenu"
         android:layout_gravity="end"
-        android:layout_marginTop="15sp"
-        android:layout_marginRight="15sp"
-        android:layout_width="@dimen/menu75"
-        android:layout_height="@dimen/menu75"
+        android:layout_marginTop="30sp"
+        android:layout_marginRight="30sp"
+        android:layout_width="@dimen/menu50"
+        android:layout_height="@dimen/menu50"
         android:background="@drawable/menublanco100"
         />
 
@@ -21,6 +21,7 @@
         android:layout_height="100dp"
         android:layout_marginLeft="@dimen/menu50"
         android:src="@drawable/usuario"
+        android:paddingBottom="10dp"
         android:contentDescription="Foto de perfil"
         app:shapeAppearanceOverlay="@style/CircularImage"
         android:scaleType="centerCrop" />
