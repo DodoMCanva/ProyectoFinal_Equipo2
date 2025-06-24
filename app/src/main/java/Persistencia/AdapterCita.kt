@@ -52,7 +52,12 @@ class AdapterCita(context: Context, val lista: ArrayList<cita>, tipo : String): 
             val selecMedico = vista.findViewById<LinearLayout>(R.id.panelCitaPaciente)
             selecMedico.setOnClickListener {
                 val intent = Intent(context, frmDetalleCitaActivity::class.java)
-
+                intent.putExtra("nombre", c.medico.nombre)
+                intent.putExtra("especialidad", c.medico.especialidad)
+                intent.putExtra("fecha", c.fecha)
+                intent.putExtra("hora", c.hora)
+                intent.putExtra("estado", c.estado)
+                intent.putExtra("motivo", c.motivo)
                 context!!.startActivity(intent)
             }
         }
