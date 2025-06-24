@@ -15,7 +15,7 @@
         android:background="@color/azulBackground">
         <View
             android:layout_width="match_parent"
-            android:layout_height="24dp"
+            android:layout_height="35dp"
             android:background="@drawable/fondo_barra" />
         <LinearLayout
             android:layout_width="match_parent"
@@ -43,10 +43,14 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingHorizontal="30dp"
-            android:paddingBottom="24dp"
-            android:layout_marginTop="15dp">
+            android:layout_marginHorizontal="30dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="bottom">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -63,149 +67,172 @@
                 android:text="Emmanuel Quiroz Soto"
                 android:textSize="18sp"
                 android:textColor="@color/azulTexto"
-                android:fontFamily="@font/quicksandregular"
-                android:layout_marginBottom="16dp" />
+                android:fontFamily="@font/quicksandregular" />
+
+            </LinearLayout>
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/imgFotoPerfil"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/usuario"
+                android:contentDescription="Foto de perfil"
+                app:shapeAppearanceOverlay="@style/CircularImage"
+                android:scaleType="centerCrop" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:orientation="vertical"
+            android:paddingLeft="30dp"
+            android:paddingBottom="24dp">
+
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/labelEspecialidad"
-                android:textSize="20sp"
                 android:fontFamily="@font/quicksandbold"
-                android:textColor="@color/azulTexto" />
+                android:text="@string/labelEspecialidad"
+                android:textColor="@color/azulTexto"
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/tvEspecialidadD"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Cardiólogo"
-                android:textSize="18sp"
-                android:textColor="@color/azulTexto"
+                android:layout_marginBottom="16dp"
                 android:fontFamily="@font/quicksandregular"
-                android:layout_marginBottom="16dp" />
+                android:text="Cardiólogo"
+                android:textColor="@color/azulTexto"
+                android:textSize="18sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginBottom="16dp">
+                android:layout_marginBottom="16dp"
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/labelFecha"
-                    android:textSize="20sp"
                     android:fontFamily="@font/quicksandbold"
-                    android:textColor="@color/azulTexto" />
+                    android:text="@string/labelFecha"
+                    android:textColor="@color/azulTexto"
+                    android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/tvFechaD"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
                     android:layout_weight="1"
-                    android:text="19/07/2025"
-                    android:textSize="18sp"
-                    android:textColor="@color/azulTexto"
                     android:fontFamily="@font/quicksandregular"
-                    android:layout_marginStart="8dp" />
+                    android:text="19/07/2025"
+                    android:textColor="@color/azulTexto"
+                    android:textSize="18sp" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginBottom="16dp">
+                android:layout_marginBottom="16dp"
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/labelHora"
-                    android:textSize="20sp"
                     android:fontFamily="@font/quicksandbold"
-                    android:textColor="@color/azulTexto" />
+                    android:text="@string/labelHora"
+                    android:textColor="@color/azulTexto"
+                    android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/tvHoraD"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
                     android:layout_weight="1"
-                    android:text="14:00"
-                    android:textSize="18sp"
-                    android:textColor="@color/azulTexto"
                     android:fontFamily="@font/quicksandregular"
-                    android:layout_marginStart="8dp" />
+                    android:text="14:00"
+                    android:textColor="@color/azulTexto"
+                    android:textSize="18sp" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginBottom="16dp">
+                android:layout_marginBottom="16dp"
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/labelEstado"
-                    android:textSize="20sp"
                     android:fontFamily="@font/quicksandbold"
-                    android:textColor="@color/azulTexto" />
+                    android:text="@string/labelEstado"
+                    android:textColor="@color/azulTexto"
+                    android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/tvEstadoD"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
                     android:layout_weight="1"
-                    android:text="Pendiente"
-                    android:textSize="18sp"
-                    android:textColor="@color/azulTexto"
                     android:fontFamily="@font/quicksandregular"
-                    android:layout_marginStart="8dp" />
+                    android:text="Pendiente"
+                    android:textColor="@color/azulTexto"
+                    android:textSize="18sp" />
             </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/labelMotivo"
-                android:textSize="20sp"
                 android:fontFamily="@font/quicksandbold"
-                android:textColor="@color/azulTexto" />
+                android:text="@string/labelMotivo"
+                android:textColor="@color/azulTexto"
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/tvMotivoD"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:minLines="3"
+                android:layout_width="350dp"
+                android:layout_height="80dp"
+                android:layout_marginBottom="24dp"
+                android:fontFamily="@font/quicksandregular"
+                android:gravity="top|start"
+                android:paddingRight="20dp"
                 android:maxLines="5"
+                android:minLines="3"
                 android:scrollbars="vertical"
                 android:text="Motivo"
-                android:textSize="18sp"
                 android:textColor="@color/azulTexto"
-                android:gravity="top|start"
-                android:layout_marginBottom="24dp"
-                android:fontFamily="@font/quicksandregular" />
+                android:textSize="18sp" />
+
             <LinearLayout
                 android:id="@+id/sdr"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_gravity="center">
+                android:layout_gravity="center"
+                android:orientation="vertical">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/labelReceta"
-                    android:textSize="20sp"
+                    android:layout_marginBottom="8dp"
                     android:fontFamily="@font/quicksandbold"
+                    android:text="@string/labelReceta"
                     android:textColor="@color/azulTexto"
-                    android:layout_marginBottom="8dp"/>
+                    android:textSize="20sp" />
 
                 <ImageView
                     android:id="@+id/ivRecetaDetallesCita"
                     android:layout_width="200dp"
                     android:layout_height="100dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/receta_detalle_cita_medico"
                     android:layout_marginBottom="10dp"
-                    />
+                    android:src="@drawable/receta_detalle_cita_medico" />
             </LinearLayout>
 
 
@@ -213,6 +240,7 @@
                 android:id="@+id/btnCancelarCita"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:background="@drawable/btn_rojo_redondear_no"
                 android:fontFamily="@font/quicksandbold"
                 android:paddingTop="12dp"
@@ -220,13 +248,14 @@
                 android:text="@string/btnCancelarCita"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
-                android:textSize="18sp"
-                android:layout_gravity="center"/>
+                android:textSize="18sp" />
 
         </LinearLayout>
 
 
     </LinearLayout>
+
+
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navegacion_menu"

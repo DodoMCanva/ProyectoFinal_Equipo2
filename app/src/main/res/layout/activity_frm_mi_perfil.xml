@@ -99,7 +99,8 @@
         android:layout_height="wrap_content"
         android:text=" Editar Perfil "
         android:textColor="@color/white"
-        android:background="@color/azulBackMensajes"/>
+        android:textAllCaps="false"
+        android:background="@drawable/btn_azul_redondeado_si"/>
 
     <Button
         android:layout_marginTop="20sp"
@@ -107,8 +108,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=" Cerrar Sesion "
+        android:textAllCaps="false"
         android:textColor="@color/white"
-        android:background="@color/rojoBtn"/>
+        android:background="@drawable/btn_rojo_redondear_no"/>
 
 </LinearLayout>
 

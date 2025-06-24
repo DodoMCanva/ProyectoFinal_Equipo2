@@ -106,7 +106,7 @@
                 android:layout_marginTop="5dp"
                 android:paddingTop="7sp"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:textSize="@dimen/text18"
                 android:hint="josefer@gmail.com"/>
 

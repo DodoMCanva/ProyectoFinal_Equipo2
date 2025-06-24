@@ -1,5 +1,6 @@
 package equipo.dos.citasmedicas
 
+import Persistencia.sesion
 import Persistencia.medico
 import Persistencia.paciente
 import android.app.DatePickerDialog
@@ -24,6 +25,7 @@ import equipo.dos.citasmedicas.databinding.ActivityFrmPrincipalBinding
 import java.util.Calendar
 
 class frmAgendarMedicoActivity : AppCompatActivity() {
+
 
     private val binding by lazy {
         ActivityFrmPrincipalBinding.inflate(layoutInflater)
@@ -195,6 +197,24 @@ class frmAgendarMedicoActivity : AppCompatActivity() {
 
         val btnPerfil = headerView.findViewById<ImageView>(R.id.btnPerfil)
         val btnMenuCerrar = headerView.findViewById<Button>(R.id.btnMenuCerrarMenu)
+
+        // cargar imagen de perfil
+        val sesionActual = sesion.obtenerSesion()
+        if (sesionActual != null) {
+            val fotoNombre = when (sesionActual) {
+                is paciente -> sesionActual.fotoPerfil
+                is medico -> sesionActual.fotoPerfil
+                else -> null
+            }
+
+            fotoNombre?.let {
+                val resId = resources.getIdentifier(it, "drawable", packageName)
+                if (resId != 0) {
+                    btnPerfil.setImageResource(resId)
+                }
+            }
+        }
+
 
         btnPerfil.setOnClickListener{
             var inte : Intent = Intent(this, frmMiPerfilActivity::class.java)

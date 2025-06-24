@@ -51,7 +51,7 @@ class frmMiPerfilActivity : AppCompatActivity() {
         }
 
         val menu = nav.menu
-        val opcion = menu.findItem(R.id.btnMenuOpcion)
+        val opcion = menu.findItem(R.id.btnMenuAjusteConsulta)
 
         when (val s = sesion.obtenerSesion()) {
             is paciente -> {
@@ -103,7 +103,7 @@ class frmMiPerfilActivity : AppCompatActivity() {
                     startActivity(inte)
                     true
                 }
-                R.id.btnMenuOpcion -> {
+                R.id.btnMenuAjusteConsulta -> {
                     var inte : Intent
                     if (sesion.tipoSesion() == "paciente") {
                         inte = Intent(this, frmHistorialActivity::class.java)

@@ -20,6 +20,7 @@ import androidx.core.view.GravityCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.navigation.NavigationView
 import equipo.dos.citasmedicas.databinding.ActivityFrmPrincipalBinding
 
@@ -44,6 +45,8 @@ class frmDetalleCitaActivity : AppCompatActivity() {
         val seccion : LinearLayout = findViewById(R.id.sdr)
         val receta : ImageView = findViewById(R.id.ivRecetaDetallesCita)
         val cancelar : TextView = findViewById(R.id.btnCancelarCita)
+
+        val imgFotoPerfil = findViewById<ShapeableImageView>(R.id.imgFotoPerfil)
 
         nm.setText(intent.getStringExtra("nombre"))
         esp.setText(intent.getStringExtra("especialidad"))
@@ -104,6 +107,24 @@ class frmDetalleCitaActivity : AppCompatActivity() {
 
         val btnPerfil = headerView.findViewById<ImageView>(R.id.btnPerfil)
         val btnMenuCerrar = headerView.findViewById<Button>(R.id.btnMenuCerrarMenu)
+
+        // cargar imagen de perfil
+        val sesionActual = sesion.obtenerSesion()
+        if (sesionActual != null) {
+            val fotoNombre = when (sesionActual) {
+                is paciente -> sesionActual.fotoPerfil
+                is medico -> sesionActual.fotoPerfil
+                else -> null
+            }
+
+            fotoNombre?.let {
+                val resId = resources.getIdentifier(it, "drawable", packageName)
+                if (resId != 0) {
+                    btnPerfil.setImageResource(resId)
+                }
+            }
+        }
+
 
         btnPerfil.setOnClickListener{
             var inte : Intent = Intent(this, frmMiPerfilActivity::class.java)
