@@ -1,4 +1,0 @@
-package Persistencia
-
-class AdapterPaciente {
-}

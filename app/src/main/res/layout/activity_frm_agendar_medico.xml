@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/drawer_agendar_medico"
+    android:id="@+id/drawer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".frmAgendarMedicoActivity">
@@ -222,13 +222,12 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20sp"
         android:layout_marginTop="20sp"
-        android:orientation="horizontal"
-        android:layout_gravity="center_horizontal"
-        android:paddingHorizontal="50dp">
+        android:gravity="center"
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/btnConfirmar"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:background="@drawable/btn_azul_redondeado_si"
             android:text="Confirmar"
@@ -237,7 +236,7 @@
 
         <Button
             android:id="@+id/btnCancelar"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
             android:background="@drawable/btn_rojo_redondear_no"

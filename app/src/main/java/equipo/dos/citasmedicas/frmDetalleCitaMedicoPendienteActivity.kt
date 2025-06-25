@@ -27,6 +27,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import equipo.dos.citasmedicas.databinding.ActivityFrmDetalleCitaMedicoPendienteBinding
 import equipo.dos.citasmedicas.databinding.ActivityFrmPrincipalBinding
+import equipo.dos.citasmedicas.helpers.MenuDesplegable
 import java.util.Calendar
 
 class frmDetalleCitaMedicoPendienteActivity : AppCompatActivity() {
@@ -83,102 +84,7 @@ class frmDetalleCitaMedicoPendienteActivity : AppCompatActivity() {
         campoEstado.setText(intent.getStringExtra("estado"))
         campoMotivo.setText(intent.getStringExtra("motivo"))
 
-
-
-        val drawerLayout = binding.drawerDetalleCitaMedico
-        val toolbar =
-            binding.btnMenu
-        val nav =
-            binding.navegacionMenu
-
-        toolbar.setOnClickListener {
-            drawerLayout.openDrawer(GravityCompat.START)
-        }
-
-        val menu = nav.menu
-        val opcion = menu.findItem(R.id.btnOpcion)
-
-
-        if (sesion.tipoSesion() == "paciente") {
-            opcion.setTitle("Agendar")
-            opcion.setIcon(R.drawable.date48)
-        } else {
-            opcion.setTitle("Ajustar Consulta")
-            opcion.setIcon(R.drawable.settings30)
-        }
-
-        nav.setNavigationItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.btnMenuMisCitas -> {
-                    var inte: Intent = Intent(this, frmPrincipalActivity::class.java)
-                    drawerLayout.closeDrawer(GravityCompat.START)
-                    startActivity(inte)
-                    true
-                }
-
-                R.id.btnMenuHistorial -> {
-                    var inte: Intent
-                    inte = Intent(this, frmHistorialActivity::class.java)
-                    drawerLayout.closeDrawer(GravityCompat.START)
-                    startActivity(inte)
-                    true
-                }
-
-                R.id.btnOpcion -> {
-                    var inte: Intent
-                    if (sesion.tipoSesion() == "paciente") {
-                        inte = Intent(this, frmAgendarActivity::class.java)
-                    } else {
-                        inte = Intent(this, AjustesConsultaActivity::class.java)
-                    }
-                    drawerLayout.closeDrawer(GravityCompat.START)
-                    startActivity(inte)
-                    true
-                }
-
-                R.id.btnMenuCerrarSesion -> {
-                    var inte: Intent = Intent(this, frmLoginActivity::class.java)
-                    drawerLayout.closeDrawer(GravityCompat.START)
-                    sesion.cerrarSesion()
-                    startActivity(inte)
-                    true
-                }
-
-                else -> false
-            }
-        }
-        val headerView = nav.getHeaderView(0)
-
-        val btnPerfil = headerView.findViewById<ImageView>(R.id.btnPerfil)
-        val btnMenuCerrar = headerView.findViewById<Button>(R.id.btnMenuCerrarMenu)
-
-        // cargar imagen de perfil
-        val sesionActual = sesion.obtenerSesion()
-        if (sesionActual != null) {
-            val fotoNombre = when (sesionActual) {
-                is paciente -> sesionActual.fotoPerfil
-                is medico -> sesionActual.fotoPerfil
-                else -> null
-            }
-
-            fotoNombre?.let {
-                val resId = resources.getIdentifier(it, "drawable", packageName)
-                if (resId != 0) {
-                    btnPerfil.setImageResource(resId)
-                }
-            }
-        }
-
-
-        btnPerfil.setOnClickListener {
-            val inte = Intent(this, frmMiPerfilActivity::class.java)
-            drawerLayout.closeDrawer(GravityCompat.START)
-            startActivity(inte)
-        }
-
-        btnMenuCerrar.setOnClickListener {
-            drawerLayout.closeDrawer(GravityCompat.START)
-        }
+        MenuDesplegable.configurarMenu(this)
 
         binding.btnFinalizarDetallesCitaMedico.setOnClickListener {
             val dialog = Dialog(this)

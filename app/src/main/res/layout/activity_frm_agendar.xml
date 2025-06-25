@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/drawer_agendar"
+    android:id="@+id/drawer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".frmAgendarActivity">
@@ -41,14 +41,14 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingTop="30dp"
-        android:gravity="center_horizontal">
+        android:layout_marginHorizontal="20dp"
+        android:gravity="center_vertical">
         <EditText
             android:id="@+id/etBuscarMedico"
-            android:layout_width="220dp"
+            android:layout_width="265dp"
             android:textSize="20sp"
             android:inputType="text"
             android:layout_height="wrap_content"
@@ -65,8 +65,6 @@
             android:padding="6dp"
             android:layout_gravity="center_vertical"
             android:contentDescription="Calendario" />
-
-
         <Button
             android:id="@+id/btnFiltros"
             android:layout_width="70dp"
