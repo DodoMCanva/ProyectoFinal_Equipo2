@@ -15,7 +15,7 @@ import com.google.firebase.database.ValueEventListener
 import modulos.EmailSender
 
 class frmRestablecerContrasenaActivity : AppCompatActivity() {
-
+    var uid: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +39,7 @@ class frmRestablecerContrasenaActivity : AppCompatActivity() {
                     val intent = Intent(this, frmVerificaIdentidadActivity::class.java)
                     intent.putExtra("codigo", codigo)
                     intent.putExtra("correo", correoIngresado)
+                    intent.putExtra("uid", uid)
                     startActivity(intent)
                 } else {
                     Toast.makeText(this, "Correo no registrado en el sistema.", Toast.LENGTH_SHORT).show()
@@ -48,8 +49,8 @@ class frmRestablecerContrasenaActivity : AppCompatActivity() {
     }
 
     private fun buscarCorreo(correo: String, callback: (Boolean) -> Unit) {
-        val dbMedicos = FirebaseDatabase.getInstance().getReference("medicos")
-        val dbPacientes = FirebaseDatabase.getInstance().getReference("pacientes")
+        val dbMedicos = FirebaseDatabase.getInstance().getReference("usuarios/medicos")
+        val dbPacientes = FirebaseDatabase.getInstance().getReference("usuarios/pacientes")
 
         var encontrado = false
         var consultasTerminadas = 0
@@ -66,11 +67,13 @@ class frmRestablecerContrasenaActivity : AppCompatActivity() {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()) {
                         encontrado = true
+                        uid = snapshot.children.firstOrNull()?.key
                     }
                     verificarFinConsulta()
                 }
 
                 override fun onCancelled(error: DatabaseError) {
+                    Toast.makeText(this@frmRestablecerContrasenaActivity, "Error buscando médicos: ${error.message}", Toast.LENGTH_SHORT).show()
                     verificarFinConsulta()
                 }
             })
@@ -80,10 +83,13 @@ class frmRestablecerContrasenaActivity : AppCompatActivity() {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()) {
                         encontrado = true
+                        uid = snapshot.children.firstOrNull()?.key
                     }
                     verificarFinConsulta()
                 }
+
                 override fun onCancelled(error: DatabaseError) {
+                    Toast.makeText(this@frmRestablecerContrasenaActivity, "Error buscando pacientes: ${error.message}", Toast.LENGTH_SHORT).show()
                     verificarFinConsulta()
                 }
             })
