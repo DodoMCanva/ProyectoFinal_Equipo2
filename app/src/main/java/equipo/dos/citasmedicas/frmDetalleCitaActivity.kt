@@ -59,99 +59,115 @@ class frmDetalleCitaActivity : AppCompatActivity() {
         MenuDesplegable.configurarMenu(this)
     }
 
+    private fun cargarDatosDeCita(citaId: String) {
+        val databaseRef =
+            FirebaseDatabase.getInstance().getReference("usuarios").child("citas").child(citaId)
 
-        private fun cargarDatosDeCita(citaId: String) {
-            val databaseRef = FirebaseDatabase.getInstance().getReference("usuarios").child("citas")
+        databaseRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val citaData = snapshot.getValue(Persistencia.cita::class.java)
 
-            databaseRef.addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    // Obtener los datos de la cita
-                    val citaData = snapshot.getValue(Persistencia.cita::class.java)
+                if (citaData != null) {
+                    val nm: TextView = findViewById(R.id.tvMedicoD)
+                    val esp: TextView = findViewById(R.id.tvEspecialidadD)
+                    val fecha: TextView = findViewById(R.id.tvFechaD)
+                    val hora: TextView = findViewById(R.id.tvHoraD)
+                    val estado: TextView = findViewById(R.id.tvEstadoD)
+                    val motivo: TextView = findViewById(R.id.tvMotivoD)
+                    val seccion: LinearLayout = findViewById(R.id.sdr)
+                    val cancelar: TextView = findViewById(R.id.btnCancelarCita)
 
-                    if (citaData != null) {
-                        // Obtener las vistas
-                        val nm: TextView = findViewById(R.id.tvMedicoD)
-                        val esp: TextView = findViewById(R.id.tvEspecialidadD)
-                        val fecha: TextView = findViewById(R.id.tvFechaD)
-                        val hora: TextView = findViewById(R.id.tvHoraD)
-                        val estado: TextView = findViewById(R.id.tvEstadoD)
-                        val motivo: TextView = findViewById(R.id.tvMotivoD)
-                        val seccion: LinearLayout = findViewById(R.id.sdr)
-                        val cancelar: TextView = findViewById(R.id.btnCancelarCita)
+                    nm.text = citaData.nombreMedico
+                    esp.text = citaData.especialidad
+                    fecha.text = citaData.fecha
+                    hora.text = citaData.hora
+                    motivo.text = citaData.motivo
+                    estado.text = citaData.estado
 
-                        // Asignar valores a las vistas
-                        nm.text = citaData.nombreMedico
-                        esp.text = citaData.especialidad // Asumiendo que ahora guardas la especialidad en la cita
-                        fecha.text = citaData.fecha
-                        hora.text = citaData.hora
-                        motivo.text = citaData.motivo
-                        estado.text = citaData.estado
-
-                        // Lógica para mostrar/ocultar secciones según el estado
-                        when (citaData.estado) {
-                            "Pendiente" -> {
-                                seccion.visibility = View.GONE
-                                cancelar.visibility = View.VISIBLE
-                            }
-                            "Completada" -> {
-                                seccion.visibility = View.VISIBLE
-                                cancelar.visibility = View.GONE
-                            }
-                            "Cancelada" -> {
-                                seccion.visibility = View.GONE
-                                cancelar.visibility = View.GONE
-                            }
-                            else -> {
-                                seccion.visibility = View.GONE
-                                cancelar.visibility = View.GONE
-                            }
+                    when (citaData.estado) {
+                        "Pendiente" -> {
+                            seccion.visibility = View.GONE
+                            cancelar.visibility = View.VISIBLE
                         }
 
-                    } else {
-                        Toast.makeText(this@frmDetalleCitaActivity, "Cita no encontrada.", Toast.LENGTH_SHORT).show()
-                        finish()
-                    }
-                }
+                        "Completada" -> {
+                            seccion.visibility = View.VISIBLE
+                            cancelar.visibility = View.GONE
+                        }
 
-                override fun onCancelled(error: DatabaseError) {
-                    Log.e("Firebase", "Error al cargar datos de la cita: ${error.message}")
-                    Toast.makeText(this@frmDetalleCitaActivity, "Error al cargar la cita.", Toast.LENGTH_SHORT).show()
+                        "Cancelada" -> {
+                            seccion.visibility = View.GONE
+                            cancelar.visibility = View.GONE
+                        }
+
+                        else -> {
+                            seccion.visibility = View.GONE
+                            cancelar.visibility = View.GONE
+                        }
+                    }
+
+                } else {
+                    Toast.makeText(
+                        this@frmDetalleCitaActivity,
+                        "Cita no encontrada en la base de datos.",
+                        Toast.LENGTH_SHORT
+                    ).show()
                     finish()
                 }
-            })
-        }
-
-        private fun mostrarDialogDeCancelacion() {
-            val dialog = Dialog(this)
-            dialog.setContentView(R.layout.dialog_cancelar_cita)
-            dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-
-            val btnConfirmar = dialog.findViewById<Button>(R.id.btnConfirmarCancelacion)
-            val btnAtras = dialog.findViewById<Button>(R.id.btnAtrasCancelacion)
-
-            btnConfirmar.setOnClickListener {
-                dialog.dismiss()
-                actualizarCancelado(citaId)
             }
 
-            btnAtras.setOnClickListener {
-                dialog.dismiss()
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("Firebase", "Error al cargar datos de la cita: ${error.message}")
+                Toast.makeText(
+                    this@frmDetalleCitaActivity,
+                    "Error al cargar la cita.",
+                    Toast.LENGTH_SHORT
+                ).show()
+                finish()
             }
-            dialog.show()
-        }
-
-        private fun actualizarCancelado(citaId: String) {
-            val databaseRef = FirebaseDatabase.getInstance().getReference("citas").child(citaId)
-            val actualizacion = mapOf("estado" to "Cancelada")
-
-            databaseRef.updateChildren(actualizacion)
-                .addOnSuccessListener {
-                    Toast.makeText(this, "Cita cancelada con éxito en la base de datos.", Toast.LENGTH_SHORT).show()
-                    cargarDatosDeCita(citaId)
-                }
-                .addOnFailureListener {
-                    Log.e("Firebase", "Error al cancelar cita: ${it.message}")
-                    Toast.makeText(this, "Error al cancelar la cita.", Toast.LENGTH_SHORT).show()
-                }
-        }
+        })
     }
+
+    private fun mostrarDialogDeCancelacion() {
+        val dialog = Dialog(this)
+        dialog.setContentView(R.layout.dialog_cancelar_cita)
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.window?.setLayout(
+            (resources.displayMetrics.widthPixels * 0.9).toInt(),
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+
+        val btnConfirmar = dialog.findViewById<Button>(R.id.btnConfirmarCancelacion)
+        val btnAtras = dialog.findViewById<Button>(R.id.btnAtrasCancelacion)
+
+        btnConfirmar.setOnClickListener {
+            dialog.dismiss()
+            actualizarCancelado()
+        }
+
+        btnAtras.setOnClickListener {
+            dialog.dismiss()
+        }
+        dialog.show()
+    }
+
+    private fun actualizarCancelado() {
+        val databaseRef =
+            FirebaseDatabase.getInstance().getReference("usuarios").child("citas").child(citaId)
+        val actualizacion = mapOf("estado" to "Cancelada")
+
+        databaseRef.updateChildren(actualizacion)
+            .addOnSuccessListener {
+                Toast.makeText(
+                    this,
+                    "Cita cancelada con éxito en la base de datos.",
+                    Toast.LENGTH_SHORT
+                ).show()
+                cargarDatosDeCita(citaId)
+            }
+            .addOnFailureListener {
+                Log.e("Firebase", "Error al cancelar cita: ${it.message}")
+                Toast.makeText(this, "Error al cancelar la cita.", Toast.LENGTH_SHORT).show()
+            }
+    }
+}
