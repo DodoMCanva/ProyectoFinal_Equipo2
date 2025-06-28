@@ -53,14 +53,15 @@
 
                 <TextView
                     android:id="@+id/tvConsultaFecha"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="29/05/2025"
+                    android:layout_width="114dp"
+                    android:layout_height="match_parent"
                     android:background="@color/white"
-                    android:textSize="@dimen/textomenu25"
                     android:enabled="false"
                     android:fontFamily="@font/quicksandsemibold"
-                    android:textColor="@color/black" />
+                    android:gravity="center"
+                    android:text="29/05/2025"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text18" />
 
                 <ImageButton
                     android:id="@+id/btnCalendarioConsultaCitas"
