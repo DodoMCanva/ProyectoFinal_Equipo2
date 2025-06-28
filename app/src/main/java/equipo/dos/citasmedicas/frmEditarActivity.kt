@@ -95,7 +95,7 @@ class frmEditarActivity : AppCompatActivity() {
                 etTelefono.setText(m.telefono)
 
                 // Cargar género correctamente
-                when (m.genero.trim().lowercase()) {
+                when (m.genero?.trim()?.lowercase()) {
                     "masculino" -> cbHombre.isChecked = true
                     "femenino" -> cbMujer.isChecked = true
                 }
@@ -139,7 +139,7 @@ class frmEditarActivity : AppCompatActivity() {
                 etTelefono.setText(p.telefono)
 
                 // Cargar género correctamente
-                when (p.genero.trim().lowercase()) {
+                when (p.genero?.trim()?.lowercase()) {
                     "masculino" -> cbHombre.isChecked = true
                     "femenino" -> cbMujer.isChecked = true
                 }

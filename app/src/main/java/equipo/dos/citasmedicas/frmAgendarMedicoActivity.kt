@@ -1,10 +1,14 @@
 package equipo.dos.citasmedicas
 
-import Persistencia.sesion
 import Persistencia.medico
 import Persistencia.paciente
 import android.app.DatePickerDialog
 import android.app.Dialog
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.auth.FirebaseAuth
+import Persistencia.sesion
+import Persistencia.cita
+import java.util.UUID
 import android.content.Intent
 import android.os.Bundle
 import android.view.ViewGroup
@@ -35,10 +39,13 @@ class frmAgendarMedicoActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_frm_agendar_medico)
+        MenuDesplegable.configurarMenu(this)
 
         //calendario
         val btnCalendario = findViewById<ImageButton>(R.id.btnCalendario)
         val tvFecha = findViewById<TextView>(R.id.tvAgendarFecha)
+        val tvHoraSeleccionada = findViewById<TextView>(R.id.tvHoraSeleccionada)
+        val btnCancelar = findViewById<Button>(R.id.btnCancelar)
 
         btnCalendario.setOnClickListener {
             val calendario = Calendar.getInstance()
@@ -46,17 +53,19 @@ class frmAgendarMedicoActivity : AppCompatActivity() {
             val mes = calendario.get(Calendar.MONTH)
             val dia = calendario.get(Calendar.DAY_OF_MONTH)
 
-            val datePicker = DatePickerDialog(this, { _: DatePicker, year: Int, month: Int, dayOfMonth: Int ->
-                val fechaSeleccionada = String.format("%02d/%02d/%04d", dayOfMonth, month + 1, year)
-                tvFecha.text = fechaSeleccionada
-            }, anio, mes, dia)
+            val datePicker =
+                DatePickerDialog(this, { _: DatePicker, year: Int, month: Int, dayOfMonth: Int ->
+                    val fechaSeleccionada =
+                        String.format("%02d/%02d/%04d", dayOfMonth, month + 1, year)
+                    tvFecha.text = fechaSeleccionada
+                }, anio, mes, dia)
 
             datePicker.show()
         }
 
         //spinner hora
         val spHora = findViewById<Spinner>(R.id.spHora)
-                fun generarHorasCada30Min(): List<String> {
+        fun generarHorasCada30Min(): List<String> {
             val horas = mutableListOf<String>()
             var hora = 7
             var minuto = 0
@@ -79,13 +88,18 @@ class frmAgendarMedicoActivity : AppCompatActivity() {
 
         val horasDisponibles = generarHorasCada30Min()
 
-        val adapterHoras = ArrayAdapter(this, android.R.layout.simple_spinner_item, horasDisponibles)
+        val adapterHoras =
+            ArrayAdapter(this, android.R.layout.simple_spinner_item, horasDisponibles)
         adapterHoras.setDropDownViewResource(R.layout.spinner_item_custom_hora)
         spHora.adapter = adapterHoras
 
-        val tvHoraSeleccionada = findViewById<TextView>(R.id.tvHoraSeleccionada)
         spHora.onItemSelectedListener = object : android.widget.AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: android.widget.AdapterView<*>, view: android.view.View?, position: Int, id: Long) {
+            override fun onItemSelected(
+                parent: android.widget.AdapterView<*>,
+                view: android.view.View?,
+                position: Int,
+                id: Long
+            ) {
                 val horaSeleccionada = parent.getItemAtPosition(position).toString()
                 tvHoraSeleccionada.text = horaSeleccionada
             }
@@ -110,7 +124,7 @@ class frmAgendarMedicoActivity : AppCompatActivity() {
 
             //mostrar el diálogo
             val dialog = Dialog(this)
-            dialog.setContentView(R.layout.dialog_confirmacion_cita) 
+            dialog.setContentView(R.layout.dialog_confirmacion_cita)
             dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
             dialog.window?.setLayout(
                 (resources.displayMetrics.widthPixels * 0.9).toInt(),
@@ -120,35 +134,87 @@ class frmAgendarMedicoActivity : AppCompatActivity() {
             val btnAceptar = dialog.findViewById<Button>(R.id.btnConfirmarCancelacion)
 
             btnAceptar.setOnClickListener {
-                val intent = Intent(this, frmPrincipalActivity::class.java)
-                intent.putExtra("fecha", fecha)
-                intent.putExtra("hora", hora)
-                intent.putExtra("motivo", motivo)
+                val medicoSeleccionado = intent.getSerializableExtra("medico") as? medico
+                val pacienteActual = sesion.obtenerSesion() as? paciente
+
+                if (medicoSeleccionado == null || pacienteActual == null) {
+                    Toast.makeText(
+                        this,
+                        "Error: No se pudo obtener la información de usuario.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    dialog.dismiss()
+                    return@setOnClickListener
+                }
+
+                val database = FirebaseDatabase.getInstance().getReference("usuarios").child("citas")
+                val citaId = database.push().key
+
+                if (citaId == null) {
+                    Toast.makeText(this, "Error al generar el ID de la cita.", Toast.LENGTH_SHORT)
+                        .show()
+                    dialog.dismiss()
+                    return@setOnClickListener
+                }
+
+                val nuevaCita = cita(
+                    idCita = citaId,
+                    idMedico = medicoSeleccionado.uid,
+                    idPaciente = (sesion.obtenerSesion() as paciente).uid,
+                    nombreMedico = medicoSeleccionado.nombre,
+                    nombrePaciente = pacienteActual.nombre,
+                    fecha = fecha,
+                    hora = hora,
+                    motivo = motivo,
+                    estado = "Pendiente",
+                    especialidad = medicoSeleccionado.especialidad,
+                    imagenMedico = medicoSeleccionado.fotoPerfil,
+                    imagenPaciente = pacienteActual.fotoPerfil
+                )
+
+                // Guarda la cita
+                database.child(citaId).setValue(nuevaCita)
+                    .addOnSuccessListener {
+                        Toast.makeText(this, "Cita agendada con éxito.", Toast.LENGTH_SHORT).show()
+                        val intent = Intent(this, frmPrincipalActivity::class.java)
+                        startActivity(intent)
+                        finish()
+                        dialog.dismiss()
+                    }
+                    .addOnFailureListener {
+                        Toast.makeText(
+                            this,
+                            "Error al agendar la cita: ${it.message}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        dialog.dismiss()
+                    }
+
+            }
+            dialog.show()
+
+        }
+
+
+        btnCancelar.setOnClickListener {
+            {
+                intent = Intent(this, frmAgendarActivity::class.java)
                 startActivity(intent)
-                dialog.dismiss() // cerrar el diálogo
             }
 
-            dialog.show()
+            val medico = intent.getSerializableExtra("medico") as? medico
+
+            if (medico != null) {
+                val tvNombre = findViewById<TextView>(R.id.tvAgendarNombre)
+                val tvMonto = findViewById<TextView>(R.id.tvMonto)
+                tvNombre.text = medico.nombre
+                tvMonto.text = "$${medico.costoConsulta}"
+            } else {
+                Toast.makeText(this, "Médico no recibido", Toast.LENGTH_SHORT).show()
+                finish()
+            }
+
+            MenuDesplegable.configurarMenu(this)
         }
-
-        val btnCancelar = findViewById<Button>(R.id.btnCancelar)
-        btnCancelar.setOnClickListener{
-            intent = Intent(this, frmAgendarActivity::class.java)
-            startActivity(intent)
-        }
-
-        val medico = intent.getSerializableExtra("medico") as? medico
-
-        if (medico != null) {
-            val tvNombre = findViewById<TextView>(R.id.tvAgendarNombre)
-            val tvMonto = findViewById<TextView>(R.id.tvMonto)
-            tvNombre.text = medico.nombre
-            tvMonto.text = "$${medico.costoConsulta}"
-        } else {
-            Toast.makeText(this, "Médico no recibido", Toast.LENGTH_SHORT).show()
-            finish()
-        }
-
-        MenuDesplegable.configurarMenu(this)
     }
 }

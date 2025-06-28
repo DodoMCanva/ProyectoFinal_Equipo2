@@ -1,6 +1,9 @@
 package equipo.dos.citasmedicas
 
 
+import Persistencia.medico
+import Persistencia.paciente
+import Persistencia.sesion
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
@@ -54,58 +57,53 @@ class frmLoginActivity : AppCompatActivity() {
             }
 
             auth.signInWithEmailAndPassword(email, contra)
-                .addOnCompleteListener(this) { task ->
+                .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         val user = auth.currentUser
                         if (user != null) {
                             val uid = user.uid
                             val db = FirebaseDatabase.getInstance().reference
 
-                            db.child("usuarios").child("medicos").child(uid).get()
-                                .addOnSuccessListener { snapshotMedico ->
-                                    if (snapshotMedico.exists()) {
+                            // --- PASO 1: Buscar en la base de datos de MÉDICOS ---
+                            db.child("usuarios").child("medicos").child(uid).get().addOnSuccessListener { snapshotMedico ->
+                                if (snapshotMedico.exists()) {
+                                    val medicoData = snapshotMedico.getValue(medico::class.java)
+                                    if (medicoData != null) {
+                                        // --- AQUI ASIGNAS LA SESION ---
+                                        sesion.asignarSesion(medicoData)
                                         val intent = Intent(this, frmPrincipalActivity::class.java)
                                         startActivity(intent)
                                         finish()
                                     } else {
-                                        db.child("usuarios").child("pacientes").child(uid).get()
-                                            .addOnSuccessListener { snapshotPaciente ->
-                                                if (snapshotPaciente.exists()) {
-                                                    val intent = Intent(
-                                                        this,
-                                                        frmPrincipalActivity::class.java
-                                                    )
-                                                    startActivity(intent)
-                                                    finish()
-                                                } else {
-                                                    Toast.makeText(
-                                                        this,
-                                                        "Usuario no encontrado en la base de datos.",
-                                                        Toast.LENGTH_SHORT
-                                                    ).show()
-                                                }
-                                            }.addOnFailureListener {
-                                            Toast.makeText(
-                                                this,
-                                                "Error al leer datos del usuario.",
-                                                Toast.LENGTH_SHORT
-                                            ).show()
-                                        }
+                                        Toast.makeText(this, "Error al obtener datos del médico.", Toast.LENGTH_SHORT).show()
                                     }
-                                }.addOnFailureListener {
-                                Toast.makeText(
-                                    this,
-                                    "Error al leer datos del usuario.",
-                                    Toast.LENGTH_SHORT
-                                ).show()
+                                } else {
+                                    db.child("usuarios").child("pacientes").child(uid).get().addOnSuccessListener { snapshotPaciente ->
+                                        if (snapshotPaciente.exists()) {
+                                            val pacienteData = snapshotPaciente.getValue(paciente::class.java)
+                                            if (pacienteData != null) {
+                                                // --- AQUI ASIGNAS LA SESION ---
+                                                sesion.asignarSesion(pacienteData)
+                                                val intent = Intent(this, frmPrincipalActivity::class.java)
+                                                startActivity(intent)
+                                                finish()
+                                            } else {
+                                                Toast.makeText(this, "Error al obtener datos del paciente.", Toast.LENGTH_SHORT).show()
+                                            }
+                                        } else {
+                                            // No está en ninguna categoría
+                                            Toast.makeText(this, "Usuario no encontrado en base de datos.", Toast.LENGTH_SHORT).show()
+                                        }
+                                    }.addOnFailureListener {
+                                        Toast.makeText(this, "Error al leer datos del usuario: ${it.message}", Toast.LENGTH_SHORT).show()
+                                    }
+                                }
+                            }.addOnFailureListener {
+                                Toast.makeText(this, "Error al leer datos del usuario: ${it.message}", Toast.LENGTH_SHORT).show()
                             }
                         }
                     } else {
-                        Toast.makeText(
-                            this,
-                            "Correo o contraseña incorrectos.",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        Toast.makeText(this, "Correo o contraseña incorrectos.", Toast.LENGTH_SHORT).show()
                     }
                 }
         }

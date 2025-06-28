@@ -2,19 +2,24 @@ package Persistencia
 
 import java.io.Serializable
 
-data class medico(var nombre : String,
-                  var correo : String,
-                  var telefono : String,
-                  var fechaNacimiento : String,
-                  var genero : String,
-                  var horario : String,
-                  var contrasena: String,
-                  var costoConsulta: Double,
-                  var cedula : String,
-                  var especialidad : String,
-                  var estado : String,
-                  var ciudad : String,
-                  var calle : String,
-                  var numero : String,
-                  var cp : String,
-                  var fotoPerfil: String = ""): Serializable
+data class medico(
+    var uid: String? = null,
+    var nombre: String? = null,
+    var correo: String? = null,
+    var telefono: String? = null,
+    var fechaNacimiento: String? = null,
+    var genero: String? = null,
+    var horario: String? = null,
+    var contrasena: String? = null,
+    var costoConsulta: Double = 0.0,
+    var cedula: String? = null,
+    var especialidad: String? = null,
+    var estado: String? = null,
+    var ciudad: String? = null,
+    var calle: String? = null,
+    var numero: String? = null,
+    var cp: String? = null,
+    var fotoPerfil: String = ""
+) : java.io.Serializable {
+    constructor() : this("","", "", "", "", "", "", "", 0.0, "", "", "", "", "", "", "", "")
+}
