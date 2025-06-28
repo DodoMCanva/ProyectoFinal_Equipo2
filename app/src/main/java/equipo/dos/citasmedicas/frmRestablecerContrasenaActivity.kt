@@ -1,6 +1,7 @@
 package equipo.dos.citasmedicas
 
 import android.content.ActivityNotFoundException
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
@@ -9,13 +10,13 @@ import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 
 class frmRestablecerContrasenaActivity : AppCompatActivity() {
 
+    var uid : String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,27 +65,32 @@ class frmRestablecerContrasenaActivity : AppCompatActivity() {
         dbMedicos.orderByChild("correo").equalTo(correo)
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    if (snapshot.exists()) encontrado = true
+                    if (snapshot.exists()) {
+                        encontrado = true
+                    }
                     verificarFinConsulta()
                 }
 
                 override fun onCancelled(error: DatabaseError) {
-                    verificarFinConsulta()
+                    Toast.makeText(this@frmRestablecerContrasenaActivity, "Fallo en buscar medicos ${error.toString()}", Toast.LENGTH_SHORT).show()
                 }
             })
 
         dbPacientes.orderByChild("correo").equalTo(correo)
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    if (snapshot.exists()) encontrado = true
+                    if (snapshot.exists()) {
+                        encontrado = true
+                    }
                     verificarFinConsulta()
                 }
-
                 override fun onCancelled(error: DatabaseError) {
-                    verificarFinConsulta()
+                    Toast.makeText(this@frmRestablecerContrasenaActivity, "Fallo en buscar pacientes ${error.toString()}", Toast.LENGTH_SHORT).show()
+
                 }
             })
     }
+
 
     private fun enviarCorreo(correo: String, codigo: String) {
         val intent = Intent(Intent.ACTION_SEND).apply {
