@@ -1,7 +1,6 @@
 package equipo.dos.citasmedicas
 
 import android.content.ActivityNotFoundException
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
@@ -13,10 +12,10 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
+import modulos.EmailSender
 
 class frmRestablecerContrasenaActivity : AppCompatActivity() {
 
-    var uid : String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +39,6 @@ class frmRestablecerContrasenaActivity : AppCompatActivity() {
                     val intent = Intent(this, frmVerificaIdentidadActivity::class.java)
                     intent.putExtra("codigo", codigo)
                     intent.putExtra("correo", correoIngresado)
-                    intent.putExtra("uid", uid)
                     startActivity(intent)
                 } else {
                     Toast.makeText(this, "Correo no registrado en el sistema.", Toast.LENGTH_SHORT).show()
@@ -49,9 +47,9 @@ class frmRestablecerContrasenaActivity : AppCompatActivity() {
         }
     }
 
-    private fun buscarCorreo(correo: String, callback: (encontrado: Boolean) -> Unit) {
-        val dbMedicos = FirebaseDatabase.getInstance().getReference("usuarios/medicos")
-        val dbPacientes = FirebaseDatabase.getInstance().getReference("usuarios/pacientes")
+    private fun buscarCorreo(correo: String, callback: (Boolean) -> Unit) {
+        val dbMedicos = FirebaseDatabase.getInstance().getReference("medicos")
+        val dbPacientes = FirebaseDatabase.getInstance().getReference("pacientes")
 
         var encontrado = false
         var consultasTerminadas = 0
@@ -68,13 +66,11 @@ class frmRestablecerContrasenaActivity : AppCompatActivity() {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()) {
                         encontrado = true
-                        uid = snapshot.children.firstOrNull()?.key
                     }
                     verificarFinConsulta()
                 }
 
                 override fun onCancelled(error: DatabaseError) {
-                    Toast.makeText(this@frmRestablecerContrasenaActivity, "Error buscando médicos: ${error.message}", Toast.LENGTH_SHORT).show()
                     verificarFinConsulta()
                 }
             })
@@ -84,32 +80,24 @@ class frmRestablecerContrasenaActivity : AppCompatActivity() {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()) {
                         encontrado = true
-                        uid = snapshot.children.firstOrNull()?.key
                     }
                     verificarFinConsulta()
                 }
-
                 override fun onCancelled(error: DatabaseError) {
-                    Toast.makeText(this@frmRestablecerContrasenaActivity, "Error buscando pacientes: ${error.message}", Toast.LENGTH_SHORT).show()
                     verificarFinConsulta()
                 }
             })
     }
 
 
-
     private fun enviarCorreo(correo: String, codigo: String) {
-        val intent = Intent(Intent.ACTION_SEND).apply {
-            type = "message/rfc822"
-            putExtra(Intent.EXTRA_EMAIL, arrayOf(correo))
-            putExtra(Intent.EXTRA_SUBJECT, "Código de recuperación")
-            putExtra(Intent.EXTRA_TEXT, "Ingresa este código de recuperación:\n\n$codigo")
-        }
-        try {
-            startActivity(Intent.createChooser(intent, "Enviar correo con..."))
-        } catch (ex: ActivityNotFoundException) {
-            Toast.makeText(this, "No hay aplicaciones de correo instaladas.", Toast.LENGTH_SHORT).show()
-        }
+        val emailSender = EmailSender("cesarin7814@gmail.com", "chicharo7878")
+        val codigo = generarCodigo()
+        emailSender.enviarCorreo(
+            destino = correo,
+            asunto = "Código de recuperación",
+            mensaje = "Ingresa este código de recuperación:\n\n$codigo"
+        )
     }
 
     private fun generarCodigo(): String {
