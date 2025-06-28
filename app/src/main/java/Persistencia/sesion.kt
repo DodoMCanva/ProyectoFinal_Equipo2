@@ -3,6 +3,7 @@ package Persistencia
 import java.io.Serializable
 
 object sesion {
+    var citas: ArrayList<cita> = ArrayList()
     var sesion: Serializable? = null
 
     fun asignarSesion(s: Serializable?) {

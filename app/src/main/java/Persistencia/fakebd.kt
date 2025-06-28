@@ -6,6 +6,7 @@ object fakebd {
     val citas : ArrayList<cita> = ArrayList()
 
 
+
     init {
         //deberiamos trabajar con id
         pacientes.add(paciente("ruta", "Cesar", "cesard@gmail.com", "612220781", "123456", "14-07-2002", "Masculino","pcesar"));
