@@ -99,7 +99,7 @@ class frmRestablecerContrasenaActivity : AppCompatActivity() {
     private fun enviarCorreoAsync(correo: String, codigo: String) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                val emailSender = EmailSender("cesarin7814@gmail.com", "tu_contraseña_de_aplicacion")
+                val emailSender = EmailSender("cesarin7814@gmail.com", "lugp kpxj aenh vnmg")
                 emailSender.enviarCorreo(
                     destino = correo,
                     asunto = "Código de recuperación",
