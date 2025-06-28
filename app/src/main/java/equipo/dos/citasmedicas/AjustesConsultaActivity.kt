@@ -128,6 +128,92 @@ class AjustesConsultaActivity : AppCompatActivity() {
         }
 
         // Jueves
+        var juevesActivo = true
+        val layoutJueves = findViewById<LinearLayout>(R.id.layoutJueves)
+        val etJuevesDeManana = findViewById<EditText>(R.id.etJuevesDeManana)
+        val etJuevesAManana = findViewById<EditText>(R.id.etJuevesAManana)
+        val etJuevesDeTarde = findViewById<EditText>(R.id.etJuevesDeTarde)
+        val etJuevesATarde = findViewById<EditText>(R.id.etJuevesATarde)
+
+        layoutJueves.setOnClickListener {
+            juevesActivo = !juevesActivo
+            val alpha = if (juevesActivo) 1f else 0.4f
+            val habilitado = juevesActivo
+            etJuevesDeManana.isEnabled = habilitado
+            etJuevesAManana.isEnabled = habilitado
+            etJuevesDeTarde.isEnabled = habilitado
+            etJuevesATarde.isEnabled = habilitado
+            etJuevesDeManana.alpha = alpha
+            etJuevesAManana.alpha = alpha
+            etJuevesDeTarde.alpha = alpha
+            etJuevesATarde.alpha = alpha
+        }
+
+        // Viernes
+        var viernesActivo = true
+        val layoutViernes = findViewById<LinearLayout>(R.id.layoutViernes)
+        val etViernesDeManana = findViewById<EditText>(R.id.etViernesDeManana)
+        val etViernesAManana = findViewById<EditText>(R.id.etViernesAManana)
+        val etViernesDeTarde = findViewById<EditText>(R.id.etViernesDeTarde)
+        val etViernesATarde = findViewById<EditText>(R.id.etViernesATarde)
+
+        layoutViernes.setOnClickListener {
+            viernesActivo = !viernesActivo
+            val alpha = if (viernesActivo) 1f else 0.4f
+            val habilitado = viernesActivo
+            etViernesDeManana.isEnabled = habilitado
+            etViernesAManana.isEnabled = habilitado
+            etViernesDeTarde.isEnabled = habilitado
+            etViernesATarde.isEnabled = habilitado
+            etViernesDeManana.alpha = alpha
+            etViernesAManana.alpha = alpha
+            etViernesDeTarde.alpha = alpha
+            etViernesATarde.alpha = alpha
+        }
+
+        // Sábado
+        var sabadoActivo = true
+        val layoutSabado = findViewById<LinearLayout>(R.id.layoutSabado)
+        val etSabadoDeManana = findViewById<EditText>(R.id.etSabadoDeManana)
+        val etSabadoAManana = findViewById<EditText>(R.id.etSabadoAManana)
+        val etSabadoDeTarde = findViewById<EditText>(R.id.etSabadoDeTarde)
+        val etSabadoATarde = findViewById<EditText>(R.id.etSabadoATarde)
+
+        layoutSabado.setOnClickListener {
+            sabadoActivo = !sabadoActivo
+            val alpha = if (sabadoActivo) 1f else 0.4f
+            val habilitado = sabadoActivo
+            etSabadoDeManana.isEnabled = habilitado
+            etSabadoAManana.isEnabled = habilitado
+            etSabadoDeTarde.isEnabled = habilitado
+            etSabadoATarde.isEnabled = habilitado
+            etSabadoDeManana.alpha = alpha
+            etSabadoAManana.alpha = alpha
+            etSabadoDeTarde.alpha = alpha
+            etSabadoATarde.alpha = alpha
+        }
+
+        // Domingo
+        var domingoActivo = true
+        val layoutDomingo = findViewById<LinearLayout>(R.id.layoutDomingo)
+        val etDomingoDeManana = findViewById<EditText>(R.id.etDomingoDeManana)
+        val etDomingoAManana = findViewById<EditText>(R.id.etDomingoAManana)
+        val etDomingoDeTarde = findViewById<EditText>(R.id.etDomingoDeTarde)
+        val etDomingoATarde = findViewById<EditText>(R.id.etDomingoATarde)
+
+        layoutDomingo.setOnClickListener {
+            domingoActivo = !domingoActivo
+            val alpha = if (domingoActivo) 1f else 0.4f
+            val habilitado = domingoActivo
+            etDomingoDeManana.isEnabled = habilitado
+            etDomingoAManana.isEnabled = habilitado
+            etDomingoDeTarde.isEnabled = habilitado
+            etDomingoATarde.isEnabled = habilitado
+            etDomingoDeManana.alpha = alpha
+            etDomingoAManana.alpha = alpha
+            etDomingoDeTarde.alpha = alpha
+            etDomingoATarde.alpha = alpha
+        }
 
     }
 
