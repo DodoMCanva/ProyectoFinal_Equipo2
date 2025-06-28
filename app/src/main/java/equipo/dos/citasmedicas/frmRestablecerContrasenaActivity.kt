@@ -98,7 +98,6 @@ class frmRestablecerContrasenaActivity : AppCompatActivity() {
 
     private fun enviarCorreo(correo: String, codigo: String) {
         val emailSender = EmailSender("cesarin7814@gmail.com", "chicharo7878")
-        val codigo = generarCodigo()
         emailSender.enviarCorreo(
             destino = correo,
             asunto = "Código de recuperación",
