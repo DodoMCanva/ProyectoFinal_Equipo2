@@ -57,7 +57,7 @@ class frmPrincipalActivity : AppCompatActivity() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val citasList = ArrayList<cita>()
                 for (citaSnapshot in snapshot.children) {
-                    val citaData = citaSnapshot.getValue(cita::class.java)
+                    val citaData = citaSnapshot.getValue(Persistencia.cita::class.java)
                     if (citaData != null) {
                         citasList.add(citaData)
                     }

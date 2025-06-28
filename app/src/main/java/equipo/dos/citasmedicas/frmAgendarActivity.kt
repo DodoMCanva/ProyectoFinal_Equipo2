@@ -45,6 +45,7 @@ class frmAgendarActivity : AppCompatActivity() {
                 for (medicoSnapshot in snapshot.children) {
                     val medicoData = medicoSnapshot.getValue(medico::class.java)
                     if (medicoData != null) {
+                        medicoData.uid = medicoSnapshot.key
                         medicosList.add(medicoData)
                     }
                 }
