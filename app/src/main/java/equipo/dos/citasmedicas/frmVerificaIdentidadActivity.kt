@@ -20,10 +20,11 @@ class frmVerificaIdentidadActivity : AppCompatActivity() {
         val etCodigo = findViewById<EditText>(R.id.et_codigoVerificacion)
         val btnVerificar = findViewById<Button>(R.id.btnVerificar)
 
-        val correo = intent.getStringExtra("correo")
+        val correo = intent.getStringExtra("codigo")
 
         btnVerificar.setOnClickListener {
             val codigoIngresado = etCodigo.text.toString().trim()
+
 
             if (codigoIngresado == codigoCorrecto) {
                 val intent = Intent(this, frmNuevaContrasenaActivity::class.java)
