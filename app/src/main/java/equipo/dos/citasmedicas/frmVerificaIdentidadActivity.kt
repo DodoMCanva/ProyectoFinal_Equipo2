@@ -10,8 +10,6 @@ import androidx.appcompat.app.AppCompatActivity
 
 class frmVerificaIdentidadActivity : AppCompatActivity() {
 
-    val codigoCorrecto = "123456"
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -20,13 +18,12 @@ class frmVerificaIdentidadActivity : AppCompatActivity() {
         val etCodigo = findViewById<EditText>(R.id.et_codigoVerificacion)
         val btnVerificar = findViewById<Button>(R.id.btnVerificar)
 
-        val correo = intent.getStringExtra("codigo")
+        val codigo = intent.getStringExtra("codigo")
+        val correo = intent.getStringExtra("correo")
 
         btnVerificar.setOnClickListener {
-            val codigoIngresado = etCodigo.text.toString().trim()
-
-
-            if (codigoIngresado == codigoCorrecto) {
+            val codigoIngresado = etCodigo.text.toString().uppercase()
+            if (codigoIngresado == codigo) {
                 val intent = Intent(this, frmNuevaContrasenaActivity::class.java)
                 intent.putExtra("correo", correo)
                 startActivity(intent)
