@@ -26,7 +26,8 @@ class frmRestablecerContrasenaActivity : AppCompatActivity() {
         val etCorreo = findViewById<EditText>(R.id.et_correoResContra)
         val btnEnviarCodigo = findViewById<Button>(R.id.btnEnviarCodigo)
 
-        dbRef = FirebaseDatabase.getInstance().getReference("usuarios") // Ajusta si tu nodo se llama distinto
+        dbRef = FirebaseDatabase.getInstance().getReference("usuarios")
+
 
         btnEnviarCodigo.setOnClickListener {
             val correoIngresado = etCorreo.text.toString().trim()
