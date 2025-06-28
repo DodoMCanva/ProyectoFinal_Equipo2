@@ -54,8 +54,8 @@
     <string name="registro">Registro</string>
     <string name="nombre">Nombre</string>
     <string name="fechaNacimiento">Fecha de nacimiento</string>
-    <string name="telefono">Teléfono</string>
-    <string name="genero">Género</string>
+    <string name="telefono">Teléfono:</string>
+    <string name="genero">Género:</string>
     <string name="hombre">Masculino</string>
     <string name="mujer">Femenino</string>
     <string name="dialogRecetaTitulo">Receta</string>
@@ -80,8 +80,8 @@
     <string name="precioConsulta">Precio de consulta</string>
     <string name="btnGuardar">Guardar</string>
     <string name="paciente">Paciente:</string>
-    <string name="Edad">Edad</string>
-    <string name="Años">Años</string>
+    <string name="Edad">Edad:</string>
+    <string name="Años">años</string>
     <string name="finalizaCita">Finalizar cita</string>
     <string name="reprogramarCita">Reprogramar cita</string>
     <string name="cancelarCita">Cancelar cita</string>
