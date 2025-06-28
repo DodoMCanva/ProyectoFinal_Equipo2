@@ -11,6 +11,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import java.util.Calendar
 
 class frmRegistroActivity : AppCompatActivity() {
@@ -96,9 +98,42 @@ class frmRegistroActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            val intent = Intent(this, frmLoginActivity::class.java)
-            intent.putExtra("tipoUsuario", "paciente")
-            startActivity(intent)
+
+            val auth = FirebaseAuth.getInstance()
+            val database = FirebaseDatabase.getInstance().reference
+
+            auth.createUserWithEmailAndPassword(correo, contra)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        val uid = auth.currentUser?.uid ?: return@addOnCompleteListener
+
+                        val paciente = mapOf(
+                            "nombre" to nombre,
+                            "correo" to correo,
+                            "fechaNacimiento" to fecha,
+                            "telefono" to telefono,
+                            "genero" to genero,
+                            "tipo" to "paciente"
+                        )
+
+                        database.child("usuarios").child("pacientes").child(uid).setValue(paciente)
+                            .addOnSuccessListener {
+                                Toast.makeText(this, "Paciente registrado correctamente", Toast.LENGTH_SHORT).show()
+                                val intent = Intent(this, frmLoginActivity::class.java)
+                                startActivity(intent)
+                                finish()
+                            }
+                            .addOnFailureListener {
+                                Toast.makeText(this, "Error al guardar datos del paciente.", Toast.LENGTH_SHORT).show()
+                            }
+                    } else {
+                        Toast.makeText(this, "Error al registrar: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+
+
+
         }
     }
 }
