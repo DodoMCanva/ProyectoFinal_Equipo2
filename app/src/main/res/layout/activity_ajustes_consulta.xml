@@ -64,6 +64,7 @@
             android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/layoutLunes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="15dp"
@@ -218,6 +219,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/layoutMartes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="15dp"
@@ -373,6 +375,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/layoutMiercoles"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="15dp"
@@ -528,6 +531,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/layoutJueves"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="15dp"
@@ -683,6 +687,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/layoutViernes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="15dp"
@@ -838,6 +843,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/layoutSabado"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="15dp"
@@ -993,6 +999,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/layoutDomingo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="15dp"
