@@ -18,8 +18,10 @@ exports.cambiarContrasena = functions.https.onCall(async (data, context) => {
   console.log("Data completa recibida:", data);
   console.log("Tipo de data:", typeof data);
   
-const email = (data.email || "").trim();
-const nuevaContra = data.nuevaContrasena;
+ const payload = data.data || {};
+
+  const email = typeof payload.email === "string" ? payload.email.trim() : "";
+  const nuevaContra = typeof payload.nuevaContrasena === "string" ? payload.nuevaContrasena : "";
   
   console.log("Email:", email);
   console.log("NuevaContra:", nuevaContra);
