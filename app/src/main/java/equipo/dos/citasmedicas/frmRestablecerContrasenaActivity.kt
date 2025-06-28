@@ -1,6 +1,7 @@
 package equipo.dos.citasmedicas
 
 import android.content.ActivityNotFoundException
+import kotlinx.coroutines.*
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
@@ -35,7 +36,7 @@ class frmRestablecerContrasenaActivity : AppCompatActivity() {
             buscarCorreo(correoIngresado) { existe ->
                 if (existe) {
                     val codigo = generarCodigo()
-                    enviarCorreo(correoIngresado, codigo)
+                    enviarCorreoAsync(correoIngresado, codigo)
                     val intent = Intent(this, frmVerificaIdentidadActivity::class.java)
                     intent.putExtra("codigo", codigo)
                     intent.putExtra("correo", correoIngresado)
@@ -95,15 +96,27 @@ class frmRestablecerContrasenaActivity : AppCompatActivity() {
             })
     }
 
-
-    private fun enviarCorreo(correo: String, codigo: String) {
-        val emailSender = EmailSender("cesarin7814@gmail.com", "chicharo7878")
-        emailSender.enviarCorreo(
-            destino = correo,
-            asunto = "Código de recuperación",
-            mensaje = "Ingresa este código de recuperación:\n\n$codigo"
-        )
+    private fun enviarCorreoAsync(correo: String, codigo: String) {
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val emailSender = EmailSender("cesarin7814@gmail.com", "tu_contraseña_de_aplicacion")
+                emailSender.enviarCorreo(
+                    destino = correo,
+                    asunto = "Código de recuperación",
+                    mensaje = "Ingresa este código de recuperación:\n\n$codigo"
+                )
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(this@frmRestablecerContrasenaActivity, "Correo enviado", Toast.LENGTH_SHORT).show()
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(this@frmRestablecerContrasenaActivity, "Error al enviar correo", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
     }
+
 
     private fun generarCodigo(): String {
         val chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
