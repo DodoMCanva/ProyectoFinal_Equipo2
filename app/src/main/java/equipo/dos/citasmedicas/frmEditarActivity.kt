@@ -66,8 +66,10 @@ class frmEditarActivity : AppCompatActivity() {
                 tvFecha.text = fechaSeleccionada
             }, anio, mes, dia)
 
+            datePicker.datePicker.maxDate = System.currentTimeMillis()
             datePicker.show()
         }
+
 
 
 
@@ -107,7 +109,7 @@ class frmEditarActivity : AppCompatActivity() {
 
                 val adapterEspecialidades = ArrayAdapter(
                     this,
-                    android.R.layout.simple_spinner_item,
+                    R.layout.item_spinner_especialidad,
                     especialidades
                 )
                 adapterEspecialidades.setDropDownViewResource(R.layout.item_spinner_especialidad)
@@ -164,27 +166,86 @@ class frmEditarActivity : AppCompatActivity() {
 
         // Botón guardar
         findViewById<Button>(R.id.btnGuardar).setOnClickListener {
+            val nombre = etNombre.text.toString().trim()
+            val telefono = etTelefono.text.toString().trim()
+            val generoSeleccionado = when {
+                cbHombre.isChecked -> "Masculino"
+                cbMujer.isChecked -> "Femenino"
+                else -> ""
+            }
+
+            if (nombre.isEmpty() || telefono.isEmpty() || generoSeleccionado.isEmpty()) {
+                Toast.makeText(this, "Nombre, teléfono y género son obligatorios.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            val telefonoRegex = Regex("^\\d{10}$")
+            if (!telefonoRegex.matches(telefono)) {
+                Toast.makeText(this, "El teléfono debe contener exactamente 10 dígitos.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            val cp = etCP.text.toString().trim()
+            val cpRegex = Regex("^\\d{5}$")
+            if (!cpRegex.matches(cp)) {
+                Toast.makeText(this, "El código postal debe tener exactamente 5 dígitos.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            if (sesion is medico) {
+                if (tvFecha.text.toString().trim().isEmpty()) {
+                    Toast.makeText(this, "La fecha de nacimiento es obligatoria.", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+
+                if (etCedula.text.toString().trim().isEmpty()) {
+                    Toast.makeText(this, "La cédula profesional es obligatoria.", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+
+                val cedula = etCedula.text.toString().trim()
+                val cedulaRegex = Regex("^\\d{7,8}$")
+                if (!cedulaRegex.matches(cedula)) {
+                    Toast.makeText(this, "La cédula profesional debe tener entre 7 y 8 dígitos numéricos.", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+
+                if (etEstado.text.toString().trim().isEmpty() ||
+                    etCalle.text.toString().trim().isEmpty() ||
+                    etNumero.text.toString().trim().isEmpty() ||
+                    etCP.text.toString().trim().isEmpty()) {
+                    Toast.makeText(this, "Todos los campos de dirección son obligatorios.", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+
+                // Validar fecha que no sea futura
+                val fechaSplit = tvFecha.text.toString().trim().split("/")
+                if (fechaSplit.size == 3) {
+                    val dia = fechaSplit[0].toInt()
+                    val mes = fechaSplit[1].toInt() - 1
+                    val anio = fechaSplit[2].toInt()
+
+                    val calendarNacimiento = Calendar.getInstance()
+                    calendarNacimiento.set(anio, mes, dia)
+                    if (calendarNacimiento.after(Calendar.getInstance())) {
+                        Toast.makeText(this, "La fecha de nacimiento no puede ser en el futuro.", Toast.LENGTH_SHORT).show()
+                        return@setOnClickListener
+                    }
+                }
+            }
 
             //mostrar el diálogo
             val dialog = Dialog(this)
             dialog.setContentView(R.layout.dialog_confirmacion_edicion)
             dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
             dialog.window?.setLayout(
-                (resources.displayMetrics.widthPixels * 0.9).toInt(),  // 90% ancho pantalla
-                ViewGroup.LayoutParams.WRAP_CONTENT                     // alto ajustado al contenido
+                (resources.displayMetrics.widthPixels * 0.9).toInt(),
+                ViewGroup.LayoutParams.WRAP_CONTENT
             )
 
             val btnAceptar = dialog.findViewById<Button>(R.id.btnConfirmarEdicion)
 
             btnAceptar.setOnClickListener {
-                val nombre = etNombre.text.toString().trim()
-                val telefono = etTelefono.text.toString().trim()
-                val generoSeleccionado = when {
-                    cbHombre.isChecked -> "Masculino"
-                    cbMujer.isChecked -> "Femenino"
-                    else -> ""
-                }
-
                 if (sesion is medico) {
                     val m = sesion
                     m.nombre = nombre
@@ -203,16 +264,16 @@ class frmEditarActivity : AppCompatActivity() {
                     p.telefono = telefono
                     p.genero = generoSeleccionado
                 }
+
                 val intent = Intent(this, frmMiPerfilActivity::class.java)
                 intent.putExtra("sesion", sesion)
                 startActivity(intent)
                 dialog.dismiss()
-
             }
 
             dialog.show()
-
             Toast.makeText(this, "Cambios guardados correctamente", Toast.LENGTH_SHORT).show()
         }
+
     }
 }

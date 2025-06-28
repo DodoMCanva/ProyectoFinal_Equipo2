@@ -1,16 +1,14 @@
-package Persistencia
+package modulos
 
-import android.animation.TypeConverter
+import Persistencia.medico
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewParent
 import android.widget.ArrayAdapter
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.activity.result.IntentSenderRequest
 import equipo.dos.citasmedicas.R
 import equipo.dos.citasmedicas.frmAgendarMedicoActivity
 

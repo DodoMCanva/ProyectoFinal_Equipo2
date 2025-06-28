@@ -7,6 +7,7 @@ object fakebd {
 
 
     init {
+        //deberiamos trabajar con id
         pacientes.add(paciente("ruta", "Cesar", "cesard@gmail.com", "612220781", "123456", "14-07-2002", "Masculino","pcesar"));
         pacientes.add(paciente("ruta", "Ana", "ana@gmail.com", "664112233", "ana123", "23-03-1995", "Femenino","pana"));
         pacientes.add(paciente("ruta", "Luis", "luis@hotmail.com", "618334455", "luispass", "09-11-1988", "Masculino","pluis"));

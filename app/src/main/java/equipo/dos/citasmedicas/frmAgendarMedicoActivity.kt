@@ -22,6 +22,7 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import equipo.dos.citasmedicas.databinding.ActivityFrmPrincipalBinding
+import equipo.dos.citasmedicas.helpers.MenuDesplegable
 import java.util.Calendar
 
 class frmAgendarMedicoActivity : AppCompatActivity() {
@@ -79,7 +80,7 @@ class frmAgendarMedicoActivity : AppCompatActivity() {
         val horasDisponibles = generarHorasCada30Min()
 
         val adapterHoras = ArrayAdapter(this, android.R.layout.simple_spinner_item, horasDisponibles)
-        adapterHoras.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        adapterHoras.setDropDownViewResource(R.layout.spinner_item_custom_hora)
         spHora.adapter = adapterHoras
 
         val tvHoraSeleccionada = findViewById<TextView>(R.id.tvHoraSeleccionada)
@@ -148,97 +149,6 @@ class frmAgendarMedicoActivity : AppCompatActivity() {
             finish()
         }
 
-        val drawerLayout = findViewById<DrawerLayout>(R.id.drawer_agendar_medico)
-        val toolbar = findViewById<Button>(R.id.btnMenu)
-        val nav = findViewById<NavigationView>(R.id.navegacion_menu)
-
-        toolbar.setOnClickListener {
-            drawerLayout.openDrawer(GravityCompat.START)
-        }
-
-        val menu = nav.menu
-        val opcion = menu.findItem(R.id.btnOpcion)
-
-        if (sesion.tipoSesion() == "paciente") {
-            opcion.setTitle("Agendar")
-            opcion.setIcon(R.drawable.date48)
-        } else {
-            opcion.setTitle("Ajustar Consulta")
-            opcion.setIcon(R.drawable.settings30)
-        }
-
-        nav.setNavigationItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.btnMenuMisCitas -> {
-                    var inte: Intent = Intent(this, frmPrincipalActivity::class.java)
-                    drawerLayout.closeDrawer(GravityCompat.START)
-                    startActivity(inte)
-                    true
-                }
-
-                R.id.btnMenuHistorial -> {
-                    var inte: Intent
-                    inte = Intent(this, frmHistorialActivity::class.java)
-                    drawerLayout.closeDrawer(GravityCompat.START)
-                    startActivity(inte)
-                    true
-                }
-
-                R.id.btnOpcion -> {
-                    var inte: Intent
-                    if (sesion.tipoSesion() == "paciente") {
-                        inte = Intent(this, frmAgendarActivity::class.java)
-                    } else {
-                        inte = Intent(this, AjustesConsultaActivity::class.java)
-                    }
-                    drawerLayout.closeDrawer(GravityCompat.START)
-                    startActivity(inte)
-                    true
-                }
-
-                R.id.btnMenuCerrarSesion -> {
-                    var inte: Intent = Intent(this, frmLoginActivity::class.java)
-                    drawerLayout.closeDrawer(GravityCompat.START)
-                    sesion.cerrarSesion()
-                    startActivity(inte)
-                    true
-                }
-
-                else -> false
-            }
-        }
-        val headerView = nav.getHeaderView(0)
-
-        val btnPerfil = headerView.findViewById<ImageView>(R.id.btnPerfil)
-        val btnMenuCerrar = headerView.findViewById<Button>(R.id.btnMenuCerrarMenu)
-
-        // cargar imagen de perfil
-        val sesionActual = sesion.obtenerSesion()
-        if (sesionActual != null) {
-            val fotoNombre = when (sesionActual) {
-                is paciente -> sesionActual.fotoPerfil
-                is medico -> sesionActual.fotoPerfil
-                else -> null
-            }
-
-            fotoNombre?.let {
-                val resId = resources.getIdentifier(it, "drawable", packageName)
-                if (resId != 0) {
-                    btnPerfil.setImageResource(resId)
-                }
-            }
-        }
-
-
-        btnPerfil.setOnClickListener{
-            var inte : Intent = Intent(this, frmMiPerfilActivity::class.java)
-            drawerLayout.closeDrawer(GravityCompat.START)
-            startActivity(inte)
-            true
-        }
-
-        btnMenuCerrar.setOnClickListener{
-            drawerLayout.closeDrawer(GravityCompat.START)
-        }
+        MenuDesplegable.configurarMenu(this)
     }
 }

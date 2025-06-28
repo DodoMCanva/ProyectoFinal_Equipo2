@@ -94,4 +94,5 @@
     <string name="btnDialogAceptar">Aceptar</string>
     <string name="historial">Historial</string>
     <string name="dialogConfirmacionEdicionTexto">Tus datos se han guardado exitosamente</string>
+    <string name="cerrarsesion">Cerrar Sesión</string>
 </resources>

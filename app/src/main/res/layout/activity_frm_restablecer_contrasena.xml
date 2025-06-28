@@ -11,7 +11,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="24dp"
+        android:layout_height="35dp"
         android:background="@drawable/fondo_barra" />
 
 
@@ -25,14 +25,15 @@
         android:textSize="@dimen/texttitulo45" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:fontFamily="@font/quicksandmedium"
-        android:gravity="center"
+        android:layout_gravity="center_horizontal"
+        android:textAlignment="center"
         android:text="@string/textResContra"
         android:textColor="@color/azulTexto"
-        android:textSize="@dimen/textomenu25" />
+        android:textSize="22sp" />
 
 
     <TextView
@@ -42,7 +43,7 @@
         android:layout_marginTop="80dp"
         android:text="@string/correo"
         android:textColor="@color/azulTexto"
-        android:textSize="@dimen/textomenu25" />
+        android:textSize="22sp" />
 
     <EditText
         android:id="@+id/et_correoResContra"

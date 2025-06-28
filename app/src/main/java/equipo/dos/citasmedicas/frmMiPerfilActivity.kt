@@ -16,6 +16,7 @@ import com.google.android.material.navigation.NavigationView
 import equipo.dos.citasmedicas.databinding.ActivityFrmMiPerfilBinding
 import equipo.dos.citasmedicas.databinding.ActivityFrmPerfilBinding
 import equipo.dos.citasmedicas.databinding.ActivityFrmPrincipalBinding
+import equipo.dos.citasmedicas.helpers.MenuDesplegable
 
 class frmMiPerfilActivity : AppCompatActivity() {
 
@@ -40,27 +41,12 @@ class frmMiPerfilActivity : AppCompatActivity() {
         val cerrar : TextView = findViewById(R.id.btnCerrarSesion)
         val editar : TextView = findViewById(R.id.btnEditarPerfil)
 
-
-        //
-        val drawerLayout = findViewById<DrawerLayout>(R.id.drawer_mi_perfil)
-        val toolbar = findViewById<Button>(R.id.btnMenu)
-        val nav = findViewById<NavigationView>(R.id.navegacion_menu)
-
-        toolbar.setOnClickListener {
-            drawerLayout.openDrawer(GravityCompat.START)
-        }
-
-        val menu = nav.menu
-        val opcion = menu.findItem(R.id.btnOpcion)
-
         when (val s = sesion.obtenerSesion()) {
             is paciente -> {
                 nombre.text = s.nombre
                 numero.text = s.correo
                 fecha.text = s.fechaNacimiento
                 genero.text = s.genero
-                opcion.setTitle("Agendar")
-                opcion.setIcon(R.drawable.date48)
                 val fotoResId = resources.getIdentifier(s.fotoPerfil, "drawable", packageName)
                 if (fotoResId != 0) {
                     imgFotoPerfil.setImageResource(fotoResId)
@@ -71,8 +57,6 @@ class frmMiPerfilActivity : AppCompatActivity() {
                 numero.text = s.correo
                 fecha.text = s.fechaNacimiento
                 genero.text = s.genero
-                opcion.setIcon(R.drawable.settings30)
-                opcion.title = "Ajustes de Consulta"
                 val fotoResId = resources.getIdentifier(s.fotoPerfil, "drawable", packageName)
                 if (fotoResId != 0) {
                     imgFotoPerfil.setImageResource(fotoResId)
@@ -94,62 +78,7 @@ class frmMiPerfilActivity : AppCompatActivity() {
             startActivity(inte)
             finish()
         }
-
-        nav.setNavigationItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.btnMenuMisCitas -> {
-                    var inte : Intent = Intent(this, frmPrincipalActivity::class.java)
-                    drawerLayout.closeDrawer(GravityCompat.START)
-                    startActivity(inte)
-                    true
-                }
-                R.id.btnMenuHistorial -> {
-                    var inte : Intent
-                    inte = Intent(this, frmHistorialActivity::class.java)
-                    drawerLayout.closeDrawer(GravityCompat.START)
-                    startActivity(inte)
-                    true
-                }
-                R.id.btnOpcion -> {
-                    var inte : Intent
-                    if (sesion.tipoSesion() == "paciente"){
-                        inte = Intent(this, frmAgendarActivity::class.java)
-                    }else{
-                        inte = Intent(this, AjustesConsultaActivity::class.java)
-                    }
-                    drawerLayout.closeDrawer(GravityCompat.START)
-                    startActivity(inte)
-                    true
-                }
-                R.id.btnMenuCerrarSesion -> {
-                    var inte : Intent = Intent(this, frmLoginActivity::class.java)
-                    drawerLayout.closeDrawer(GravityCompat.START)
-                    sesion.cerrarSesion()
-                    startActivity(inte)
-                    true
-                }
-                else -> false
-            }
-        }
-
-        val headerView = nav.getHeaderView(0)
-        val btnPerfil = headerView.findViewById<ImageView>(R.id.btnPerfil)
-        val btnMenuCerrar = headerView.findViewById<Button>(R.id.btnMenuCerrarMenu)
-
-        btnPerfil.setOnClickListener{
-            var inte : Intent = Intent(this, frmMiPerfilActivity::class.java)
-            drawerLayout.closeDrawer(GravityCompat.START)
-            startActivity(inte)
-            true
-        }
-
-        btnMenuCerrar.setOnClickListener{
-            drawerLayout.closeDrawer(GravityCompat.START)
-            val intent = Intent(this, frmLoginActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            sesion.cerrarSesion()
-            startActivity(intent)
-        }
+        MenuDesplegable.configurarMenu(this)
 
     }
 }

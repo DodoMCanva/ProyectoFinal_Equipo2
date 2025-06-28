@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/drawer_mi_perfil"
+    android:id="@+id/drawer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".frmMiPerfilActivity">
@@ -95,7 +95,7 @@
     <Button
         android:layout_marginTop="60sp"
         android:id="@+id/btnEditarPerfil"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:text=" Editar Perfil "
         android:textColor="@color/white"
@@ -105,9 +105,9 @@
     <Button
         android:layout_marginTop="20sp"
         android:id="@+id/btnCerrarSesion"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:text=" Cerrar Sesion "
+        android:text="@string/cerrarsesion"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:background="@drawable/btn_rojo_redondear_no"/>

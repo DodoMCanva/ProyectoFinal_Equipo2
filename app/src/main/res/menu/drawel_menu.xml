@@ -15,6 +15,6 @@
         android:icon="@drawable/ic_launcher_foreground"/>
     <item
         android:id="@+id/btnMenuCerrarSesion"
-        android:title="Logout"
+        android:title="@string/cerrarsesion"
         android:icon="@drawable/exit30"/>
 </menu>

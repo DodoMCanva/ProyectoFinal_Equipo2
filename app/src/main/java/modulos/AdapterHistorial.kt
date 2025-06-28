@@ -1,5 +1,6 @@
-package Persistencia
+package modulos
 
+import Persistencia.cita
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -12,11 +13,10 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import equipo.dos.citasmedicas.R
-import equipo.dos.citasmedicas.frmAgendarMedicoActivity
 import equipo.dos.citasmedicas.frmDetalleCitaActivity
 import equipo.dos.citasmedicas.frmDetalleCitaMedicoPendienteActivity
 
-class AdapterCita(context: Context, val lista: ArrayList<cita>, tipo : String): ArrayAdapter<cita>(context,0, lista) {
+class AdapterHistorial(context: Context, val lista: ArrayList<cita>, tipo : String): ArrayAdapter<cita>(context,0, lista) {
     val tipo : String = tipo
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -30,18 +30,21 @@ class AdapterCita(context: Context, val lista: ArrayList<cita>, tipo : String): 
             vista.findViewById<TextView>(R.id.citaPaciente).text = c.paciente.nombre
             vista.findViewById<TextView>(R.id.citaMotivo).text = c.motivo
             vista.findViewById<TextView>(R.id.citaEstado).text = c.estado
+
+            val selCita = vista.findViewById<LinearLayout>(R.id.panelCitaMedico)
             when (c.estado) {
                 "Completada" -> {
-                    vista.setBackgroundColor(ContextCompat.getColor(context, R.color.BackCitaCompletada))
+                    selCita.setBackgroundColor(ContextCompat.getColor(context, R.color.BackCitaCompletada))
                 }
                 "Pendiente" -> {
-                    vista.setBackgroundColor(ContextCompat.getColor(context, R.color.BackCitaPendiente))
+                    selCita.setBackgroundColor(ContextCompat.getColor(context, R.color.BackCitaPendiente))
                 }
                 "Cancelada" -> {
-                    vista.setBackgroundColor(ContextCompat.getColor(context, R.color.BackCitaCancelada))
+                    selCita.setBackgroundColor(ContextCompat.getColor(context, R.color.BackCitaCancelada))
+                }
+                else -> {
                 }
             }
-            val selCita = vista.findViewById<LinearLayout>(R.id.panelCitaMedico)
             selCita.setOnClickListener {
                 val intent = Intent(context, frmDetalleCitaMedicoPendienteActivity::class.java)
                 intent.putExtra("nombre", c.paciente.nombre)
@@ -73,8 +76,6 @@ class AdapterCita(context: Context, val lista: ArrayList<cita>, tipo : String): 
                 context!!.startActivity(intent)
             }
         }
-
         return vista
     }
-
 }
