@@ -1,6 +1,7 @@
 package equipo.dos.citasmedicas
 
 import android.content.ActivityNotFoundException
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
@@ -15,6 +16,7 @@ import com.google.firebase.database.ValueEventListener
 
 class frmRestablecerContrasenaActivity : AppCompatActivity() {
 
+    var uid : String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,7 +72,7 @@ class frmRestablecerContrasenaActivity : AppCompatActivity() {
                 }
 
                 override fun onCancelled(error: DatabaseError) {
-                    verificarFinConsulta()
+                    Toast.makeText(this@frmRestablecerContrasenaActivity, "Fallo en buscar medicos ${error.toString()}", Toast.LENGTH_SHORT).show()
                 }
             })
 
@@ -83,7 +85,8 @@ class frmRestablecerContrasenaActivity : AppCompatActivity() {
                     verificarFinConsulta()
                 }
                 override fun onCancelled(error: DatabaseError) {
-                    verificarFinConsulta()
+                    Toast.makeText(this@frmRestablecerContrasenaActivity, "Fallo en buscar pacientes ${error.toString()}", Toast.LENGTH_SHORT).show()
+
                 }
             })
     }
