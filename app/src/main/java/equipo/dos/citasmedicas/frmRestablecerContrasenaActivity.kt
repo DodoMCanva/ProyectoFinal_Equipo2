@@ -12,6 +12,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
+import modulos.EmailSender
 
 class frmRestablecerContrasenaActivity : AppCompatActivity() {
 
@@ -90,18 +91,13 @@ class frmRestablecerContrasenaActivity : AppCompatActivity() {
 
 
     private fun enviarCorreo(correo: String, codigo: String) {
-        val intent = Intent(Intent.ACTION_SEND).apply {
-            type = "message/rfc822"
-            putExtra(Intent.EXTRA_EMAIL, arrayOf(correo))
-            putExtra(Intent.EXTRA_SUBJECT, "Código de recuperación")
-            putExtra(Intent.EXTRA_TEXT, "Ingresa este código de recuperación:\n\n$codigo")
-            setPackage("com.google.android.gm")
-        }
-        try {
-            startActivity(Intent.createChooser(intent, "Enviar correo con..."))
-        } catch (ex: ActivityNotFoundException) {
-            Toast.makeText(this, "No hay aplicaciones de correo instaladas.", Toast.LENGTH_SHORT).show()
-        }
+        val emailSender = EmailSender("cesarin7814@gmail.com", "chicharo7878")
+        val codigo = generarCodigo()
+        emailSender.enviarCorreo(
+            destino = correo,
+            asunto = "Código de recuperación",
+            mensaje = "Ingresa este código de recuperación:\n\n$codigo"
+        )
     }
 
     private fun generarCodigo(): String {
