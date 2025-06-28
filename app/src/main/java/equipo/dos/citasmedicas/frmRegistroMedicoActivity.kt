@@ -13,6 +13,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import java.util.Calendar
 
 class frmRegistroMedicoActivity : AppCompatActivity() {
@@ -141,9 +143,57 @@ class frmRegistroMedicoActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            val intent = Intent(this, frmLoginActivity::class.java)
-            intent.putExtra("tipoUsuario", "doctor")
-            startActivity(intent)
+
+
+
+
+            val auth = FirebaseAuth.getInstance()
+            val database = FirebaseDatabase.getInstance().reference
+
+            auth.createUserWithEmailAndPassword(correo, contra)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        val uid = auth.currentUser?.uid ?: return@addOnCompleteListener
+                        val medico = mapOf(
+                            "nombre" to nombre,
+                            "correo" to correo,
+                            "fechaNacimiento" to fecha,
+                            "telefono" to telefono,
+                            "genero" to genero,
+                            "especialidad" to especialidad,
+                            "cedula" to cedula,
+                            "direccion" to mapOf(
+                                "estado" to estado,
+                                "ciudad" to ciudad,
+                                "calle" to calle,
+                                "numero" to numero,
+                                "codigoPostal" to codigoPostal
+                            ),
+                            "tipo" to "medico"
+                        )
+
+                        database.child("usuarios").child("medicos").child(uid).setValue(medico)
+                            .addOnSuccessListener {
+                                Toast.makeText(
+                                    this,
+                                    "Médico registrado correctamente.",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                val intent = Intent(this, frmLoginActivity::class.java)
+                                startActivity(intent)
+                                finish()
+                            }
+                            .addOnFailureListener {
+                                Toast.makeText(
+                                    this,
+                                    "Error al guardar datos del médico.",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                    }
+
+                }
+
         }
 
 

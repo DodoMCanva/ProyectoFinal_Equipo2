@@ -43,19 +43,22 @@ android {
 }
 
 dependencies {
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    implementation ("com.google.firebase:firebase-database:21.0.0")
-    implementation (platform("com.google.firebase:firebase-bom:33.10.0"))
-    implementation ("com.google.firebase:firebase-analytics-ktx")
-    implementation ("com.google.firebase:firebase-auth-ktx:23.2.0")
-    implementation ("com.google.firebase:firebase-storage-ktx")
 
+    // Firebase BOM para manejar versiones automáticamente
+    implementation(platform("com.google.firebase:firebase-bom:33.10.0"))
+
+    // Firebase con versiones administradas por el BOM
+    implementation("com.google.firebase:firebase-analytics-ktx")
+    implementation("com.google.firebase:firebase-auth-ktx")
+    implementation("com.google.firebase:firebase-database-ktx")
+    implementation("com.google.firebase:firebase-storage-ktx")
 }
