@@ -16,7 +16,6 @@ import com.google.firebase.database.ValueEventListener
 
 class frmRestablecerContrasenaActivity : AppCompatActivity() {
 
-    private lateinit var dbRef: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,9 +24,6 @@ class frmRestablecerContrasenaActivity : AppCompatActivity() {
 
         val etCorreo = findViewById<EditText>(R.id.et_correoResContra)
         val btnEnviarCodigo = findViewById<Button>(R.id.btnEnviarCodigo)
-
-        dbRef = FirebaseDatabase.getInstance().getReference("usuarios")
-
 
         btnEnviarCodigo.setOnClickListener {
             val correoIngresado = etCorreo.text.toString().trim()
@@ -52,14 +48,40 @@ class frmRestablecerContrasenaActivity : AppCompatActivity() {
     }
 
     private fun buscarCorreo(correo: String, callback: (Boolean) -> Unit) {
-        dbRef.orderByChild("correo").equalTo(correo)
+        val dbMedicos = FirebaseDatabase.getInstance().getReference("medicos")
+        val dbPacientes = FirebaseDatabase.getInstance().getReference("pacientes")
+
+        var encontrado = false
+        var consultasTerminadas = 0
+
+        fun verificarFinConsulta() {
+            consultasTerminadas++
+            if (consultasTerminadas == 2) {
+                callback(encontrado)
+            }
+        }
+
+        dbMedicos.orderByChild("correo").equalTo(correo)
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    callback(snapshot.exists())
+                    if (snapshot.exists()) encontrado = true
+                    verificarFinConsulta()
                 }
 
                 override fun onCancelled(error: DatabaseError) {
-                    callback(false)
+                    verificarFinConsulta()
+                }
+            })
+
+        dbPacientes.orderByChild("correo").equalTo(correo)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.exists()) encontrado = true
+                    verificarFinConsulta()
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    verificarFinConsulta()
                 }
             })
     }
