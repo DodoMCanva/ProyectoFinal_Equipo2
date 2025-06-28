@@ -20,12 +20,16 @@ class frmVerificaIdentidadActivity : AppCompatActivity() {
 
         val codigo = intent.getStringExtra("codigo")
         val correo = intent.getStringExtra("correo")
+        val uid = intent.getStringExtra("uid")
+
+        val correoLimpio = correo.orEmpty().trim()
 
         btnVerificar.setOnClickListener {
             val codigoIngresado = etCodigo.text.toString().uppercase()
             if (codigoIngresado == codigo) {
                 val intent = Intent(this, frmNuevaContrasenaActivity::class.java)
-                intent.putExtra("correo", correo)
+                intent.putExtra("correo", correoLimpio)
+                intent.putExtra("uid", uid)
                 startActivity(intent)
                 finish()
             } else {

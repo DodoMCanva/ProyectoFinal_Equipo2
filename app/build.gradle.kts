@@ -62,12 +62,15 @@ android {
 
         implementation(platform("com.google.firebase:firebase-bom:33.10.0"))
 
+        implementation("com.google.firebase:firebase-functions-ktx")
+
         implementation("com.sun.mail:android-mail:1.6.7")
         implementation("com.sun.mail:android-activation:1.6.7")
-
+        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1")
         implementation("com.google.firebase:firebase-analytics-ktx")
         implementation("com.google.firebase:firebase-auth-ktx")
         implementation("com.google.firebase:firebase-database-ktx")
         implementation("com.google.firebase:firebase-storage-ktx")
+
     }
 }

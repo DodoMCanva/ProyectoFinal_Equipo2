@@ -1,0 +1,16 @@
+{
+  "rules": {
+    "usuarios": {
+      "medicos": {
+        ".read": true,
+        ".write": true,
+        ".indexOn": ["correo"]
+      },
+      "pacientes": {
+        ".read": true,
+        ".write": true,
+        ".indexOn": ["correo"]
+      }
+    }
+  }
+}
