@@ -45,9 +45,9 @@ object MenuDesplegable {
                 R.id.btnMenuMisCitas -> {
                     activity.startActivity(Intent(activity, frmPrincipalActivity::class.java))
                 }
-                R.id.btnMenuHistorial -> {
-                    activity.startActivity(Intent(activity, frmHistorialActivity::class.java))
-                }
+//                R.id.btnMenuHistorial -> {
+//                    activity.startActivity(Intent(activity, frmHistorialActivity::class.java))
+//                }
                 R.id.btnOpcion -> {
                     val intent = if (sesion.tipoSesion() == "paciente") {
                         Intent(activity, frmAgendarActivity::class.java)

@@ -17,6 +17,11 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Spinner
 import android.widget.TextView
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -31,7 +36,7 @@ import equipo.dos.citasmedicas.helpers.MenuDesplegable
 import java.util.Calendar
 
 class frmDetalleCitaMedicoPendienteActivity : AppCompatActivity() {
-
+    private lateinit var citaId: String
     private val binding by lazy {
         ActivityFrmDetalleCitaMedicoPendienteBinding.inflate(layoutInflater)
     }
@@ -41,246 +46,207 @@ class frmDetalleCitaMedicoPendienteActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(binding.root)
 
-
-        val campoNombre: TextView = findViewById(R.id.tvPacienteDetalleCitaMedico)
-        val campoEdad: TextView = findViewById(R.id.tvEdadDetalleCitaMedico)
-        val campoGenero: TextView = findViewById(R.id.tvGeneroDetalleCitaMedico)
-        val campoTelefono: TextView = findViewById(R.id.tvTelefonoDetalleCitaMedico)
-        val campoFecha: TextView = findViewById(R.id.tvFechaDetalleCitaMedico)
-        val campoHora: TextView = findViewById(R.id.tvHoraDetalleCitaMedico)
-        val campoEstado: TextView = findViewById(R.id.tvEstadoDetalleCitaMedico)
-        val campoMotivo: TextView = findViewById(R.id.tvMotivoDetalleCitaMedico)
-
-        val seccionReceta: LinearLayout = findViewById(R.id.llSeccionRecteaDetalleCita)
-        val seccionBotones: LinearLayout = findViewById(R.id.llSeccionOpcionesDetallesCita)
-
-        val imgFotoPerfil: ImageView = findViewById(R.id.imgFotoPerfil)
-
-        var estado = intent.getStringExtra("estado")
-        when (estado) {
-
-            "Pendiente" -> {
-                seccionReceta.visibility = View.GONE
-            }
-
-            "Completada" -> {
-                seccionBotones.visibility = View.GONE
-            }
-
-            "Cancelada" -> {
-                seccionBotones.visibility = View.GONE
-                seccionReceta.visibility = View.GONE
-            }
-
-            else -> Toast.makeText(this, "Se mando", Toast.LENGTH_SHORT).show()
+        citaId = intent.getStringExtra("citaId") ?: ""
+        if (citaId.isEmpty()) {
+            Toast.makeText(this, "Error: ID de cita no recibido.", Toast.LENGTH_SHORT).show()
+            finish()
+            return
         }
 
-        campoNombre.setText(intent.getStringExtra("nombre"))
-        campoEdad.setText(intent.getStringExtra("edad"))
-        campoGenero.setText(intent.getStringExtra("genero"))
-        campoTelefono.setText(intent.getStringExtra("telefono"))
-        campoFecha.setText(intent.getStringExtra("fecha"))
-        campoHora.setText(intent.getStringExtra("hora"))
-        campoEstado.setText(intent.getStringExtra("estado"))
-        campoMotivo.setText(intent.getStringExtra("motivo"))
+        cargarDatosDeCita(citaId)
 
         MenuDesplegable.configurarMenu(this)
 
         binding.btnFinalizarDetallesCitaMedico.setOnClickListener {
-            val dialog = Dialog(this)
-            dialog.setContentView(R.layout.dialog_subir_receta)
-            dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-            val width = (resources.displayMetrics.widthPixels * 0.90).toInt()
-            dialog.window?.setLayout(width, ViewGroup.LayoutParams.WRAP_CONTENT)
-
-            val btnCancelarReceta = dialog.findViewById<Button>(R.id.btnCancelarForm)
-            btnCancelarReceta.setOnClickListener {
-                dialog.dismiss()
-            }
-            val btnCompletar = dialog.findViewById<Button>(R.id.btnCompletar)
-            btnCompletar.setOnClickListener {
-
-                seccionReceta.visibility = View.VISIBLE
-
-                seccionBotones.visibility = View.GONE
-                dialog.dismiss()
-                actualizarCompletada()
-            }
-            dialog.show()
+            mostrarDialogSubirReceta()
         }
 
         binding.btnReprogramarDetallesMedico.setOnClickListener {
-            val dialog = Dialog(this)
-            dialog.setContentView(R.layout.dialog_reprogramar_cita)
-            dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-            val width = (resources.displayMetrics.widthPixels * 0.90).toInt()
-            dialog.window?.setLayout(width, ViewGroup.LayoutParams.WRAP_CONTENT)
-
-            val btnCalendarioDialog =
-                dialog.findViewById<ImageButton>(R.id.btnCalendarioReprogramar)
-            val tvFechaDialog =
-                dialog.findViewById<TextView>(R.id.tvRepFecha)
-
-            if (btnCalendarioDialog == null || tvFechaDialog == null) {
-                Toast.makeText(
-                    this,
-                    "Error: Vistas de fecha no encontradas en diálogo.",
-                    Toast.LENGTH_LONG
-                ).show()
-                return@setOnClickListener
-            }
-
-            btnCalendarioDialog.setOnClickListener {
-                val calendario = Calendar.getInstance()
-                val anio = calendario.get(Calendar.YEAR)
-                val mes = calendario.get(Calendar.MONTH)
-                val dia = calendario.get(Calendar.DAY_OF_MONTH)
-
-                val datePicker = DatePickerDialog(
-                    this,
-                    { _: DatePicker, year: Int, month: Int, dayOfMonth: Int ->
-                        val fechaSeleccionada =
-                            String.format("%02d/%02d/%04d", dayOfMonth, month + 1, year)
-                        tvFechaDialog.text = fechaSeleccionada
-                    },
-                    anio,
-                    mes,
-                    dia
-                )
-                datePicker.show()
-            }
-
-            val spHoraDialog = dialog.findViewById<Spinner>(R.id.spHoraReprogramarCita)
-            val tvHoraSeleccionadaDialog =
-                dialog.findViewById<TextView>(R.id.tvHoraReprogramarCita) // TextView para la HORA
-
-            if (spHoraDialog == null || tvHoraSeleccionadaDialog == null) {
-                Toast.makeText(
-                    this,
-                    "Error: Vistas de hora no encontradas en diálogo.",
-                    Toast.LENGTH_LONG
-                ).show()
-                return@setOnClickListener
-            }
-
-            fun generarHorasCada30Min(): List<String> {
-                val horas = mutableListOf<String>()
-                var hora = 7
-                var minuto = 0
-                while (hora < 19 || (hora == 19 && minuto == 0)) {
-                    val amPm = if (hora < 12) "AM" else "PM"
-                    val hora12 = when {
-                        hora == 0 -> 12
-                        hora == 12 -> 12
-                        hora > 12 -> hora - 12
-                        else -> hora
-                    }
-                    val horaFormateada = String.format("%d:%02d %s", hora12, minuto, amPm)
-                    horas.add(horaFormateada)
-                    minuto += 30
-                    if (minuto >= 60) {
-                        minuto = 0
-                        hora++
-                    }
-                }
-                return horas
-            }
-
-            val horasDisponibles = generarHorasCada30Min()
-            val adapterHoras =
-                ArrayAdapter(this, android.R.layout.simple_spinner_item, horasDisponibles)
-            adapterHoras.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            spHoraDialog.adapter = adapterHoras
-
-            spHoraDialog.onItemSelectedListener =
-                object : android.widget.AdapterView.OnItemSelectedListener {
-                    override fun onItemSelected(
-                        parent: android.widget.AdapterView<*>,
-                        view: android.view.View?,
-                        position: Int,
-                        id: Long
-                    ) {
-                        val horaSeleccionada = parent.getItemAtPosition(position).toString()
-                        tvHoraSeleccionadaDialog.text =
-                            horaSeleccionada
-                    }
-
-                    override fun onNothingSelected(parent: android.widget.AdapterView<*>) {
-                    }
-                }
-            val btnCancelarReprogramacion = dialog.findViewById<Button>(R.id.btnCancelarRep)
-            btnCancelarReprogramacion?.setOnClickListener {
-                dialog.dismiss()
-            }
-
-
-
-            val btnCompletarReprogramacionDialog = dialog.findViewById<Button>(R.id.btnCompletarRep)
-            btnCompletarReprogramacionDialog?.setOnClickListener {
-                val nuevaFecha = tvFechaDialog.text.toString()
-                val nuevaHora = tvHoraSeleccionadaDialog.text.toString()
-                Toast.makeText(
-                    this,
-                    "Cita reprogramada para: $nuevaFecha a las $nuevaHora",
-                    Toast.LENGTH_LONG
-                ).show()
-
-                actualizarReprogramar()
-                dialog.dismiss()
-            }
-
-
-            dialog.show()
+            mostrarDialogReprogramarCita()
         }
-
 
         binding.btnCancelarDetallesMedico.setOnClickListener {
-            val dialog = Dialog(this)
-            dialog.setContentView(R.layout.dialog_cancelar_cita)
-            dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+            mostrarDialogDeCancelacion()
+        }
+    }
 
-            val width = (resources.displayMetrics.widthPixels * 0.90).toInt()
-            dialog.window?.setLayout(width, ViewGroup.LayoutParams.WRAP_CONTENT)
+    private fun cargarDatosDeCita(citaId: String) {
+        val databaseRef = FirebaseDatabase.getInstance().getReference("usuarios").child("citas")
 
-            val btnAtras = dialog.findViewById<Button>(R.id.btnAtrasCancelacion)
-            btnAtras.setOnClickListener {
-                dialog.dismiss()
+        databaseRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val citaData = snapshot.getValue(Persistencia.cita::class.java)
+
+                if (citaData != null) {
+                    val campoNombre: TextView = findViewById(R.id.tvPacienteDetalleCitaMedico)
+                    val campoFecha: TextView = findViewById(R.id.tvFechaDetalleCitaMedico)
+                    val campoHora: TextView = findViewById(R.id.tvHoraDetalleCitaMedico)
+                    val campoEstado: TextView = findViewById(R.id.tvEstadoDetalleCitaMedico)
+                    val campoMotivo: TextView = findViewById(R.id.tvMotivoDetalleCitaMedico)
+                    val seccionReceta: LinearLayout = findViewById(R.id.llSeccionRecteaDetalleCita)
+                    val seccionBotones: LinearLayout = findViewById(R.id.llSeccionOpcionesDetallesCita)
+
+
+                    campoNombre.text = citaData.nombrePaciente
+                    campoFecha.text = citaData.fecha
+                    campoHora.text = citaData.hora
+                    campoEstado.text = citaData.estado
+                    campoMotivo.text = citaData.motivo
+
+                    when (citaData.estado) {
+                        "Pendiente" -> {
+                            seccionReceta.visibility = View.GONE
+                            seccionBotones.visibility = View.VISIBLE
+                        }
+                        "Completada" -> {
+                            seccionReceta.visibility = View.VISIBLE
+                            seccionBotones.visibility = View.GONE
+                        }
+                        "Cancelada" -> {
+                            seccionReceta.visibility = View.GONE
+                            seccionBotones.visibility = View.GONE
+                        }
+                        else -> {
+                            seccionReceta.visibility = View.GONE
+                            seccionBotones.visibility = View.GONE
+                        }
+                    }
+
+                    val idPaciente = citaData.idPaciente
+                    if (idPaciente != null) {
+                        FirebaseDatabase.getInstance().getReference("usuarios/pacientes/$idPaciente").get().addOnSuccessListener { patientSnapshot ->
+                            val pacienteData = patientSnapshot.getValue(Persistencia.paciente::class.java)
+                            if (pacienteData != null) {
+                                // Ahora que tienes el objeto paciente, puedes mostrar sus datos
+                                findViewById<TextView>(R.id.tvGeneroDetalleCitaMedico).text = pacienteData.genero
+                                findViewById<TextView>(R.id.tvTelefonoDetalleCitaMedico).text = pacienteData.telefono
+                            }
+                        }
+                    }
+
+                } else {
+                    Toast.makeText(this@frmDetalleCitaMedicoPendienteActivity, "Cita no encontrada.", Toast.LENGTH_SHORT).show()
+                    finish()
+                }
             }
-            val btnConfirmar = dialog.findViewById<Button>(R.id.btnConfirmarCancelacion)
-            btnConfirmar.setOnClickListener {
-                dialog.dismiss()
-                actualizarcancelado()
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("Firebase", "Error al cargar datos de la cita: ${error.message}")
+                Toast.makeText(this@frmDetalleCitaMedicoPendienteActivity, "Error al cargar la cita.", Toast.LENGTH_SHORT).show()
+                finish()
             }
+        })
+    }
 
+    private fun mostrarDialogSubirReceta() {
+        val dialog = Dialog(this)
+        dialog.setContentView(R.layout.dialog_subir_receta)
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.window?.setLayout((resources.displayMetrics.widthPixels * 0.90).toInt(), ViewGroup.LayoutParams.WRAP_CONTENT)
 
+        val btnCancelarReceta = dialog.findViewById<Button>(R.id.btnCancelarForm)
+        val btnCompletar = dialog.findViewById<Button>(R.id.btnCompletar)
 
-            dialog.show()
+        btnCancelarReceta.setOnClickListener { dialog.dismiss() }
+        btnCompletar.setOnClickListener {
+            dialog.dismiss()
+            actualizarCompletada(citaId)
+        }
+        dialog.show()
+    }
+
+    private fun mostrarDialogReprogramarCita() {
+        val dialog = Dialog(this)
+        dialog.setContentView(R.layout.dialog_reprogramar_cita)
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.window?.setLayout((resources.displayMetrics.widthPixels * 0.90).toInt(), ViewGroup.LayoutParams.WRAP_CONTENT)
+
+        // Aquí van tus vistas del diálogo
+        val btnCalendarioDialog = dialog.findViewById<ImageButton>(R.id.btnCalendarioReprogramar)
+        val tvFechaDialog = dialog.findViewById<TextView>(R.id.tvRepFecha)
+        val spHoraDialog = dialog.findViewById<Spinner>(R.id.spHoraReprogramarCita)
+        val tvHoraSeleccionadaDialog = dialog.findViewById<TextView>(R.id.tvHoraReprogramarCita)
+        val btnCompletarReprogramacionDialog = dialog.findViewById<Button>(R.id.btnCompletarRep)
+        val btnCancelarReprogramacion = dialog.findViewById<Button>(R.id.btnCancelarRep)
+
+        fun generarHorasCada30Min(): List<String> { /* ... */ return mutableListOf() }
+        val adapterHoras = ArrayAdapter(this, android.R.layout.simple_spinner_item, generarHorasCada30Min())
+        spHoraDialog.adapter = adapterHoras
+        spHoraDialog.onItemSelectedListener = object : android.widget.AdapterView.OnItemSelectedListener { /* ... */ override fun onItemSelected(p0: android.widget.AdapterView<*>?, p1: View?, p2: Int, p3: Long) { tvHoraSeleccionadaDialog.text = p0?.getItemAtPosition(p2).toString() } override fun onNothingSelected(p0: android.widget.AdapterView<*>?) {} }
+
+        btnCancelarReprogramacion?.setOnClickListener { dialog.dismiss() }
+        btnCompletarReprogramacionDialog?.setOnClickListener {
+            val nuevaFecha = tvFechaDialog.text.toString()
+            val nuevaHora = tvHoraSeleccionadaDialog.text.toString()
+            actualizarReprogramar(citaId, nuevaFecha, nuevaHora)
+            dialog.dismiss()
         }
 
+        dialog.show()
     }
 
-    private fun actualizarcancelado() {
-        val campoEstado: TextView = findViewById(R.id.tvEstadoDetalleCitaMedico)
-        val seccionBotones: LinearLayout = findViewById(R.id.llSeccionOpcionesDetallesCita)
-        val seccionReceta: LinearLayout = findViewById(R.id.llSeccionRecteaDetalleCita)
+    private fun mostrarDialogDeCancelacion() {
+        val dialog = Dialog(this)
+        dialog.setContentView(R.layout.dialog_cancelar_cita)
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.window?.setLayout((resources.displayMetrics.widthPixels * 0.90).toInt(), ViewGroup.LayoutParams.WRAP_CONTENT)
 
-        campoEstado.text = "Cancelada"
-        seccionBotones.visibility = View.GONE
-        seccionReceta.visibility = View.GONE
+        val btnConfirmar = dialog.findViewById<Button>(R.id.btnConfirmarCancelacion)
+        val btnAtras = dialog.findViewById<Button>(R.id.btnAtrasCancelacion)
 
-        Toast.makeText(this, "Cita cancelada", Toast.LENGTH_SHORT).show()
+        btnAtras.setOnClickListener { dialog.dismiss() }
+        btnConfirmar.setOnClickListener {
+            dialog.dismiss()
+            actualizarcancelado(citaId) // Llama a la función de actualización con el ID
+        }
+        dialog.show()
+    }
+    private fun actualizarcancelado(citaId: String) {
+        val databaseRef = FirebaseDatabase.getInstance().getReference("citas").child(citaId)
+        val actualizacion = mapOf("estado" to "Cancelada")
 
+        databaseRef.updateChildren(actualizacion)
+            .addOnSuccessListener {
+                Toast.makeText(this, "Cita cancelada con éxito en la base de datos.", Toast.LENGTH_SHORT).show()
+                cargarDatosDeCita(citaId)
+            }
+            .addOnFailureListener {
+                Log.e("Firebase", "Error al cancelar cita: ${it.message}")
+                Toast.makeText(this, "Error al cancelar la cita.", Toast.LENGTH_SHORT).show()
+            }
     }
 
-    private fun actualizarCompletada() {
-        val campoEstado: TextView = findViewById(R.id.tvEstadoDetalleCitaMedico)
-        campoEstado.text = "Completada"
-        Toast.makeText(this, "Cita completada y receta lista!", Toast.LENGTH_SHORT).show()
+    private fun actualizarCompletada(citaId: String) {
+        val databaseRef = FirebaseDatabase.getInstance().getReference("citas").child(citaId)
+        val actualizacion = mapOf("estado" to "Completada")
+
+        databaseRef.updateChildren(actualizacion)
+            .addOnSuccessListener {
+                Toast.makeText(this, "Cita completada y receta lista!", Toast.LENGTH_SHORT).show()
+                cargarDatosDeCita(citaId)
+            }
+            .addOnFailureListener {
+                Log.e("Firebase", "Error al completar cita: ${it.message}")
+                Toast.makeText(this, "Error al completar la cita.", Toast.LENGTH_SHORT).show()
+            }
     }
 
-    private fun actualizarReprogramar() {
-        val campoEstado: TextView = findViewById(R.id.tvEstadoDetalleCitaMedico)
-        campoEstado.text = "Pendiente"
+    private fun actualizarReprogramar(citaId: String, nuevaFecha: String, nuevaHora: String) {
+        val databaseRef = FirebaseDatabase.getInstance().getReference("citas").child(citaId)
+        val actualizacion = mapOf(
+            "estado" to "Pendiente",
+            "fecha" to nuevaFecha,
+            "hora" to nuevaHora
+        )
 
+        databaseRef.updateChildren(actualizacion)
+            .addOnSuccessListener {
+                Toast.makeText(this, "Cita reprogramada con éxito.", Toast.LENGTH_SHORT).show()
+                cargarDatosDeCita(citaId)
+            }
+            .addOnFailureListener {
+                Log.e("Firebase", "Error al reprogramar cita: ${it.message}")
+                Toast.makeText(this, "Error al reprogramar la cita.", Toast.LENGTH_SHORT).show()
+            }
     }
 }

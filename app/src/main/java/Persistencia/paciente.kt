@@ -8,14 +8,17 @@ import java.time.Period
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
 data class paciente(
-    var imagen: String,
-    var nombre: String,
-    var correo: String,
-    var telefono: String,
-    var contrasena: String,
-    var fechaNacimiento: String,
-    var genero: String,
+    var uid: String? = null,
+    var imagen: String? = null,
+    var nombre: String?= null,
+    var correo: String?= null,
+    var telefono: String?= null,
+    var contrasena: String?= null,
+    var fechaNacimiento: String?= null,
+    var genero: String?= null,
     var fotoPerfil: String = "") : Serializable {
+
+        constructor() : this("","", "", "", "", "", "", "", "")
 
 
     @RequiresApi(Build.VERSION_CODES.O)

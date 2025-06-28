@@ -1,11 +1,24 @@
 package Persistencia
 
-data class cita(//Posiblemente se eliminen los primeros dos campos o se cambian
-                var paciente : paciente,
-                var medico : medico,
-                var fecha : String,
-                var hora : String,
-                var motivo : String,
-                var receta : String,
-                var estado : String
-                )
+import java.io.Serializable
+
+data class cita(
+    var idCita: String? = null,
+    var idMedico: String? = null,
+    var idPaciente: String? = null,
+    var nombreMedico: String? = null,
+    var nombrePaciente: String? = null,
+    var fecha: String? = null,
+    var hora: String? = null,
+    var motivo: String? = null,
+    var estado: String? = "Pendiente",
+    var receta: String? = null,
+    var imagenMedico: String? = null,
+    var imagenPaciente: String? = null,
+    var imagenReceta: String? = null,
+    var especialidad: String? = null
+
+): Serializable {
+
+    constructor() : this(null, null, null, null, null, null, null, null, "Pendiente", null, null, null, null, null)
+}
