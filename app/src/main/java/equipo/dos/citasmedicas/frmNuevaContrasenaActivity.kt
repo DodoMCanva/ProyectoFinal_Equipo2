@@ -43,30 +43,13 @@ class frmNuevaContrasenaActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
+            cambiar()
 
-            var usuarioEncontrado = false
-
-            val paciente = fakebd.pacientes.find { it.correo == correo }
-            if (paciente != null) {
-                paciente.contrasena = nueva
-                usuarioEncontrado = true
-            } else {
-                val medico = fakebd.medicos.find { it.correo == correo }
-                if (medico != null) {
-                    medico.contrasena = nueva
-                    usuarioEncontrado = true
-                }
-            }
-
-            if (usuarioEncontrado) {
-                Toast.makeText(this, "Contraseña actualizada exitosamente.", Toast.LENGTH_SHORT).show()
-                val intent = Intent(this, frmLoginActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                startActivity(intent)
-            } else {
-                Toast.makeText(this, "Error: Usuario no encontrado para el correo proporcionado.", Toast.LENGTH_SHORT).show()
-            }
         }
+    }
+
+    fun cambiar(){
+
     }
 }
 
