@@ -6,6 +6,7 @@ import Persistencia.paciente
 import Persistencia.sesion
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -13,7 +14,10 @@ import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 class frmLoginActivity : AppCompatActivity() {
 
@@ -56,51 +60,64 @@ class frmLoginActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
+
             auth.signInWithEmailAndPassword(email, contra)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         val user = auth.currentUser
                         if (user != null) {
                             val uid = user.uid
-                            val db = FirebaseDatabase.getInstance().reference
+                            val db = FirebaseDatabase.getInstance().getReference("usuarios")
 
-                            // --- PASO 1: Buscar en la base de datos de MÉDICOS ---
-                            db.child("usuarios").child("medicos").child(uid).get().addOnSuccessListener { snapshotMedico ->
-                                if (snapshotMedico.exists()) {
-                                    val medicoData = snapshotMedico.getValue(medico::class.java)
-                                    if (medicoData != null) {
-                                        // --- AQUI ASIGNAS LA SESION ---
-                                        sesion.asignarSesion(medicoData)
-                                        val intent = Intent(this, frmPrincipalActivity::class.java)
-                                        startActivity(intent)
-                                        finish()
-                                    } else {
-                                        Toast.makeText(this, "Error al obtener datos del médico.", Toast.LENGTH_SHORT).show()
-                                    }
-                                } else {
-                                    db.child("usuarios").child("pacientes").child(uid).get().addOnSuccessListener { snapshotPaciente ->
-                                        if (snapshotPaciente.exists()) {
-                                            val pacienteData = snapshotPaciente.getValue(paciente::class.java)
-                                            if (pacienteData != null) {
-                                                // --- AQUI ASIGNAS LA SESION ---
-                                                sesion.asignarSesion(pacienteData)
-                                                val intent = Intent(this, frmPrincipalActivity::class.java)
-                                                startActivity(intent)
-                                                finish()
-                                            } else {
-                                                Toast.makeText(this, "Error al obtener datos del paciente.", Toast.LENGTH_SHORT).show()
-                                            }
+                            db.child("medicos").child(uid).addListenerForSingleValueEvent(object : ValueEventListener {
+                               override fun onDataChange(snapshot: DataSnapshot) {
+                                    if (snapshot.exists()) {
+                                        val medicoData = snapshot.getValue(medico::class.java)
+                                        if (medicoData != null) {
+                                            medicoData.uid = uid
+                                            sesion.asignarSesion(medicoData)
+                                            Log.d("Login", "Sesión de médico iniciada: UID = $uid")
+                                            val intent = Intent(this@frmLoginActivity, frmPrincipalActivity::class.java)
+                                            startActivity(intent)
+                                            finish()
                                         } else {
-                                            // No está en ninguna categoría
-                                            Toast.makeText(this, "Usuario no encontrado en base de datos.", Toast.LENGTH_SHORT).show()
+                                            Toast.makeText(this@frmLoginActivity, "Error al obtener datos del médico.", Toast.LENGTH_SHORT).show()
                                         }
-                                    }.addOnFailureListener {
-                                        Toast.makeText(this, "Error al leer datos del usuario: ${it.message}", Toast.LENGTH_SHORT).show()
+                                    } else {
+                                        db.child("pacientes").child(uid).addListenerForSingleValueEvent(object : ValueEventListener {
+                                            override fun onDataChange(snapshot: DataSnapshot) {
+                                                if (snapshot.exists()) {
+                                                    val pacienteData = snapshot.getValue(paciente::class.java)
+                                                    if (pacienteData != null) {
+                                                        pacienteData.uid = uid // <-- ¡ASIGNA EL UID AQUÍ!
+                                                        sesion.asignarSesion(pacienteData)
+                                                        Log.d("Login", "Sesión de paciente iniciada: UID = $uid")
+                                                        val intent = Intent(this@frmLoginActivity, frmPrincipalActivity::class.java)
+                                                        startActivity(intent)
+                                                        finish()
+                                                    } else {
+                                                        Toast.makeText(this@frmLoginActivity, "Error al obtener datos del paciente.", Toast.LENGTH_SHORT).show()
+                                                    }
+                                                } else {
+                                                    Toast.makeText(this@frmLoginActivity, "Usuario no encontrado en la base de datos.", Toast.LENGTH_SHORT).show()
+                                                    auth.signOut() // Cierra la sesión de Auth para evitar problemas
+                                                }
+                                            }
+
+                                            override fun onCancelled(error: DatabaseError) {
+                                                Log.e("Firebase", "Error al leer datos del usuario: ${error.message}")
+                                                Toast.makeText(this@frmLoginActivity, "Error al leer datos del usuario.", Toast.LENGTH_SHORT).show()
+                                            }
+                                        })
                                     }
                                 }
-                            }.addOnFailureListener {
-                                Toast.makeText(this, "Error al leer datos del usuario: ${it.message}", Toast.LENGTH_SHORT).show()
-                            }
+
+                                override fun onCancelled(error: DatabaseError) {
+                                    Log.e("Firebase", "Error al leer datos del médico: ${error.message}")
+                                    Toast.makeText(this@frmLoginActivity, "Error al leer datos del médico.", Toast.LENGTH_SHORT).show()
+                                }
+                            })
+
                         }
                     } else {
                         Toast.makeText(this, "Correo o contraseña incorrectos.", Toast.LENGTH_SHORT).show()
@@ -117,6 +134,4 @@ class frmLoginActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
-
-
 }
