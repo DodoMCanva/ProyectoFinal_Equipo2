@@ -126,7 +126,7 @@ android:paddingLeft="20dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
                 android:text="@string/Años"
-                android:textSize="@dimen/text18"
+                android:textSize="@dimen/text22"
                 android:textColor="@color/azulTexto"/>
         </LinearLayout>
 

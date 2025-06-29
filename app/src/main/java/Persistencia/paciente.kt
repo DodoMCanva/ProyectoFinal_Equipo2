@@ -23,12 +23,28 @@ data class paciente(
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun calcularEdad(): Int {
-        val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
+        val posiblesFormatos = listOf(
+            DateTimeFormatter.ofPattern("dd-MM-yyyy"),
+            DateTimeFormatter.ofPattern("dd/MM/yyyy")
+        )
+
         return try {
-            val fechaNacimiento = LocalDate.parse(this.fechaNacimiento, formatter)
-            val fechaActual = LocalDate.now()
-            Period.between(fechaNacimiento, fechaActual).years
-        } catch (e: DateTimeParseException) {
+            val fechaNacimiento = posiblesFormatos.firstNotNullOfOrNull { formato ->
+                try {
+                    LocalDate.parse(this.fechaNacimiento, formato)
+                } catch (e: Exception) {
+                    null
+                }
+            }
+
+            if (fechaNacimiento != null) {
+                val fechaActual = LocalDate.now()
+                Period.between(fechaNacimiento, fechaActual).years
+            } else {
+                0 // Si no se pudo parsear
+            }
+
+        } catch (e: Exception) {
             e.printStackTrace()
             0
         }

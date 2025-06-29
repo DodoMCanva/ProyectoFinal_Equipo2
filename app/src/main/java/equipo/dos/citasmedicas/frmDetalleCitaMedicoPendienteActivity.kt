@@ -6,6 +6,7 @@ import Persistencia.sesion
 import android.app.DatePickerDialog
 import android.app.Dialog
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
@@ -71,56 +72,56 @@ class frmDetalleCitaMedicoPendienteActivity : AppCompatActivity() {
     }
 
     private fun cargarDatosDeCita(citaId: String) {
-        val databaseRef = FirebaseDatabase.getInstance().getReference("usuarios").child("citas")
+        val databaseRef = FirebaseDatabase.getInstance().getReference("usuarios/citas").child(citaId)
 
         databaseRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val citaData = snapshot.getValue(Persistencia.cita::class.java)
 
                 if (citaData != null) {
-                    val campoNombre: TextView = findViewById(R.id.tvPacienteDetalleCitaMedico)
-                    val campoFecha: TextView = findViewById(R.id.tvFechaDetalleCitaMedico)
-                    val campoHora: TextView = findViewById(R.id.tvHoraDetalleCitaMedico)
-                    val campoEstado: TextView = findViewById(R.id.tvEstadoDetalleCitaMedico)
-                    val campoMotivo: TextView = findViewById(R.id.tvMotivoDetalleCitaMedico)
-                    val seccionReceta: LinearLayout = findViewById(R.id.llSeccionRecteaDetalleCita)
-                    val seccionBotones: LinearLayout = findViewById(R.id.llSeccionOpcionesDetallesCita)
+                    findViewById<TextView>(R.id.tvPacienteDetalleCitaMedico).text = citaData.nombrePaciente
+                    findViewById<TextView>(R.id.tvFechaDetalleCitaMedico).text = citaData.fecha
+                    findViewById<TextView>(R.id.tvHoraDetalleCitaMedico).text = citaData.hora
+                    findViewById<TextView>(R.id.tvEstadoDetalleCitaMedico).text = citaData.estado
+                    findViewById<TextView>(R.id.tvMotivoDetalleCitaMedico).text = citaData.motivo
 
-
-                    campoNombre.text = citaData.nombrePaciente
-                    campoFecha.text = citaData.fecha
-                    campoHora.text = citaData.hora
-                    campoEstado.text = citaData.estado
-                    campoMotivo.text = citaData.motivo
-
+                    // Muestra u oculta secciones según el estado de la cita
+                    val seccionReceta = findViewById<LinearLayout>(R.id.llSeccionRecteaDetalleCita)
+                    val seccionBotones = findViewById<LinearLayout>(R.id.llSeccionOpcionesDetallesCita)
                     when (citaData.estado) {
                         "Pendiente" -> {
-                            seccionReceta.visibility = View.GONE
-                            seccionBotones.visibility = View.VISIBLE
+                            seccionReceta?.visibility = View.GONE
+                            seccionBotones?.visibility = View.VISIBLE
                         }
                         "Completada" -> {
-                            seccionReceta.visibility = View.VISIBLE
-                            seccionBotones.visibility = View.GONE
+                            seccionReceta?.visibility = View.VISIBLE
+                            seccionBotones?.visibility = View.GONE
                         }
                         "Cancelada" -> {
-                            seccionReceta.visibility = View.GONE
-                            seccionBotones.visibility = View.GONE
-                        }
-                        else -> {
-                            seccionReceta.visibility = View.GONE
-                            seccionBotones.visibility = View.GONE
+                            seccionReceta?.visibility = View.GONE
+                            seccionBotones?.visibility = View.GONE
                         }
                     }
 
+                    // Cargar los datos del paciente
                     val idPaciente = citaData.idPaciente
-                    if (idPaciente != null) {
-                        FirebaseDatabase.getInstance().getReference("usuarios/pacientes/$idPaciente").get().addOnSuccessListener { patientSnapshot ->
-                            val pacienteData = patientSnapshot.getValue(Persistencia.paciente::class.java)
-                            if (pacienteData != null) {
-                                // Ahora que tienes el objeto paciente, puedes mostrar sus datos
-                                findViewById<TextView>(R.id.tvGeneroDetalleCitaMedico).text = pacienteData.genero
-                                findViewById<TextView>(R.id.tvTelefonoDetalleCitaMedico).text = pacienteData.telefono
+                    if (!idPaciente.isNullOrEmpty()) {
+                        val refPaciente = FirebaseDatabase.getInstance().getReference("usuarios/pacientes/$idPaciente")
+                        refPaciente.get().addOnSuccessListener { snapshotPaciente ->
+                            val paciente = snapshotPaciente.getValue(Persistencia.paciente::class.java)
+                            if (paciente != null) {
+                                findViewById<TextView>(R.id.tvGeneroDetalleCitaMedico).text = paciente.genero
+                                findViewById<TextView>(R.id.tvTelefonoDetalleCitaMedico).text = paciente.telefono
+
+                                // Calcular edad si es posible (requiere Android 8.0+)
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                    val edad = paciente.calcularEdad()
+                                    findViewById<TextView>(R.id.tvEdadDetalleCitaMedico).text = edad.toString()
+                                } else {
+                                    findViewById<TextView>(R.id.tvEdadDetalleCitaMedico).text = "N/D"
+                                }
                             }
+
                         }
                     }
 
@@ -131,9 +132,7 @@ class frmDetalleCitaMedicoPendienteActivity : AppCompatActivity() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                Log.e("Firebase", "Error al cargar datos de la cita: ${error.message}")
-                Toast.makeText(this@frmDetalleCitaMedicoPendienteActivity, "Error al cargar la cita.", Toast.LENGTH_SHORT).show()
-                finish()
+                Toast.makeText(this@frmDetalleCitaMedicoPendienteActivity, "Error al cargar cita: ${error.message}", Toast.LENGTH_SHORT).show()
             }
         })
     }
