@@ -13,7 +13,6 @@ class EmailSender(
 ) {
 
         fun enviarCorreo(destino: String, asunto: String, mensaje: String) {
-            // Esto no es recomendado, pero para evitar NetworkOnMainThreadException en ejemplo pequeño:
             val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
             StrictMode.setThreadPolicy(policy)
 

@@ -89,7 +89,7 @@ class frmLoginActivity : AppCompatActivity() {
                                                 if (snapshot.exists()) {
                                                     val pacienteData = snapshot.getValue(paciente::class.java)
                                                     if (pacienteData != null) {
-                                                        pacienteData.uid = uid // <-- ¡ASIGNA EL UID AQUÍ!
+                                                        pacienteData.uid = uid
                                                         sesion.asignarSesion(pacienteData)
                                                         Log.d("Login", "Sesión de paciente iniciada: UID = $uid")
                                                         val intent = Intent(this@frmLoginActivity, frmPrincipalActivity::class.java)

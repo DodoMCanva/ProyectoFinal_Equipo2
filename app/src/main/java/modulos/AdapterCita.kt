@@ -16,20 +16,27 @@ import equipo.dos.citasmedicas.R
 import equipo.dos.citasmedicas.frmDetalleCitaActivity
 import equipo.dos.citasmedicas.frmDetalleCitaMedicoPendienteActivity
 
-class AdapterCita(context: Context, val lista: ArrayList<cita>, tipo: String, filtro: Boolean) :
+class AdapterCita(context: Context, val lista: ArrayList<cita>, tipo: String, filtro: Boolean, fecha : String) :
     ArrayAdapter<cita>(context, 0, lista) {
     val tipo: String = tipo
     val filtro: Boolean = filtro
+    val fecha = fecha
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun getView(position: Int, converterView: View?, parent: ViewGroup): View {
         return vistaNormal(position, converterView, parent)
+    }
+
+    fun ordenarPorFecha(){
+
+    }
+
+    fun ordenarPorFecha(){
+
     }
 
     fun vistaNormal(position: Int, converterView: View?, parent: ViewGroup): View {
         val c = lista[position]
         val vista: View
-
         if (tipo == "medico") {
             vista = converterView ?: LayoutInflater.from(context)
                 .inflate(R.layout.cita_medico, parent, false)
