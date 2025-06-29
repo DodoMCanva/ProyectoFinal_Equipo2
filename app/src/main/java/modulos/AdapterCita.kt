@@ -23,16 +23,23 @@ class AdapterCita(context: Context, val lista: ArrayList<cita>, tipo: String, fi
     val fecha = fecha
 
     override fun getView(position: Int, converterView: View?, parent: ViewGroup): View {
+
         return vistaNormal(position, converterView, parent)
     }
 
-    fun ordenarPorFecha(){
+
+    // modifican la vista
+    fun ordenarPorFechaHora(){
 
     }
 
-    fun ordenarPorFecha(){
+    fun filtrar(){
 
     }
+
+    fun filtrarDia(){}
+
+
 
     fun vistaNormal(position: Int, converterView: View?, parent: ViewGroup): View {
         val c = lista[position]
@@ -130,6 +137,8 @@ class AdapterCita(context: Context, val lista: ArrayList<cita>, tipo: String, fi
         return vista
     }
 
+    //Esta vista muestra todas las citas de la semana a partir de la fecha establecida(si la fecha es el 1 de enero, imprimira las citas,
+    // de los dias 1, 2, 3, 4, 5, 6, 7)
     fun vistaFiltrada() {
     }
 }

@@ -23,15 +23,15 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import equipo.dos.citasmedicas.databinding.ActivityFrmPrincipalBinding
 import equipo.dos.citasmedicas.helpers.MenuDesplegable
-import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
+//mover a los implements/etc
 @RequiresApi(Build.VERSION_CODES.O)
 class frmPrincipalActivity : AppCompatActivity() {
     var adapter: AdapterCita? = null
-    var f : Boolean = false
-    var fecha : String = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
+    var filtroBusqueda : Boolean = false
+    var fechaBusqueda : String = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
 
     private val binding by lazy {
         ActivityFrmPrincipalBinding.inflate(layoutInflater)
@@ -47,71 +47,25 @@ class frmPrincipalActivity : AppCompatActivity() {
         val fechaTexto : TextView = findViewById(R.id.tvConsultaFecha)
 
         calendario.setOnClickListener{
-            //se ajusta el calendario pero se tiene que usar otro metodo para la recoleccion
-            fecha = fechaTexto.text.toString()
+            fechaBusqueda = fechaTexto.text.toString()
             //Reordenar formato
+            sesion.actualizarListaCitas()
             cargarCitas()
 
         }
         filtro.setOnClickListener{
-            f = !f
+            sesion.actualizarListaCitas()
+            filtroBusqueda = !filtroBusqueda
             cargarCitas()
         }
 
     }
 
     fun cargarCitas() {
-        //Esta linea toma la instancia, para que sea mas modular lo movi a sesion object
-        //val uidActual = FirebaseAuth.getInstance().currentUser?.uid
-        val tipo = sesion.tipoSesion()
-
-
-        if (sesion.uid == null) {
-            Toast.makeText(this, "Sesión no iniciada.", Toast.LENGTH_SHORT).show()
-            return
-        }
-
-        val database = FirebaseDatabase.getInstance().getReference("usuarios").child("citas")
         val listaCitas: ListView = findViewById(R.id.lvCitas)
-
-        val query = if (tipo == "paciente") {
-            database.orderByChild("idPaciente").equalTo(sesion.uid)
-        } else {
-            database.orderByChild("idMedico").equalTo(sesion.uid)
+        if (sesion.citas != null && sesion.citas.isNotEmpty()){
+            adapter = AdapterCita(this, sesion.citas, sesion.tipo, filtroBusqueda, fechaBusqueda)
+            listaCitas.adapter = adapter
         }
-
-        query.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                //Aqui la lista se esta recreando, puede ser util para cambio en tiempo real con los hilos
-                //pero ahorita solo es mas proceso tedioso
-                //mejor cargarla localmente en la sesion
-                val citasList = ArrayList<cita>()
-                for (citaSnapshot in snapshot.children) {
-                    val citaData = citaSnapshot.getValue(Persistencia.cita::class.java)
-                    if (citaData != null) {
-                        citasList.add(citaData)
-                    }
-                }
-                adapter = AdapterCita(this@frmPrincipalActivity, citasList, tipo, f, fecha)
-                listaCitas.adapter = adapter
-
-                if (citasList.isEmpty()) {
-                    Toast.makeText(
-                        this@frmPrincipalActivity,
-                        "No tienes citas agendadas.",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                Log.e("Firebase", "Error al cargar citas: ${error.message}")
-                Toast.makeText(
-                    this@frmPrincipalActivity,
-                    "Error al cargar citas.",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-        })
     }
 }
