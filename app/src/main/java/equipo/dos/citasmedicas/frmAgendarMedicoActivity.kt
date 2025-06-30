@@ -157,6 +157,7 @@ class frmAgendarMedicoActivity : AppCompatActivity() {
                     return@setOnClickListener
                 }
 
+                //Posiblemente se modifique
                 val nuevaCita = cita(
                     idCita = citaId,
                     idMedico = medicoSeleccionado.uid,

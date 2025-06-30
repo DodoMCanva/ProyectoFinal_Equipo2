@@ -1,8 +1,12 @@
 package modulos
 import Persistencia.cita
+import Persistencia.medico
+import Persistencia.paciente
+import Persistencia.sesion
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,6 +25,34 @@ class AdapterHistorial(context: Context, val lista: ArrayList<cita>, tipo : Stri
     @RequiresApi(Build.VERSION_CODES.O)
     override fun getView(position: Int, converterView: View?, parent: ViewGroup): View {
         val c = lista[position]
+        var m : medico? = null
+        val uidMedico = c.idMedico
+        if (uidMedico != null) {
+            sesion.buscarMedico(uidMedico) { medico ->
+                if (medico != null) {
+                    m = medico
+                } else {
+                    Log.e("Firebase", "No se encontró al médico")
+                }
+            }
+        } else {
+            Log.e("Firebase", "El UID del médico es nulo")
+        }
+
+        var p : paciente? = null
+        val uidPaciente = c.idPaciente
+        if (uidPaciente != null) {
+            sesion.buscarPaciente(uidPaciente) { paciente ->
+                if (paciente != null) {
+                    p = paciente
+                } else {
+                    Log.e("Firebase", "No se encontró al paciente")
+                }
+            }
+        } else {
+            Log.e("Firebase", "El UID del paciente es nulo")
+        }
+
         val vista: View
         if (tipo == "medico") {
             vista = converterView ?: LayoutInflater.from(context)
@@ -65,14 +97,14 @@ class AdapterHistorial(context: Context, val lista: ArrayList<cita>, tipo : Stri
             }
             selCita.setOnClickListener {
                 val intent = Intent(context, frmDetalleCitaMedicoPendienteActivity::class.java)
-                intent.putExtra("nombre", c.paciente.nombre)
-                intent.putExtra("genero", c.paciente.genero)
-                intent.putExtra("telefono", c.paciente.telefono)
+                intent.putExtra("nombre", p?.nombre)
+                intent.putExtra("genero", p?.genero)
+                intent.putExtra("telefono", p?.telefono)
                 intent.putExtra("fecha", c.fecha)
                 intent.putExtra("hora", c.hora)
                 intent.putExtra("estado", c.estado)
                 intent.putExtra("motivo", c.motivo)
-                intent.putExtra("edad", c.paciente.calcularEdad())
+                intent.putExtra("edad", p?.calcularEdad())
                 context!!.startActivity(intent)
             }
         } else {
@@ -80,14 +112,14 @@ class AdapterHistorial(context: Context, val lista: ArrayList<cita>, tipo : Stri
                 .inflate(R.layout.cita_paciente, parent, false)
             vista.findViewById<TextView>(R.id.citaFecha).text = c.fecha
             vista.findViewById<TextView>(R.id.citaHora).text = c.hora
-            vista.findViewById<TextView>(R.id.citaEspecialidad).text = c.medico.especialidad
-            vista.findViewById<TextView>(R.id.citaMedico).text = c.medico.nombre
+            vista.findViewById<TextView>(R.id.citaEspecialidad).text = m?.especialidad
+            vista.findViewById<TextView>(R.id.citaMedico).text = m?.nombre
 
             val selecMedico = vista.findViewById<LinearLayout>(R.id.panelCitaPaciente)
             selecMedico.setOnClickListener {
                 val intent = Intent(context, frmDetalleCitaActivity::class.java)
-                intent.putExtra("nombre", c.medico.nombre)
-                intent.putExtra("especialidad", c.medico.especialidad)
+                intent.putExtra("nombre", m?.nombre)
+                intent.putExtra("especialidad", m?.especialidad)
                 intent.putExtra("fecha", c.fecha)
                 intent.putExtra("hora", c.hora)
                 intent.putExtra("estado", c.estado)

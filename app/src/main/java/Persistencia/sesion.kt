@@ -95,7 +95,6 @@ object sesion {
                 callback(null)
             }
         })
-
     }
 
 

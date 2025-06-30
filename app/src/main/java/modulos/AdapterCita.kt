@@ -1,10 +1,13 @@
 package modulos
 
 import Persistencia.cita
+import Persistencia.medico
+import Persistencia.paciente
 import Persistencia.sesion
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -44,6 +47,37 @@ class AdapterCita(context: Context, val lista: ArrayList<cita>, tipo: String, fi
 
     fun vistaNormal(position: Int, converterView: View?, parent: ViewGroup): View {
         val c = lista[position]
+
+        //precarcargar paciente y medico
+        var m : medico? = null
+        val uidMedico = c.idMedico
+        if (uidMedico != null) {
+            sesion.buscarMedico(uidMedico) { medico ->
+                if (medico != null) {
+                    m = medico
+                } else {
+                    Log.e("Firebase", "No se encontró al médico")
+                }
+            }
+        } else {
+            Log.e("Firebase", "El UID del médico es nulo")
+        }
+
+        var p : paciente? = null
+        val uidPaciente = c.idPaciente
+        if (uidPaciente != null) {
+            sesion.buscarPaciente(uidPaciente) { paciente ->
+                if (paciente != null) {
+                    p = paciente
+                } else {
+                    Log.e("Firebase", "No se encontró al paciente")
+                }
+            }
+        } else {
+            Log.e("Firebase", "El UID del paciente es nulo")
+        }
+
+
         val vista: View
         if (tipo == "medico") {
             vista = converterView ?: LayoutInflater.from(context)
@@ -90,23 +124,10 @@ class AdapterCita(context: Context, val lista: ArrayList<cita>, tipo: String, fi
                     )
                 }
             }
+
             selCita.setOnClickListener {
                 val intent = Intent(context, frmDetalleCitaMedicoPendienteActivity::class.java)
-                intent.putExtra("nombre", c.nombrePaciente)
-                intent.putExtra("telefono", c.nombrePaciente)
-                intent.putExtra("genero", c.nombrePaciente)
-                intent.putExtra("fecha", c.fecha)
-                intent.putExtra("hora", c.hora)
-                intent.putExtra("estado", c.estado)
-                intent.putExtra("motivo", c.motivo)
-                intent.putExtra("receta", c.receta)
-                intent.putExtra("especialidad", c.especialidad)
-                intent.putExtra("imagenMedico", c.imagenMedico)
-                intent.putExtra("imagenPaciente", c.imagenPaciente)
-                intent.putExtra("imagenReceta", c.imagenReceta)
-
                 intent.putExtra("citaId", c.idCita)
-
                 context.startActivity(intent)
             }
         } else {
@@ -115,21 +136,10 @@ class AdapterCita(context: Context, val lista: ArrayList<cita>, tipo: String, fi
             vista.findViewById<TextView>(R.id.citaFecha).text = c.fecha
             vista.findViewById<TextView>(R.id.citaHora).text = c.hora
             vista.findViewById<TextView>(R.id.citaMedico).text = c.nombreMedico
-            val medico = sesion.buscarMedico(c.idMedico)
             val selecMedico = vista.findViewById<LinearLayout>(R.id.panelCitaPaciente)
             selecMedico.setOnClickListener {
                 val intent = Intent(context, frmDetalleCitaActivity::class.java)
-
-                //
-                intent.putExtra("nombre", c.nombreMedico)
-                // Nota: La especialidad no está en la cita, deberías obtenerla de la DB
-                // intent.putExtra("especialidad", c.medico.especialidad)
-                intent.putExtra("fecha", c.fecha)
-                intent.putExtra("hora", c.hora)
-                intent.putExtra("estado", c.estado)
-                intent.putExtra("motivo", c.motivo)
                 intent.putExtra("citaId", c.idCita)
-
                 context.startActivity(intent)
             }
         }

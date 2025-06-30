@@ -31,7 +31,7 @@ object MenuDesplegable {
         val menu = nav.menu
         val opcion = menu.findItem(R.id.btnOpcion)
 
-        if (sesion.tipoSesion() == "paciente") {
+        if (sesion.tipo == "paciente") {
             opcion.title = "Agendar"
             opcion.setIcon(R.drawable.date48)
         } else {
@@ -45,11 +45,11 @@ object MenuDesplegable {
                 R.id.btnMenuMisCitas -> {
                     activity.startActivity(Intent(activity, frmPrincipalActivity::class.java))
                 }
-//                R.id.btnMenuHistorial -> {
-//                    activity.startActivity(Intent(activity, frmHistorialActivity::class.java))
-//                }
+                R.id.btnMenuHistorial -> {
+                    activity.startActivity(Intent(activity, frmHistorialActivity::class.java))
+                }
                 R.id.btnOpcion -> {
-                    val intent = if (sesion.tipoSesion() == "paciente") {
+                    val intent = if (sesion.tipo == "paciente") {
                         Intent(activity, frmAgendarActivity::class.java)
                     } else {
                         Intent(activity, AjustesConsultaActivity::class.java)
