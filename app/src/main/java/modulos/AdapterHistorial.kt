@@ -27,7 +27,7 @@ class AdapterHistorial(context: Context, val lista: ArrayList<cita>, tipo : Stri
                 .inflate(R.layout.cita_medico, parent, false)
             vista.findViewById<TextView>(R.id.citaMFecha).text = c.fecha
             vista.findViewById<TextView>(R.id.citaMHora).text = c.hora
-            vista.findViewById<TextView>(R.id.citaPaciente).text = c.paciente.nombre
+            vista.findViewById<TextView>(R.id.citaPaciente).text = c.nombrePaciente
             vista.findViewById<TextView>(R.id.citaMotivo).text = c.motivo
             vista.findViewById<TextView>(R.id.citaEstado).text = c.estado
 

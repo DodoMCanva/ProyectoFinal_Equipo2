@@ -59,8 +59,6 @@ class frmLoginActivity : AppCompatActivity() {
                 ).show()
                 return@setOnClickListener
             }
-
-
             auth.signInWithEmailAndPassword(email, contra)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
@@ -68,7 +66,6 @@ class frmLoginActivity : AppCompatActivity() {
                         if (user != null) {
                             val uid = user.uid
                             val db = FirebaseDatabase.getInstance().getReference("usuarios")
-
                             db.child("medicos").child(uid).addListenerForSingleValueEvent(object : ValueEventListener {
                                override fun onDataChange(snapshot: DataSnapshot) {
                                     if (snapshot.exists()) {
@@ -100,7 +97,7 @@ class frmLoginActivity : AppCompatActivity() {
                                                     }
                                                 } else {
                                                     Toast.makeText(this@frmLoginActivity, "Usuario no encontrado en la base de datos.", Toast.LENGTH_SHORT).show()
-                                                    auth.signOut() // Cierra la sesión de Auth para evitar problemas
+                                                    auth.signOut()
                                                 }
                                             }
 

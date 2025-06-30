@@ -160,7 +160,7 @@ class frmAgendarMedicoActivity : AppCompatActivity() {
                 val nuevaCita = cita(
                     idCita = citaId,
                     idMedico = medicoSeleccionado.uid,
-                    idPaciente = (sesion.obtenerSesion() as paciente).uid,
+                    idPaciente = sesion.uid,
                     nombreMedico = medicoSeleccionado.nombre,
                     nombrePaciente = pacienteActual.nombre,
                     fecha = fecha,

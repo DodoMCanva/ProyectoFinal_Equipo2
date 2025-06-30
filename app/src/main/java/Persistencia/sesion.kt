@@ -1,5 +1,6 @@
 package Persistencia
 
+import android.content.ComponentCallbacks
 import android.content.Context
 import android.util.Log
 import android.widget.ListView
@@ -63,6 +64,40 @@ object sesion {
             }
         })
     }
+
+    fun buscarPaciente(uid: String, callback: (paciente?) -> Unit) {
+        val db = FirebaseDatabase.getInstance().getReference("usuarios/pacientes/$uid")
+        db.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val pacienteData = snapshot.getValue(paciente::class.java)
+                pacienteData?.uid = uid
+                callback(pacienteData)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("Firebase", "Error al leer datos del paciente: ${error.message}")
+                callback(null)
+            }
+        })
+    }
+
+    fun buscarMedico(uid: String, callback: (medico?) -> Unit){
+        val db = FirebaseDatabase.getInstance().getReference("usuarios/medicos/$uid")
+        db.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val medicoData = snapshot.getValue(medico::class.java)
+                medicoData?.uid = uid
+                callback(medicoData)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("Firebase", "Error al leer datos del paciente: ${error.message}")
+                callback(null)
+            }
+        })
+
+    }
+
 
     fun cerrarSesion() {
         FirebaseAuth.getInstance().signOut()

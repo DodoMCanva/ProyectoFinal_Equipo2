@@ -1,6 +1,7 @@
 package modulos
 
 import Persistencia.cita
+import Persistencia.sesion
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -27,12 +28,12 @@ class AdapterCita(context: Context, val lista: ArrayList<cita>, tipo: String, fi
         return vistaNormal(position, converterView, parent)
     }
 
-
-    // modifican la vista
+    //
     fun ordenarPorFechaHora(){
 
     }
 
+    //
     fun filtrar(){
 
     }
@@ -63,7 +64,6 @@ class AdapterCita(context: Context, val lista: ArrayList<cita>, tipo: String, fi
                         )
                     )
                 }
-
                 "Pendiente" -> {
                     selCita.setBackgroundColor(
                         ContextCompat.getColor(
@@ -72,7 +72,6 @@ class AdapterCita(context: Context, val lista: ArrayList<cita>, tipo: String, fi
                         )
                     )
                 }
-
                 "Cancelada" -> {
                     selCita.setBackgroundColor(
                         ContextCompat.getColor(
@@ -95,7 +94,6 @@ class AdapterCita(context: Context, val lista: ArrayList<cita>, tipo: String, fi
                 val intent = Intent(context, frmDetalleCitaMedicoPendienteActivity::class.java)
                 intent.putExtra("nombre", c.nombrePaciente)
                 intent.putExtra("telefono", c.nombrePaciente)
-
                 intent.putExtra("genero", c.nombrePaciente)
                 intent.putExtra("fecha", c.fecha)
                 intent.putExtra("hora", c.hora)
@@ -117,18 +115,19 @@ class AdapterCita(context: Context, val lista: ArrayList<cita>, tipo: String, fi
             vista.findViewById<TextView>(R.id.citaFecha).text = c.fecha
             vista.findViewById<TextView>(R.id.citaHora).text = c.hora
             vista.findViewById<TextView>(R.id.citaMedico).text = c.nombreMedico
-
+            val medico = sesion.buscarMedico(c.idMedico)
             val selecMedico = vista.findViewById<LinearLayout>(R.id.panelCitaPaciente)
             selecMedico.setOnClickListener {
                 val intent = Intent(context, frmDetalleCitaActivity::class.java)
-               intent.putExtra("nombre", c.nombreMedico)
+
+                //
+                intent.putExtra("nombre", c.nombreMedico)
                 // Nota: La especialidad no está en la cita, deberías obtenerla de la DB
                 // intent.putExtra("especialidad", c.medico.especialidad)
                 intent.putExtra("fecha", c.fecha)
                 intent.putExtra("hora", c.hora)
                 intent.putExtra("estado", c.estado)
                 intent.putExtra("motivo", c.motivo)
-
                 intent.putExtra("citaId", c.idCita)
 
                 context.startActivity(intent)

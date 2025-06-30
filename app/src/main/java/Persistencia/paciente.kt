@@ -18,8 +18,7 @@ data class paciente(
     var genero: String?= null,
     var fotoPerfil: String = "") : Serializable {
 
-        constructor() : this("","", "", "", "", "", "", "", "")
-
+    constructor() : this("","", "", "", "", "", "", "", "")
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun calcularEdad(): Int {
@@ -27,7 +26,6 @@ data class paciente(
             DateTimeFormatter.ofPattern("dd-MM-yyyy"),
             DateTimeFormatter.ofPattern("dd/MM/yyyy")
         )
-
         return try {
             val fechaNacimiento = posiblesFormatos.firstNotNullOfOrNull { formato ->
                 try {
@@ -41,9 +39,8 @@ data class paciente(
                 val fechaActual = LocalDate.now()
                 Period.between(fechaNacimiento, fechaActual).years
             } else {
-                0 // Si no se pudo parsear
+                0
             }
-
         } catch (e: Exception) {
             e.printStackTrace()
             0

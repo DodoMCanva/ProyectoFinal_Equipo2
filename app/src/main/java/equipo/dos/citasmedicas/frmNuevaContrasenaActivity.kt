@@ -57,12 +57,6 @@ class frmNuevaContrasenaActivity : AppCompatActivity() {
     fun cambiar(correo: String, nueva: String) {
         val correoTrim = correo.trim()
         val nuevaTrim = nueva.trim()
-
-        if (correoTrim.isEmpty() || nuevaTrim.isEmpty()) {
-            Toast.makeText(this, "Correo o contraseña vacíos", Toast.LENGTH_SHORT).show()
-            return
-        }
-
         val functions = FirebaseFunctions.getInstance()
         val datos: Map<String, Any> = mapOf(
             "email" to correoTrim,

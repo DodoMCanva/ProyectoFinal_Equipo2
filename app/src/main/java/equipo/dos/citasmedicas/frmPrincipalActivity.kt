@@ -9,16 +9,12 @@ import com.google.firebase.auth.FirebaseAuth
 import Persistencia.cita
 import android.util.Log
 import Persistencia.sesion
-import android.icu.text.DateFormat
 import android.os.Build
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ListView
 import android.widget.Switch
 import android.widget.TextView
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import equipo.dos.citasmedicas.databinding.ActivityFrmPrincipalBinding
@@ -40,7 +36,7 @@ class frmPrincipalActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_frm_principal)
-        cargarCitas()
+        imprimirCitas()
         MenuDesplegable.configurarMenu(this)
         val filtro : Switch = findViewById(R.id.swMostrarTodaSemana)
         val calendario : ImageButton = findViewById(R.id.btnCalendarioConsultaCitas)
@@ -49,19 +45,17 @@ class frmPrincipalActivity : AppCompatActivity() {
         calendario.setOnClickListener{
             fechaBusqueda = fechaTexto.text.toString()
             //Reordenar formato
-            sesion.actualizarListaCitas()
-            cargarCitas()
+            imprimirCitas()
 
         }
         filtro.setOnClickListener{
-            sesion.actualizarListaCitas()
             filtroBusqueda = !filtroBusqueda
-            cargarCitas()
+            imprimirCitas()
         }
-
     }
 
-    fun cargarCitas() {
+    fun imprimirCitas() {
+        sesion.actualizarListaCitas()
         val listaCitas: ListView = findViewById(R.id.lvCitas)
         if (sesion.citas != null && sesion.citas.isNotEmpty()){
             adapter = AdapterCita(this, sesion.citas, sesion.tipo, filtroBusqueda, fechaBusqueda)
