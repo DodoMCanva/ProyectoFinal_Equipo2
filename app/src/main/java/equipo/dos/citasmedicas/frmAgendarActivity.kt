@@ -1,26 +1,16 @@
 package equipo.dos.citasmedicas
 
 import modulos.AdapterMedico
-import Persistencia.fakebd
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import Persistencia.medico
-import android.util.Log
-import Persistencia.sesion
-import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
-import android.widget.ImageView
 import android.widget.ListView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.GravityCompat
-import androidx.drawerlayout.widget.DrawerLayout
-import com.google.android.material.navigation.NavigationView
 import equipo.dos.citasmedicas.databinding.ActivityFrmAgendarBinding
-import equipo.dos.citasmedicas.databinding.ActivityFrmPrincipalBinding
 import equipo.dos.citasmedicas.helpers.MenuDesplegable
 
 class frmAgendarActivity : AppCompatActivity() {

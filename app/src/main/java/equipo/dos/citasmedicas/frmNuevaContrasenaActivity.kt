@@ -1,8 +1,5 @@
 package equipo.dos.citasmedicas
 
-import Persistencia.fakebd
-import Persistencia.medico
-import Persistencia.paciente
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
