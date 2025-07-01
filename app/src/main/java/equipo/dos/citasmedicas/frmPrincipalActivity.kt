@@ -55,11 +55,13 @@ class frmPrincipalActivity : AppCompatActivity() {
     }
 
     fun imprimirCitas() {
-        sesion.actualizarListaCitas()
-        val listaCitas: ListView = findViewById(R.id.lvCitas)
-        if (sesion.citas != null && sesion.citas.isNotEmpty()){
-            adapter = AdapterCita(this, sesion.citas, sesion.tipo, filtroBusqueda, fechaBusqueda)
-            listaCitas.adapter = adapter
+        sesion.actualizarListaCitas {
+            val listaCitas: ListView = findViewById(R.id.lvCitas)
+            if (sesion.citas != null && sesion.citas.isNotEmpty()) {
+                adapter =
+                    AdapterCita(this, sesion.citas, sesion.tipo, filtroBusqueda, fechaBusqueda)
+                listaCitas.adapter = adapter
+            }
         }
     }
 }
