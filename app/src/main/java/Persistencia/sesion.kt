@@ -41,8 +41,7 @@ object sesion {
         return sesion
     }
 
-    fun actualizarListaCitas() {
-        //capaz sea el tiemmpo de respuesta
+    fun actualizarListaCitas(callback: () -> Unit) {
         citas = ArrayList<cita>()
         val database = FirebaseDatabase.getInstance().getReference("usuarios").child("citas")
         val query = if (tipo == "paciente") {
@@ -59,9 +58,11 @@ object sesion {
                         citas.add(citaData)
                     }
                 }
+                callback()
             }
             override fun onCancelled(error: DatabaseError) {
                 Log.e("Firebase", "Error al cargar citas: ${error.message}")
+                callback()
             }
         })
     }
