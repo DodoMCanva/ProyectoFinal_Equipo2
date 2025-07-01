@@ -62,7 +62,7 @@
 
     <TextView
         android:id="@+id/etiqueta_correo"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="2dp"
@@ -74,7 +74,7 @@
 
     <EditText
         android:id="@+id/et_correo"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="50dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="2dp"
@@ -87,7 +87,7 @@
 
     <TextView
         android:id="@+id/etiqueta_contrasena"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="2dp"
@@ -99,7 +99,7 @@
 
     <EditText
         android:id="@+id/et_contrasena"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="50dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
@@ -135,7 +135,7 @@
 
     <Button
         android:id="@+id/btnIniciarSesion"
-        android:layout_width="match_parent"
+        android:layout_width="200dp"
         android:layout_height="55dp"
         android:layout_marginStart="48dp"
         android:layout_marginTop="48dp"
