@@ -65,9 +65,9 @@
 
             <LinearLayout
                 android:id="@+id/layoutLunes"
-                android:layout_width="match_parent"
+                android:layout_width="350dp"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="15dp"
+                android:layout_gravity="center_horizontal"
                 android:background="@drawable/backhorariosrounded"
                 android:orientation="horizontal">
 
@@ -75,7 +75,7 @@
                     android:layout_width="60dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginStart="35dp"
+                    android:layout_marginStart="15dp"
                     android:fontFamily="@font/quicksandsemibold"
                     android:paddingRight="15dp"
                     android:text="@string/lunes"
@@ -220,9 +220,9 @@
 
             <LinearLayout
                 android:id="@+id/layoutMartes"
-                android:layout_width="match_parent"
+                android:layout_width="350dp"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="15dp"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="15dp"
                 android:background="@drawable/backhorariosrounded"
                 android:orientation="horizontal">
@@ -231,7 +231,7 @@
                     android:layout_width="60dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginStart="35dp"
+                    android:layout_marginStart="15dp"
                     android:fontFamily="@font/quicksandsemibold"
                     android:paddingRight="10dp"
                     android:text="@string/martes"
@@ -376,9 +376,9 @@
 
             <LinearLayout
                 android:id="@+id/layoutMiercoles"
-                android:layout_width="match_parent"
+                android:layout_width="350dp"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="15dp"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="15dp"
                 android:background="@drawable/backhorariosrounded"
                 android:orientation="horizontal">
@@ -387,7 +387,7 @@
                     android:layout_width="60dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginStart="35dp"
+                    android:layout_marginStart="15dp"
                     android:fontFamily="@font/quicksandsemibold"
                     android:paddingRight="15dp"
                     android:text="@string/miercoles"
@@ -532,9 +532,9 @@
 
             <LinearLayout
                 android:id="@+id/layoutJueves"
-                android:layout_width="match_parent"
+                android:layout_width="350dp"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="15dp"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="15dp"
                 android:background="@drawable/backhorariosrounded"
                 android:orientation="horizontal">
@@ -543,7 +543,7 @@
                     android:layout_width="60dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginStart="35dp"
+                    android:layout_marginStart="15dp"
                     android:fontFamily="@font/quicksandsemibold"
                     android:paddingRight="15dp"
                     android:text="@string/jueves"
@@ -688,9 +688,9 @@
 
             <LinearLayout
                 android:id="@+id/layoutViernes"
-                android:layout_width="match_parent"
+                android:layout_width="350dp"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="15dp"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="15dp"
                 android:background="@drawable/backhorariosrounded"
                 android:orientation="horizontal">
@@ -699,7 +699,7 @@
                     android:layout_width="60dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginStart="35dp"
+                    android:layout_marginStart="15dp"
                     android:fontFamily="@font/quicksandsemibold"
                     android:paddingRight="15dp"
                     android:text="@string/viernes"
@@ -844,9 +844,9 @@
 
             <LinearLayout
                 android:id="@+id/layoutSabado"
-                android:layout_width="match_parent"
+                android:layout_width="350dp"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="15dp"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="15dp"
                 android:background="@drawable/backhorariosrounded"
                 android:orientation="horizontal">
@@ -855,7 +855,7 @@
                     android:layout_width="60dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginStart="35dp"
+                    android:layout_marginStart="15dp"
                     android:fontFamily="@font/quicksandsemibold"
                     android:paddingRight="14dp"
                     android:text="@string/sabado"
@@ -1000,9 +1000,9 @@
 
             <LinearLayout
                 android:id="@+id/layoutDomingo"
-                android:layout_width="match_parent"
+                android:layout_width="350dp"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="15dp"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="15dp"
                 android:background="@drawable/backhorariosrounded"
                 android:orientation="horizontal">
@@ -1011,7 +1011,7 @@
                     android:layout_width="60dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginStart="25dp"
+                    android:layout_marginStart="15dp"
                     android:fontFamily="@font/quicksandsemibold"
                     android:text="@string/domingo"
                     android:textColor="@color/azulTexto"
@@ -1157,10 +1157,10 @@
     </ScrollView>
 
     <LinearLayout
-        android:layout_width="330dp"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingLeft="20dp"
+        android:layout_gravity="center_horizontal"
         android:paddingTop="20dp">
 
         <TextView
