@@ -45,16 +45,17 @@
 
     </LinearLayout>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
-        android:fontFamily="@font/quicksandsemibold"
-        android:text="@string/horario"
-        android:textColor="@color/azulTexto"
-        android:textSize="@dimen/textomenu25" />
+        <TextView
+            android:layout_width="350dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:fontFamily="@font/quicksandsemibold"
+            android:text="@string/horario"
+            android:textColor="@color/azulTexto"
+            android:textSize="@dimen/textomenu25" />
 
-    <ScrollView
+        <ScrollView
         android:layout_width="match_parent"
         android:layout_height="400dp">
 
