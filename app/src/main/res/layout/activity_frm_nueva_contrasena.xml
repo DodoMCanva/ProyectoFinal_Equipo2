@@ -25,7 +25,7 @@
         android:textAlignment="center"
         android:textSize="@dimen/texttitulo45" />
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="330dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:fontFamily="@font/quicksandbold"
@@ -47,11 +47,10 @@
 
     <EditText
         android:id="@+id/et_nuevaContrasena"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="40dp"
-        android:layout_marginStart="32dp"
         android:layout_marginTop="2dp"
-        android:layout_marginEnd="32dp"
+        android:layout_gravity="center_horizontal"
         android:background="@color/white"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
@@ -69,11 +68,10 @@
 
     <EditText
         android:id="@+id/et_confirmarContrasena"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="40dp"
-        android:layout_marginStart="32dp"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="2dp"
-        android:layout_marginEnd="32dp"
         android:background="@color/white"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
