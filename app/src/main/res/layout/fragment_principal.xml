@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Fragmentos.CitasFragment">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:background="@color/azulBackground">
+
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:id="@+id/tvConsultaFecha"
+                android:layout_width="114dp"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:enabled="false"
+                android:fontFamily="@font/quicksandsemibold"
+                android:gravity="center"
+                android:text="29/05/2025"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text18" />
+
+            <ImageButton
+                android:id="@+id/btnCalendarioConsultaCitas"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/date24"
+                android:background="@drawable/btncalendario"
+                android:scaleType="centerInside"
+                android:layout_marginRight="10dp"
+                android:contentDescription="Calendario" />
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="@string/mostrarSemana"
+                android:textSize="14sp"
+                android:fontFamily="@font/quicksandbold"
+                android:textColor="@color/azulTexto"
+                android:gravity="end"
+                android:layout_marginLeft="10dp"
+                android:layout_gravity="center_vertical" />
+
+            <Switch
+                android:id="@+id/swMostrarTodaSemana"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal"
+            android:paddingTop="15dp">
+
+            <TextView
+                android:id="@+id/tvFechaInicio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="01/05/2025"
+                android:textSize="@dimen/textomenu25"
+                android:fontFamily="@font/quicksandbold"
+                android:textColor="@color/azulTexto" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" – "
+                android:layout_marginHorizontal="5dp"
+                android:textSize="@dimen/textomenu25"
+                android:fontFamily="@font/quicksandbold"
+                android:textColor="@color/azulTexto" />
+
+            <TextView
+                android:id="@+id/tvFechaFinal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="01/05/2025"
+                android:textSize="@dimen/textomenu25"
+                android:fontFamily="@font/quicksandbold"
+                android:textColor="@color/azulTexto" />
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/lvCitas"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginHorizontal="40dp"
+            android:layout_marginTop="20dp"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btnAgendar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="16dp"
+            android:src="@drawable/date48"
+            app:backgroundTint="@color/amarilloBtn"
+            app:tint="@color/white" />
+
+    </LinearLayout>
+</LinearLayout>

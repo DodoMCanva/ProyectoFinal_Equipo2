@@ -34,6 +34,9 @@
             android:name=".frmRegistroMedicoActivity"
             android:exported="false" />
         <activity
+            android:name=".frmHistorialActivity"
+            android:exported="false" />
+        <activity
             android:name=".frmDetalleCitaActivity"
             android:exported="false" />
         <activity

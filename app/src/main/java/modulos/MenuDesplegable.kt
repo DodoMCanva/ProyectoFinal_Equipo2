@@ -6,23 +6,32 @@ import Persistencia.sesion
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Intent
+import android.os.Build
 import android.view.View
 import android.widget.*
+import androidx.annotation.RequiresApi
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.commit
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import equipo.dos.citasmedicas.*
+import equipo.dos.citasmedicas.Fragmentos.AgendarFragment
+import equipo.dos.citasmedicas.Fragmentos.AjusteConsultaFragment
+import equipo.dos.citasmedicas.Fragmentos.CitasFragment
+import equipo.dos.citasmedicas.Fragmentos.HistorialFragment
 
 import java.util.Calendar
 
 object MenuDesplegable {
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun configurarMenu(activity: Activity) {
         val toolbar = activity.findViewById<Button>(R.id.btnMenu)
         val drawerLayout = activity.findViewById<DrawerLayout>(R.id.drawer)
         val nav = activity.findViewById<NavigationView>(R.id.navegacion_menu)
         val btnAgendar: FloatingActionButton? = activity.findViewById(R.id.btnAgendar)
+        val encabezado : TextView = activity.findViewById(R.id.encabezadoPrincipal)
 
         toolbar.setOnClickListener {
             drawerLayout.openDrawer(GravityCompat.START)
@@ -34,6 +43,7 @@ object MenuDesplegable {
         if (sesion.tipo == "paciente") {
             opcion.title = "Agendar"
             opcion.setIcon(R.drawable.date48)
+
         } else {
             opcion.title = "Ajustar Consulta"
             opcion.setIcon(R.drawable.settings30)
@@ -43,18 +53,41 @@ object MenuDesplegable {
         nav.setNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.btnMenuMisCitas -> {
-                    activity.startActivity(Intent(activity, frmPrincipalActivity::class.java))
+                    if (activity is frmPrincipalActivity) {
+                        activity.supportFragmentManager.commit {
+                            setReorderingAllowed(true)
+                            replace(R.id.contenedorFragmento, CitasFragment())
+                            addToBackStack(null)
+                        }
+                    }
                 }
                 R.id.btnMenuHistorial -> {
-                    activity.startActivity(Intent(activity, frmHistorialActivity::class.java))
+                    if (activity is frmPrincipalActivity) {
+                        activity.supportFragmentManager.commit {
+                            setReorderingAllowed(true)
+                            replace(R.id.contenedorFragmento, HistorialFragment())
+                            addToBackStack(null)
+                        }
+                    }
                 }
                 R.id.btnOpcion -> {
-                    val intent = if (sesion.tipo == "paciente") {
-                        Intent(activity, frmAgendarActivity::class.java)
+                    if (sesion.tipo == "paciente") {
+                        if (activity is frmPrincipalActivity) {
+                            activity.supportFragmentManager.commit {
+                                setReorderingAllowed(true)
+                                replace(R.id.contenedorFragmento, AgendarFragment())
+                                addToBackStack(null)
+                            }
+                        }
                     } else {
-                        Intent(activity, AjustesConsultaActivity::class.java)
+                        if (activity is frmPrincipalActivity) {
+                            activity.supportFragmentManager.commit {
+                                setReorderingAllowed(true)
+                                replace(R.id.contenedorFragmento, AjusteConsultaFragment())
+                                addToBackStack(null)
+                            }
+                        }
                     }
-                    activity.startActivity(intent)
                 }
                 R.id.btnMenuCerrarSesion -> {
                     sesion.cerrarSesion()
@@ -108,7 +141,13 @@ object MenuDesplegable {
         }
 
         btnAgendar?.setOnClickListener {
-            activity.startActivity(Intent(activity, frmAgendarActivity::class.java))
+            if (activity is frmPrincipalActivity) {
+                activity.supportFragmentManager.commit {
+                    setReorderingAllowed(true)
+                    replace(R.id.contenedorFragmento, AgendarFragment())
+                    addToBackStack(null)
+                }
+            }
             drawerLayout.closeDrawer(GravityCompat.START)
         }
     }

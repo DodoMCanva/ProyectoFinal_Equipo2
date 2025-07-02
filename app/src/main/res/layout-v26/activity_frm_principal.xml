@@ -6,50 +6,49 @@
     android:id="@+id/drawer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".frmHistorialActivity">
+    android:background="@color/azulBackground"
+    tools:context=".frmPrincipalActivity">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/azulBackground">
+        android:orientation="vertical">
 
         <View
             android:layout_width="match_parent"
             android:layout_height="35dp"
             android:background="@drawable/fondo_barra" />
-
         <LinearLayout
-            android:layout_width="300dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginLeft="20dp"
-            android:paddingTop="0dp">
+            android:padding="16dp">
 
             <Button
                 android:id="@+id/btnMenu"
                 android:layout_width="@dimen/menu50"
-                android:layout_height="45dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="0dp"
-                android:background="@drawable/menuazul100" />
+                android:layout_height="@dimen/menu50"
+                android:background="@drawable/menuazul100"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="16dp"/>
 
             <TextView
-                android:layout_width="match_parent"
+                android:id="@+id/encabezadoPrincipal"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/azulTexto"
                 android:textSize="@dimen/texttitulo45"
                 android:fontFamily="@font/quicksandbold"
-                android:text="@string/historial"
-                android:gravity="center" />
+                android:text="@string/misCitas"
+                android:layout_marginLeft="60dp"/>
         </LinearLayout>
-        <ListView
-            android:id="@+id/lvHistorial"
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/contenedorFragmento"
+            android:name="equipo.dos.citasmedicas.Fragmentos.CitasFragment"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            android:layout_marginHorizontal="40dp"
-            android:layout_marginTop="20dp"/>
+            android:layout_weight="1"/>
     </LinearLayout>
 
     <com.google.android.material.navigation.NavigationView
@@ -60,6 +59,5 @@
         android:background="@color/azulBackMensajes"
         app:itemTextColor="@color/white"
         app:menu="@menu/drawel_menu"
-        app:headerLayout="@layout/menu"
-        />
+        app:headerLayout="@layout/menu" />
 </androidx.drawerlayout.widget.DrawerLayout>

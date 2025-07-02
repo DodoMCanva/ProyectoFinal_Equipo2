@@ -197,25 +197,25 @@ class frmAgendarMedicoActivity : AppCompatActivity() {
         }
 
 
-        btnCancelar.setOnClickListener {
-            {
-                intent = Intent(this, frmAgendarActivity::class.java)
-                startActivity(intent)
-            }
-
-            val medico = intent.getSerializableExtra("medico") as? medico
-
-            if (medico != null) {
-                val tvNombre = findViewById<TextView>(R.id.tvAgendarNombre)
-                val tvMonto = findViewById<TextView>(R.id.tvMonto)
-                tvNombre.text = medico.nombre
-                tvMonto.text = "$${medico.costoConsulta}"
-            } else {
-                Toast.makeText(this, "Médico no recibido", Toast.LENGTH_SHORT).show()
-                finish()
-            }
-
-            MenuDesplegable.configurarMenu(this)
-        }
+//        btnCancelar.setOnClickListener {
+//            {
+//                intent = Intent(this, frmAgendarActivity::class.java)
+//                startActivity(intent)
+//            }
+//
+//            val medico = intent.getSerializableExtra("medico") as? medico
+//
+//            if (medico != null) {
+//                val tvNombre = findViewById<TextView>(R.id.tvAgendarNombre)
+//                val tvMonto = findViewById<TextView>(R.id.tvMonto)
+//                tvNombre.text = medico.nombre
+//                tvMonto.text = "$${medico.costoConsulta}"
+//            } else {
+//                Toast.makeText(this, "Médico no recibido", Toast.LENGTH_SHORT).show()
+//                finish()
+//            }
+//
+//            MenuDesplegable.configurarMenu(this)
+//        }
     }
 }

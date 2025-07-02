@@ -6,7 +6,7 @@ import java.io.Serializable
 import java.time.LocalDate
 import java.time.Period
 import java.time.format.DateTimeFormatter
-import java.time.format.DateTimeParseException
+
 data class paciente(
     var uid: String? = null,
     var imagen: String? = null,

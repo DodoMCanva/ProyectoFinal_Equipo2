@@ -20,6 +20,6 @@ data class medico(
     var numero: String? = null,
     var cp: String? = null,
     var fotoPerfil: String = ""
-) : java.io.Serializable {
+) : Serializable {
     constructor() : this("","", "", "", "", "", "", "", 0.0, "", "", "", "", "", "", "", "")
 }

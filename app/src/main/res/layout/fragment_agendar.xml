@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Fragmentos.AgendarFragment">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/azulBackground">
+
+        <LinearLayout
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_vertical">
+            <EditText
+                android:id="@+id/etBuscarMedico"
+                android:layout_width="240dp"
+                android:textSize="20sp"
+                android:inputType="text"
+                android:layout_height="wrap_content"
+                android:hint="Nombre del médico"/>
+
+            <ImageButton
+                android:id="@+id/btnBuscar"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:src="@drawable/search50"
+                android:background="@drawable/btn_buscar"
+                android:scaleType="centerInside"
+                android:layout_marginRight="5dp"
+                android:padding="6dp"
+                android:layout_gravity="center_vertical"
+                android:contentDescription="Calendario" />
+            <Button
+                android:id="@+id/btnFiltros"
+                android:layout_width="70dp"
+                android:layout_height="50sp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/quicksandmedium"
+                android:backgroundTint="@color/azulClaroBtn"
+                android:text="Filtro"
+                android:textAllCaps="false"
+                />
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/lvMedicos"
+            android:layout_width="350dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal" />
+    </LinearLayout>
+</FrameLayout>
