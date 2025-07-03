@@ -24,16 +24,14 @@ import equipo.dos.citasmedicas.helpers.MenuDesplegable
 class DetalleCitaPacienteFragment : Fragment() {
 
     private lateinit var citaId: String
-    private val binding by lazy {
-        ActivityFrmPrincipalBinding.inflate(layoutInflater)
-    }
+
 
     @SuppressLint("MissingInflatedId")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_agendar_medico, container, false)
+        return inflater.inflate(R.layout.fragment_detalle_cita_paciente, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

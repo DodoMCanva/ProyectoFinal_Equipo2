@@ -41,7 +41,7 @@ class CitasFragment : Fragment() {
             sesion.actualizarListaCitas {
                 if (sesion.citas != null && sesion.citas.isNotEmpty()) {
                     adapter = AdapterCita(requireContext(), sesion.citas, sesion.tipo, filtroBusqueda, fechaBusqueda){ citaSeleccionada ->
-                        val fragment
+                        var fragment: Fragment
                         if (sesion.tipo == "paciente"){
                              fragment = AgendarMedicoFragment()
                         }else{
