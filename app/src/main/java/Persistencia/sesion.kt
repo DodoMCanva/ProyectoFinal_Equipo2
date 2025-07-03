@@ -7,6 +7,9 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import java.io.Serializable
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 object sesion {
     var citas: ArrayList<cita> = ArrayList()
@@ -101,6 +104,22 @@ object sesion {
         uid = null
         citas.clear()
     }
-}
+    fun listaOrdenada(): ArrayList<cita>{
+        val formatoFechaHora = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
+        val listaOrdenada = citas.sortedWith(compareBy { cita ->
+            try {
+                val fechaHoraString = "${cita.fecha} ${cita.hora}"
+
+                formatoFechaHora.parse(fechaHoraString)
+            } catch (e: Exception) {
+                Date(0)
+            }
+        })
+        return listaOrdenada as ArrayList<cita>
+            }
+
+
+    }
+
 
 

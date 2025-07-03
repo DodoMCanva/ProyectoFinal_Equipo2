@@ -2,6 +2,7 @@ package equipo.dos.citasmedicas
 
 import android.os.Build
 import android.os.Bundle
+import android.widget.Button
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.add
@@ -13,6 +14,8 @@ import equipo.dos.citasmedicas.helpers.MenuDesplegable
 
 
 class frmPrincipalActivity : AppCompatActivity() {
+
+
 
     private val binding by lazy {
         ActivityFrmPrincipalBinding.inflate(layoutInflater)

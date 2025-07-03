@@ -35,7 +35,7 @@ class DetalleCitaPacienteFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        //citaId = intent.getStringExtra("citaId") ?: ""
+        citaId = arguments?.getString("citaId") ?: ""
         if (citaId.isEmpty()) {
             Toast.makeText(requireContext(), "Error: ID de cita no recibido.", Toast.LENGTH_SHORT).show()
           //  finish()

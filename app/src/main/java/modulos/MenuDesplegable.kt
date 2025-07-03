@@ -31,7 +31,6 @@ object MenuDesplegable {
         val toolbar = activity.findViewById<Button>(R.id.btnMenu)
         val drawerLayout = activity.findViewById<DrawerLayout>(R.id.drawer)
         val nav = activity.findViewById<NavigationView>(R.id.navegacion_menu)
-        val btnAgendar: FloatingActionButton? = activity.findViewById(R.id.btnAgendar)
         val encabezado : TextView = activity.findViewById(R.id.encabezadoPrincipal)
 
         toolbar.setOnClickListener {
@@ -48,7 +47,7 @@ object MenuDesplegable {
         } else {
             opcion.title = "Ajustar Consulta"
             opcion.setIcon(R.drawable.settings30)
-            btnAgendar?.visibility = View.GONE
+
         }
 
         nav.setNavigationItemSelectedListener { item ->
@@ -152,16 +151,6 @@ object MenuDesplegable {
             datePicker.show()
         }
 
-        btnAgendar?.setOnClickListener {
-            if (activity is frmPrincipalActivity) {
-                activity.supportFragmentManager.commit {
-                    setReorderingAllowed(true)
-                    replace(R.id.contenedorFragmento, AgendarFragment())
-                    addToBackStack(null)
-                    encabezado.setText("Agendar")
-                }
-            }
-            drawerLayout.closeDrawer(GravityCompat.START)
-        }
+
     }
 }
