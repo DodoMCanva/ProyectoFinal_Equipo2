@@ -19,7 +19,6 @@ import equipo.dos.citasmedicas.helpers.MenuDesplegable
 
 class MiPerfilFragment : Fragment() {
 
-
     private lateinit var imgFotoPerfil: ImageView
 
     override fun onCreateView(
@@ -48,20 +47,20 @@ class MiPerfilFragment : Fragment() {
                 numero.text = s.correo
                 fecha.text = s.fechaNacimiento
                 genero.text = s.genero
-//                val fotoResId = resources.getIdentifier(s.fotoPerfil, "drawable", packageName)
-//                if (fotoResId != 0) {
-//                    imgFotoPerfil.setImageResource(fotoResId)
-//                }
+                val fotoResId = resources.getIdentifier(s.fotoPerfil, "drawable", requireContext().packageName)
+                if (fotoResId != 0) {
+                    imgFotoPerfil.setImageResource(fotoResId)
+                }
             }
             is medico -> {
                 nombre.text = s.nombre
                 numero.text = s.correo
                 fecha.text = s.fechaNacimiento
                 genero.text = s.genero
-                //val fotoResId = resources.getIdentifier(s.fotoPerfil, "drawable", packageName)
-//                if (fotoResId != 0) {
-//                    imgFotoPerfil.setImageResource(fotoResId)
-//                }
+                val fotoResId = resources.getIdentifier(s.fotoPerfil, "drawable", requireContext().packageName)
+                if (fotoResId != 0) {
+                    imgFotoPerfil.setImageResource(fotoResId)
+                }
             }
             else -> {
                 Toast.makeText(requireContext(), "no se cargo correctamente la sesion", Toast.LENGTH_SHORT).show()
