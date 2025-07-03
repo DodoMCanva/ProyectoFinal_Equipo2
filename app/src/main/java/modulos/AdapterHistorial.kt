@@ -94,16 +94,7 @@ class AdapterHistorial(context: Context, val lista: ArrayList<cita>, tipo : Stri
                 }
             }
             selCita.setOnClickListener {
-                val intent = Intent(context, frmDetalleCitaMedicoPendienteActivity::class.java)
-                intent.putExtra("nombre", p?.nombre)
-                intent.putExtra("genero", p?.genero)
-                intent.putExtra("telefono", p?.telefono)
-                intent.putExtra("fecha", c.fecha)
-                intent.putExtra("hora", c.hora)
-                intent.putExtra("estado", c.estado)
-                intent.putExtra("motivo", c.motivo)
-                intent.putExtra("edad", p?.calcularEdad())
-                context!!.startActivity(intent)
+
             }
         } else {
             vista = converterView ?: LayoutInflater.from(context)
@@ -115,14 +106,7 @@ class AdapterHistorial(context: Context, val lista: ArrayList<cita>, tipo : Stri
 
             val selecMedico = vista.findViewById<LinearLayout>(R.id.panelCitaPaciente)
             selecMedico.setOnClickListener {
-                val intent = Intent(context, frmDetalleCitaActivity::class.java)
-                intent.putExtra("nombre", m?.nombre)
-                intent.putExtra("especialidad", m?.especialidad)
-                intent.putExtra("fecha", c.fecha)
-                intent.putExtra("hora", c.hora)
-                intent.putExtra("estado", c.estado)
-                intent.putExtra("motivo", c.motivo)
-                context!!.startActivity(intent)
+
             }
         }
         return vista

@@ -31,24 +31,10 @@ class AdapterCita(
     val filtro: Boolean = filtro
     val fecha = fecha
 
+    //A debate si se use un metodo vistaNormal
     override fun getView(position: Int, converterView: View?, parent: ViewGroup): View {
-        //
         return vistaNormal(position, converterView, parent)
     }
-
-    //
-    fun ordenarPorFechaHora(){
-
-    }
-
-    //
-    fun filtrar(){
-
-    }
-
-    fun filtrarDia(){}
-
-
 
     fun vistaNormal(position: Int, converterView: View?, parent: ViewGroup): View {
 
@@ -131,9 +117,7 @@ class AdapterCita(
 
             //Cambio comportamiento
             selCita.setOnClickListener {
-                val intent = Intent(context, frmDetalleCitaMedicoPendienteActivity::class.java)
-                intent.putExtra("citaId", c.idCita)
-                context.startActivity(intent)
+                onCitaSelected(c)
             }
         } else {
             vista = converterView ?: LayoutInflater.from(context)

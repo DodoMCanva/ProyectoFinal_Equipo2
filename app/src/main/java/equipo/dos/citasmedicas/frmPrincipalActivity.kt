@@ -2,6 +2,7 @@ package equipo.dos.citasmedicas
 
 import android.os.Build
 import android.os.Bundle
+import android.widget.Button
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.add
@@ -14,20 +15,17 @@ import equipo.dos.citasmedicas.helpers.MenuDesplegable
 
 class frmPrincipalActivity : AppCompatActivity() {
 
-    private val binding by lazy {
-        ActivityFrmPrincipalBinding.inflate(layoutInflater)
-    }
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_frm_principal)
         MenuDesplegable.configurarMenu(this)
 
-        supportFragmentManager.commit {
-            setReorderingAllowed(true)
-            add<CitasFragment>(R.id.contenedorFragmento)
+        if (savedInstanceState == null) {
+            supportFragmentManager.commit {
+                setReorderingAllowed(true)
+                add<CitasFragment>(R.id.contenedorFragmento)
+            }
         }
-
     }
+
 }

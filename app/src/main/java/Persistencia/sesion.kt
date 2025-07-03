@@ -7,6 +7,9 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import java.io.Serializable
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 object sesion {
     var citas: ArrayList<cita> = ArrayList()
@@ -36,7 +39,7 @@ object sesion {
     }
 
     fun actualizarListaCitas(callback: () -> Unit) {
-        citas = ArrayList<cita>()
+        citas.clear()
         val database = FirebaseDatabase.getInstance().getReference("usuarios").child("citas")
         val query = if (tipo == "paciente") {
             database.orderByChild("idPaciente").equalTo(Persistencia.sesion.uid)
@@ -49,7 +52,9 @@ object sesion {
                 for (citaSnapshot in snapshot.children) {
                     val citaData = citaSnapshot.getValue(Persistencia.cita::class.java)
                     if (citaData != null) {
-                        citas.add(citaData)
+                        if (!citas.contains(citaData)){
+                            citas.add(citaData)
+                        }
                     }
                 }
                 callback()
@@ -101,6 +106,23 @@ object sesion {
         uid = null
         citas.clear()
     }
-}
+    fun listaOrdenada(): ArrayList<cita>{
+
+        val formatoFechaHora = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
+        var listaOrdenada: List<cita> = citas.sortedWith(compareBy { cita ->
+            try {
+                val fechaHoraString = "${cita.fecha} ${cita.hora}"
+
+                formatoFechaHora.parse(fechaHoraString)
+            } catch (e: Exception) {
+                Date(0)
+            }
+        })
+        return ArrayList(listaOrdenada)
+            }
+
+
+    }
+
 
 

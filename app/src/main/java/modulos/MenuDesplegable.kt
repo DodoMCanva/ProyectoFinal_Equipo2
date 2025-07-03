@@ -20,6 +20,7 @@ import equipo.dos.citasmedicas.Fragmentos.AgendarFragment
 import equipo.dos.citasmedicas.Fragmentos.AjusteConsultaFragment
 import equipo.dos.citasmedicas.Fragmentos.CitasFragment
 import equipo.dos.citasmedicas.Fragmentos.HistorialFragment
+import equipo.dos.citasmedicas.Fragmentos.MiPerfilFragment
 
 import java.util.Calendar
 
@@ -30,7 +31,6 @@ object MenuDesplegable {
         val toolbar = activity.findViewById<Button>(R.id.btnMenu)
         val drawerLayout = activity.findViewById<DrawerLayout>(R.id.drawer)
         val nav = activity.findViewById<NavigationView>(R.id.navegacion_menu)
-        val btnAgendar: FloatingActionButton? = activity.findViewById(R.id.btnAgendar)
         val encabezado : TextView = activity.findViewById(R.id.encabezadoPrincipal)
 
         toolbar.setOnClickListener {
@@ -47,7 +47,7 @@ object MenuDesplegable {
         } else {
             opcion.title = "Ajustar Consulta"
             opcion.setIcon(R.drawable.settings30)
-            btnAgendar?.visibility = View.GONE
+
         }
 
         nav.setNavigationItemSelectedListener { item ->
@@ -58,6 +58,7 @@ object MenuDesplegable {
                             setReorderingAllowed(true)
                             replace(R.id.contenedorFragmento, CitasFragment())
                             addToBackStack(null)
+                            encabezado.setText("Mis Citas")
                         }
                     }
                 }
@@ -67,6 +68,7 @@ object MenuDesplegable {
                             setReorderingAllowed(true)
                             replace(R.id.contenedorFragmento, HistorialFragment())
                             addToBackStack(null)
+                            encabezado.setText("Historia")
                         }
                     }
                 }
@@ -77,7 +79,7 @@ object MenuDesplegable {
                                 setReorderingAllowed(true)
                                 replace(R.id.contenedorFragmento, AgendarFragment())
                                 addToBackStack(null)
-
+                                encabezado.setText("Agendar")
                             }
                         }
                     } else {
@@ -86,6 +88,7 @@ object MenuDesplegable {
                                 setReorderingAllowed(true)
                                 replace(R.id.contenedorFragmento, AjusteConsultaFragment())
                                 addToBackStack(null)
+                                encabezado.setText("Ajustar Consulta")
                             }
                         }
                     }
@@ -116,7 +119,14 @@ object MenuDesplegable {
         }
 
         btnPerfil.setOnClickListener {
-            activity.startActivity(Intent(activity, frmMiPerfilActivity::class.java))
+            if (activity is frmPrincipalActivity) {
+                activity.supportFragmentManager.commit {
+                    setReorderingAllowed(true)
+                    replace(R.id.contenedorFragmento, MiPerfilFragment())
+                    addToBackStack(null)
+                    encabezado.setText("Mi Perfil")
+                }
+            }
             drawerLayout.closeDrawer(GravityCompat.START)
         }
 
@@ -141,15 +151,6 @@ object MenuDesplegable {
             datePicker.show()
         }
 
-        btnAgendar?.setOnClickListener {
-            if (activity is frmPrincipalActivity) {
-                activity.supportFragmentManager.commit {
-                    setReorderingAllowed(true)
-                    replace(R.id.contenedorFragmento, AgendarFragment())
-                    addToBackStack(null)
-                }
-            }
-            drawerLayout.closeDrawer(GravityCompat.START)
-        }
+
     }
 }

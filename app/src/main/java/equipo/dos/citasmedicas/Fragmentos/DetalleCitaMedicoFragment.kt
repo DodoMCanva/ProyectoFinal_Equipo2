@@ -21,14 +21,14 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import equipo.dos.citasmedicas.R
 import equipo.dos.citasmedicas.helpers.MenuDesplegable
-import equipo.dos.citasmedicas.databinding.ActivityFrmDetalleCitaMedicoPendienteBinding
+import equipo.dos.citasmedicas.databinding.ActivityFrmPrincipalBinding
 
 
 class DetalleCitaMedicoFragment : Fragment() {
 
     private lateinit var citaId: String
     private val binding by lazy {
-        ActivityFrmDetalleCitaMedicoPendienteBinding.inflate(layoutInflater)
+        ActivityFrmPrincipalBinding.inflate(layoutInflater)
     }
 
     override fun onCreateView(
@@ -50,15 +50,19 @@ class DetalleCitaMedicoFragment : Fragment() {
         cargarDatosDeCita(citaId)
 
 
-        binding.btnFinalizarDetallesCitaMedico.setOnClickListener {
+        var finalizarCita= view.findViewById<Button>(R.id.btnFinalizarDetallesCitaMedico)
+
+        finalizarCita.setOnClickListener {
             mostrarDialogSubirReceta()
         }
+        var reprodetalleMedico= view.findViewById<Button>(R.id.btnReprogramarDetallesMedico)
 
-        binding.btnReprogramarDetallesMedico.setOnClickListener {
+            reprodetalleMedico.setOnClickListener {
             mostrarDialogReprogramarCita()
         }
 
-        binding.btnCancelarDetallesMedico.setOnClickListener {
+        var cancelarDetallesMedico= view.findViewById<Button>(R.id.btnCancelarDetallesMedico)
+        cancelarDetallesMedico.setOnClickListener {
             mostrarDialogDeCancelacion()
         }
     }

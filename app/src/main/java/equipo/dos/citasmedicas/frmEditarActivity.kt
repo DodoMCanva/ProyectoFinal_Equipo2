@@ -265,7 +265,7 @@ class frmEditarActivity : AppCompatActivity() {
                     p.genero = generoSeleccionado
                 }
 
-                val intent = Intent(this, frmMiPerfilActivity::class.java)
+                val intent = Intent(this, frmPrincipalActivity::class.java)
                 intent.putExtra("sesion", sesion)
                 startActivity(intent)
                 dialog.dismiss()

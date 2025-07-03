@@ -1,5 +1,6 @@
 package equipo.dos.citasmedicas.Fragmentos
 
+import Persistencia.cita
 import Persistencia.sesion
 import android.os.Build
 import android.os.Bundle
@@ -12,6 +13,7 @@ import android.widget.ListView
 import android.widget.Switch
 import android.widget.TextView
 import androidx.annotation.RequiresApi
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import equipo.dos.citasmedicas.R
 import modulos.AdapterCita
 import java.time.LocalDateTime
@@ -29,48 +31,71 @@ class CitasFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_principal, container, false)
+
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val filtro: Switch = view.findViewById(R.id.swMostrarTodaSemana)
         val calendario: ImageButton = view.findViewById(R.id.btnCalendarioConsultaCitas)
         val fechaTexto: TextView = view.findViewById(R.id.tvConsultaFecha)
         val listaCitas: ListView = view.findViewById(R.id.lvCitas)
+        val btnAgendar: FloatingActionButton? = view.findViewById(R.id.btnAgendar)
 
-        fun imprimirCitas() {
-            sesion.actualizarListaCitas {
-                if (sesion.citas != null && sesion.citas.isNotEmpty()) {
-                    adapter = AdapterCita(requireContext(), sesion.citas, sesion.tipo, filtroBusqueda, fechaBusqueda){ citaSeleccionada ->
-                        val fragment
-                        if (sesion.tipo == "paciente"){
-                             fragment = AgendarMedicoFragment()
-                        }else{
-                            fragment = AgendarMedicoFragment()
-                        }
+        adaptarCitas(listaCitas)
 
-                        val bundle = Bundle().apply {
-                            putSerializable("cita", citaSeleccionada)
-                        }
-                        fragment.arguments = bundle
+        if (sesion.tipo == "paciente") {
+            btnAgendar?.visibility = View.VISIBLE
+        } else {
+            btnAgendar?.visibility = View.GONE
 
-                        parentFragmentManager.beginTransaction()
-                            .replace(R.id.contenedorFragmento, fragment)
-                            .addToBackStack(null)
-                            .commit()
-                    }
-                    //listaCitas.adapter = adapter
-                }
-            }
         }
+        btnAgendar?.setOnClickListener {
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.contenedorFragmento, AgendarFragment())
+                .addToBackStack(null)
+                .commit()
+        }
+
+
         calendario.setOnClickListener {
             fechaBusqueda = fechaTexto.text.toString()
-            imprimirCitas()
+            adaptarCitas(listaCitas)
         }
 
         filtro.setOnClickListener {
             filtroBusqueda = !filtroBusqueda
-            imprimirCitas()
+            adaptarCitas(listaCitas)
+
         }
-        imprimirCitas()
+
+    }
+
+    fun adaptarCitas(listView: ListView) {
+        val listaCitas: ListView = listView
+        sesion.actualizarListaCitas {
+            if (sesion.citas != null && sesion.citas.isNotEmpty()) {
+
+                adapter = AdapterCita(requireContext(), sesion.citas, sesion.tipo, filtroBusqueda, fechaBusqueda){ citaSeleccionada ->
+                    var fragment: Fragment
+                    if (sesion.tipo == "paciente"){
+                        fragment = DetalleCitaPacienteFragment()
+                    }else{
+                        fragment = DetalleCitaMedicoFragment()
+                    }
+
+                    val bundle = Bundle().apply {
+                        putString("citaId", citaSeleccionada.idCita)
+                    }
+                    fragment.arguments = bundle
+
+                    parentFragmentManager.beginTransaction()
+                        .replace(R.id.contenedorFragmento, fragment)
+                        .addToBackStack(null)
+                        .commit()
+                }
+                listaCitas.adapter = adapter
+            }
+        }
     }
 }
