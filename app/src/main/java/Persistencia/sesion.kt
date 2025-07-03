@@ -52,7 +52,9 @@ object sesion {
                 for (citaSnapshot in snapshot.children) {
                     val citaData = citaSnapshot.getValue(Persistencia.cita::class.java)
                     if (citaData != null) {
-                        citas.add(citaData)
+                        if (!citas.contains(citaData)){
+                            citas.add(citaData)
+                        }
                     }
                 }
                 callback()
