@@ -2,6 +2,8 @@ package equipo.dos.citasmedicas.Fragmentos
 
 import android.os.Build
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.style.UnderlineSpan
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -87,11 +89,11 @@ class AjusteConsultaFragment : Fragment() {
             etLunesATarde.alpha = alpha
 
             if (lunesActivo) {
-                tvLunesEstado.text = getString(R.string.textoSubrayadoDeshabilitar)
-                tvLunesEstado.setTextColor(ContextCompat.getColor(requireContext(), R.color.rojoBtn))
-            } else {
-                tvLunesEstado.text = getString(R.string.textoSubrayadoHabilitar)
+                tvLunesEstado.text = subrayar(getString(R.string.textoSubrayadoDeshabilitar))
                 tvLunesEstado.setTextColor(ContextCompat.getColor(requireContext(), R.color.amarilloBtn))
+            } else {
+                tvLunesEstado.text = subrayar(getString(R.string.textoSubrayadoHabilitar))
+                tvLunesEstado.setTextColor(ContextCompat.getColor(requireContext(), R.color.verdeHabilitar))
             }
         }
 
@@ -118,11 +120,11 @@ class AjusteConsultaFragment : Fragment() {
             etMartesATarde.alpha = alpha
 
             if (martesActivo) {
-                tvMartesEstado.text = getString(R.string.textoSubrayadoDeshabilitar)
-                tvMartesEstado.setTextColor(ContextCompat.getColor(requireContext(), R.color.rojoBtn))
-            } else {
-                tvMartesEstado.text = getString(R.string.textoSubrayadoHabilitar)
+                tvMartesEstado.text = subrayar(getString(R.string.textoSubrayadoDeshabilitar))
                 tvMartesEstado.setTextColor(ContextCompat.getColor(requireContext(), R.color.amarilloBtn))
+            } else {
+                tvMartesEstado.text = subrayar(getString(R.string.textoSubrayadoHabilitar))
+                tvMartesEstado.setTextColor(ContextCompat.getColor(requireContext(), R.color.verdeHabilitar))
             }
         }
 
@@ -147,11 +149,11 @@ class AjusteConsultaFragment : Fragment() {
             etMiercolesATarde.alpha = alpha
 
             if (miercolesActivo) {
-                tvMiercolesEstado.text = getString(R.string.textoSubrayadoDeshabilitar)
-                tvMiercolesEstado.setTextColor(ContextCompat.getColor(requireContext(), R.color.rojoBtn))
-            } else {
-                tvMiercolesEstado.text = getString(R.string.textoSubrayadoHabilitar)
+                tvMiercolesEstado.text = subrayar(getString(R.string.textoSubrayadoDeshabilitar))
                 tvMiercolesEstado.setTextColor(ContextCompat.getColor(requireContext(), R.color.amarilloBtn))
+            } else {
+                tvMiercolesEstado.text = subrayar(getString(R.string.textoSubrayadoHabilitar))
+                tvMiercolesEstado.setTextColor(ContextCompat.getColor(requireContext(), R.color.verdeHabilitar))
             }
         }
 
@@ -176,11 +178,11 @@ class AjusteConsultaFragment : Fragment() {
             etJuevesATarde.alpha = alpha
 
             if (juevesActivo) {
-                tvJuevesEstado.text = getString(R.string.textoSubrayadoDeshabilitar)
-                tvJuevesEstado.setTextColor(ContextCompat.getColor(requireContext(), R.color.rojoBtn))
-            } else {
-                tvJuevesEstado.text = getString(R.string.textoSubrayadoHabilitar)
+                tvJuevesEstado.text = subrayar(getString(R.string.textoSubrayadoDeshabilitar))
                 tvJuevesEstado.setTextColor(ContextCompat.getColor(requireContext(), R.color.amarilloBtn))
+            } else {
+                tvJuevesEstado.text = subrayar(getString(R.string.textoSubrayadoHabilitar))
+                tvJuevesEstado.setTextColor(ContextCompat.getColor(requireContext(), R.color.verdeHabilitar))
             }
         }
 
@@ -205,11 +207,11 @@ class AjusteConsultaFragment : Fragment() {
             etViernesATarde.alpha = alpha
 
             if (viernesActivo) {
-                tvViernesEstado.text = getString(R.string.textoSubrayadoDeshabilitar)
-                tvViernesEstado.setTextColor(ContextCompat.getColor(requireContext(), R.color.rojoBtn))
-            } else {
-                tvViernesEstado.text = getString(R.string.textoSubrayadoHabilitar)
+                tvViernesEstado.text = subrayar(getString(R.string.textoSubrayadoDeshabilitar))
                 tvViernesEstado.setTextColor(ContextCompat.getColor(requireContext(), R.color.amarilloBtn))
+            } else {
+                tvViernesEstado.text = subrayar(getString(R.string.textoSubrayadoHabilitar))
+                tvViernesEstado.setTextColor(ContextCompat.getColor(requireContext(), R.color.verdeHabilitar))
             }
         }
 
@@ -234,11 +236,11 @@ class AjusteConsultaFragment : Fragment() {
             etSabadoATarde.alpha = alpha
 
             if (sabadoActivo) {
-                tvSabadoEstado.text = getString(R.string.textoSubrayadoDeshabilitar)
-                tvSabadoEstado.setTextColor(ContextCompat.getColor(requireContext(), R.color.rojoBtn))
-            } else {
-                tvSabadoEstado.text = getString(R.string.textoSubrayadoHabilitar)
+                tvSabadoEstado.text = subrayar(getString(R.string.textoSubrayadoDeshabilitar))
                 tvSabadoEstado.setTextColor(ContextCompat.getColor(requireContext(), R.color.amarilloBtn))
+            } else {
+                tvSabadoEstado.text = subrayar(getString(R.string.textoSubrayadoHabilitar))
+                tvSabadoEstado.setTextColor(ContextCompat.getColor(requireContext(), R.color.verdeHabilitar))
             }
         }
 
@@ -263,11 +265,11 @@ class AjusteConsultaFragment : Fragment() {
             etDomingoATarde.alpha = alpha
 
             if (domingoActivo) {
-                tvDomingoEstado.text = getString(R.string.textoSubrayadoDeshabilitar)
-                tvDomingoEstado.setTextColor(ContextCompat.getColor(requireContext(), R.color.rojoBtn))
-            } else {
-                tvDomingoEstado.text = getString(R.string.textoSubrayadoHabilitar)
+                tvDomingoEstado.text = subrayar(getString(R.string.textoSubrayadoDeshabilitar))
                 tvDomingoEstado.setTextColor(ContextCompat.getColor(requireContext(), R.color.amarilloBtn))
+            } else {
+                tvDomingoEstado.text = subrayar(getString(R.string.textoSubrayadoHabilitar))
+                tvDomingoEstado.setTextColor(ContextCompat.getColor(requireContext(), R.color.verdeHabilitar))
             }
         }
 
@@ -375,6 +377,11 @@ class AjusteConsultaFragment : Fragment() {
         picker.show()
     }
 
+    private fun subrayar(texto: String): SpannableString {
+        val subrayado = SpannableString(texto)
+        subrayado.setSpan(UnderlineSpan(), 0, texto.length, 0)
+        return subrayado
+    }
 
 
 
