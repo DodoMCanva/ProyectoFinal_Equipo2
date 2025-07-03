@@ -18,7 +18,7 @@ import java.time.format.DateTimeFormatter
 
 
 class HistorialFragment : Fragment() {
-    var adapter: AdapterHistorial? = null
+    private var adapter: AdapterHistorial? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,11 +26,33 @@ class HistorialFragment : Fragment() {
     ): View? {
         return inflater.inflate(R.layout.fragment_historial, container, false)
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = AdapterHistorial(requireContext(), sesion.listaOrdenada(), sesion.tipo)
-        var listaCitas = view.findViewById<ListView>(R.id.lvHistorial)
-        listaCitas.adapter = adapter
+        val listaCitasView = view.findViewById<ListView>(R.id.lvHistorial)
+        adapter = AdapterHistorial(requireContext(), ArrayList(), sesion.tipo) { citaSeleccionada ->
+            val fragment = if (sesion.tipo == "paciente") {
+                DetalleCitaPacienteFragment()
+            } else {
+                DetalleCitaMedicoFragment()
+            }
+            val bundle = Bundle().apply {
+                putString("citaId", citaSeleccionada.idCita)
+            }
+            fragment.arguments = bundle
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.contenedorFragmento, fragment)
+                .addToBackStack(null).commit()
 
+        }
+        listaCitasView.adapter = adapter
+        cargarHistorial()
+    }
+
+    private fun cargarHistorial() {
+        sesion.actualizarListaCitas {
+            val listaOrdenada = sesion.listaOrdenada()
+            adapter?.actualizarDatos(listaOrdenada)
+        }
     }
 }

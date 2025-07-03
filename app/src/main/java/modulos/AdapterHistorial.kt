@@ -17,43 +17,15 @@ import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import equipo.dos.citasmedicas.R
 
-class AdapterHistorial(context: Context, val lista: ArrayList<cita>, tipo : String): ArrayAdapter<cita>(context,0, lista) {
-    val tipo: String = tipo
+class AdapterHistorial(context: Context, lista: ArrayList<cita>, val tipo: String, val onCitaSelected:(cita)-> Unit) : ArrayAdapter<cita>(context, 0, lista) {
 
     @RequiresApi(Build.VERSION_CODES.O)
-    override fun getView(position: Int, converterView: View?, parent: ViewGroup): View {
-        val c = lista[position]
-        var m : medico? = null
-        val uidMedico = c.idMedico
-        if (uidMedico != null) {
-            sesion.buscarMedico(uidMedico) { medico ->
-                if (medico != null) {
-                    m = medico
-                } else {
-                    Log.e("Firebase", "No se encontró al médico")
-                }
-            }
-        } else {
-            Log.e("Firebase", "El UID del médico es nulo")
-        }
-
-        var p : paciente? = null
-        val uidPaciente = c.idPaciente
-        if (uidPaciente != null) {
-            sesion.buscarPaciente(uidPaciente) { paciente ->
-                if (paciente != null) {
-                    p = paciente
-                } else {
-                    Log.e("Firebase", "No se encontró al paciente")
-                }
-            }
-        } else {
-            Log.e("Firebase", "El UID del paciente es nulo")
-        }
+    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+        val c = getItem(position)!!
 
         val vista: View
         if (tipo == "medico") {
-            vista = converterView ?: LayoutInflater.from(context)
+            vista = convertView ?: LayoutInflater.from(context)
                 .inflate(R.layout.cita_medico, parent, false)
             vista.findViewById<TextView>(R.id.citaMFecha).text = c.fecha
             vista.findViewById<TextView>(R.id.citaMHora).text = c.hora
@@ -63,52 +35,57 @@ class AdapterHistorial(context: Context, val lista: ArrayList<cita>, tipo : Stri
 
             val selCita = vista.findViewById<LinearLayout>(R.id.panelCitaMedico)
             when (c.estado) {
-                "Completada" -> {
-                    selCita.setBackgroundColor(
-                        ContextCompat.getColor(
-                            context,
-                            R.color.BackCitaCompletada
-                        )
+                "Completada" -> selCita.setBackgroundColor(
+                    ContextCompat.getColor(
+                        context,
+                        R.color.BackCitaCompletada
                     )
-                }
+                )
 
-                "Pendiente" -> {
-                    selCita.setBackgroundColor(
-                        ContextCompat.getColor(
-                            context,
-                            R.color.BackCitaPendiente
-                        )
+                "Pendiente" -> selCita.setBackgroundColor(
+                    ContextCompat.getColor(
+                        context,
+                        R.color.BackCitaPendiente
                     )
-                }
+                )
 
-                "Cancelada" -> {
-                    selCita.setBackgroundColor(
-                        ContextCompat.getColor(
-                            context,
-                            R.color.BackCitaCancelada
-                        )
+                "Cancelada" -> selCita.setBackgroundColor(
+                    ContextCompat.getColor(
+                        context,
+                        R.color.BackCitaCancelada
                     )
-                }
+                )
 
-                else -> {
-                }
+                else -> selCita.setBackgroundColor(
+                    ContextCompat.getColor(
+                        context,
+                        R.color.BackCitaPendiente
+                    )
+                )
             }
+
             selCita.setOnClickListener {
-
+                onCitaSelected(c)
             }
+
         } else {
-            vista = converterView ?: LayoutInflater.from(context)
+            vista = convertView ?: LayoutInflater.from(context)
                 .inflate(R.layout.cita_paciente, parent, false)
             vista.findViewById<TextView>(R.id.citaFecha).text = c.fecha
             vista.findViewById<TextView>(R.id.citaHora).text = c.hora
-            vista.findViewById<TextView>(R.id.citaEspecialidad).text = m?.especialidad
-            vista.findViewById<TextView>(R.id.citaMedico).text = m?.nombre
-
-            val selecMedico = vista.findViewById<LinearLayout>(R.id.panelCitaPaciente)
-            selecMedico.setOnClickListener {
-
+            vista.findViewById<TextView>(R.id.citaEspecialidad).text = c.especialidad
+            vista.findViewById<TextView>(R.id.citaMedico).text = c.nombreMedico
+            val selecCita = vista.findViewById<LinearLayout>(R.id.panelCitaPaciente)
+            selecCita.setOnClickListener {
+                onCitaSelected(c)
             }
         }
         return vista
     }
+    fun actualizarDatos(nuevasCitas: List<cita>) {
+        clear()
+        addAll(nuevasCitas)
+        notifyDataSetChanged()
+    }
 }
+
