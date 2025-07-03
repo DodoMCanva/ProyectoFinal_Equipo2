@@ -68,7 +68,7 @@ object MenuDesplegable {
                             setReorderingAllowed(true)
                             replace(R.id.contenedorFragmento, HistorialFragment())
                             addToBackStack(null)
-                            encabezado.setText("Historia")
+                            encabezado.setText("Historial")
                         }
                     }
                 }
