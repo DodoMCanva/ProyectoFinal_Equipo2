@@ -4,7 +4,6 @@ import Persistencia.cita
 import Persistencia.sesion
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -42,9 +41,8 @@ class CitasFragment : Fragment() {
         val fechaTexto: TextView = view.findViewById(R.id.tvConsultaFecha)
         val listaCitas: ListView = view.findViewById(R.id.lvCitas)
         val btnAgendar: FloatingActionButton? = view.findViewById(R.id.btnAgendar)
-        adapter = null
-        adaptarCitas()
-        listaCitas.adapter = adapter
+
+        adaptarCitas(listaCitas)
 
         if (sesion.tipo == "paciente") {
             btnAgendar?.visibility = View.VISIBLE
@@ -62,24 +60,20 @@ class CitasFragment : Fragment() {
 
         calendario.setOnClickListener {
             fechaBusqueda = fechaTexto.text.toString()
-            adapter = null
-            adaptarCitas()
-            listaCitas.adapter = adapter
+            adaptarCitas(listaCitas)
         }
 
         filtro.setOnClickListener {
             filtroBusqueda = !filtroBusqueda
-            adapter = null
-            adaptarCitas()
-            listaCitas.adapter = adapter
+            adaptarCitas(listaCitas)
+
         }
 
     }
 
-    fun adaptarCitas() {
-        Log.d("CITAS", ">>> imprimirCitas llamada")
+    fun adaptarCitas(listView: ListView) {
+        val listaCitas: ListView = listView
         sesion.actualizarListaCitas {
-            Log.d("CITAS", ">>> Callback ejecutado - citas.size = ${sesion.citas.size}")
             if (sesion.citas != null && sesion.citas.isNotEmpty()) {
 
                 adapter = AdapterCita(requireContext(), sesion.citas, sesion.tipo, filtroBusqueda, fechaBusqueda){ citaSeleccionada ->
@@ -100,7 +94,7 @@ class CitasFragment : Fragment() {
                         .addToBackStack(null)
                         .commit()
                 }
-
+                listaCitas.adapter = adapter
             }
         }
     }
