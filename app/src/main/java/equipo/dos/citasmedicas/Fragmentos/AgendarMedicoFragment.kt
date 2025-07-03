@@ -7,6 +7,7 @@ import Persistencia.sesion
 import android.app.DatePickerDialog
 import android.app.Dialog
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -21,6 +22,7 @@ import android.widget.ListView
 import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -39,6 +41,7 @@ class AgendarMedicoFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_agendar_medico, container, false)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         //calendario
         val btnCalendario = view.findViewById<ImageButton>(R.id.btnCalendario)
@@ -53,11 +56,17 @@ class AgendarMedicoFragment : Fragment() {
             val dia = calendario.get(Calendar.DAY_OF_MONTH)
 
             val datePicker =
-                DatePickerDialog(requireContext(), { _: DatePicker, year: Int, month: Int, dayOfMonth: Int ->
-                    val fechaSeleccionada =
-                        String.format("%02d/%02d/%04d", dayOfMonth, month + 1, year)
-                    tvFecha.text = fechaSeleccionada
-                }, anio, mes, dia)
+                DatePickerDialog(
+                    requireContext(),
+                    { _: DatePicker, year: Int, month: Int, dayOfMonth: Int ->
+                        val fechaSeleccionada =
+                            String.format("%02d/%02d/%04d", dayOfMonth, month + 1, year)
+                        tvFecha.text = fechaSeleccionada
+                    },
+                    anio,
+                    mes,
+                    dia
+                )
 
             datePicker.show()
         }
@@ -117,7 +126,11 @@ class AgendarMedicoFragment : Fragment() {
             val motivo = txtMotivo.text.toString()
 
             if (motivo.isEmpty()) {
-                Toast.makeText(requireContext(), "Escribe un motivo para la cita", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(),
+                    "Escribe un motivo para la cita",
+                    Toast.LENGTH_SHORT
+                ).show()
                 return@setOnClickListener
             }
 
@@ -146,11 +159,16 @@ class AgendarMedicoFragment : Fragment() {
                     return@setOnClickListener
                 }
 
-                val database = FirebaseDatabase.getInstance().getReference("usuarios").child("citas")
+                val database =
+                    FirebaseDatabase.getInstance().getReference("usuarios").child("citas")
                 val citaId = database.push().key
 
                 if (citaId == null) {
-                    Toast.makeText(requireContext(), "Error al generar el ID de la cita.", Toast.LENGTH_SHORT)
+                    Toast.makeText(
+                        requireContext(),
+                        "Error al generar el ID de la cita.",
+                        Toast.LENGTH_SHORT
+                    )
                         .show()
                     dialog.dismiss()
                     return@setOnClickListener
@@ -175,9 +193,17 @@ class AgendarMedicoFragment : Fragment() {
                 // Guarda la cita
                 database.child(citaId).setValue(nuevaCita)
                     .addOnSuccessListener {
-                        Toast.makeText(requireContext(), "Cita agendada con éxito.", Toast.LENGTH_SHORT).show()
-                        val intent = Intent(requireContext(), frmPrincipalActivity::class.java)
-                        startActivity(intent)
+                        Toast.makeText(
+                            requireContext(),
+                            "Cita agendada con éxito.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+
+                        parentFragmentManager.beginTransaction()
+                            .replace(R.id.contenedorFragmento, CitasFragment())
+                            .addToBackStack(null)
+                            .commit()
+
                         dialog.dismiss()
                     }
                     .addOnFailureListener {
@@ -195,25 +221,12 @@ class AgendarMedicoFragment : Fragment() {
         }
 
 
-//        btnCancelar.setOnClickListener {
-//            {
-//                intent = Intent(this, frmAgendarActivity::class.java)
-//                startActivity(intent)
-//            }
-//
-//            val medico = intent.getSerializableExtra("medico") as? medico
-//
-//            if (medico != null) {
-//                val tvNombre = findViewById<TextView>(R.id.tvAgendarNombre)
-//                val tvMonto = findViewById<TextView>(R.id.tvMonto)
-//                tvNombre.text = medico.nombre
-//                tvMonto.text = "$${medico.costoConsulta}"
-//            } else {
-//                Toast.makeText(this, "Médico no recibido", Toast.LENGTH_SHORT).show()
-//                finish()
-//            }
-//
-//            MenuDesplegable.configurarMenu(this)
-//        }
+        btnCancelar.setOnClickListener {
+
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.contenedorFragmento, CitasFragment())
+                .addToBackStack(null)
+                .commit()
+        }
     }
 }

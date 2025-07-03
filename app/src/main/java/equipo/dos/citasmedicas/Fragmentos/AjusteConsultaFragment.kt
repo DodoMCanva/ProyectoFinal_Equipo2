@@ -1,5 +1,6 @@
 package equipo.dos.citasmedicas.Fragmentos
 
+import Persistencia.sesion
 import android.os.Build
 import android.os.Bundle
 import android.text.SpannableString
@@ -349,7 +350,7 @@ class AjusteConsultaFragment : Fragment() {
             val database = FirebaseDatabase.getInstance().getReference("configuracionHorario")
 
             // obtener id de medico en sesion
-            val usuarioId = "usuario123"
+            val usuarioId = sesion.uid.toString()
 
             database.child(usuarioId).setValue(config)
                 .addOnSuccessListener {
