@@ -42,6 +42,8 @@ class CitasFragment : Fragment() {
         val listaCitas: ListView = view.findViewById(R.id.lvCitas)
         val btnAgendar: FloatingActionButton? = view.findViewById(R.id.btnAgendar)
 
+        sesion.citas.clear()
+
         adaptarCitas(listaCitas)
 
         if (sesion.tipo == "paciente") {
