@@ -42,8 +42,7 @@ class CitasFragment : Fragment() {
         val listaCitas: ListView = view.findViewById(R.id.lvCitas)
         val btnAgendar: FloatingActionButton? = view.findViewById(R.id.btnAgendar)
 
-        adaptarCitas()
-        listaCitas.adapter = adapter
+        adaptarCitas(listaCitas)
 
         if (sesion.tipo == "paciente") {
             btnAgendar?.visibility = View.VISIBLE
@@ -61,19 +60,19 @@ class CitasFragment : Fragment() {
 
         calendario.setOnClickListener {
             fechaBusqueda = fechaTexto.text.toString()
-            adaptarCitas()
-            listaCitas.adapter = adapter
+            adaptarCitas(listaCitas)
         }
 
         filtro.setOnClickListener {
             filtroBusqueda = !filtroBusqueda
-            adaptarCitas()
-            listaCitas.adapter = adapter
+            adaptarCitas(listaCitas)
+
         }
 
     }
 
-    fun adaptarCitas() {
+    fun adaptarCitas(listView: ListView) {
+        val listaCitas: ListView = listView
         sesion.actualizarListaCitas {
             if (sesion.citas != null && sesion.citas.isNotEmpty()) {
 
@@ -95,7 +94,7 @@ class CitasFragment : Fragment() {
                         .addToBackStack(null)
                         .commit()
                 }
-
+                listaCitas.adapter = adapter
             }
         }
     }
