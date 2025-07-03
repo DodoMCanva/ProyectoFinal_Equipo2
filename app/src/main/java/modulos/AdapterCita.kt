@@ -131,9 +131,7 @@ class AdapterCita(
 
             //Cambio comportamiento
             selCita.setOnClickListener {
-                val intent = Intent(context, frmDetalleCitaMedicoPendienteActivity::class.java)
-                intent.putExtra("citaId", c.idCita)
-                context.startActivity(intent)
+                onCitaSelected(c)
             }
         } else {
             vista = converterView ?: LayoutInflater.from(context)
