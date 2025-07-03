@@ -1,4 +1,5 @@
 package modulos
+
 import Persistencia.cita
 import Persistencia.medico
 import Persistencia.paciente
@@ -17,7 +18,12 @@ import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import equipo.dos.citasmedicas.R
 
-class AdapterHistorial(context: Context, lista: ArrayList<cita>, val tipo: String, val onCitaSelected:(cita)-> Unit) : ArrayAdapter<cita>(context, 0, lista) {
+class AdapterHistorial(
+    context: Context,
+    lista: ArrayList<cita>,
+    val tipo: String,
+    val onCitaSelected: (cita) -> Unit
+) : ArrayAdapter<cita>(context, 0, lista) {
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
@@ -82,6 +88,7 @@ class AdapterHistorial(context: Context, lista: ArrayList<cita>, val tipo: Strin
         }
         return vista
     }
+
     fun actualizarDatos(nuevasCitas: List<cita>) {
         clear()
         addAll(nuevasCitas)
