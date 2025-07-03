@@ -39,6 +39,8 @@ class CitasFragment : Fragment() {
         val filtro: Switch = view.findViewById(R.id.swMostrarTodaSemana)
         val calendario: ImageButton = view.findViewById(R.id.btnCalendarioConsultaCitas)
         val fechaTexto: TextView = view.findViewById(R.id.tvConsultaFecha)
+        val fechaInicio : TextView = view.findViewById(R.id.tvFechaInicio)
+        val fechaFinal : TextView = view.findViewById(R.id.tvFechaFinal)
         val listaCitas: ListView = view.findViewById(R.id.lvCitas)
         val btnAgendar: FloatingActionButton? = view.findViewById(R.id.btnAgendar)
 
@@ -60,6 +62,15 @@ class CitasFragment : Fragment() {
 
         calendario.setOnClickListener {
             fechaBusqueda = fechaTexto.text.toString()
+            if (filtroBusqueda){
+                fechaInicio.visibility = View.VISIBLE
+                fechaFinal.visibility = View.VISIBLE
+                fechaInicio.setText(fechaBusqueda)
+                fechaFinal.setText()
+            }else{
+                fechaInicio.visibility = View.INVISIBLE
+                fechaFinal.visibility = View.INVISIBLE
+            }
             adaptarCitas(listaCitas)
         }
 
