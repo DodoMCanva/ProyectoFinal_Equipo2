@@ -16,8 +16,6 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import equipo.dos.citasmedicas.R
-import equipo.dos.citasmedicas.frmDetalleCitaActivity
-import equipo.dos.citasmedicas.frmDetalleCitaMedicoPendienteActivity
 
 class AdapterHistorial(context: Context, val lista: ArrayList<cita>, tipo : String): ArrayAdapter<cita>(context,0, lista) {
     val tipo: String = tipo
