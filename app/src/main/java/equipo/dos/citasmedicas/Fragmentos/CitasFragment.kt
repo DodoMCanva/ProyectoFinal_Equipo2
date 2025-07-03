@@ -2,12 +2,14 @@ package equipo.dos.citasmedicas.Fragmentos
 
 import Persistencia.cita
 import Persistencia.sesion
+import android.app.DatePickerDialog
 import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.DatePicker
 import android.widget.ImageButton
 import android.widget.ListView
 import android.widget.Switch
@@ -18,6 +20,8 @@ import equipo.dos.citasmedicas.R
 import modulos.AdapterCita
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import java.util.Calendar
+
 @RequiresApi(Build.VERSION_CODES.O)
 
 
@@ -39,6 +43,8 @@ class CitasFragment : Fragment() {
         val filtro: Switch = view.findViewById(R.id.swMostrarTodaSemana)
         val calendario: ImageButton = view.findViewById(R.id.btnCalendarioConsultaCitas)
         val fechaTexto: TextView = view.findViewById(R.id.tvConsultaFecha)
+        val fechaInicio : TextView = view.findViewById(R.id.tvFechaInicio)
+        val fechaFinal : TextView = view.findViewById(R.id.tvFechaFinal)
         val listaCitas: ListView = view.findViewById(R.id.lvCitas)
         val btnAgendar: FloatingActionButton? = view.findViewById(R.id.btnAgendar)
 
@@ -57,9 +63,30 @@ class CitasFragment : Fragment() {
                 .commit()
         }
 
-
         calendario.setOnClickListener {
+            val calendario = Calendar.getInstance()
+            val anio = calendario.get(Calendar.YEAR)
+            val mes = calendario.get(Calendar.MONTH)
+            val dia = calendario.get(Calendar.DAY_OF_MONTH)
+
+            val datePicker =
+                DatePickerDialog(requireContext(), { _: DatePicker, year: Int, month: Int, dayOfMonth: Int ->
+                    val fechaSeleccionada =
+                        String.format("%02d/%02d/%04d", dayOfMonth, month + 1, year)
+                    fechaTexto.text = fechaSeleccionada
+                }, anio, mes, dia)
+            datePicker.show()
+
             fechaBusqueda = fechaTexto.text.toString()
+            if (filtroBusqueda){
+                fechaInicio.visibility = View.VISIBLE
+                fechaFinal.visibility = View.VISIBLE
+                fechaInicio.setText(fechaBusqueda)
+                //fechaFinal.setText()
+            }else{
+                fechaInicio.visibility = View.INVISIBLE
+                fechaFinal.visibility = View.INVISIBLE
+            }
             adaptarCitas(listaCitas)
         }
 
