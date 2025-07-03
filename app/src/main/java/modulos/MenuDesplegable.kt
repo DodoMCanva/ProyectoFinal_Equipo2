@@ -77,6 +77,7 @@ object MenuDesplegable {
                                 setReorderingAllowed(true)
                                 replace(R.id.contenedorFragmento, AgendarFragment())
                                 addToBackStack(null)
+
                             }
                         }
                     } else {
