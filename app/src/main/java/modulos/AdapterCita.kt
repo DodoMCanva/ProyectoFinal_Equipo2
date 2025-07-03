@@ -125,6 +125,7 @@ class AdapterCita(
             vista.findViewById<TextView>(R.id.citaFecha).text = c.fecha
             vista.findViewById<TextView>(R.id.citaHora).text = c.hora
             vista.findViewById<TextView>(R.id.citaMedico).text = c.nombreMedico
+            vista.findViewById<TextView>(R.id.citaEspecialidad).text = c.especialidad
 
             val selecCita = vista.findViewById<LinearLayout>(R.id.panelCitaPaciente)
             //Cambio comportamiento
