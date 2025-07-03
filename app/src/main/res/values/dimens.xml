@@ -12,7 +12,7 @@
     <dimen name="text18">18sp</dimen>
     <dimen name="menu75">75sp</dimen>
     <dimen name="titulo_dialogo">35sp</dimen>
-
+    <dimen name="text20">20sp</dimen>
     <dimen name="text22">22sp</dimen>
     <dimen name="tituloLogin">45sp</dimen>
 
