@@ -54,6 +54,8 @@ class CitasFragment : Fragment() {
         fechaTexto.setText(fechaBusqueda)
         fechaInicio.setText(fechaBusqueda)
         fechaFinal.setText(fechaFinale)
+        fechaInicio.visibility = View.INVISIBLE
+        fechaFinal.visibility = View.INVISIBLE
 
         adaptarCitas(listaCitas)
 
