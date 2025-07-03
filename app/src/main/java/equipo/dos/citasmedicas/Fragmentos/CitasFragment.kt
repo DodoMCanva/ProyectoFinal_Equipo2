@@ -42,6 +42,9 @@ class CitasFragment : Fragment() {
         val listaCitas: ListView = view.findViewById(R.id.lvCitas)
         val btnAgendar: FloatingActionButton? = view.findViewById(R.id.btnAgendar)
 
+        adaptarCitas()
+        listaCitas.adapter = adapter
+
         if (sesion.tipo == "paciente") {
             btnAgendar?.visibility = View.VISIBLE
         } else {
@@ -55,41 +58,45 @@ class CitasFragment : Fragment() {
                 .commit()
         }
 
-        fun imprimirCitas() {
-            sesion.actualizarListaCitas {
-                if (sesion.citas != null && sesion.citas.isNotEmpty()) {
 
-                    adapter = AdapterCita(requireContext(), sesion.citas, sesion.tipo, filtroBusqueda, fechaBusqueda){ citaSeleccionada ->
-                        var fragment: Fragment
-                        if (sesion.tipo == "paciente"){
-                             fragment = DetalleCitaPacienteFragment()
-                        }else{
-                            fragment = DetalleCitaMedicoFragment()
-                        }
-
-                        val bundle = Bundle().apply {
-                            putString("citaId", citaSeleccionada.idCita)
-                        }
-                        fragment.arguments = bundle
-
-                        parentFragmentManager.beginTransaction()
-                            .replace(R.id.contenedorFragmento, fragment)
-                            .addToBackStack(null)
-                            .commit()
-                    }
-                    listaCitas.adapter = adapter
-                }
-            }
-        }
         calendario.setOnClickListener {
             fechaBusqueda = fechaTexto.text.toString()
-            imprimirCitas()
+            adaptarCitas()
+            listaCitas.adapter = adapter
         }
 
         filtro.setOnClickListener {
             filtroBusqueda = !filtroBusqueda
-            imprimirCitas()
+            adaptarCitas()
+            listaCitas.adapter = adapter
         }
-        imprimirCitas()
+
+    }
+
+    fun adaptarCitas() {
+        sesion.actualizarListaCitas {
+            if (sesion.citas != null && sesion.citas.isNotEmpty()) {
+
+                adapter = AdapterCita(requireContext(), sesion.citas, sesion.tipo, filtroBusqueda, fechaBusqueda){ citaSeleccionada ->
+                    var fragment: Fragment
+                    if (sesion.tipo == "paciente"){
+                        fragment = DetalleCitaPacienteFragment()
+                    }else{
+                        fragment = DetalleCitaMedicoFragment()
+                    }
+
+                    val bundle = Bundle().apply {
+                        putString("citaId", citaSeleccionada.idCita)
+                    }
+                    fragment.arguments = bundle
+
+                    parentFragmentManager.beginTransaction()
+                        .replace(R.id.contenedorFragmento, fragment)
+                        .addToBackStack(null)
+                        .commit()
+                }
+
+            }
+        }
     }
 }
