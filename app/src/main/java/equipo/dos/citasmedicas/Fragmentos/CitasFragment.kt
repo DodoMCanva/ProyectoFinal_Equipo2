@@ -30,8 +30,10 @@ import java.util.Locale
 class CitasFragment : Fragment() {
     var adapter: AdapterCita? = null
     var filtroBusqueda : Boolean = false
-    var fechaBusqueda: String = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
-    var fechaFinale : String = LocalDateTime.now().plusDays(7).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+
+    //NOTA: formato anterior yyyy-MM-dd
+    var fechaBusqueda: String = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+    var fechaFinale : String = LocalDateTime.now().plusDays(7).format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -105,9 +107,9 @@ class CitasFragment : Fragment() {
             datePicker.show()
         }
 
-        filtro.setOnClickListener {
-            filtroBusqueda = !filtroBusqueda
-            if (filtroBusqueda){
+        filtro.setOnCheckedChangeListener { _, isChecked ->
+            filtroBusqueda = isChecked
+            if (filtroBusqueda) {
                 fechaInicio.visibility = View.VISIBLE
                 fechaFinal.visibility = View.VISIBLE
             } else {
@@ -123,8 +125,13 @@ class CitasFragment : Fragment() {
         val listaCitas: ListView = listView
         sesion.actualizarListaCitas {
             if (sesion.citas != null && sesion.citas.isNotEmpty()) {
-
-                adapter = AdapterCita(requireContext(), sesion.citas, sesion.tipo, filtroBusqueda, fechaBusqueda){ citaSeleccionada ->
+                var lista = ArrayList<cita>()
+                if (filtroBusqueda) {
+                    lista = sesion.listaOrdenada().semana(fechaBusqueda, fechaFinale)
+                }else{
+                    lista = sesion.listaOrdenada().dia(fechaBusqueda)
+                }
+                adapter = AdapterCita(requireContext(), lista, sesion.tipo, filtroBusqueda, fechaBusqueda){ citaSeleccionada ->
                     var fragment: Fragment
                     if (sesion.tipo == "paciente"){
                         fragment = DetalleCitaPacienteFragment()
@@ -146,4 +153,34 @@ class CitasFragment : Fragment() {
             }
         }
     }
+
+
+    fun ArrayList<cita>.semana(inicio : String, fin : String) : ArrayList<cita>{
+        val lista = ArrayList<cita>()
+        val formato = SimpleDateFormat("dd/MM/yyyyy", Locale.getDefault())
+        val fechaInicio = formato.parse(inicio)
+        val fechaFin =formato.parse(fin)
+        for (cita in this){
+            val fechaCita = formato.parse(cita.fecha)
+            if (fechaCita.after(fechaInicio) && fechaCita.before(fechaFin)) {
+                lista.add(cita)
+            }
+        }
+        return lista
+    }
+
+    fun ArrayList<cita>.dia(fecha : String) : ArrayList<cita>{
+        val lista = ArrayList<cita>()
+        val formato = SimpleDateFormat("dd/MM/yyyyy", Locale.getDefault())
+        val fecha = formato.parse(fecha)
+        for (cita in this){
+            val fechaCita = formato.parse(cita.fecha)
+            if (fechaCita == fecha ) {
+                lista.add(cita)
+            }
+        }
+        return lista
+    }
+
+
 }
