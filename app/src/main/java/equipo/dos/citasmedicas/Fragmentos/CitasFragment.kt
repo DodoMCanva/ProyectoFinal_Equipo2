@@ -18,9 +18,11 @@ import androidx.annotation.RequiresApi
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import equipo.dos.citasmedicas.R
 import modulos.AdapterCita
+import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Calendar
+import java.util.Locale
 
 @RequiresApi(Build.VERSION_CODES.O)
 
@@ -28,7 +30,8 @@ import java.util.Calendar
 class CitasFragment : Fragment() {
     var adapter: AdapterCita? = null
     var filtroBusqueda : Boolean = false
-    var fechaBusqueda : String = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
+    var fechaBusqueda: String = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+    var fechaFinale : String = LocalDateTime.now().plusDays(7).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,6 +50,10 @@ class CitasFragment : Fragment() {
         val fechaFinal : TextView = view.findViewById(R.id.tvFechaFinal)
         val listaCitas: ListView = view.findViewById(R.id.lvCitas)
         val btnAgendar: FloatingActionButton? = view.findViewById(R.id.btnAgendar)
+
+        fechaTexto.setText(fechaBusqueda)
+        fechaInicio.setText(fechaBusqueda)
+        fechaFinal.setText(fechaFinal.toString())
 
         adaptarCitas(listaCitas)
 
@@ -69,31 +76,43 @@ class CitasFragment : Fragment() {
             val mes = calendario.get(Calendar.MONTH)
             val dia = calendario.get(Calendar.DAY_OF_MONTH)
 
-            val datePicker =
-                DatePickerDialog(requireContext(), { _: DatePicker, year: Int, month: Int, dayOfMonth: Int ->
-                    val fechaSeleccionada =
-                        String.format("%02d/%02d/%04d", dayOfMonth, month + 1, year)
-                    fechaTexto.text = fechaSeleccionada
-                }, anio, mes, dia)
+            val datePicker = DatePickerDialog(requireContext(), { _: DatePicker, year: Int, month: Int, dayOfMonth: Int ->
+                val fechaSeleccionadaCal = Calendar.getInstance()
+                fechaSeleccionadaCal.set(year, month, dayOfMonth)
+                val formato = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                val fechaSeleccionadaStr = formato.format(fechaSeleccionadaCal.time)
+                fechaTexto.text = fechaSeleccionadaStr
+                fechaBusqueda = fechaSeleccionadaStr
+                if (filtroBusqueda) {
+                    fechaInicio.visibility = View.VISIBLE
+                    fechaFinal.visibility = View.VISIBLE
+                    fechaInicio.setText(fechaBusqueda)
+                    fechaSeleccionadaCal.add(Calendar.DAY_OF_MONTH, 7)
+                    fechaFinale = formato.format(fechaSeleccionadaCal.time)
+                    fechaFinal.setText(fechaFinale)
+                } else {
+                    fechaInicio.visibility = View.INVISIBLE
+                    fechaFinal.visibility = View.INVISIBLE
+                    fechaInicio.setText(fechaBusqueda)
+                    fechaSeleccionadaCal.add(Calendar.DAY_OF_MONTH, 7)
+                    fechaFinale = formato.format(fechaSeleccionadaCal.time)
+                    fechaFinal.setText(fechaFinale)
+                }
+                adaptarCitas(listaCitas)
+            }, anio, mes, dia)
             datePicker.show()
-
-            fechaBusqueda = fechaTexto.text.toString()
-            if (filtroBusqueda){
-                fechaInicio.visibility = View.VISIBLE
-                fechaFinal.visibility = View.VISIBLE
-                fechaInicio.setText(fechaBusqueda)
-                //fechaFinal.setText()
-            }else{
-                fechaInicio.visibility = View.INVISIBLE
-                fechaFinal.visibility = View.INVISIBLE
-            }
-            adaptarCitas(listaCitas)
         }
 
         filtro.setOnClickListener {
             filtroBusqueda = !filtroBusqueda
+            if (filtroBusqueda){
+                fechaInicio.visibility = View.VISIBLE
+                fechaFinal.visibility = View.VISIBLE
+            } else {
+                fechaInicio.visibility = View.INVISIBLE
+                fechaFinal.visibility = View.INVISIBLE
+            }
             adaptarCitas(listaCitas)
-
         }
 
     }
