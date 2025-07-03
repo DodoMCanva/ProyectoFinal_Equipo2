@@ -17,8 +17,6 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import equipo.dos.citasmedicas.R
-import equipo.dos.citasmedicas.frmDetalleCitaActivity
-import equipo.dos.citasmedicas.frmDetalleCitaMedicoPendienteActivity
 
 class AdapterCita(
     context: Context,
