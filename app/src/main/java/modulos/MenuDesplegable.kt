@@ -58,6 +58,7 @@ object MenuDesplegable {
                             setReorderingAllowed(true)
                             replace(R.id.contenedorFragmento, CitasFragment())
                             addToBackStack(null)
+                            encabezado.setText("Mis Citas")
                         }
                     }
                 }
@@ -67,6 +68,7 @@ object MenuDesplegable {
                             setReorderingAllowed(true)
                             replace(R.id.contenedorFragmento, HistorialFragment())
                             addToBackStack(null)
+                            encabezado.setText("Historial")
                         }
                     }
                 }
@@ -77,6 +79,7 @@ object MenuDesplegable {
                                 setReorderingAllowed(true)
                                 replace(R.id.contenedorFragmento, AgendarFragment())
                                 addToBackStack(null)
+                                encabezado.setText("Agendar")
                             }
                         }
                     } else {
@@ -85,6 +88,7 @@ object MenuDesplegable {
                                 setReorderingAllowed(true)
                                 replace(R.id.contenedorFragmento, AjusteConsultaFragment())
                                 addToBackStack(null)
+                                encabezado.setText("Ajustes de Consulta")
                             }
                         }
                     }
@@ -115,8 +119,14 @@ object MenuDesplegable {
         }
 
         btnPerfil.setOnClickListener {
-            activity.startActivity(Intent(activity, frmMiPerfilActivity::class.java))
-            drawerLayout.closeDrawer(GravityCompat.START)
+            if (activity is frmPrincipalActivity) {
+                activity.supportFragmentManager.commit {
+                    setReorderingAllowed(true)
+                    replace(R.id.contenedorFragmento, AjusteConsultaFragment())
+                    addToBackStack(null)
+                    encabezado.setText("Mi Perfil")
+                }
+            }
         }
 
         btnMenuCerrar.setOnClickListener {

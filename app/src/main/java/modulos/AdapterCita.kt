@@ -20,14 +20,21 @@ import equipo.dos.citasmedicas.R
 import equipo.dos.citasmedicas.frmDetalleCitaActivity
 import equipo.dos.citasmedicas.frmDetalleCitaMedicoPendienteActivity
 
-class AdapterCita(context: Context, val lista: ArrayList<cita>, tipo: String, filtro: Boolean, fecha : String) :
-    ArrayAdapter<cita>(context, 0, lista) {
+class AdapterCita(
+    context: Context,
+    val lista: ArrayList<cita>,
+    tipo: String,
+    filtro: Boolean,
+    fecha : String,
+    val onCitaSelected : (cita) -> Unit
+) : ArrayAdapter<cita>(context, 0, lista) {
+
     val tipo: String = tipo
     val filtro: Boolean = filtro
     val fecha = fecha
 
     override fun getView(position: Int, converterView: View?, parent: ViewGroup): View {
-
+        //
         return vistaNormal(position, converterView, parent)
     }
 
@@ -46,9 +53,9 @@ class AdapterCita(context: Context, val lista: ArrayList<cita>, tipo: String, fi
 
 
     fun vistaNormal(position: Int, converterView: View?, parent: ViewGroup): View {
+
         val c = lista[position]
 
-        //precarcargar paciente y medico
         var m : medico? = null
         val uidMedico = c.idMedico
         if (uidMedico != null) {
@@ -87,7 +94,6 @@ class AdapterCita(context: Context, val lista: ArrayList<cita>, tipo: String, fi
             vista.findViewById<TextView>(R.id.citaPaciente).text = c.nombrePaciente
             vista.findViewById<TextView>(R.id.citaMotivo).text = c.motivo
             vista.findViewById<TextView>(R.id.citaEstado).text = c.estado
-
             val selCita = vista.findViewById<LinearLayout>(R.id.panelCitaMedico)
             when (c.estado) {
                 "Completada" -> {
@@ -125,6 +131,7 @@ class AdapterCita(context: Context, val lista: ArrayList<cita>, tipo: String, fi
                 }
             }
 
+            //Cambio comportamiento
             selCita.setOnClickListener {
                 val intent = Intent(context, frmDetalleCitaMedicoPendienteActivity::class.java)
                 intent.putExtra("citaId", c.idCita)
@@ -136,11 +143,11 @@ class AdapterCita(context: Context, val lista: ArrayList<cita>, tipo: String, fi
             vista.findViewById<TextView>(R.id.citaFecha).text = c.fecha
             vista.findViewById<TextView>(R.id.citaHora).text = c.hora
             vista.findViewById<TextView>(R.id.citaMedico).text = c.nombreMedico
-            val selecMedico = vista.findViewById<LinearLayout>(R.id.panelCitaPaciente)
-            selecMedico.setOnClickListener {
-                val intent = Intent(context, frmDetalleCitaActivity::class.java)
-                intent.putExtra("citaId", c.idCita)
-                context.startActivity(intent)
+
+            val selecCita = vista.findViewById<LinearLayout>(R.id.panelCitaPaciente)
+            //Cambio comportamiento
+            selecCita.setOnClickListener {
+                onCitaSelected(c)
             }
         }
         return vista
