@@ -53,7 +53,7 @@ class CitasFragment : Fragment() {
 
         fechaTexto.setText(fechaBusqueda)
         fechaInicio.setText(fechaBusqueda)
-        fechaFinal.setText(fechaFinal.toString())
+        fechaFinal.setText(fechaFinale)
 
         adaptarCitas(listaCitas)
 
