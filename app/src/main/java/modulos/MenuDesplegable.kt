@@ -128,8 +128,6 @@ object MenuDesplegable {
                     encabezado.setText("Mi Perfil")
                 }
             }
-            activity.startActivity(Intent(activity, frmMiPerfilActivity::class.java))
-            encabezado.setText("Mi Perfil")
             drawerLayout.closeDrawer(GravityCompat.START)
         }
 
