@@ -22,6 +22,7 @@ class AdapterMedico(
         vista.findViewById<TextView>(R.id.medicoEspecialidad).text = me.especialidad
         vista.findViewById<TextView>(R.id.medicoNombre).text = me.nombre
 
+
         val selecMedico: LinearLayout = vista.findViewById(R.id.btnCampoMedico)
         selecMedico.setOnClickListener {
             onMedicoSelected(me)

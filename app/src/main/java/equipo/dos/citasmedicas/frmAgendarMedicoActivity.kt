@@ -10,6 +10,7 @@ import Persistencia.sesion
 import Persistencia.cita
 import java.util.UUID
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
@@ -21,6 +22,7 @@ import android.widget.ImageView
 import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout

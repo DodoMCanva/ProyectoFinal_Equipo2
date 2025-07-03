@@ -40,8 +40,25 @@ class CitasFragment : Fragment() {
         fun imprimirCitas() {
             sesion.actualizarListaCitas {
                 if (sesion.citas != null && sesion.citas.isNotEmpty()) {
-                    adapter = AdapterCita(requireContext(), sesion.citas, sesion.tipo, filtroBusqueda, fechaBusqueda)
-                    listaCitas.adapter = adapter
+                    adapter = AdapterCita(requireContext(), sesion.citas, sesion.tipo, filtroBusqueda, fechaBusqueda){ citaSeleccionada ->
+                        val fragment
+                        if (sesion.tipo == "paciente"){
+                             fragment = AgendarMedicoFragment()
+                        }else{
+                            fragment = AgendarMedicoFragment()
+                        }
+
+                        val bundle = Bundle().apply {
+                            putSerializable("cita", citaSeleccionada)
+                        }
+                        fragment.arguments = bundle
+
+                        parentFragmentManager.beginTransaction()
+                            .replace(R.id.contenedorFragmento, fragment)
+                            .addToBackStack(null)
+                            .commit()
+                    }
+                    //listaCitas.adapter = adapter
                 }
             }
         }
