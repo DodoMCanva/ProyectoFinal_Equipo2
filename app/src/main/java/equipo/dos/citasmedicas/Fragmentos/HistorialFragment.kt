@@ -28,7 +28,7 @@ class HistorialFragment : Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = AdapterHistorial(requireContext(), sesion.citas, sesion.tipo)
+        adapter = AdapterHistorial(requireContext(), sesion.listaOrdenada(), sesion.tipo)
         var listaCitas = view.findViewById<ListView>(R.id.lvHistorial)
         listaCitas.adapter = adapter
 

@@ -39,7 +39,7 @@ object sesion {
     }
 
     fun actualizarListaCitas(callback: () -> Unit) {
-        citas = ArrayList<cita>()
+        citas.clear()
         val database = FirebaseDatabase.getInstance().getReference("usuarios").child("citas")
         val query = if (tipo == "paciente") {
             database.orderByChild("idPaciente").equalTo(Persistencia.sesion.uid)
@@ -105,8 +105,9 @@ object sesion {
         citas.clear()
     }
     fun listaOrdenada(): ArrayList<cita>{
+
         val formatoFechaHora = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
-        val listaOrdenada = citas.sortedWith(compareBy { cita ->
+        var listaOrdenada: List<cita> = citas.sortedWith(compareBy { cita ->
             try {
                 val fechaHoraString = "${cita.fecha} ${cita.hora}"
 
@@ -115,7 +116,7 @@ object sesion {
                 Date(0)
             }
         })
-        return listaOrdenada as ArrayList<cita>
+        return ArrayList(listaOrdenada)
             }
 
 
