@@ -137,7 +137,7 @@ class CitasFragment : Fragment() {
                 var lista = ArrayList<cita>()
                 if (filtroBusqueda) {
                     lista = sesion.listaOrdenada().semana(fechaBusqueda, fechaFinale)
-                    
+                    //lista = lista.encabezar(fechaBusqueda, fechaFinale)
                 } else {
                     lista = sesion.listaOrdenada().dia(fechaBusqueda)
                 }
@@ -170,6 +170,10 @@ class CitasFragment : Fragment() {
         val formato = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
         val fechaInicio = formato.parse(inicio)
         val fechaFin = formato.parse(fin)
+//        val calendar = Calendar.getInstance()
+//        calendar.time = formato.parse(fin)
+//        calendar.add(Calendar.DAY_OF_YEAR, 1)
+//        val fechaFin = calendar.time
 
         for (cita in this) {
             val fechaCita = formato.parse(cita.fecha)
@@ -186,35 +190,20 @@ class CitasFragment : Fragment() {
         val fechaInicio = formato.parse(inicio)
         val fechaFin = formato.parse(fin)
 
-        var fechaAnterior: Date? = null
-
-        // Vamos a hacer un log de inicio y fin para verificar las fechas
-        println("Inicio: ${formato.format(fechaInicio)} | Fin: ${formato.format(fechaFin)}")
-
+        var fechaActual = formato.parse(this[0].fecha)
+        lista.add(cita(idCita = "encabezado", fecha = formato.format(fechaActual)))
         for (cita in this) {
             val fechaCita = formato.parse(cita.fecha)
-
-            // Comprobamos si la fechaCita está en el rango entre fechaInicio y fechaFin
+            if (fechaCita != fechaActual){
+                fechaActual = fechaCita
+                lista.add(cita(idCita = "encabezado", fecha = formato.format(fechaActual)))
+            }
             if (!fechaCita.before(fechaInicio) && !fechaCita.after(fechaFin)) {
-                // Log de la cita que estamos procesando
-                println("Procesando cita: ${cita.fecha}")
-
-                // Solo agregamos encabezado si la fecha de la cita es diferente a la anterior
-                if (fechaAnterior == null || !fechaCita.equals(fechaAnterior)) {
-                    // Log de cuando cambia de día
-                    println("Añadiendo encabezado para fecha: ${formato.format(fechaCita)}")
-                    lista.add(cita(idCita = "encabezado", fecha = formato.format(fechaCita)))
-                }
-
-                // Agregamos la cita a la lista
                 lista.add(cita)
-
-                // Actualizamos la fecha anterior para la próxima iteración
-                fechaAnterior = fechaCita
             }
         }
-
         return lista
+
     }
 
 
