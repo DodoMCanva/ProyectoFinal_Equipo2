@@ -19,67 +19,62 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="400dp">
+        android:layout_height="500dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            >
 
             <LinearLayout
                 android:id="@+id/layoutLunes"
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
+                android:layout_gravity="center"
+                android:gravity="center_vertical"
                 android:background="@drawable/backhorariosrounded"
                 android:orientation="horizontal">
 
                 <LinearLayout
-                    android:layout_width="100dp"
+                    android:layout_width="50dp"
                     android:layout_height="65dp"
                     android:orientation="vertical"
-                    android:layout_gravity="bottom"
-                    >
-
-                <TextView
-                    android:layout_width="60dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="15dp"
-                    android:fontFamily="@font/quicksandsemibold"
-                    android:paddingRight="15dp"
-                    android:text="@string/lunes"
-                    android:textColor="@color/azulTexto"
-                    android:textSize="@dimen/text22" />
+                    android:gravity="center">
 
                     <TextView
-                        android:id="@+id/tvLunesEstado"
-                        android:layout_width="90dp"
+                        android:layout_width="60dp"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginBottom="5dp"
-                        android:layout_marginTop="5dp"
+                        android:gravity="center"
                         android:fontFamily="@font/quicksandsemibold"
-                        android:paddingRight="15dp"
-                        android:text="@string/textoSubrayadoDeshabilitar"
-                        android:textColor="@color/amarilloBtn"
-                        android:textSize="12sp"
-                                                />
-
+                        android:text="@string/lunes"
+                        android:layout_marginLeft="5dp"
+                        android:textColor="@color/azulTexto"
+                        android:textSize="@dimen/text22" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:paddingLeft="5dp">
+                   >
+
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="15dp"
+                        android:layout_marginTop="5dp"
                         android:orientation="horizontal">
+
+                        <Switch
+                            android:id="@+id/swLunesMañanaEstado"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="10dp"
+                            android:text="" />
+
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -137,12 +132,22 @@
                             android:text="13:00"
                             android:textColor="@color/black"
                             android:textSize="@dimen/text20" />
+
+
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
                         android:orientation="horizontal">
+
+                        <Switch
+                            android:id="@+id/swLunesTardeEstado"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:text="" />
 
 
                         <TextView
@@ -209,55 +214,48 @@
                 android:id="@+id/layoutMartes"
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
+                android:layout_gravity="center"
+                android:gravity="center_vertical"
                 android:layout_marginTop="15dp"
                 android:background="@drawable/backhorariosrounded"
                 android:orientation="horizontal">
 
                 <LinearLayout
-                    android:layout_width="100dp"
+                    android:layout_width="50dp"
                     android:layout_height="65dp"
                     android:orientation="vertical"
-                    android:layout_gravity="bottom">
+                    android:gravity="center">
 
                     <TextView
                         android:layout_width="60dp"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="15dp"
+                        android:gravity="center"
                         android:fontFamily="@font/quicksandsemibold"
-                        android:paddingRight="15dp"
-                        android:text="@string/martes"
+                        android:text="Mar"
+                        android:layout_marginLeft="5dp"
                         android:textColor="@color/azulTexto"
                         android:textSize="@dimen/text22" />
-
-                    <TextView
-
-                        android:id="@+id/tvMartesEstado"
-                        android:layout_width="90dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginBottom="5dp"
-                        android:layout_marginTop="5dp"
-                        android:fontFamily="@font/quicksandsemibold"
-                        android:paddingRight="15dp"
-                        android:text="@string/textoSubrayadoDeshabilitar"
-                        android:textColor="@color/amarilloBtn"
-                        android:textSize="12sp" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingLeft="5dp">
+                    android:orientation="vertical">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="15dp"
+                        android:layout_marginTop="5dp"
                         android:orientation="horizontal">
+
+                        <Switch
+                            android:id="@+id/swMartesMañanaEstado"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="10dp"
+                            android:text="" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -273,9 +271,9 @@
                             android:layout_width="80dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginBottom="10dp"
+                            android:layout_marginVertical="10dp"
                             android:layout_marginStart="10dp"
+                            android:layout_marginTop="10dp"
                             android:background="@color/white"
                             android:clickable="true"
                             android:focusable="false"
@@ -302,9 +300,9 @@
                             android:layout_width="80dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginBottom="10dp"
+                            android:layout_marginVertical="10dp"
                             android:layout_marginStart="10dp"
+                            android:layout_marginTop="10dp"
                             android:background="@color/white"
                             android:clickable="true"
                             android:focusable="false"
@@ -320,7 +318,15 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
                         android:orientation="horizontal">
+
+                        <Switch
+                            android:id="@+id/swMartesTardeEstado"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:text="" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -337,8 +343,8 @@
                             android:layout_width="80dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:layout_marginBottom="5dp"
                             android:layout_marginStart="10dp"
+                            android:layout_marginBottom="5dp"
                             android:background="@color/white"
                             android:clickable="true"
                             android:focusable="false"
@@ -354,8 +360,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:layout_marginBottom="5dp"
                             android:layout_marginStart="10dp"
+                            android:layout_marginBottom="5dp"
                             android:fontFamily="@font/quicksandsemibold"
                             android:text="@string/a"
                             android:textColor="@color/azulTexto"
@@ -366,8 +372,8 @@
                             android:layout_width="80dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:layout_marginBottom="5dp"
                             android:layout_marginStart="10dp"
+                            android:layout_marginBottom="5dp"
                             android:background="@color/white"
                             android:clickable="true"
                             android:focusable="false"
@@ -386,54 +392,48 @@
                 android:id="@+id/layoutMiercoles"
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
+                android:layout_gravity="center"
+                android:gravity="center_vertical"
                 android:layout_marginTop="15dp"
                 android:background="@drawable/backhorariosrounded"
                 android:orientation="horizontal">
 
                 <LinearLayout
-                    android:layout_width="100dp"
+                    android:layout_width="50dp"
                     android:layout_height="65dp"
                     android:orientation="vertical"
-                    android:layout_gravity="bottom">
+                    android:gravity="center">
 
                     <TextView
                         android:layout_width="60dp"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="15dp"
+                        android:gravity="center"
                         android:fontFamily="@font/quicksandsemibold"
-                        android:paddingRight="15dp"
-                        android:text="@string/miercoles"
+                        android:text="Mié"
+                        android:layout_marginLeft="5dp"
                         android:textColor="@color/azulTexto"
                         android:textSize="@dimen/text22" />
-
-                    <TextView
-                        android:id="@+id/tvMiercolesEstado"
-                        android:layout_width="90dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginBottom="5dp"
-                        android:layout_marginTop="5dp"
-                        android:fontFamily="@font/quicksandsemibold"
-                        android:paddingRight="15dp"
-                        android:text="@string/textoSubrayadoDeshabilitar"
-                        android:textColor="@color/amarilloBtn"
-                        android:textSize="12sp" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingLeft="5dp">
+                    android:orientation="vertical">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="15dp"
+                        android:layout_marginTop="5dp"
                         android:orientation="horizontal">
+
+                        <Switch
+                            android:id="@+id/swMiercolesMañanaEstado"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="10dp"
+                            android:text="" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -449,9 +449,9 @@
                             android:layout_width="80dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginBottom="10dp"
+                            android:layout_marginVertical="10dp"
                             android:layout_marginStart="10dp"
+                            android:layout_marginTop="10dp"
                             android:background="@color/white"
                             android:clickable="true"
                             android:focusable="false"
@@ -478,9 +478,9 @@
                             android:layout_width="80dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginBottom="10dp"
+                            android:layout_marginVertical="10dp"
                             android:layout_marginStart="10dp"
+                            android:layout_marginTop="10dp"
                             android:background="@color/white"
                             android:clickable="true"
                             android:focusable="false"
@@ -496,7 +496,15 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
                         android:orientation="horizontal">
+
+                        <Switch
+                            android:id="@+id/swMiercolesTardeEstado"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:text="" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -513,8 +521,8 @@
                             android:layout_width="80dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:layout_marginBottom="5dp"
                             android:layout_marginStart="10dp"
+                            android:layout_marginBottom="5dp"
                             android:background="@color/white"
                             android:clickable="true"
                             android:focusable="false"
@@ -530,8 +538,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:layout_marginBottom="5dp"
                             android:layout_marginStart="10dp"
+                            android:layout_marginBottom="5dp"
                             android:fontFamily="@font/quicksandsemibold"
                             android:text="@string/a"
                             android:textColor="@color/azulTexto"
@@ -542,8 +550,8 @@
                             android:layout_width="80dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:layout_marginBottom="5dp"
                             android:layout_marginStart="10dp"
+                            android:layout_marginBottom="5dp"
                             android:background="@color/white"
                             android:clickable="true"
                             android:focusable="false"
@@ -562,54 +570,48 @@
                 android:id="@+id/layoutJueves"
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
+                android:layout_gravity="center"
+                android:gravity="center_vertical"
                 android:layout_marginTop="15dp"
                 android:background="@drawable/backhorariosrounded"
                 android:orientation="horizontal">
 
                 <LinearLayout
-                    android:layout_width="100dp"
+                    android:layout_width="50dp"
                     android:layout_height="65dp"
                     android:orientation="vertical"
-                    android:layout_gravity="bottom">
+                    android:gravity="center">
 
                     <TextView
                         android:layout_width="60dp"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="15dp"
+                        android:gravity="center"
                         android:fontFamily="@font/quicksandsemibold"
-                        android:paddingRight="15dp"
-                        android:text="@string/jueves"
+                        android:text="Jue"
+                        android:layout_marginLeft="5dp"
                         android:textColor="@color/azulTexto"
                         android:textSize="@dimen/text22" />
-
-                    <TextView
-                        android:id="@+id/tvJuevesEstado"
-                        android:layout_width="90dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginBottom="5dp"
-                        android:layout_marginTop="5dp"
-                        android:fontFamily="@font/quicksandsemibold"
-                        android:paddingRight="15dp"
-                        android:text="@string/textoSubrayadoDeshabilitar"
-                        android:textColor="@color/amarilloBtn"
-                        android:textSize="12sp" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingLeft="5dp">
+                    android:orientation="vertical">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="15dp"
+                        android:layout_marginTop="5dp"
                         android:orientation="horizontal">
+
+                        <Switch
+                            android:id="@+id/swJuevesMañanaEstado"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="10dp"
+                            android:text="" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -625,9 +627,9 @@
                             android:layout_width="80dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginBottom="10dp"
+                            android:layout_marginVertical="10dp"
                             android:layout_marginStart="10dp"
+                            android:layout_marginTop="10dp"
                             android:background="@color/white"
                             android:clickable="true"
                             android:focusable="false"
@@ -654,9 +656,9 @@
                             android:layout_width="80dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginBottom="10dp"
+                            android:layout_marginVertical="10dp"
                             android:layout_marginStart="10dp"
+                            android:layout_marginTop="10dp"
                             android:background="@color/white"
                             android:clickable="true"
                             android:focusable="false"
@@ -672,7 +674,15 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
                         android:orientation="horizontal">
+
+                        <Switch
+                            android:id="@+id/swJuevesTardeEstado"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:text="" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -689,8 +699,8 @@
                             android:layout_width="80dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:layout_marginBottom="5dp"
                             android:layout_marginStart="10dp"
+                            android:layout_marginBottom="5dp"
                             android:background="@color/white"
                             android:clickable="true"
                             android:focusable="false"
@@ -706,8 +716,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:layout_marginBottom="5dp"
                             android:layout_marginStart="10dp"
+                            android:layout_marginBottom="5dp"
                             android:fontFamily="@font/quicksandsemibold"
                             android:text="@string/a"
                             android:textColor="@color/azulTexto"
@@ -718,8 +728,8 @@
                             android:layout_width="80dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:layout_marginBottom="5dp"
                             android:layout_marginStart="10dp"
+                            android:layout_marginBottom="5dp"
                             android:background="@color/white"
                             android:clickable="true"
                             android:focusable="false"
@@ -738,54 +748,48 @@
                 android:id="@+id/layoutViernes"
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
+                android:layout_gravity="center"
+                android:gravity="center_vertical"
                 android:layout_marginTop="15dp"
                 android:background="@drawable/backhorariosrounded"
                 android:orientation="horizontal">
 
                 <LinearLayout
-                    android:layout_width="100dp"
+                    android:layout_width="50dp"
                     android:layout_height="65dp"
                     android:orientation="vertical"
-                    android:layout_gravity="bottom">
+                    android:gravity="center">
 
                     <TextView
                         android:layout_width="60dp"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="15dp"
+                        android:gravity="center"
                         android:fontFamily="@font/quicksandsemibold"
-                        android:paddingRight="15dp"
-                        android:text="@string/viernes"
+                        android:text="Vie"
+                        android:layout_marginLeft="5dp"
                         android:textColor="@color/azulTexto"
                         android:textSize="@dimen/text22" />
-
-                    <TextView
-                        android:id="@+id/tvViernesEstado"
-                        android:layout_width="90dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginBottom="5dp"
-                        android:layout_marginTop="5dp"
-                        android:fontFamily="@font/quicksandsemibold"
-                        android:paddingRight="15dp"
-                        android:text="@string/textoSubrayadoDeshabilitar"
-                        android:textColor="@color/amarilloBtn"
-                        android:textSize="12sp" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingLeft="5dp">
+                    android:orientation="vertical">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="15dp"
+                        android:layout_marginTop="5dp"
                         android:orientation="horizontal">
+
+                        <Switch
+                            android:id="@+id/swViernesMañanaEstado"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="10dp"
+                            android:text="" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -801,9 +805,9 @@
                             android:layout_width="80dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginBottom="10dp"
+                            android:layout_marginVertical="10dp"
                             android:layout_marginStart="10dp"
+                            android:layout_marginTop="10dp"
                             android:background="@color/white"
                             android:clickable="true"
                             android:focusable="false"
@@ -830,9 +834,9 @@
                             android:layout_width="80dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginBottom="10dp"
+                            android:layout_marginVertical="10dp"
                             android:layout_marginStart="10dp"
+                            android:layout_marginTop="10dp"
                             android:background="@color/white"
                             android:clickable="true"
                             android:focusable="false"
@@ -848,7 +852,15 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
                         android:orientation="horizontal">
+
+                        <Switch
+                            android:id="@+id/swViernesTardeEstado"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:text="" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -865,8 +877,8 @@
                             android:layout_width="80dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:layout_marginBottom="5dp"
                             android:layout_marginStart="10dp"
+                            android:layout_marginBottom="5dp"
                             android:background="@color/white"
                             android:clickable="true"
                             android:focusable="false"
@@ -882,8 +894,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:layout_marginBottom="5dp"
                             android:layout_marginStart="10dp"
+                            android:layout_marginBottom="5dp"
                             android:fontFamily="@font/quicksandsemibold"
                             android:text="@string/a"
                             android:textColor="@color/azulTexto"
@@ -894,8 +906,8 @@
                             android:layout_width="80dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:layout_marginBottom="5dp"
                             android:layout_marginStart="10dp"
+                            android:layout_marginBottom="5dp"
                             android:background="@color/white"
                             android:clickable="true"
                             android:focusable="false"
@@ -914,54 +926,48 @@
                 android:id="@+id/layoutSabado"
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
+                android:layout_gravity="center"
+                android:gravity="center_vertical"
                 android:layout_marginTop="15dp"
                 android:background="@drawable/backhorariosrounded"
                 android:orientation="horizontal">
 
                 <LinearLayout
-                    android:layout_width="100dp"
+                    android:layout_width="50dp"
                     android:layout_height="65dp"
                     android:orientation="vertical"
-                    android:layout_gravity="bottom">
+                    android:gravity="center">
 
                     <TextView
                         android:layout_width="60dp"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="15dp"
+                        android:gravity="center"
                         android:fontFamily="@font/quicksandsemibold"
-                        android:paddingRight="15dp"
-                        android:text="@string/sabado"
+                        android:text="Sáb"
+                        android:layout_marginLeft="5dp"
                         android:textColor="@color/azulTexto"
                         android:textSize="@dimen/text22" />
-
-                    <TextView
-                        android:id="@+id/tvSabadoEstado"
-                        android:layout_width="90dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginBottom="5dp"
-                        android:layout_marginTop="5dp"
-                        android:fontFamily="@font/quicksandsemibold"
-                        android:paddingRight="15dp"
-                        android:text="@string/textoSubrayadoDeshabilitar"
-                        android:textColor="@color/amarilloBtn"
-                        android:textSize="12sp" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingLeft="5dp">
+                    android:orientation="vertical">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="15dp"
+                        android:layout_marginTop="5dp"
                         android:orientation="horizontal">
+
+                        <Switch
+                            android:id="@+id/swSabadoMañanaEstado"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="10dp"
+                            android:text="" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -979,6 +985,7 @@
                             android:layout_gravity="center_vertical"
                             android:layout_marginVertical="10dp"
                             android:layout_marginStart="10dp"
+                            android:layout_marginTop="10dp"
                             android:background="@color/white"
                             android:clickable="true"
                             android:focusable="false"
@@ -1007,6 +1014,7 @@
                             android:layout_gravity="center_vertical"
                             android:layout_marginVertical="10dp"
                             android:layout_marginStart="10dp"
+                            android:layout_marginTop="10dp"
                             android:background="@color/white"
                             android:clickable="true"
                             android:focusable="false"
@@ -1022,7 +1030,15 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
                         android:orientation="horizontal">
+
+                        <Switch
+                            android:id="@+id/swSabadoTardeEstado"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:text="" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -1084,59 +1100,52 @@
                 </LinearLayout>
             </LinearLayout>
 
-
             <LinearLayout
                 android:id="@+id/layoutDomingo"
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
+                android:layout_gravity="center"
+                android:gravity="center_vertical"
                 android:layout_marginTop="15dp"
                 android:background="@drawable/backhorariosrounded"
                 android:orientation="horizontal">
 
                 <LinearLayout
-                    android:layout_width="100dp"
+                    android:layout_width="50dp"
                     android:layout_height="65dp"
                     android:orientation="vertical"
-                    android:layout_gravity="bottom">
+                    android:gravity="center">
 
                     <TextView
-                        android:layout_width="80dp"
+                        android:layout_width="60dp"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="15dp"
+                        android:gravity="center"
                         android:fontFamily="@font/quicksandsemibold"
-                        android:paddingRight="15dp"
-                        android:text="@string/domingo"
+                        android:text="Dom"
+                        android:layout_marginLeft="5dp"
                         android:textColor="@color/azulTexto"
                         android:textSize="@dimen/text22" />
-
-                    <TextView
-                        android:id="@+id/tvDomingoEstado"
-                        android:layout_width="90dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginBottom="5dp"
-                        android:layout_marginTop="5dp"
-                        android:fontFamily="@font/quicksandsemibold"
-                        android:paddingRight="15dp"
-                        android:text="@string/textoSubrayadoDeshabilitar"
-                        android:textColor="@color/amarilloBtn"
-                        android:textSize="12sp" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingLeft="5dp">
+                    android:orientation="vertical">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="15dp"
+                        android:layout_marginTop="5dp"
                         android:orientation="horizontal">
+
+                        <Switch
+                            android:id="@+id/swDomingoMañanaEstado"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="10dp"
+                            android:text="" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -1154,6 +1163,7 @@
                             android:layout_gravity="center_vertical"
                             android:layout_marginVertical="10dp"
                             android:layout_marginStart="10dp"
+                            android:layout_marginTop="10dp"
                             android:background="@color/white"
                             android:clickable="true"
                             android:focusable="false"
@@ -1182,6 +1192,7 @@
                             android:layout_gravity="center_vertical"
                             android:layout_marginVertical="10dp"
                             android:layout_marginStart="10dp"
+                            android:layout_marginTop="10dp"
                             android:background="@color/white"
                             android:clickable="true"
                             android:focusable="false"
@@ -1197,7 +1208,15 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
                         android:orientation="horizontal">
+
+                        <Switch
+                            android:id="@+id/swDomingoTardeEstado"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:text="" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -1258,6 +1277,7 @@
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
+
 
         </LinearLayout>
 
