@@ -19,7 +19,6 @@ class AdapterCita(
     context: Context,
     val lista: ArrayList<cita>,
     tipo: String,
-    filtro: Boolean,
     val onCitaSelected: (cita) -> Unit
 ) : ArrayAdapter<cita>(context, 0, lista) {
 
