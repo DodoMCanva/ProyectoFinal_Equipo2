@@ -271,6 +271,29 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/quicksandbold"
+                    android:text="@string/ciudad"
+                    android:textColor="@color/azulTexto"
+                    android:textSize="@dimen/text18" />
+
+                <EditText
+                    android:id="@+id/etEditarCiudad"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="48dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/white"
+                    android:inputType="text"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:hint="Cd. Obregón"
+                    android:textColor="@color/azulTexto"
+                    android:textSize="@dimen/text18" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:paddingTop="10dp"
                     android:text="@string/calle"
                     android:textColor="@color/azulTexto"
