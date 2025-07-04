@@ -299,11 +299,11 @@ class frmEditarActivity : AppCompatActivity() {
                 val posicion = adapterEspecialidades.getPosition(m.especialidad)
                 spEspecialidad.setSelection(posicion)
                 etCedula.setText(m.cedula)
-                etEstado.setText(m.estado)
-                etCiudad.setText(m.ciudad)
-                etCalle.setText(m.calle)
-                etNumero.setText(m.numero)
-                etCP.setText(m.cp)
+                etEstado.setText(m.direccion?.estado)
+                etCiudad.setText(m.direccion?.ciudad)
+                etCalle.setText(m.direccion?.calle)
+                etNumero.setText(m.direccion?.numero)
+                etCP.setText(m.direccion?.cp)
 
                 Glide.with(this)
                     .load(m.fotoPerfil) // Aquí va la URL de Cloudinary
@@ -416,11 +416,11 @@ class frmEditarActivity : AppCompatActivity() {
                 sesionActual.genero = generoSeleccionado
                 sesionActual.especialidad = spEspecialidad.selectedItem.toString()
                 sesionActual.cedula = etCedula.text.toString().trim()
-                sesionActual.estado = etEstado.text.toString().trim()
-                sesionActual.ciudad = etCiudad.text.toString().trim()
-                sesionActual.calle = etCalle.text.toString().trim()
-                sesionActual.numero = etNumero.text.toString().trim()
-                sesionActual.cp = etCP.text.toString().trim()
+                sesionActual.direccion?.estado = etEstado.text.toString().trim()
+                sesionActual.direccion?.ciudad = etCiudad.text.toString().trim()
+                sesionActual.direccion?.calle = etCalle.text.toString().trim()
+                sesionActual.direccion?.numero = etNumero.text.toString().trim()
+                sesionActual.direccion?.cp = etCP.text.toString().trim()
                 sesionActual.fechaNacimiento = tvFecha.text.toString().trim()
                 imageUrl?.let { sesionActual.fotoPerfil = it }
                 sesionActual.uid?.let { uid ->
