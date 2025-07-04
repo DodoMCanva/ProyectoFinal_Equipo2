@@ -64,8 +64,8 @@ class frmRegistroActivity : AppCompatActivity() {
             val confContra = etConfContra.text.toString()
             val telefono = etTelefono.text.toString().trim()
             val genero = when {
-                cbHombre.isChecked -> "Hombre"
-                cbMujer.isChecked -> "Mujer"
+                cbHombre.isChecked -> "Masculino"
+                cbMujer.isChecked -> "Femenino"
                 else -> ""
             }
 

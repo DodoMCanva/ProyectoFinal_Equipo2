@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import java.util.Calendar
+import Persistencia.direccion
 
 class frmRegistroMedicoActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -88,8 +89,8 @@ class frmRegistroMedicoActivity : AppCompatActivity() {
             val confContra = etConfContra.text.toString()
             val telefono = etTelefono.text.toString().trim()
             val genero = when {
-                cbHombre.isChecked -> "Hombre"
-                cbMujer.isChecked -> "Mujer"
+                cbHombre.isChecked -> "Masculino"
+                cbMujer.isChecked -> "Femenino"
                 else -> ""
             }
             val especialidad = spEspecialidad.selectedItem?.toString()?.trim() ?: ""
@@ -150,7 +151,16 @@ class frmRegistroMedicoActivity : AppCompatActivity() {
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         val uid = auth.currentUser?.uid ?: return@addOnCompleteListener
+                        val direccionObj = direccion(
+                            estado = estado,
+                            ciudad = ciudad,
+                            calle = calle,
+                            numero = numero,
+                            cp = codigoPostal
+                        )
+
                         val medico = mapOf(
+                            "uid" to uid,
                             "nombre" to nombre,
                             "correo" to correo,
                             "fechaNacimiento" to fecha,
@@ -158,15 +168,9 @@ class frmRegistroMedicoActivity : AppCompatActivity() {
                             "genero" to genero,
                             "especialidad" to especialidad,
                             "cedula" to cedula,
-                            "direccion" to mapOf(
-                                "estado" to estado,
-                                "ciudad" to ciudad,
-                                "calle" to calle,
-                                "numero" to numero,
-                                "codigoPostal" to codigoPostal,
-                                "tipo" to "medico"
-                            ),
-
+                            "direccion" to direccionObj,
+                            "fotoPerfil" to "usuario1",
+                            "tipo" to "medico"
                         )
 
                         database.child("usuarios").child("medicos").child(uid).setValue(medico)
