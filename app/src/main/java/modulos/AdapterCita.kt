@@ -53,8 +53,6 @@ class AdapterCita(
         )
         val nombrePacienteTextView = vista.findViewById<TextView>(R.id.citaPaciente)
         val nombreMedicoTextView = vista.findViewById<TextView>(R.id.citaMedico)
-        nombrePacienteTextView.text = "Cargando..."
-        nombreMedicoTextView.text = "Cargando..."
         cargarDatosPacienteYMedico(c, nombrePacienteTextView, nombreMedicoTextView)
         vista.findViewById<TextView>(R.id.citaFecha).text = c.fecha
         vista.findViewById<TextView>(R.id.citaHora).text = c.hora
