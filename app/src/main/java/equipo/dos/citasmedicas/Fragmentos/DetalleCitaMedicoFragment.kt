@@ -1,5 +1,7 @@
 package equipo.dos.citasmedicas.Fragmentos
 
+import Persistencia.cita
+import Persistencia.paciente
 import android.app.Dialog
 import android.os.Build
 import android.os.Bundle
@@ -20,16 +22,11 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import equipo.dos.citasmedicas.R
-import equipo.dos.citasmedicas.helpers.MenuDesplegable
-import equipo.dos.citasmedicas.databinding.ActivityFrmPrincipalBinding
 
 
 class DetalleCitaMedicoFragment : Fragment() {
 
     private lateinit var citaId: String
-    private val binding by lazy {
-        ActivityFrmPrincipalBinding.inflate(layoutInflater)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,10 +37,9 @@ class DetalleCitaMedicoFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-     //   citaId = intent.getStringExtra("citaId") ?: ""
+        citaId = arguments?.getString("citaId") ?: ""
         if (citaId.isEmpty()) {
             Toast.makeText(requireContext(), "Error: ID de cita no recibido.", Toast.LENGTH_SHORT).show()
-           // finish()
             return
         }
 
@@ -72,7 +68,7 @@ class DetalleCitaMedicoFragment : Fragment() {
 
         databaseRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                val citaData = snapshot.getValue(Persistencia.cita::class.java)
+                val citaData = snapshot.getValue(cita::class.java)
 
                 if (citaData != null) {
                     view?.findViewById<TextView>(R.id.tvPacienteDetalleCitaMedico)?.text = citaData.nombrePaciente
@@ -81,7 +77,6 @@ class DetalleCitaMedicoFragment : Fragment() {
                     view?.findViewById<TextView>(R.id.tvEstadoDetalleCitaMedico)?.text = citaData.estado
                     view?.findViewById<TextView>(R.id.tvMotivoDetalleCitaMedico)?.text = citaData.motivo
 
-                    // Muestra u oculta secciones según el estado de la cita
                     val seccionReceta = view?.findViewById<LinearLayout>(R.id.llSeccionRecteaDetalleCita)
                     val seccionBotones = view?.findViewById<LinearLayout>(R.id.llSeccionOpcionesDetallesCita)
                     when (citaData.estado) {
@@ -99,17 +94,15 @@ class DetalleCitaMedicoFragment : Fragment() {
                         }
                     }
 
-                    // Cargar los datos del paciente
                     val idPaciente = citaData.idPaciente
                     if (!idPaciente.isNullOrEmpty()) {
                         val refPaciente = FirebaseDatabase.getInstance().getReference("usuarios/pacientes/$idPaciente")
                         refPaciente.get().addOnSuccessListener { snapshotPaciente ->
-                            val paciente = snapshotPaciente.getValue(Persistencia.paciente::class.java)
+                            val paciente = snapshotPaciente.getValue(paciente::class.java)
                             if (paciente != null) {
                                 view?.findViewById<TextView>(R.id.tvGeneroDetalleCitaMedico)?.text = paciente.genero
                                 view?.findViewById<TextView>(R.id.tvTelefonoDetalleCitaMedico)?.text = paciente.telefono
 
-                                // Calcular edad si es posible (requiere Android 8.0+)
                                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                                     val edad = paciente.calcularEdad()
                                     view?.findViewById<TextView>(R.id.tvEdadDetalleCitaMedico)?.text = edad.toString()
@@ -122,13 +115,12 @@ class DetalleCitaMedicoFragment : Fragment() {
                     }
 
                 } else {
-                   // Toast.makeText(requireContext()@frmDetalleCitaMedicoPendienteActivity, "Cita no encontrada.", Toast.LENGTH_SHORT).show()
-                    //finish()
+                    Toast.makeText(requireContext(), "Cita no encontrada.", Toast.LENGTH_SHORT).show()
                 }
             }
 
             override fun onCancelled(error: DatabaseError) {
-              //  Toast.makeText(requireContext()@frmDetalleCitaMedicoPendienteActivity, "Error al cargar cita: ${error.message}", Toast.LENGTH_SHORT).show()
+              Toast.makeText(requireContext(), "Error al cargar cita: ${error.message}", Toast.LENGTH_SHORT).show()
             }
         })
     }

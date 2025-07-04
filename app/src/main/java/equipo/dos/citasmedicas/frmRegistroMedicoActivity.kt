@@ -143,10 +143,6 @@ class frmRegistroMedicoActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-
-
-
-
             val auth = FirebaseAuth.getInstance()
             val database = FirebaseDatabase.getInstance().reference
 
@@ -167,9 +163,10 @@ class frmRegistroMedicoActivity : AppCompatActivity() {
                                 "ciudad" to ciudad,
                                 "calle" to calle,
                                 "numero" to numero,
-                                "codigoPostal" to codigoPostal
+                                "codigoPostal" to codigoPostal,
+                                "tipo" to "medico"
                             ),
-                            "tipo" to "medico"
+
                         )
 
                         database.child("usuarios").child("medicos").child(uid).setValue(medico)
@@ -191,11 +188,7 @@ class frmRegistroMedicoActivity : AppCompatActivity() {
                                 ).show()
                             }
                     }
-
                 }
-
         }
-
-
     }
 }
