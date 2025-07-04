@@ -161,22 +161,7 @@ class CitasFragment : Fragment() {
 
         val fechaInicio = formato.parse(inicio)
         val fechaFin = formato.parse(fin)
-<<<<<<< Updated upstream
 
-        var fechaActual = fechaInicio
-        while (fechaActual.before(fechaFin) || fechaActual.equals(fechaFin)) {
-            lista.add(cita(idCita = "encabezado", fecha = formato.format(fechaActual.time)))
-            for (cita in this) {
-                val fechaCita = formato.parse(cita.fecha)
-                if (fechaCita.equals(fechaActual)) {
-                    lista.add(cita)
-                }
-            }
-            fechaActual = Calendar.getInstance().apply {
-                time = fechaActual
-                add(Calendar.DAY_OF_MONTH, 1)
-            }.time
-=======
         var fechaActual = formato.parse(inicio)
         lista.add(cita(idCita = "encabezado", fecha = formato.format(fechaActual.time)))
         for (cita in this) {
@@ -188,7 +173,6 @@ class CitasFragment : Fragment() {
             if (fechaCita.after(fechaInicio) && fechaCita.before(fechaFin)) {
                 lista.add(cita)
             }
->>>>>>> Stashed changes
         }
         return lista
     }
