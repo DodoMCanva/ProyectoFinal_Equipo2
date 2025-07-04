@@ -1,8 +1,10 @@
 package equipo.dos.citasmedicas.Fragmentos
 
 import Persistencia.cita
-import Persistencia.paciente
+import Persistencia.paciente // Asegúrate de importar la clase paciente
+import android.app.DatePickerDialog
 import android.app.Dialog
+import android.icu.util.Calendar
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -12,21 +14,26 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.DatePicker
 import android.widget.ImageButton
+import android.widget.ImageView // Importar ImageView
 import android.widget.LinearLayout
 import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.bumptech.glide.Glide // Importar Glide
 import equipo.dos.citasmedicas.R
 
 
 class DetalleCitaMedicoFragment : Fragment() {
 
     private lateinit var citaId: String
+    private lateinit var imgFotoPacienteDetalle: ImageView // Variable para el ImageView de la foto del paciente
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,6 +42,7 @@ class DetalleCitaMedicoFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_detalle_cita_medico, container, false)
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         citaId = arguments?.getString("citaId") ?: ""
@@ -43,21 +51,20 @@ class DetalleCitaMedicoFragment : Fragment() {
             return
         }
 
+        imgFotoPacienteDetalle = view.findViewById(R.id.imgFotoPerfil)
         cargarDatosDeCita(citaId)
 
 
-        var finalizarCita= view.findViewById<Button>(R.id.btnFinalizarDetallesCitaMedico)
-
+        val finalizarCita = view.findViewById<Button>(R.id.btnFinalizarDetallesCitaMedico)
         finalizarCita.setOnClickListener {
             mostrarDialogSubirReceta()
         }
-        var reprodetalleMedico= view.findViewById<Button>(R.id.btnReprogramarDetallesMedico)
-
-            reprodetalleMedico.setOnClickListener {
+        val reprodetalleMedico = view.findViewById<Button>(R.id.btnReprogramarDetallesMedico)
+        reprodetalleMedico.setOnClickListener {
             mostrarDialogReprogramarCita()
         }
 
-        var cancelarDetallesMedico= view.findViewById<Button>(R.id.btnCancelarDetallesMedico)
+        val cancelarDetallesMedico = view.findViewById<Button>(R.id.btnCancelarDetallesMedico)
         cancelarDetallesMedico.setOnClickListener {
             mostrarDialogDeCancelacion()
         }
@@ -94,33 +101,35 @@ class DetalleCitaMedicoFragment : Fragment() {
                         }
                     }
 
-                    val idPaciente = citaData.idPaciente
+                    // Lógica para cargar la imagen del PACIENTE
+                    val idPaciente = citaData.idPaciente // Asume que tu objeto 'cita' tiene un campo 'idPaciente'
                     if (!idPaciente.isNullOrEmpty()) {
                         val refPaciente = FirebaseDatabase.getInstance().getReference("usuarios/pacientes/$idPaciente")
-                        refPaciente.get().addOnSuccessListener { snapshotPaciente ->
-                            val paciente = snapshotPaciente.getValue(paciente::class.java)
-                            if (paciente != null) {
-                                view?.findViewById<TextView>(R.id.tvGeneroDetalleCitaMedico)?.text = paciente.genero
-                                view?.findViewById<TextView>(R.id.tvTelefonoDetalleCitaMedico)?.text = paciente.telefono
-
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                                    val edad = paciente.calcularEdad()
-                                    view?.findViewById<TextView>(R.id.tvEdadDetalleCitaMedico)?.text = edad.toString()
-                                } else {
-                                    view?.findViewById<TextView>(R.id.tvEdadDetalleCitaMedico)?.text = "N/D"
-                                }
+                        refPaciente.get().addOnSuccessListener { pacienteSnapshot ->
+                            val pacienteData = pacienteSnapshot.getValue(paciente::class.java) // <--- Declaración corregida
+                            pacienteData?.fotoPerfil?.let { fotoUrl ->
+                                Glide.with(this@DetalleCitaMedicoFragment)
+                                    .load(fotoUrl)
+                                    .placeholder(R.drawable.usuario) // Imagen por defecto mientras carga
+                                    .error(R.drawable.usuario)       // Imagen si hay error de carga
+                                    .into(imgFotoPacienteDetalle)
+                            } ?: run {
+                                imgFotoPacienteDetalle.setImageResource(R.drawable.usuario) // Si no hay fotoPerfil
                             }
-
+                        }.addOnFailureListener {
+                            Log.e("Firebase", "Error al cargar datos del paciente: ${it.message}")
+                            imgFotoPacienteDetalle.setImageResource(R.drawable.usuario) // Fallback en error de Firebase
                         }
+                    } else {
+                        imgFotoPacienteDetalle.setImageResource(R.drawable.usuario) // Si no hay ID de paciente en la cita
                     }
-
                 } else {
                     Toast.makeText(requireContext(), "Cita no encontrada.", Toast.LENGTH_SHORT).show()
                 }
             }
 
             override fun onCancelled(error: DatabaseError) {
-              Toast.makeText(requireContext(), "Error al cargar cita: ${error.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Error al cargar cita: ${error.message}", Toast.LENGTH_SHORT).show()
             }
         })
     }
@@ -142,6 +151,7 @@ class DetalleCitaMedicoFragment : Fragment() {
         dialog.show()
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     private fun mostrarDialogReprogramarCita() {
         val dialog = Dialog(requireContext())
         dialog.setContentView(R.layout.dialog_reprogramar_cita)
@@ -156,15 +166,38 @@ class DetalleCitaMedicoFragment : Fragment() {
         val btnCompletarReprogramacionDialog = dialog.findViewById<Button>(R.id.btnCompletarRep)
         val btnCancelarReprogramacion = dialog.findViewById<Button>(R.id.btnCancelarRep)
 
-        fun generarHorasCada30Min(): List<String> { /* ... */ return mutableListOf() }
+        fun generarHorasCada30Min(): List<String> { /* Implementa tu lógica de generación de horas */ return mutableListOf() }
         val adapterHoras = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, generarHorasCada30Min())
+        adapterHoras.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item) // Mejor estilo para el spinner
         spHoraDialog.adapter = adapterHoras
-        spHoraDialog.onItemSelectedListener = object : android.widget.AdapterView.OnItemSelectedListener { /* ... */ override fun onItemSelected(p0: android.widget.AdapterView<*>?, p1: View?, p2: Int, p3: Long) { tvHoraSeleccionadaDialog.text = p0?.getItemAtPosition(p2).toString() } override fun onNothingSelected(p0: android.widget.AdapterView<*>?) {} }
+        spHoraDialog.onItemSelectedListener = object : android.widget.AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(p0: android.widget.AdapterView<*>?, p1: View?, p2: Int, p3: Long) { tvHoraSeleccionadaDialog.text = p0?.getItemAtPosition(p2).toString() }
+            override fun onNothingSelected(p0: android.widget.AdapterView<*>?) {}
+        }
+
+        btnCalendarioDialog.setOnClickListener { // Agregado el listener para el calendario
+            val calendario = Calendar.getInstance()
+            val datePicker = DatePickerDialog(requireContext(),
+                { _: DatePicker, year: Int, month: Int, dayOfMonth: Int ->
+                    val fechaSeleccionada = String.format("%02d/%02d/%04d", dayOfMonth, month + 1, year)
+                    tvFechaDialog.text = fechaSeleccionada
+                },
+                calendario.get(Calendar.YEAR),
+                calendario.get(Calendar.MONTH),
+                calendario.get(Calendar.DAY_OF_MONTH)
+            )
+            datePicker.show()
+        }
+
 
         btnCancelarReprogramacion?.setOnClickListener { dialog.dismiss() }
         btnCompletarReprogramacionDialog?.setOnClickListener {
             val nuevaFecha = tvFechaDialog.text.toString()
             val nuevaHora = tvHoraSeleccionadaDialog.text.toString()
+            if (nuevaFecha.isEmpty() || nuevaHora.isEmpty()) {
+                Toast.makeText(requireContext(), "Fecha y hora son obligatorias para reprogramar.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
             actualizarReprogramar(citaId, nuevaFecha, nuevaHora)
             dialog.dismiss()
         }
@@ -184,7 +217,7 @@ class DetalleCitaMedicoFragment : Fragment() {
         btnAtras.setOnClickListener { dialog.dismiss() }
         btnConfirmar.setOnClickListener {
             dialog.dismiss()
-            actualizarcancelado(citaId) // Llama a la función de actualización con el ID
+            actualizarcancelado(citaId)
         }
         dialog.show()
     }
@@ -236,8 +269,4 @@ class DetalleCitaMedicoFragment : Fragment() {
                 Toast.makeText(requireContext(), "Error al reprogramar la cita.", Toast.LENGTH_SHORT).show()
             }
     }
-
-
-
-
 }

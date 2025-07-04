@@ -7,6 +7,8 @@ import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Build
+import android.util.Log
+import com.bumptech.glide.Glide
 import android.view.View
 import android.widget.*
 import androidx.annotation.RequiresApi
@@ -31,7 +33,7 @@ object MenuDesplegable {
         val toolbar = activity.findViewById<Button>(R.id.btnMenu)
         val drawerLayout = activity.findViewById<DrawerLayout>(R.id.drawer)
         val nav = activity.findViewById<NavigationView>(R.id.navegacion_menu)
-        val encabezado : TextView = activity.findViewById(R.id.encabezadoPrincipal)
+        val encabezado: TextView = activity.findViewById(R.id.encabezadoPrincipal)
 
         toolbar.setOnClickListener {
             drawerLayout.openDrawer(GravityCompat.START)
@@ -62,6 +64,7 @@ object MenuDesplegable {
                         }
                     }
                 }
+
                 R.id.btnMenuHistorial -> {
                     if (activity is frmPrincipalActivity) {
                         activity.supportFragmentManager.commit {
@@ -72,6 +75,7 @@ object MenuDesplegable {
                         }
                     }
                 }
+
                 R.id.btnOpcion -> {
                     if (sesion.tipo == "paciente") {
                         if (activity is frmPrincipalActivity) {
@@ -93,6 +97,7 @@ object MenuDesplegable {
                         }
                     }
                 }
+
                 R.id.btnMenuCerrarSesion -> {
                     sesion.cerrarSesion()
                     activity.startActivity(Intent(activity, frmLoginActivity::class.java))
@@ -107,15 +112,24 @@ object MenuDesplegable {
         val btnMenuCerrar = headerView.findViewById<Button>(R.id.btnMenuCerrarMenu)
 
         val sesionActual = sesion.obtenerSesion()
-        val fotoNombre = when (sesionActual) {
+        Log.d("MenuDesplegable", "Configurando menú. Foto URL en sesion global: ${(sesionActual as? medico)?.fotoPerfil ?: (sesionActual as? paciente)?.fotoPerfil}")
+
+        val fotoUrl = when (sesionActual) {
             is paciente -> sesionActual.fotoPerfil
             is medico -> sesionActual.fotoPerfil
             else -> null
         }
 
-        fotoNombre?.let {
-            val resId = activity.resources.getIdentifier(it, "drawable", activity.packageName)
-            if (resId != 0) btnPerfil.setImageResource(resId)
+        fotoUrl?.let {
+            Glide.with(activity)
+                .load(it) // Carga la URL de la foto de perfil (que viene de Cloudinary)
+                .placeholder(R.drawable.usuario) // Imagen por defecto mientras carga
+                .error(R.drawable.usuario)     // Imagen por defecto si hay un error al cargar
+                .into(btnPerfil)
+            Log.d("MenuDesplegable", "Glide cargando foto: $it")
+        } ?: run {
+            Log.d("MenuDesplegable", "No hay URL de foto, mostrando placeholder.")
+            btnPerfil.setImageResource(R.drawable.usuario)
         }
 
         btnPerfil.setOnClickListener {
@@ -139,9 +153,11 @@ object MenuDesplegable {
 
         btnCalendario?.setOnClickListener {
             val calendario = Calendar.getInstance()
-            val datePicker = DatePickerDialog(activity,
+            val datePicker = DatePickerDialog(
+                activity,
                 { _: DatePicker, year: Int, month: Int, dayOfMonth: Int ->
-                    val fechaSeleccionada = String.format("%02d/%02d/%04d", dayOfMonth, month + 1, year)
+                    val fechaSeleccionada =
+                        String.format("%02d/%02d/%04d", dayOfMonth, month + 1, year)
                     tvFecha?.text = fechaSeleccionada
                 },
                 calendario.get(Calendar.YEAR),

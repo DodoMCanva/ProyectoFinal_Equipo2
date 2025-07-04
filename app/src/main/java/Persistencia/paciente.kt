@@ -9,7 +9,6 @@ import java.time.format.DateTimeFormatter
 
 data class paciente(
     var uid: String? = null,
-    var imagen: String? = null,
     var nombre: String?= null,
     var correo: String?= null,
     var telefono: String?= null,
@@ -18,7 +17,7 @@ data class paciente(
     var genero: String?= null,
     var fotoPerfil: String = "") : Serializable {
 
-    constructor() : this("","", "", "", "", "", "", "", "")
+    constructor() : this("","", "", "", "", "", "", "")
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun calcularEdad(): Int {

@@ -1,5 +1,6 @@
 package equipo.dos.citasmedicas.Fragmentos
 
+import Persistencia.medico
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.os.Bundle
@@ -8,6 +9,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.bumptech.glide.Glide
+import android.widget.ImageView
+import Persistencia.paciente
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -24,6 +28,7 @@ import equipo.dos.citasmedicas.helpers.MenuDesplegable
 class DetalleCitaPacienteFragment : Fragment() {
 
     private lateinit var citaId: String
+    private lateinit var imgFotoMedicoDetalle: ImageView
 
 
     @SuppressLint("MissingInflatedId")
@@ -37,12 +42,14 @@ class DetalleCitaPacienteFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         citaId = arguments?.getString("citaId") ?: ""
         if (citaId.isEmpty()) {
-            Toast.makeText(requireContext(), "Error: ID de cita no recibido.", Toast.LENGTH_SHORT).show()
-          //  finish()
+            Toast.makeText(requireContext(), "Error: ID de cita no recibido.", Toast.LENGTH_SHORT)
+                .show()
             return
         }
+        imgFotoMedicoDetalle = view.findViewById(R.id.imgFotoPerfil)
 
         cargarDatosDeCita(citaId)
+
 
         val cancelar: TextView = view.findViewById(R.id.btnCancelarCita)
         cancelar.setOnClickListener {
@@ -98,24 +105,42 @@ class DetalleCitaPacienteFragment : Fragment() {
                         }
                     }
 
+                    val idMedico = citaData.idMedico
+                    if (!idMedico.isNullOrEmpty()) {
+                        val refMedico = FirebaseDatabase.getInstance()
+                            .getReference("usuarios/medicos/$idMedico")
+                        refMedico.get().addOnSuccessListener { medicoSnapshot ->
+                            val medicoData = medicoSnapshot.getValue(medico::class.java)
+                            medicoData?.fotoPerfil?.let { fotoUrl ->
+                                Glide.with(this@DetalleCitaPacienteFragment)
+                                    .load(fotoUrl)
+                                    .placeholder(R.drawable.usuario)
+                                    .error(R.drawable.usuario)
+                                    .into(imgFotoMedicoDetalle)
+                            } ?: run {
+                                imgFotoMedicoDetalle.setImageResource(R.drawable.usuario)
+                            }
+                        }.addOnFailureListener {
+                            Log.e("Firebase", "Error al cargar datos del médico: ${it.message}")
+                            imgFotoMedicoDetalle.setImageResource(R.drawable.usuario)
+                        }
+                    } else {
+                        imgFotoMedicoDetalle.setImageResource(R.drawable.usuario)
+                    }
+
                 } else {
-                  //  Toast.makeText(
-                       // requireContext()@frmDetalleCitaActivity,
-                    //    "Cita no encontrada en la base de datos.",
-                      //  Toast.LENGTH_SHORT
-                 //   ).show()
-                    //finish()
+                    Toast.makeText(
+                        requireContext(),
+                        "Cita no encontrada en la base de datos.",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
 
             override fun onCancelled(error: DatabaseError) {
                 Log.e("Firebase", "Error al cargar datos de la cita: ${error.message}")
-              //  Toast.makeText(
-                   // requireContext()@frmDetalleCitaActivity,
-                //    "Error al cargar la cita.",
-                    Toast.LENGTH_SHORT
-             //   ).show()
-             //   finish()
+                Toast.LENGTH_SHORT
+
             }
         })
     }
@@ -159,7 +184,8 @@ class DetalleCitaPacienteFragment : Fragment() {
             }
             .addOnFailureListener {
                 Log.e("Firebase", "Error al cancelar cita: ${it.message}")
-                Toast.makeText(requireContext(), "Error al cancelar la cita.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Error al cancelar la cita.", Toast.LENGTH_SHORT)
+                    .show()
             }
     }
 }
