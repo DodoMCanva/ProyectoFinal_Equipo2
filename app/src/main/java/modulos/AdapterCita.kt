@@ -25,6 +25,9 @@ class AdapterCita(
     val tipo: String = tipo
 
     override fun getView(position: Int, converterView: View?, parent: ViewGroup): View {
+        if (position < 0 || position >= lista.size) {
+            return View(context)
+        }
         val c = lista[position]
         if (c.idCita == "encabezado") {
             return vistaEncabezado(position, converterView, parent)
