@@ -1,5 +1,0 @@
-package modulos
-
-class tuberiaCitas {
-
-}
