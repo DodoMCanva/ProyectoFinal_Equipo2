@@ -155,25 +155,29 @@ class CitasFragment : Fragment() {
     }
 
 
-    fun ArrayList<cita>.semana(inicio : String, fin : String) : ArrayList<cita>{
+    fun ArrayList<cita>.semana(inicio: String, fin: String): ArrayList<cita> {
         val lista = ArrayList<cita>()
-        val formato = SimpleDateFormat("dd/MM/yyyyy", Locale.getDefault())
+        val formato = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
         val fechaInicio = formato.parse(inicio)
         val fechaFin = formato.parse(fin)
-        var fechaActual = formato.parse(inicio)
-        lista.add(cita(idCita = "encabezado", fecha = formato.format(fechaActual.time)))
-        for (cita in this){
-            val fechaCita = formato.parse(cita.fecha)
-            if (fechaCita != fechaActual){
-                fechaActual == fechaCita
-                lista.add(cita(idCita = "encabezado", fecha = formato.format(fechaActual.time)))
+        var fechaActual = fechaInicio
+        while (!fechaActual.after(fechaFin)) {
+            lista.add(cita(idCita = "encabezado", fecha = formato.format(fechaActual.time)))
+            for (cita in this) {
+                val fechaCita = formato.parse(cita.fecha)
+                if (fechaCita.equals(fechaActual)) {
+                    lista.add(cita)
+                }
             }
-            if (fechaCita.after(fechaInicio) && fechaCita.before(fechaFin)) {
-                lista.add(cita)
-            }
+            val calendar = Calendar.getInstance()
+            calendar.time = fechaActual
+            calendar.add(Calendar.DAY_OF_MONTH, 1)
+            fechaActual = calendar.time
         }
         return lista
     }
+
+
 
     fun ArrayList<cita>.dia(fecha : String) : ArrayList<cita>{
         val lista = ArrayList<cita>()
