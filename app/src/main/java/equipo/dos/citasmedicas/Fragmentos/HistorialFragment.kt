@@ -7,7 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ListView
+import android.widget.TextView
 import equipo.dos.citasmedicas.R
+import equipo.dos.citasmedicas.frmPrincipalActivity
 import modulos.AdapterHistorial
 
 
@@ -48,5 +50,11 @@ class HistorialFragment : Fragment() {
             val listaOrdenada = sesion.listaOrdenada()
             adapter?.actualizarDatos(listaOrdenada)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val tvEncabezado: TextView? = (activity as? frmPrincipalActivity)?.findViewById(R.id.encabezadoPrincipal)
+        tvEncabezado?.text = "Detalle Cita"
     }
 }
