@@ -29,6 +29,8 @@ import java.util.Locale
 
 
 class CitasFragment : Fragment() {
+
+
     var adapter: AdapterCita? = null
     var filtroBusqueda: Boolean = false
 
@@ -48,6 +50,7 @@ class CitasFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         val filtro: Switch = view.findViewById(R.id.swMostrarTodaSemana)
         val calendario: ImageButton = view.findViewById(R.id.btnCalendarioConsultaCitas)
         val fechaTexto: TextView = view.findViewById(R.id.tvConsultaFecha)
@@ -137,7 +140,7 @@ class CitasFragment : Fragment() {
                 var lista = ArrayList<cita>()
                 if (filtroBusqueda) {
                     lista = sesion.listaOrdenada().semana(fechaBusqueda, fechaFinale)
-                    //lista = lista.encabezar(fechaBusqueda, fechaFinale)
+                    lista = lista.encabezar(fechaBusqueda, fechaFinale)
                 } else {
                     lista = sesion.listaOrdenada().dia(fechaBusqueda)
                 }
@@ -160,6 +163,8 @@ class CitasFragment : Fragment() {
                         .commit()
                 }
                 listaCitas.adapter = adapter
+
+
             }
         }
     }
@@ -170,11 +175,6 @@ class CitasFragment : Fragment() {
         val formato = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
         val fechaInicio = formato.parse(inicio)
         val fechaFin = formato.parse(fin)
-//        val calendar = Calendar.getInstance()
-//        calendar.time = formato.parse(fin)
-//        calendar.add(Calendar.DAY_OF_YEAR, 1)
-//        val fechaFin = calendar.time
-
         for (cita in this) {
             val fechaCita = formato.parse(cita.fecha)
             if (!fechaCita.before(fechaInicio) && !fechaCita.after(fechaFin)) {
@@ -190,33 +190,33 @@ class CitasFragment : Fragment() {
         val fechaInicio = formato.parse(inicio)
         val fechaFin = formato.parse(fin)
 
-        var fechaActual = formato.parse(this[0].fecha)
-        lista.add(cita(idCita = "encabezado", fecha = formato.format(fechaActual)))
+        var fechaActual: Date? = null
+
         for (cita in this) {
             val fechaCita = formato.parse(cita.fecha)
-            if (fechaCita != fechaActual){
+            if (fechaCita.before(fechaInicio) || fechaCita.after(fechaFin)) continue
+            if (fechaActual == null || !fechaCita.equals(fechaActual)) {
                 fechaActual = fechaCita
                 lista.add(cita(idCita = "encabezado", fecha = formato.format(fechaActual)))
             }
-            if (!fechaCita.before(fechaInicio) && !fechaCita.after(fechaFin)) {
-                lista.add(cita)
-            }
+            lista.add(cita)
         }
+
         return lista
 
     }
 
 
     fun ArrayList<cita>.dia(fecha: String): ArrayList<cita> {
-            val lista = ArrayList<cita>()
-            val formato = SimpleDateFormat("dd/MM/yyyyy", Locale.getDefault())
-            val fecha = formato.parse(fecha)
-            for (cita in this) {
-                val fechaCita = formato.parse(cita.fecha)
-                if (fechaCita == fecha) {
-                    lista.add(cita)
-                }
+        val lista = ArrayList<cita>()
+        val formato = SimpleDateFormat("dd/MM/yyyyy", Locale.getDefault())
+        val fecha = formato.parse(fecha)
+        for (cita in this) {
+            val fechaCita = formato.parse(cita.fecha)
+            if (fechaCita == fecha) {
+                lista.add(cita)
             }
-            return lista
         }
+        return lista
     }
+}

@@ -2,6 +2,7 @@ package equipo.dos.citasmedicas
 
 import Persistencia.medico
 import Persistencia.paciente
+import Persistencia.sesion
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.Dialog
@@ -28,8 +29,6 @@ import com.cloudinary.android.MediaManager
 import com.cloudinary.android.callback.ErrorInfo
 import com.cloudinary.android.callback.UploadCallback
 import com.google.firebase.database.FirebaseDatabase
-import equipo.dos.citasmedicas.databinding.ActivityFrmEditarBinding
-import equipo.dos.citasmedicas.databinding.ActivityFrmPrincipalBinding
 import java.util.Calendar
 
 val UPLOAD_PRESET_CITAS_MEDICAS = "Citas Medicas"
@@ -400,7 +399,7 @@ class frmEditarActivity : AppCompatActivity() {
             cbMujer.isChecked -> "Femenino"
             else -> ""
         }
-        val sesionActual = Persistencia.sesion.obtenerSesion()
+        val sesionActual = sesion.obtenerSesion()
 
         if (sesionActual == null) {
             Toast.makeText(this, "Error: Sesión no válida para actualizar.", Toast.LENGTH_SHORT)
@@ -429,7 +428,7 @@ class frmEditarActivity : AppCompatActivity() {
                         .addOnSuccessListener {
                             Toast.makeText(this, "Perfil de médico/paciente actualizado en Firebase.", Toast.LENGTH_SHORT).show()
                             Log.d("EditarPerfil", "Perfil actualizado en Firebase. Foto URL en Firebase: ${sesionActual.fotoPerfil}")
-                            Persistencia.sesion.asignarSesion(sesionActual)
+                            sesion.asignarSesion(sesionActual)
                             Log.d("EditarPerfil", "Sesión global Persistencia.sesion.sesion actualizada. Foto URL: ${(Persistencia.sesion.obtenerSesion() as? medico)?.fotoPerfil ?: (Persistencia.sesion.obtenerSesion() as? paciente)?.fotoPerfil}")
                             val intent = Intent(this, frmPrincipalActivity::class.java)
                             startActivity(intent)
@@ -469,7 +468,7 @@ class frmEditarActivity : AppCompatActivity() {
                                 "Perfil de paciente actualizado en Firebase.",
                                 Toast.LENGTH_SHORT
                             ).show()
-                            Persistencia.sesion.asignarSesion(sesionActual) // Asegúrate de que la sesión global también se actualice
+                            sesion.asignarSesion(sesionActual)
                             val intent = Intent(this, frmPrincipalActivity::class.java)
                             startActivity(intent)
                             dialog.dismiss()

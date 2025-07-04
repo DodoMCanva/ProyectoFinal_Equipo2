@@ -42,15 +42,15 @@ object sesion {
         citas.clear()
         val database = FirebaseDatabase.getInstance().getReference("usuarios").child("citas")
         val query = if (tipo == "paciente") {
-            database.orderByChild("idPaciente").equalTo(Persistencia.sesion.uid)
+            database.orderByChild("idPaciente").equalTo(uid)
         } else {
-            database.orderByChild("idMedico").equalTo(Persistencia.sesion.uid)
+            database.orderByChild("idMedico").equalTo(uid)
         }
 
         query.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 for (citaSnapshot in snapshot.children) {
-                    val citaData = citaSnapshot.getValue(Persistencia.cita::class.java)
+                    val citaData = citaSnapshot.getValue(cita::class.java)
                     if (citaData != null) {
                         if (!citas.contains(citaData)){
                             citas.add(citaData)

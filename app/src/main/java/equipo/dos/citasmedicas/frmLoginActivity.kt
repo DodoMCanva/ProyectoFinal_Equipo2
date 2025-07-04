@@ -73,10 +73,12 @@ class frmLoginActivity : AppCompatActivity() {
                                         if (medicoData != null) {
                                             medicoData.uid = uid
                                             sesion.asignarSesion(medicoData)
-                                            Log.d("Login", "Sesión de médico iniciada: UID = $uid")
-                                            val intent = Intent(this@frmLoginActivity, frmPrincipalActivity::class.java)
-                                            startActivity(intent)
-                                            finish()
+                                            sesion.actualizarListaCitas {
+                                                Log.d("Login", "Sesión de médico iniciada: UID = $uid")
+                                                val intent = Intent(this@frmLoginActivity, frmPrincipalActivity::class.java)
+                                                startActivity(intent)
+                                                finish()
+                                            }
                                         } else {
                                             Toast.makeText(this@frmLoginActivity, "Error al obtener datos del médico.", Toast.LENGTH_SHORT).show()
                                         }
@@ -88,10 +90,12 @@ class frmLoginActivity : AppCompatActivity() {
                                                     if (pacienteData != null) {
                                                         pacienteData.uid = uid
                                                         sesion.asignarSesion(pacienteData)
-                                                        Log.d("Login", "Sesión de paciente iniciada: UID = $uid")
-                                                        val intent = Intent(this@frmLoginActivity, frmPrincipalActivity::class.java)
-                                                        startActivity(intent)
-                                                        finish()
+                                                        sesion.actualizarListaCitas {
+                                                            Log.d("Login", "Sesión de paciente iniciada: UID = $uid")
+                                                            val intent = Intent(this@frmLoginActivity, frmPrincipalActivity::class.java)
+                                                            startActivity(intent)
+                                                            finish()
+                                                        }
                                                     } else {
                                                         Toast.makeText(this@frmLoginActivity, "Error al obtener datos del paciente.", Toast.LENGTH_SHORT).show()
                                                     }

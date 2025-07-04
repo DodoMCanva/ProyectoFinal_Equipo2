@@ -18,18 +18,12 @@ import android.widget.Button
 import android.widget.DatePicker
 import android.widget.EditText
 import android.widget.ImageButton
-import android.widget.ListView
 import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 import equipo.dos.citasmedicas.R
-import equipo.dos.citasmedicas.frmPrincipalActivity
-import modulos.AdapterMedico
 import java.util.Calendar
 
 class AgendarMedicoFragment : Fragment() {
@@ -45,9 +39,15 @@ class AgendarMedicoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         //calendario
         val btnCalendario = view.findViewById<ImageButton>(R.id.btnCalendario)
+        val tvNombreMedico = view.findViewById<TextView>(R.id.tvAgendarNombre)
+        val tvMonto = view.findViewById<TextView>(R.id.tvMontoAgendar)
         val tvFecha = view.findViewById<TextView>(R.id.tvAgendarFecha)
         val tvHoraSeleccionada = view.findViewById<TextView>(R.id.tvHoraSeleccionada)
         val btnCancelar = view.findViewById<Button>(R.id.btnCancelar)
+
+        tvNombreMedico.setText((arguments?.getSerializable("medico") as? medico)?.nombre)
+
+        tvMonto.setText((arguments?.getSerializable("medico") as? medico)?.costoConsulta.toString())
 
         btnCalendario.setOnClickListener {
             val calendario = Calendar.getInstance()
@@ -134,7 +134,6 @@ class AgendarMedicoFragment : Fragment() {
                 return@setOnClickListener
             }
 
-            //mostrar el diálogo
             val dialog = Dialog(requireContext())
             dialog.setContentView(R.layout.dialog_confirmacion_cita)
             dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
@@ -174,7 +173,6 @@ class AgendarMedicoFragment : Fragment() {
                     return@setOnClickListener
                 }
 
-                //Posiblemente se modifique
                 val nuevaCita = cita(
                     idCita = citaId,
                     idMedico = medicoSeleccionado.uid,
@@ -190,7 +188,6 @@ class AgendarMedicoFragment : Fragment() {
                     imagenPaciente = pacienteActual.fotoPerfil
                 )
 
-                // Guarda la cita
                 database.child(citaId).setValue(nuevaCita)
                     .addOnSuccessListener {
                         Toast.makeText(
@@ -222,7 +219,6 @@ class AgendarMedicoFragment : Fragment() {
 
 
         btnCancelar.setOnClickListener {
-
             parentFragmentManager.beginTransaction()
                 .replace(R.id.contenedorFragmento, CitasFragment())
                 .addToBackStack(null)

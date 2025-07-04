@@ -28,9 +28,11 @@ class frmPrincipalActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_frm_principal)
-
-        cargarSesionDesdeFirebase()
-
+        if (sesion.sesion != null){
+            setupUI()
+        }else{
+            cargarSesionDesdeFirebase()
+        }
     }
 
     override fun onResume() {
@@ -50,7 +52,7 @@ class frmPrincipalActivity : AppCompatActivity() {
                         val medicoData = snapshot.getValue(medico::class.java)
                         if (medicoData != null) {
                             medicoData.uid = uid
-                            Persistencia.sesion.asignarSesion(medicoData)
+                            sesion.asignarSesion(medicoData)
                             Log.d("frmPrincipalActivity", "Sesión de médico recargada: UID = $uid, Foto: ${medicoData.fotoPerfil}")
                             Log.d("PrincipalActivity", "Sesión global después de recarga: ${(Persistencia.sesion.obtenerSesion() as? medico)?.fotoPerfil}")
                             setupUI()
@@ -102,18 +104,18 @@ class frmPrincipalActivity : AppCompatActivity() {
 
     private fun setupUI() {
         MenuDesplegable.configurarMenu(this)
-
-        if (supportFragmentManager.findFragmentById(R.id.contenedorFragmento) == null) {
-            supportFragmentManager.commit {
+        if (this is frmPrincipalActivity) {
+            this.supportFragmentManager.commit {
                 setReorderingAllowed(true)
-                add<CitasFragment>(R.id.contenedorFragmento)
+                replace(R.id.contenedorFragmento, CitasFragment())
+                addToBackStack(null)
             }
         }
     }
 
     private fun handleSessionError() {
         Toast.makeText(this, "Error al cargar tu perfil. Por favor, inicia sesión de nuevo.", Toast.LENGTH_LONG).show()
-        Persistencia.sesion.cerrarSesion()
+        sesion.cerrarSesion()
         val intent = Intent(this, frmLoginActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
