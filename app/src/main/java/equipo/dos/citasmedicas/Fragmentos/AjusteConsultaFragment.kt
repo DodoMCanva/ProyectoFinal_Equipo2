@@ -1,7 +1,6 @@
 package equipo.dos.citasmedicas.Fragmentos
 
 import Persistencia.sesion
-import android.os.Build
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.style.UnderlineSpan
@@ -11,24 +10,34 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
-import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import com.google.firebase.database.FirebaseDatabase
-import equipo.dos.citasmedicas.ConfiguracionHorario
+import Persistencia.ConfiguracionHorario
+import Persistencia.Horario
+import android.text.Editable
+import android.text.TextWatcher
+import android.widget.Switch
+import com.google.firebase.auth.FirebaseAuth
 import equipo.dos.citasmedicas.R
-import equipo.dos.citasmedicas.helpers.MenuDesplegable
+
 class AjusteConsultaFragment : Fragment() {
 
-    private var lunesActivo = true
-    private var martesActivo = true
-    private var miercolesActivo = true
-    private var juevesActivo = true
-    private var viernesActivo = true
-    private var sabadoActivo = true
-    private var domingoActivo = true
+    private var lunesManActivo = false
+    private var lunesTarActivo = false
+    private var martesManActivo = false
+    private var martesTarActivo = false
+    private var miercolesManActivo = false
+    private var miercolesTarActivo = false
+    private var juevesManActivo = false
+    private var juevesTarActivo = false
+    private var viernesManActivo = false
+    private var viernesTarActivo = false
+    private var sabadoManActivo = false
+    private var sabadoTarActivo = false
+    private var domingoManActivo = false
+    private var domingoTarActivo = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,24 +50,69 @@ class AjusteConsultaFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        val userId = sesion.uid.toString()
+        val database = FirebaseDatabase.getInstance().getReference("configuracionHorario")
+
+        database.child(userId).get().addOnSuccessListener { snapshot ->
+            val configGuardada = snapshot.getValue(ConfiguracionHorario::class.java)
+            if (configGuardada != null) {
+                inicializarUIConConfiguracion(view, configGuardada)
+            } else {
+                desactivarTodosLosCampos(view)
+            }
+        }.addOnFailureListener {
+            Toast.makeText(requireContext(), "No hay horario configurado", Toast.LENGTH_SHORT).show()
+        }
+
+        cargarConfiguracionGuardada { config ->
+            if (config != null) {
+                activity?.runOnUiThread {
+                    inicializarUIConConfiguracion(view, config)
+                }
+            }
+        }
+
         val etCostoCita = view.findViewById<EditText>(R.id.etCostoCita)
+
+        etCostoCita.addTextChangedListener(object : TextWatcher {
+            var current = ""
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+
+            override fun afterTextChanged(s: Editable?) {
+                if (s.toString() != current) {
+                    etCostoCita.removeTextChangedListener(this)
+
+                    val clean = s.toString().replace("[^\\d.]".toRegex(), "")
+                    current = "$" + clean
+                    etCostoCita.setText(current)
+                    etCostoCita.setSelection(current.length)
+
+                    etCostoCita.addTextChangedListener(this)
+                }
+            }
+        })
 
         // Cambio de horario de consulta
 
         val ids = listOf(
+            //mañana
             R.id.etLunesDeManana, R.id.etLunesAManana,
-            R.id.etLunesDeTarde, R.id.etLunesATarde,
             R.id.etMartesDeManana, R.id.etMartesAManana,
-            R.id.etMartesDeTarde, R.id.etMartesATarde,
             R.id.etMiercolesDeManana, R.id.etMiercolesAManana,
-            R.id.etMiercolesDeTarde, R.id.etMiercolesATarde,
             R.id.etJuevesDeManana, R.id.etJuevesAManana,
-            R.id.etJuevesDeTarde, R.id.etJuevesATarde,
             R.id.etViernesDeManana, R.id.etViernesAManana,
-            R.id.etViernesDeTarde, R.id.etViernesATarde,
             R.id.etSabadoDeManana, R.id.etSabadoAManana,
-            R.id.etSabadoDeTarde, R.id.etSabadoATarde,
             R.id.etDomingoDeManana, R.id.etDomingoAManana,
+            //tarde
+            R.id.etLunesDeTarde, R.id.etLunesATarde,
+            R.id.etMartesDeTarde, R.id.etMartesATarde,
+            R.id.etMiercolesDeTarde, R.id.etMiercolesATarde,
+            R.id.etJuevesDeTarde, R.id.etJuevesATarde,
+            R.id.etViernesDeTarde, R.id.etViernesATarde,
+            R.id.etSabadoDeTarde, R.id.etSabadoATarde,
             R.id.etDomingoDeTarde, R.id.etDomingoATarde
         )
 
@@ -69,287 +123,291 @@ class AjusteConsultaFragment : Fragment() {
             }
         }
 
-        // Lunes
-        val tvLunesEstado = view.findViewById<TextView>(R.id.tvLunesEstado)
+        // Lunes - Mañana
+        val swLunesMañanaEstado = view.findViewById<Switch>(R.id.swLunesMañanaEstado)
         val etLunesDeManana = view.findViewById<EditText>(R.id.etLunesDeManana)
         val etLunesAManana = view.findViewById<EditText>(R.id.etLunesAManana)
+
+        swLunesMañanaEstado.setOnCheckedChangeListener { _, isChecked ->
+            lunesManActivo = isChecked
+            etLunesDeManana.isEnabled = isChecked
+            etLunesAManana.isEnabled = isChecked
+            val alpha = if (isChecked) 1f else 0.4f
+            etLunesDeManana.alpha = alpha
+            etLunesAManana.alpha = alpha
+        }
+        // Lunes - Tarde
+        val swLunesTardeEstado = view.findViewById<Switch>(R.id.swLunesTardeEstado)
         val etLunesDeTarde = view.findViewById<EditText>(R.id.etLunesDeTarde)
         val etLunesATarde = view.findViewById<EditText>(R.id.etLunesATarde)
 
-        tvLunesEstado.setOnClickListener {
-            lunesActivo = !lunesActivo
-            val alpha = if (lunesActivo) 1f else 0.4f
-            val habilitado = lunesActivo
-            etLunesDeManana.isEnabled = habilitado
-            etLunesAManana.isEnabled = habilitado
-            etLunesDeTarde.isEnabled = habilitado
-            etLunesATarde.isEnabled = habilitado
-            etLunesDeManana.alpha = alpha
-            etLunesAManana.alpha = alpha
+        swLunesTardeEstado.setOnCheckedChangeListener { _, isChecked ->
+            lunesTarActivo = isChecked
+            etLunesDeTarde.isEnabled = isChecked
+            etLunesATarde.isEnabled = isChecked
+            val alpha = if (isChecked) 1f else 0.4f
             etLunesDeTarde.alpha = alpha
             etLunesATarde.alpha = alpha
-
-            if (lunesActivo) {
-                tvLunesEstado.text = subrayar(getString(R.string.textoSubrayadoDeshabilitar))
-                tvLunesEstado.setTextColor(ContextCompat.getColor(requireContext(), R.color.amarilloBtn))
-            } else {
-                tvLunesEstado.text = subrayar(getString(R.string.textoSubrayadoHabilitar))
-                tvLunesEstado.setTextColor(ContextCompat.getColor(requireContext(), R.color.verdeHabilitar))
-            }
         }
 
-
-
-        // Martes
-        val tvMartesEstado = view.findViewById<TextView>(R.id.tvMartesEstado)
+        // Martes - Mañana
+        val swMartesMañanaEstado = view.findViewById<Switch>(R.id.swMartesMañanaEstado)
         val etMartesDeManana = view.findViewById<EditText>(R.id.etMartesDeManana)
         val etMartesAManana = view.findViewById<EditText>(R.id.etMartesAManana)
+
+        swMartesMañanaEstado.setOnCheckedChangeListener { _, isChecked ->
+            martesManActivo = isChecked
+            etMartesDeManana.isEnabled = isChecked
+            etMartesAManana.isEnabled = isChecked
+            val alpha = if (isChecked) 1f else 0.4f
+            etMartesDeManana.alpha = alpha
+            etMartesAManana.alpha = alpha
+        }
+
+        // Martes - Tarde
+        val swMartesTardeEstado = view.findViewById<Switch>(R.id.swMartesTardeEstado)
         val etMartesDeTarde = view.findViewById<EditText>(R.id.etMartesDeTarde)
         val etMartesATarde = view.findViewById<EditText>(R.id.etMartesATarde)
 
-        tvMartesEstado.setOnClickListener {
-            martesActivo = !martesActivo
-            val alpha = if (martesActivo) 1f else 0.4f
-            val habilitado = martesActivo
-            etMartesDeManana.isEnabled = habilitado
-            etMartesAManana.isEnabled = habilitado
-            etMartesDeTarde.isEnabled = habilitado
-            etMartesATarde.isEnabled = habilitado
-            etMartesDeManana.alpha = alpha
-            etMartesAManana.alpha = alpha
+        swMartesTardeEstado.setOnCheckedChangeListener { _, isChecked ->
+            martesTarActivo = isChecked
+            etMartesDeTarde.isEnabled = isChecked
+            etMartesATarde.isEnabled = isChecked
+            val alpha = if (isChecked) 1f else 0.4f
             etMartesDeTarde.alpha = alpha
             etMartesATarde.alpha = alpha
-
-            if (martesActivo) {
-                tvMartesEstado.text = subrayar(getString(R.string.textoSubrayadoDeshabilitar))
-                tvMartesEstado.setTextColor(ContextCompat.getColor(requireContext(), R.color.amarilloBtn))
-            } else {
-                tvMartesEstado.text = subrayar(getString(R.string.textoSubrayadoHabilitar))
-                tvMartesEstado.setTextColor(ContextCompat.getColor(requireContext(), R.color.verdeHabilitar))
-            }
         }
 
-        // Miercoles
-        val tvMiercolesEstado = view.findViewById<TextView>(R.id.tvMiercolesEstado)
+        // Miercoles - Mañana
+        val swMiercolesMañanaEstado = view.findViewById<Switch>(R.id.swMiercolesMañanaEstado)
         val etMiercolesDeManana = view.findViewById<EditText>(R.id.etMiercolesDeManana)
         val etMiercolesAManana = view.findViewById<EditText>(R.id.etMiercolesAManana)
+
+        swMiercolesMañanaEstado.setOnCheckedChangeListener { _, isChecked ->
+            miercolesManActivo = isChecked
+            etMiercolesDeManana.isEnabled = isChecked
+            etMiercolesAManana.isEnabled = isChecked
+            val alpha = if (isChecked) 1f else 0.4f
+            etMiercolesDeManana.alpha = alpha
+            etMiercolesAManana.alpha = alpha
+        }
+        // Miercoles - Tarde
+        val swMiercolesTardeEstado = view.findViewById<Switch>(R.id.swMiercolesTardeEstado)
         val etMiercolesDeTarde = view.findViewById<EditText>(R.id.etMiercolesDeTarde)
         val etMiercolesATarde = view.findViewById<EditText>(R.id.etMiercolesATarde)
 
-        tvMiercolesEstado.setOnClickListener {
-            miercolesActivo = !miercolesActivo
-            val alpha = if (miercolesActivo) 1f else 0.4f
-            val habilitado = miercolesActivo
-            etMiercolesDeManana.isEnabled = habilitado
-            etMiercolesAManana.isEnabled = habilitado
-            etMiercolesDeTarde.isEnabled = habilitado
-            etMiercolesATarde.isEnabled = habilitado
-            etMiercolesDeManana.alpha = alpha
-            etMiercolesAManana.alpha = alpha
+        swMiercolesTardeEstado.setOnCheckedChangeListener { _, isChecked ->
+            miercolesTarActivo = isChecked
+            etMiercolesDeTarde.isEnabled = isChecked
+            etMiercolesATarde.isEnabled = isChecked
+            val alpha = if (isChecked) 1f else 0.4f
             etMiercolesDeTarde.alpha = alpha
             etMiercolesATarde.alpha = alpha
-
-            if (miercolesActivo) {
-                tvMiercolesEstado.text = subrayar(getString(R.string.textoSubrayadoDeshabilitar))
-                tvMiercolesEstado.setTextColor(ContextCompat.getColor(requireContext(), R.color.amarilloBtn))
-            } else {
-                tvMiercolesEstado.text = subrayar(getString(R.string.textoSubrayadoHabilitar))
-                tvMiercolesEstado.setTextColor(ContextCompat.getColor(requireContext(), R.color.verdeHabilitar))
-            }
         }
 
-        // Jueves
-        val tvJuevesEstado = view.findViewById<TextView>(R.id.tvJuevesEstado)
+
+        // Jueves - Mañana
+        val swJuevesMañanaEstado = view.findViewById<Switch>(R.id.swJuevesMañanaEstado)
         val etJuevesDeManana = view.findViewById<EditText>(R.id.etJuevesDeManana)
         val etJuevesAManana = view.findViewById<EditText>(R.id.etJuevesAManana)
+
+        swJuevesMañanaEstado.setOnCheckedChangeListener { _, isChecked ->
+            juevesManActivo = isChecked
+            etJuevesDeManana.isEnabled = isChecked
+            etJuevesAManana.isEnabled = isChecked
+            val alpha = if (isChecked) 1f else 0.4f
+            etJuevesDeManana.alpha = alpha
+            etJuevesAManana.alpha = alpha
+        }
+        // Jueves - Tarde
+        val swJuevesTardeEstado = view.findViewById<Switch>(R.id.swJuevesTardeEstado)
         val etJuevesDeTarde = view.findViewById<EditText>(R.id.etJuevesDeTarde)
         val etJuevesATarde = view.findViewById<EditText>(R.id.etJuevesATarde)
 
-        tvJuevesEstado.setOnClickListener {
-            juevesActivo = !juevesActivo
-            val alpha = if (juevesActivo) 1f else 0.4f
-            val habilitado = juevesActivo
-            etJuevesDeManana.isEnabled = habilitado
-            etJuevesAManana.isEnabled = habilitado
-            etJuevesDeTarde.isEnabled = habilitado
-            etJuevesATarde.isEnabled = habilitado
-            etJuevesDeManana.alpha = alpha
-            etJuevesAManana.alpha = alpha
+        swJuevesTardeEstado.setOnCheckedChangeListener { _, isChecked ->
+            juevesTarActivo = isChecked
+            etJuevesDeTarde.isEnabled = isChecked
+            etJuevesATarde.isEnabled = isChecked
+            val alpha = if (isChecked) 1f else 0.4f
             etJuevesDeTarde.alpha = alpha
             etJuevesATarde.alpha = alpha
-
-            if (juevesActivo) {
-                tvJuevesEstado.text = subrayar(getString(R.string.textoSubrayadoDeshabilitar))
-                tvJuevesEstado.setTextColor(ContextCompat.getColor(requireContext(), R.color.amarilloBtn))
-            } else {
-                tvJuevesEstado.text = subrayar(getString(R.string.textoSubrayadoHabilitar))
-                tvJuevesEstado.setTextColor(ContextCompat.getColor(requireContext(), R.color.verdeHabilitar))
-            }
         }
 
-        // Viernes
-        val tvViernesEstado = view.findViewById<TextView>(R.id.tvViernesEstado)
+        // Viernes - Mañana
+        val swViernesMañanaEstado = view.findViewById<Switch>(R.id.swViernesMañanaEstado)
         val etViernesDeManana = view.findViewById<EditText>(R.id.etViernesDeManana)
         val etViernesAManana = view.findViewById<EditText>(R.id.etViernesAManana)
+
+        swViernesMañanaEstado.setOnCheckedChangeListener { _, isChecked ->
+            viernesManActivo = isChecked
+            etViernesDeManana.isEnabled = isChecked
+            etViernesAManana.isEnabled = isChecked
+            val alpha = if (isChecked) 1f else 0.4f
+            etViernesDeManana.alpha = alpha
+            etViernesAManana.alpha = alpha
+        }
+        // Viernes - Tarde
+        val swViernesTardeEstado = view.findViewById<Switch>(R.id.swViernesTardeEstado)
         val etViernesDeTarde = view.findViewById<EditText>(R.id.etViernesDeTarde)
         val etViernesATarde = view.findViewById<EditText>(R.id.etViernesATarde)
 
-        tvViernesEstado.setOnClickListener {
-            viernesActivo = !viernesActivo
-            val alpha = if (viernesActivo) 1f else 0.4f
-            val habilitado = viernesActivo
-            etViernesDeManana.isEnabled = habilitado
-            etViernesAManana.isEnabled = habilitado
-            etViernesDeTarde.isEnabled = habilitado
-            etViernesATarde.isEnabled = habilitado
-            etViernesDeManana.alpha = alpha
-            etViernesAManana.alpha = alpha
+        swViernesTardeEstado.setOnCheckedChangeListener { _, isChecked ->
+            viernesTarActivo = isChecked
+            etViernesDeTarde.isEnabled = isChecked
+            etViernesATarde.isEnabled = isChecked
+            val alpha = if (isChecked) 1f else 0.4f
             etViernesDeTarde.alpha = alpha
             etViernesATarde.alpha = alpha
-
-            if (viernesActivo) {
-                tvViernesEstado.text = subrayar(getString(R.string.textoSubrayadoDeshabilitar))
-                tvViernesEstado.setTextColor(ContextCompat.getColor(requireContext(), R.color.amarilloBtn))
-            } else {
-                tvViernesEstado.text = subrayar(getString(R.string.textoSubrayadoHabilitar))
-                tvViernesEstado.setTextColor(ContextCompat.getColor(requireContext(), R.color.verdeHabilitar))
-            }
         }
 
-        // Sábado
-        val tvSabadoEstado = view.findViewById<TextView>(R.id.tvSabadoEstado)
+
+        // Sábado - Mañana
+        val swSabadoMañanaEstado = view.findViewById<Switch>(R.id.swSabadoMañanaEstado)
         val etSabadoDeManana = view.findViewById<EditText>(R.id.etSabadoDeManana)
         val etSabadoAManana = view.findViewById<EditText>(R.id.etSabadoAManana)
+
+        swSabadoMañanaEstado.setOnCheckedChangeListener { _, isChecked ->
+            sabadoManActivo = isChecked
+            etSabadoDeManana.isEnabled = isChecked
+            etSabadoAManana.isEnabled = isChecked
+            val alpha = if (isChecked) 1f else 0.4f
+            etSabadoDeManana.alpha = alpha
+            etSabadoAManana.alpha = alpha
+        }
+        // Sábado - Tarde
+        val swSabadoTardeEstado = view.findViewById<Switch>(R.id.swSabadoTardeEstado)
         val etSabadoDeTarde = view.findViewById<EditText>(R.id.etSabadoDeTarde)
         val etSabadoATarde = view.findViewById<EditText>(R.id.etSabadoATarde)
 
-        tvSabadoEstado.setOnClickListener {
-            sabadoActivo = !sabadoActivo
-            val alpha = if (sabadoActivo) 1f else 0.4f
-            val habilitado = sabadoActivo
-            etSabadoDeManana.isEnabled = habilitado
-            etSabadoAManana.isEnabled = habilitado
-            etSabadoDeTarde.isEnabled = habilitado
-            etSabadoATarde.isEnabled = habilitado
-            etSabadoDeManana.alpha = alpha
-            etSabadoAManana.alpha = alpha
+        swSabadoTardeEstado.setOnCheckedChangeListener { _, isChecked ->
+            sabadoTarActivo = isChecked
+            etSabadoDeTarde.isEnabled = isChecked
+            etSabadoATarde.isEnabled = isChecked
+            val alpha = if (isChecked) 1f else 0.4f
             etSabadoDeTarde.alpha = alpha
             etSabadoATarde.alpha = alpha
-
-            if (sabadoActivo) {
-                tvSabadoEstado.text = subrayar(getString(R.string.textoSubrayadoDeshabilitar))
-                tvSabadoEstado.setTextColor(ContextCompat.getColor(requireContext(), R.color.amarilloBtn))
-            } else {
-                tvSabadoEstado.text = subrayar(getString(R.string.textoSubrayadoHabilitar))
-                tvSabadoEstado.setTextColor(ContextCompat.getColor(requireContext(), R.color.verdeHabilitar))
-            }
         }
 
-        // Domingo
-        val tvDomingoEstado = view.findViewById<TextView>(R.id.tvDomingoEstado)
+
+        // Domingo - Mañana
+        val swDomingoMañanaEstado = view.findViewById<Switch>(R.id.swDomingoMañanaEstado)
         val etDomingoDeManana = view.findViewById<EditText>(R.id.etDomingoDeManana)
         val etDomingoAManana = view.findViewById<EditText>(R.id.etDomingoAManana)
+
+        swDomingoMañanaEstado.setOnCheckedChangeListener { _, isChecked ->
+            domingoManActivo = isChecked
+            etDomingoDeManana.isEnabled = isChecked
+            etDomingoAManana.isEnabled = isChecked
+            val alpha = if (isChecked) 1f else 0.4f
+            etDomingoDeManana.alpha = alpha
+            etDomingoAManana.alpha = alpha
+        }
+        // Domingo - Tarde
+        val swDomingoTardeEstado = view.findViewById<Switch>(R.id.swDomingoTardeEstado)
         val etDomingoDeTarde = view.findViewById<EditText>(R.id.etDomingoDeTarde)
         val etDomingoATarde = view.findViewById<EditText>(R.id.etDomingoATarde)
 
-        tvDomingoEstado.setOnClickListener {
-            domingoActivo = !domingoActivo
-            val alpha = if (domingoActivo) 1f else 0.4f
-            val habilitado = domingoActivo
-            etDomingoDeManana.isEnabled = habilitado
-            etDomingoAManana.isEnabled = habilitado
-            etDomingoDeTarde.isEnabled = habilitado
-            etDomingoATarde.isEnabled = habilitado
-            etDomingoDeManana.alpha = alpha
-            etDomingoAManana.alpha = alpha
+        swDomingoTardeEstado.setOnCheckedChangeListener { _, isChecked ->
+            domingoTarActivo = isChecked
+            etDomingoDeTarde.isEnabled = isChecked
+            etDomingoATarde.isEnabled = isChecked
+            val alpha = if (isChecked) 1f else 0.4f
             etDomingoDeTarde.alpha = alpha
             etDomingoATarde.alpha = alpha
-
-            if (domingoActivo) {
-                tvDomingoEstado.text = subrayar(getString(R.string.textoSubrayadoDeshabilitar))
-                tvDomingoEstado.setTextColor(ContextCompat.getColor(requireContext(), R.color.amarilloBtn))
-            } else {
-                tvDomingoEstado.text = subrayar(getString(R.string.textoSubrayadoHabilitar))
-                tvDomingoEstado.setTextColor(ContextCompat.getColor(requireContext(), R.color.verdeHabilitar))
-            }
         }
+
 
         val btnGuardar = view.findViewById<Button>(R.id.btnGuardarConsulta)
         btnGuardar.setOnClickListener {
-            val costoStr = etCostoCita.text.toString()
+            //val costoStr = etCostoCita.text.toString()
+            //val costo = String.format("%.2f", costoStr.toDoubleOrNull() ?: 0.0).toDouble()
+            val costoStr = etCostoCita.text.toString().replace("$", "").trim()
             val costo = String.format("%.2f", costoStr.toDoubleOrNull() ?: 0.0).toDouble()
 
-            val lunesHorarios = listOf(
-                etLunesDeManana.text.toString(),
-                etLunesAManana.text.toString(),
-                etLunesDeTarde.text.toString(),
-                etLunesATarde.text.toString()
-            )
-
-            val martesHorarios = listOf(
-                etMartesDeManana.text.toString(),
-                etMartesAManana.text.toString(),
-                etMartesDeTarde.text.toString(),
-                etMartesATarde.text.toString()
-            )
-
-            val miercolesHorarios = listOf(
-                etMiercolesDeManana.text.toString(),
-                etMiercolesAManana.text.toString(),
-                etMiercolesDeTarde.text.toString(),
-                etMiercolesATarde.text.toString()
-            )
-
-            val juevesHorarios = listOf(
-                etJuevesDeManana.text.toString(),
-                etJuevesAManana.text.toString(),
-                etJuevesDeTarde.text.toString(),
-                etJuevesATarde.text.toString()
-            )
-
-            val viernesHorarios = listOf(
-                etViernesDeManana.text.toString(),
-                etViernesAManana.text.toString(),
-                etViernesDeTarde.text.toString(),
-                etViernesATarde.text.toString()
-            )
-
-            val sabadoHorarios = listOf(
-                etSabadoDeManana.text.toString(),
-                etSabadoAManana.text.toString(),
-                etSabadoDeTarde.text.toString(),
-                etSabadoATarde.text.toString()
-            )
-
-            val domingoHorarios = listOf(
-                etDomingoDeManana.text.toString(),
-                etDomingoAManana.text.toString(),
-                etDomingoDeTarde.text.toString(),
-                etDomingoATarde.text.toString()
-            )
 
             val config = ConfiguracionHorario(
                 costoCita = costo,
-                lunesActivo = lunesActivo,
-                lunesHorarios = lunesHorarios,
-                martesActivo = martesActivo,
-                martesHorarios = martesHorarios,
-                miercolesActivo = miercolesActivo,
-                miercolesHorarios = miercolesHorarios,
-                juevesActivo = juevesActivo,
-                juevesHorarios = juevesHorarios,
-                viernesActivo = viernesActivo,
-                viernesHorarios = viernesHorarios,
-                sabadoActivo = sabadoActivo,
-                sabadoHorarios = sabadoHorarios,
-                domingoActivo = domingoActivo,
-                domingoHorarios = domingoHorarios
+
+                lunesMananaActivo = lunesManActivo,
+                lunesTardeActivo = lunesTarActivo,
+                lunesManana = Horario(
+                    desde = etLunesDeManana.text.toString(),
+                    hasta = etLunesAManana.text.toString()
+                ),
+                lunesTarde = Horario(
+                    desde = etLunesDeTarde.text.toString(),
+                    hasta = etLunesATarde.text.toString()
+                ),
+
+                martesMananaActivo = martesManActivo,
+                martesTardeActivo = martesTarActivo,
+                martesManana = Horario(
+                    desde = etMartesDeManana.text.toString(),
+                    hasta = etMartesAManana.text.toString()
+                ),
+                martesTarde = Horario(
+                    desde = etMartesDeTarde.text.toString(),
+                    hasta = etMartesATarde.text.toString()
+                ),
+
+                miercolesMananaActivo = miercolesManActivo,
+                miercolesTardeActivo = miercolesTarActivo,
+                miercolesManana = Horario(
+                    desde = etMiercolesDeManana.text.toString(),
+                    hasta = etMiercolesAManana.text.toString()
+                ),
+                miercolesTarde = Horario(
+                    desde = etMiercolesDeTarde.text.toString(),
+                    hasta = etMiercolesATarde.text.toString()
+                ),
+
+                juevesMananaActivo = juevesManActivo,
+                juevesTardeActivo = juevesTarActivo,
+                juevesManana = Horario(
+                    desde = etJuevesDeManana.text.toString(),
+                    hasta = etJuevesAManana.text.toString()
+                ),
+                juevesTarde = Horario(
+                    desde = etJuevesDeTarde.text.toString(),
+                    hasta = etJuevesATarde.text.toString()
+                ),
+
+                viernesMananaActivo = viernesManActivo,
+                viernesTardeActivo = viernesTarActivo,
+                viernesManana = Horario(
+                    desde = etViernesDeManana.text.toString(),
+                    hasta = etViernesAManana.text.toString()
+                ),
+                viernesTarde = Horario(
+                    desde = etViernesDeTarde.text.toString(),
+                    hasta = etViernesATarde.text.toString()
+                ),
+
+                sabadoMananaActivo = sabadoManActivo,
+                sabadoTardeActivo = sabadoTarActivo,
+                sabadoManana = Horario(
+                    desde = etSabadoDeManana.text.toString(),
+                    hasta = etSabadoAManana.text.toString()
+                ),
+                sabadoTarde = Horario(
+                    desde = etSabadoDeTarde.text.toString(),
+                    hasta = etSabadoATarde.text.toString()
+                ),
+
+                domingoMananaActivo = domingoManActivo,
+                domingoTardeActivo = domingoTarActivo,
+                domingoManana = Horario(
+                    desde = etDomingoDeManana.text.toString(),
+                    hasta = etDomingoAManana.text.toString()
+                ),
+                domingoTarde = Horario(
+                    desde = etDomingoDeTarde.text.toString(),
+                    hasta = etDomingoATarde.text.toString()
+                )
             )
 
             // Guardar en Firebase
             val database = FirebaseDatabase.getInstance().getReference("configuracionHorario")
-
-            // obtener id de medico en sesion
             val usuarioId = sesion.uid.toString()
 
             database.child(usuarioId).setValue(config)
@@ -359,9 +417,7 @@ class AjusteConsultaFragment : Fragment() {
                 .addOnFailureListener {
                     Toast.makeText(requireContext(), "Error al guardar configuración", Toast.LENGTH_SHORT).show()
                 }
-
         }
-
 
     }
 
@@ -373,7 +429,7 @@ class AjusteConsultaFragment : Fragment() {
         val picker = android.app.TimePickerDialog(this.requireContext(), { _, h, m ->
             val hora = String.format("%02d:%02d", h, m)
             editText.setText(hora)
-        }, hour, minute, true)
+        }, hour, minute, false)
 
         picker.show()
     }
@@ -384,6 +440,188 @@ class AjusteConsultaFragment : Fragment() {
         return subrayado
     }
 
+    fun aplicarEstadoInicial(
+        sw: Switch,
+        etInicio: EditText,
+        etFin: EditText,
+        activo: Boolean
+    ) {
+        etInicio.isEnabled = activo
+        etFin.isEnabled = activo
+        etInicio.alpha = if (activo) 1f else 0.4f
+        etFin.alpha = if (activo) 1f else 0.4f
+        sw.isChecked = activo  // switch encendido = desactivado
+    }
+
+    private fun cargarConfiguracionGuardada(onLoaded: (ConfiguracionHorario?) -> Unit) {
+        val userId = FirebaseAuth.getInstance().currentUser?.uid ?: run {
+            onLoaded(null)
+            return
+        }
+
+        val ref = FirebaseDatabase.getInstance().getReference("configuracionHorario/$userId")
+        ref.get().addOnSuccessListener { snapshot ->
+            if (snapshot.exists()) {
+                val config = snapshot.getValue(ConfiguracionHorario::class.java)
+                onLoaded(config)
+            } else {
+                onLoaded(null)
+            }
+        }.addOnFailureListener {
+            onLoaded(null)
+        }
+    }
+
+    private fun inicializarUIConConfiguracion(view: View, config: ConfiguracionHorario) {
+        // Costo
+        val etCostoCita = view.findViewById<EditText>(R.id.etCostoCita)
+        //etCostoCita.setText(config.costoCita.toString())
+        etCostoCita.setText(String.format("$%.2f", config.costoCita))
+
+        // Lunes
+        val swLunesMañanaEstado = view.findViewById<Switch>(R.id.swLunesMañanaEstado)
+        val etLunesDeManana = view.findViewById<EditText>(R.id.etLunesDeManana)
+        val etLunesAManana = view.findViewById<EditText>(R.id.etLunesAManana)
+        val swLunesTardeEstado = view.findViewById<Switch>(R.id.swLunesTardeEstado)
+        val etLunesDeTarde = view.findViewById<EditText>(R.id.etLunesDeTarde)
+        val etLunesATarde = view.findViewById<EditText>(R.id.etLunesATarde)
+
+        lunesManActivo = config.lunesMananaActivo
+        lunesTarActivo = config.lunesTardeActivo
+        aplicarEstadoInicial(swLunesMañanaEstado, etLunesDeManana, etLunesAManana, lunesManActivo)
+        etLunesDeManana.setText(config.lunesManana.desde)
+        etLunesAManana.setText(config.lunesManana.hasta)
+
+        aplicarEstadoInicial(swLunesTardeEstado, etLunesDeTarde, etLunesATarde, lunesTarActivo)
+        etLunesDeTarde.setText(config.lunesTarde.desde)
+        etLunesATarde.setText(config.lunesTarde.hasta)
+
+        // Martes
+        val swMartesMañanaEstado = view.findViewById<Switch>(R.id.swMartesMañanaEstado)
+        val etMartesDeManana = view.findViewById<EditText>(R.id.etMartesDeManana)
+        val etMartesAManana = view.findViewById<EditText>(R.id.etMartesAManana)
+        val swMartesTardeEstado = view.findViewById<Switch>(R.id.swMartesTardeEstado)
+        val etMartesDeTarde = view.findViewById<EditText>(R.id.etMartesDeTarde)
+        val etMartesATarde = view.findViewById<EditText>(R.id.etMartesATarde)
+
+        martesManActivo = config.martesMananaActivo
+        martesTarActivo = config.martesTardeActivo
+        aplicarEstadoInicial(swMartesMañanaEstado, etMartesDeManana, etMartesAManana, martesManActivo)
+        etMartesDeManana.setText(config.martesManana.desde)
+        etMartesAManana.setText(config.martesManana.hasta)
+
+        aplicarEstadoInicial(swMartesTardeEstado, etMartesDeTarde, etMartesATarde, martesTarActivo)
+        etMartesDeTarde.setText(config.martesTarde.desde)
+        etMartesATarde.setText(config.martesTarde.hasta)
+
+        // Miércoles
+        val swMiercolesMañanaEstado = view.findViewById<Switch>(R.id.swMiercolesMañanaEstado)
+        val etMiercolesDeManana = view.findViewById<EditText>(R.id.etMiercolesDeManana)
+        val etMiercolesAManana = view.findViewById<EditText>(R.id.etMiercolesAManana)
+        val swMiercolesTardeEstado = view.findViewById<Switch>(R.id.swMiercolesTardeEstado)
+        val etMiercolesDeTarde = view.findViewById<EditText>(R.id.etMiercolesDeTarde)
+        val etMiercolesATarde = view.findViewById<EditText>(R.id.etMiercolesATarde)
+
+        miercolesManActivo = config.miercolesMananaActivo
+        miercolesTarActivo = config.miercolesTardeActivo
+        aplicarEstadoInicial(swMiercolesMañanaEstado, etMiercolesDeManana, etMiercolesAManana, miercolesManActivo)
+        etMiercolesDeManana.setText(config.miercolesManana.desde)
+        etMiercolesAManana.setText(config.miercolesManana.hasta)
+
+        aplicarEstadoInicial(swMiercolesTardeEstado, etMiercolesDeTarde, etMiercolesATarde, miercolesTarActivo)
+        etMiercolesDeTarde.setText(config.miercolesTarde.desde)
+        etMiercolesATarde.setText(config.miercolesTarde.hasta)
+
+        // Jueves
+        val swJuevesMañanaEstado = view.findViewById<Switch>(R.id.swJuevesMañanaEstado)
+        val etJuevesDeManana = view.findViewById<EditText>(R.id.etJuevesDeManana)
+        val etJuevesAManana = view.findViewById<EditText>(R.id.etJuevesAManana)
+        val swJuevesTardeEstado = view.findViewById<Switch>(R.id.swJuevesTardeEstado)
+        val etJuevesDeTarde = view.findViewById<EditText>(R.id.etJuevesDeTarde)
+        val etJuevesATarde = view.findViewById<EditText>(R.id.etJuevesATarde)
+
+        juevesManActivo = config.juevesMananaActivo
+        juevesTarActivo = config.juevesTardeActivo
+        aplicarEstadoInicial(swJuevesMañanaEstado, etJuevesDeManana, etJuevesAManana, juevesManActivo)
+        etJuevesDeManana.setText(config.juevesManana.desde)
+        etJuevesAManana.setText(config.juevesManana.hasta)
+
+        aplicarEstadoInicial(swJuevesTardeEstado, etJuevesDeTarde, etJuevesATarde, juevesTarActivo)
+        etJuevesDeTarde.setText(config.juevesTarde.desde)
+        etJuevesATarde.setText(config.juevesTarde.hasta)
+
+        // Viernes
+        val swViernesMañanaEstado = view.findViewById<Switch>(R.id.swViernesMañanaEstado)
+        val etViernesDeManana = view.findViewById<EditText>(R.id.etViernesDeManana)
+        val etViernesAManana = view.findViewById<EditText>(R.id.etViernesAManana)
+        val swViernesTardeEstado = view.findViewById<Switch>(R.id.swViernesTardeEstado)
+        val etViernesDeTarde = view.findViewById<EditText>(R.id.etViernesDeTarde)
+        val etViernesATarde = view.findViewById<EditText>(R.id.etViernesATarde)
+
+        viernesManActivo = config.viernesMananaActivo
+        viernesTarActivo = config.viernesTardeActivo
+        aplicarEstadoInicial(swViernesMañanaEstado, etViernesDeManana, etViernesAManana, viernesManActivo)
+        etViernesDeManana.setText(config.viernesManana.desde)
+        etViernesAManana.setText(config.viernesManana.hasta)
+
+        aplicarEstadoInicial(swViernesTardeEstado, etViernesDeTarde, etViernesATarde, viernesTarActivo)
+        etViernesDeTarde.setText(config.viernesTarde.desde)
+        etViernesATarde.setText(config.viernesTarde.hasta)
+
+        // Sábado
+        val swSabadoMañanaEstado = view.findViewById<Switch>(R.id.swSabadoMañanaEstado)
+        val etSabadoDeManana = view.findViewById<EditText>(R.id.etSabadoDeManana)
+        val etSabadoAManana = view.findViewById<EditText>(R.id.etSabadoAManana)
+        val swSabadoTardeEstado = view.findViewById<Switch>(R.id.swSabadoTardeEstado)
+        val etSabadoDeTarde = view.findViewById<EditText>(R.id.etSabadoDeTarde)
+        val etSabadoATarde = view.findViewById<EditText>(R.id.etSabadoATarde)
+
+        sabadoManActivo = config.sabadoMananaActivo
+        sabadoTarActivo = config.sabadoTardeActivo
+        aplicarEstadoInicial(swSabadoMañanaEstado, etSabadoDeManana, etSabadoAManana, sabadoManActivo)
+        etSabadoDeManana.setText(config.sabadoManana.desde)
+        etSabadoAManana.setText(config.sabadoManana.hasta)
+
+        aplicarEstadoInicial(swSabadoTardeEstado, etSabadoDeTarde, etSabadoATarde, sabadoTarActivo)
+        etSabadoDeTarde.setText(config.sabadoTarde.desde)
+        etSabadoATarde.setText(config.sabadoTarde.hasta)
+
+        // Domingo
+        val swDomingoMañanaEstado = view.findViewById<Switch>(R.id.swDomingoMañanaEstado)
+        val etDomingoDeManana = view.findViewById<EditText>(R.id.etDomingoDeManana)
+        val etDomingoAManana = view.findViewById<EditText>(R.id.etDomingoAManana)
+        val swDomingoTardeEstado = view.findViewById<Switch>(R.id.swDomingoTardeEstado)
+        val etDomingoDeTarde = view.findViewById<EditText>(R.id.etDomingoDeTarde)
+        val etDomingoATarde = view.findViewById<EditText>(R.id.etDomingoATarde)
+
+        domingoManActivo = config.domingoMananaActivo
+        domingoTarActivo = config.domingoTardeActivo
+        aplicarEstadoInicial(swDomingoMañanaEstado, etDomingoDeManana, etDomingoAManana, domingoManActivo)
+        etDomingoDeManana.setText(config.domingoManana.desde)
+        etDomingoAManana.setText(config.domingoManana.hasta)
+
+        aplicarEstadoInicial(swDomingoTardeEstado, etDomingoDeTarde, etDomingoATarde, domingoTarActivo)
+        etDomingoDeTarde.setText(config.domingoTarde.desde)
+        etDomingoATarde.setText(config.domingoTarde.hasta)
+    }
+
+    private fun desactivarTodosLosCampos(view: View) {
+        val ids = listOf(
+            R.id.etLunesDeManana, R.id.etLunesAManana, R.id.etLunesDeTarde, R.id.etLunesATarde,
+            R.id.etMartesDeManana, R.id.etMartesAManana, R.id.etMartesDeTarde, R.id.etMartesATarde,
+            R.id.etMiercolesDeManana, R.id.etMiercolesAManana, R.id.etMiercolesDeTarde, R.id.etMiercolesATarde,
+            R.id.etJuevesDeManana, R.id.etJuevesAManana, R.id.etJuevesDeTarde, R.id.etJuevesATarde,
+            R.id.etViernesDeManana, R.id.etViernesAManana, R.id.etViernesDeTarde, R.id.etViernesATarde,
+            R.id.etSabadoDeManana, R.id.etSabadoAManana, R.id.etSabadoDeTarde, R.id.etSabadoATarde,
+            R.id.etDomingoDeManana, R.id.etDomingoAManana, R.id.etDomingoDeTarde, R.id.etDomingoATarde,
+        )
+
+        for (id in ids) {
+            val editText = view.findViewById<EditText>(id)
+            editText.isEnabled = false
+            editText.alpha = 0.4f
+        }
+    }
 
 
 

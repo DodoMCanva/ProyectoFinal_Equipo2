@@ -50,6 +50,13 @@ android {
     }
 
     dependencies {
+
+        
+        implementation ("com.cloudinary:cloudinary-android:3.0.2")
+
+        implementation ("com.cloudinary:cloudinary-android-download:3.0.2")
+        implementation ("com.cloudinary:cloudinary-android-preprocess:3.0.2")
+
         implementation(libs.androidx.core.ktx)
         implementation(libs.androidx.appcompat)
         implementation(libs.material)

@@ -31,8 +31,6 @@ class frmEditarActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_frm_editar)
 
-
-
 // Obtener referencia de todos los campos
         imgFotoPerfil = findViewById(R.id.imgFotoPerfil)
         val etNombre = findViewById<EditText>(R.id.etEditarNombre)
@@ -47,6 +45,7 @@ class frmEditarActivity : AppCompatActivity() {
         val spEspecialidad = findViewById<Spinner>(R.id.spEditarEspecialidad)
         val etCedula = findViewById<EditText>(R.id.etEditarCedula)
         val etEstado = findViewById<EditText>(R.id.etEditarEstado)
+        val etCiudad = findViewById<EditText>(R.id.etEditarCiudad) // <- AGREGADO
         val etCalle = findViewById<EditText>(R.id.etEditarCalle)
         val etNumero = findViewById<EditText>(R.id.etEditarNumero)
         val etCP = findViewById<EditText>(R.id.etEditarCodigoPostal)
@@ -69,9 +68,6 @@ class frmEditarActivity : AppCompatActivity() {
             datePicker.datePicker.maxDate = System.currentTimeMillis()
             datePicker.show()
         }
-
-
-
 
         cbHombre.setOnCheckedChangeListener(null)
         cbMujer.setOnCheckedChangeListener(null)
@@ -120,6 +116,7 @@ class frmEditarActivity : AppCompatActivity() {
 
                 etCedula.setText(m.cedula)
                 etEstado.setText(m.estado)
+                etCiudad.setText(m.ciudad)
                 etCalle.setText(m.calle)
                 etNumero.setText(m.numero)
                 etCP.setText(m.cp)
@@ -185,36 +182,40 @@ class frmEditarActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            val cp = etCP.text.toString().trim()
-            val cpRegex = Regex("^\\d{5}$")
-            if (!cpRegex.matches(cp)) {
-                Toast.makeText(this, "El código postal debe tener exactamente 5 dígitos.", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-
+            // Validaciones SOLO para MÉDICOS
             if (sesion is medico) {
                 if (tvFecha.text.toString().trim().isEmpty()) {
                     Toast.makeText(this, "La fecha de nacimiento es obligatoria.", Toast.LENGTH_SHORT).show()
                     return@setOnClickListener
                 }
 
-                if (etCedula.text.toString().trim().isEmpty()) {
+                val cedula = etCedula.text.toString().trim()
+                if (cedula.isEmpty()) {
                     Toast.makeText(this, "La cédula profesional es obligatoria.", Toast.LENGTH_SHORT).show()
                     return@setOnClickListener
                 }
 
-                val cedula = etCedula.text.toString().trim()
                 val cedulaRegex = Regex("^\\d{7,8}$")
                 if (!cedulaRegex.matches(cedula)) {
                     Toast.makeText(this, "La cédula profesional debe tener entre 7 y 8 dígitos numéricos.", Toast.LENGTH_SHORT).show()
                     return@setOnClickListener
                 }
 
-                if (etEstado.text.toString().trim().isEmpty() ||
-                    etCalle.text.toString().trim().isEmpty() ||
-                    etNumero.text.toString().trim().isEmpty() ||
-                    etCP.text.toString().trim().isEmpty()) {
+                // Validar dirección solo si es médico
+                val estado = etEstado.text.toString().trim()
+                val ciudad = etCiudad.text.toString().trim()
+                val calle = etCalle.text.toString().trim()
+                val numero = etNumero.text.toString().trim()
+                val cp = etCP.text.toString().trim()
+
+                if (estado.isEmpty() || ciudad.isEmpty() || calle.isEmpty() || numero.isEmpty() || cp.isEmpty()) {
                     Toast.makeText(this, "Todos los campos de dirección son obligatorios.", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+
+                val cpRegex = Regex("^\\d{5}$")
+                if (!cpRegex.matches(cp)) {
+                    Toast.makeText(this, "El código postal debe tener exactamente 5 dígitos.", Toast.LENGTH_SHORT).show()
                     return@setOnClickListener
                 }
 
@@ -254,6 +255,7 @@ class frmEditarActivity : AppCompatActivity() {
                     m.especialidad = spEspecialidad.selectedItem.toString()
                     m.cedula = etCedula.text.toString().trim()
                     m.estado = etEstado.text.toString().trim()
+                    m.ciudad = etCiudad.text.toString().trim()
                     m.calle = etCalle.text.toString().trim()
                     m.numero = etNumero.text.toString().trim()
                     m.cp = etCP.text.toString().trim()
