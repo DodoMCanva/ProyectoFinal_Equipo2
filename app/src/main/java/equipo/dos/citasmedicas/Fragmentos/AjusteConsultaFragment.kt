@@ -21,6 +21,7 @@ import android.text.TextWatcher
 import android.widget.Switch
 import com.google.firebase.auth.FirebaseAuth
 import equipo.dos.citasmedicas.R
+import equipo.dos.citasmedicas.frmPrincipalActivity
 
 class AjusteConsultaFragment : Fragment() {
 
@@ -623,8 +624,10 @@ class AjusteConsultaFragment : Fragment() {
             editText.alpha = 0.4f
         }
     }
-
-
-
+    override fun onResume() {
+        super.onResume()
+        val tvEncabezado: TextView? = (activity as? frmPrincipalActivity)?.findViewById(R.id.encabezadoPrincipal)
+        tvEncabezado?.text = "Ajustes Consulta"
+    }
 }
 

@@ -24,6 +24,7 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import com.google.firebase.database.FirebaseDatabase
 import equipo.dos.citasmedicas.R
+import equipo.dos.citasmedicas.frmPrincipalActivity
 import java.util.Calendar
 
 class AgendarMedicoFragment : Fragment() {
@@ -224,5 +225,11 @@ class AgendarMedicoFragment : Fragment() {
                 .addToBackStack(null)
                 .commit()
         }
+
+    }
+    override fun onResume() {
+        super.onResume()
+        val tvEncabezado: TextView? = (activity as? frmPrincipalActivity)?.findViewById(R.id.encabezadoPrincipal)
+        tvEncabezado?.text = "Agendar"
     }
 }

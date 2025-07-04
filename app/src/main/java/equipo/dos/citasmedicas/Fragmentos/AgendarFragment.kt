@@ -7,12 +7,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ListView
+import android.widget.TextView
 import android.widget.Toast
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import equipo.dos.citasmedicas.R
+import equipo.dos.citasmedicas.frmPrincipalActivity
 import modulos.AdapterMedico
 
 
@@ -74,5 +76,10 @@ class AgendarFragment : Fragment() {
                 ).show()
             }
         })
+    }
+    override fun onResume() {
+        super.onResume()
+        val tvEncabezado: TextView? = (activity as? frmPrincipalActivity)?.findViewById(R.id.encabezadoPrincipal)
+        tvEncabezado?.text = "Agendar"
     }
 }
