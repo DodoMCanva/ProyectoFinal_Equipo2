@@ -19,7 +19,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import equipo.dos.citasmedicas.R
-import equipo.dos.citasmedicas.frmPrincipalActivity
 import modulos.AdapterCitaRecycler
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
@@ -212,11 +211,5 @@ class CitasFragment : Fragment() {
             }
         }
         return lista
-    }
-
-    override fun onResume() {
-        super.onResume()
-        val tvEncabezado: TextView? = (activity as? frmPrincipalActivity)?.findViewById(R.id.encabezadoPrincipal)
-        tvEncabezado?.text = "Mis Citas"
     }
 }

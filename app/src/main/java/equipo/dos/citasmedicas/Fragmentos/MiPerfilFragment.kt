@@ -17,7 +17,6 @@ import android.widget.Toast
 import equipo.dos.citasmedicas.R
 import equipo.dos.citasmedicas.frmEditarActivity
 import equipo.dos.citasmedicas.frmLoginActivity
-import equipo.dos.citasmedicas.frmPrincipalActivity
 import equipo.dos.citasmedicas.helpers.MenuDesplegable
 
 class MiPerfilFragment : Fragment() {
@@ -91,11 +90,5 @@ class MiPerfilFragment : Fragment() {
             startActivity(inte)
         }
 
-
-    }
-    override fun onResume() {
-        super.onResume()
-        val tvEncabezado: TextView? = (activity as? frmPrincipalActivity)?.findViewById(R.id.encabezadoPrincipal)
-        tvEncabezado?.text = "Mi Perfil"
     }
 }
