@@ -189,19 +189,20 @@ class CitasFragment : Fragment() {
         val formato = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
         val fechaInicio = formato.parse(inicio)
         val fechaFin = formato.parse(fin)
+        val calendar = Calendar.getInstance()
+        calendar.time = fechaInicio
+        val citasPorFecha = this.groupBy { it.fecha }
 
-        var fechaActual: Date? = null
+        while (!calendar.time.after(fechaFin)) {
+            val diaStr = formato.format(calendar.time)
+            lista.add(cita(idCita = "encabezado", fecha = diaStr))
 
-        for (cita in this) {
-            val fechaCita = formato.parse(cita.fecha)
-            if (fechaCita.before(fechaInicio) || fechaCita.after(fechaFin)) continue
-            if (fechaActual == null || !fechaCita.equals(fechaActual)) {
-                fechaActual = fechaCita
-                lista.add(cita(idCita = "encabezado", fecha = formato.format(fechaActual)))
+            val citasDelDia = citasPorFecha[diaStr]
+            if (citasDelDia != null) {
+                lista.addAll(citasDelDia)
             }
-            lista.add(cita)
+            calendar.add(Calendar.DAY_OF_YEAR, 1)
         }
-
         return lista
 
     }
