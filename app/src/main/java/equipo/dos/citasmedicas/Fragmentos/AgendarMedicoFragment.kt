@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.DatePicker
@@ -25,9 +26,11 @@ import androidx.annotation.RequiresApi
 import com.google.firebase.database.FirebaseDatabase
 import equipo.dos.citasmedicas.R
 import equipo.dos.citasmedicas.frmPrincipalActivity
+import modulos.ModuloHorario
 import java.util.Calendar
 
 class AgendarMedicoFragment : Fragment() {
+    val modulo = ModuloHorario()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,196 +40,68 @@ class AgendarMedicoFragment : Fragment() {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
+    private lateinit var spHora: Spinner
+    private lateinit var tvFecha: TextView
+    private lateinit var tvHoraSeleccionada: TextView
+
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        //calendario
-        val btnCalendario = view.findViewById<ImageButton>(R.id.btnCalendario)
-        val tvNombreMedico = view.findViewById<TextView>(R.id.tvAgendarNombre)
-        val tvMonto = view.findViewById<TextView>(R.id.tvMontoAgendar)
-        val tvFecha = view.findViewById<TextView>(R.id.tvAgendarFecha)
-        val tvHoraSeleccionada = view.findViewById<TextView>(R.id.tvHoraSeleccionada)
-        val btnCancelar = view.findViewById<Button>(R.id.btnCancelar)
+        spHora = view.findViewById(R.id.spHora)
+        tvFecha = view.findViewById(R.id.tvAgendarFecha)
+        tvHoraSeleccionada = view.findViewById(R.id.tvHoraSeleccionada)
 
-        tvNombreMedico.setText((arguments?.getSerializable("medico") as? medico)?.nombre)
-
-        tvMonto.setText((arguments?.getSerializable("medico") as? medico)?.costoConsulta.toString())
-
-        btnCalendario.setOnClickListener {
-            val calendario = Calendar.getInstance()
-            val anio = calendario.get(Calendar.YEAR)
-            val mes = calendario.get(Calendar.MONTH)
-            val dia = calendario.get(Calendar.DAY_OF_MONTH)
-
-            val datePicker =
-                DatePickerDialog(
-                    requireContext(),
-                    { _: DatePicker, year: Int, month: Int, dayOfMonth: Int ->
-                        val fechaSeleccionada =
-                            String.format("%02d/%02d/%04d", dayOfMonth, month + 1, year)
-                        tvFecha.text = fechaSeleccionada
-                    },
-                    anio,
-                    mes,
-                    dia
-                )
-
-            datePicker.show()
+        view.findViewById<ImageButton>(R.id.btnCalendario).setOnClickListener {
+            mostrarSelectorFecha()
         }
 
-        //spinner hora
-        val spHora = view.findViewById<Spinner>(R.id.spHora)
-        fun generarHorasCada30Min(): List<String> {
+        spHora.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, pos: Int, id: Long) {
+                tvHoraSeleccionada.text = parent.getItemAtPosition(pos).toString()
+            }
+            override fun onNothingSelected(parent: AdapterView<*>) {}
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun mostrarSelectorFecha() {
+        val cal = Calendar.getInstance()
+        DatePickerDialog(requireContext(),
+            { _: DatePicker, y: Int, m: Int, d: Int ->
+                val fechaStr = String.format("%02d/%02d/%04d", d, m+1, y)
+                tvFecha.text = fechaStr
+                configurarSpinnerHoras(y, m, d)
+            },
+            cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)
+        ).show()
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun configurarSpinnerHoras(year: Int, month: Int, day: Int) {
+        val cal = Calendar.getInstance().apply { set(year, month, day) }
+        val dow = cal.get(Calendar.DAY_OF_WEEK)
+        val medico = arguments?.getSerializable("medico") as? medico ?: return
+
+        modulo.obtenerConfiguracionDelMedico(medico.uid!!) { config ->
+            if (config == null) {
+                Toast.makeText(context, "Error al cargar configuración", Toast.LENGTH_SHORT).show()
+                return@obtenerConfiguracionDelMedico
+            }
+            val (mañanaP, tardeP) = modulo.obtenerConfigDelDia(config, dow)
             val horas = mutableListOf<String>()
-            var hora = 7
-            var minuto = 0
-
-            while (hora < 19 || (hora == 19 && minuto == 0)) {
-                val amPm = if (hora < 12) "AM" else "PM"
-                val hora12 = if (hora % 12 == 0) 12 else hora % 12
-                val horaFormateada = String.format("%d:%02d %s", hora12, minuto, amPm)
-                horas.add(horaFormateada)
-
-                minuto += 30
-                if (minuto >= 60) {
-                    minuto = 0
-                    hora++
+            if (mañanaP.first) horas += modulo.generarHorasEnHorario(mañanaP.second.desde, mañanaP.second.hasta)
+            if (tardeP.first) horas += modulo.generarHorasEnHorario(tardeP.second.desde, tardeP.second.hasta)
+            if (horas.isEmpty()) {
+                Toast.makeText(context, "No hay horarios disponibles", Toast.LENGTH_SHORT).show()
+                spHora.adapter = null
+            } else {
+                spHora.adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, horas).apply {
+                    setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                 }
             }
-
-            return horas
-        }
-
-        val horasDisponibles = generarHorasCada30Min()
-
-        val adapterHoras =
-            ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, horasDisponibles)
-        adapterHoras.setDropDownViewResource(R.layout.spinner_item_custom_hora)
-        spHora.adapter = adapterHoras
-
-        spHora.onItemSelectedListener = object : android.widget.AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: android.widget.AdapterView<*>,
-                view: android.view.View?,
-                position: Int,
-                id: Long
-            ) {
-                val horaSeleccionada = parent.getItemAtPosition(position).toString()
-                tvHoraSeleccionada.text = horaSeleccionada
-            }
-
-            override fun onNothingSelected(parent: android.widget.AdapterView<*>) {
-
-            }
-        }
-
-        val btnConfirmar = view.findViewById<Button>(R.id.btnConfirmar)
-        val txtMotivo = view.findViewById<EditText>(R.id.txtMotivo)
-
-        btnConfirmar.setOnClickListener {
-            val fecha = tvFecha.text.toString()
-            val hora = spHora.selectedItem.toString()
-            val motivo = txtMotivo.text.toString()
-
-            if (motivo.isEmpty()) {
-                Toast.makeText(
-                    requireContext(),
-                    "Escribe un motivo para la cita",
-                    Toast.LENGTH_SHORT
-                ).show()
-                return@setOnClickListener
-            }
-
-            val dialog = Dialog(requireContext())
-            dialog.setContentView(R.layout.dialog_confirmacion_cita)
-            dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-            dialog.window?.setLayout(
-                (resources.displayMetrics.widthPixels * 0.9).toInt(),
-                ViewGroup.LayoutParams.WRAP_CONTENT
-            )
-
-            val btnAceptar = dialog.findViewById<Button>(R.id.btnConfirmarCancelacion)
-
-            btnAceptar.setOnClickListener {
-                val medicoSeleccionado = arguments?.getSerializable("medico") as? medico
-                val pacienteActual = sesion.obtenerSesion() as? paciente
-
-                if (medicoSeleccionado == null || pacienteActual == null) {
-                    Toast.makeText(
-                        requireContext(),
-                        "Error: No se pudo obtener la información de usuario.",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    dialog.dismiss()
-                    return@setOnClickListener
-                }
-
-                val database =
-                    FirebaseDatabase.getInstance().getReference("usuarios").child("citas")
-                val citaId = database.push().key
-
-                if (citaId == null) {
-                    Toast.makeText(
-                        requireContext(),
-                        "Error al generar el ID de la cita.",
-                        Toast.LENGTH_SHORT
-                    )
-                        .show()
-                    dialog.dismiss()
-                    return@setOnClickListener
-                }
-
-                val nuevaCita = cita(
-                    idCita = citaId,
-                    idMedico = medicoSeleccionado.uid,
-                    idPaciente = sesion.uid,
-                    nombreMedico = medicoSeleccionado.nombre,
-                    nombrePaciente = pacienteActual.nombre,
-                    fecha = fecha,
-                    hora = hora,
-                    motivo = motivo,
-                    estado = "Pendiente",
-                    especialidad = medicoSeleccionado.especialidad,
-                    imagenMedico = medicoSeleccionado.fotoPerfil,
-                    imagenPaciente = pacienteActual.fotoPerfil
-                )
-
-                database.child(citaId).setValue(nuevaCita)
-                    .addOnSuccessListener {
-                        Toast.makeText(
-                            requireContext(),
-                            "Cita agendada con éxito.",
-                            Toast.LENGTH_SHORT
-                        ).show()
-
-                        parentFragmentManager.beginTransaction()
-                            .replace(R.id.contenedorFragmento, CitasFragment())
-                            .addToBackStack(null)
-                            .commit()
-
-                        dialog.dismiss()
-                    }
-                    .addOnFailureListener {
-                        Toast.makeText(
-                            requireContext(),
-                            "Error al agendar la cita: ${it.message}",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        dialog.dismiss()
-                    }
-
-            }
-            dialog.show()
-
-        }
-
-
-        btnCancelar.setOnClickListener {
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.contenedorFragmento, CitasFragment())
-                .addToBackStack(null)
-                .commit()
         }
 
     }
+    
     override fun onResume() {
         super.onResume()
         val tvEncabezado: TextView? = (activity as? frmPrincipalActivity)?.findViewById(R.id.encabezadoPrincipal)
