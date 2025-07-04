@@ -42,7 +42,6 @@ class AgendarFragment : Fragment() {
                         medicosList.add(medicoData)
                     }
                 }
-
                 adapter = AdapterMedico(requireContext(), medicosList) { medicoSeleccionado ->
                     val fragment = AgendarMedicoFragment()
                     val bundle = Bundle().apply {

@@ -107,7 +107,6 @@ object sesion {
         citas.clear()
     }
     fun listaOrdenada(): ArrayList<cita>{
-
         val formatoFechaHora = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
         var listaOrdenada: List<cita> = citas.sortedWith(compareBy { cita ->
             try {
