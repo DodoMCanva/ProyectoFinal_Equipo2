@@ -1,105 +1,107 @@
 package modulos
 
 import Persistencia.cita
-import Persistencia.medico
-import Persistencia.paciente
 import Persistencia.sesion
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import equipo.dos.citasmedicas.R
+import androidx.recyclerview.widget.RecyclerView
 
-class AdapterCita(
-    context: Context,
-    val lista: ArrayList<cita>,
-    tipo: String,
-    val onCitaSelected: (cita) -> Unit
-) : ArrayAdapter<cita>(context, 0, lista) {
+class AdapterCitaRecycler(
+    private val context: Context,
+    private val lista: List<cita>,
+    private val tipo: String,
+    private val onCitaSelected: (cita) -> Unit
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    val tipo: String = tipo
-
-    override fun getView(position: Int, converterView: View?, parent: ViewGroup): View {
-        if (position < 0 || position >= lista.size) {
-            return View(context)
-        }
-        val c = lista[position]
-        if (c.idCita == "encabezado") {
-            return vistaEncabezado(position, converterView, parent)
-        } else {
-            return vistaNormal(position, converterView, parent)
-        }
-
+    companion object {
+        private const val TYPE_ENCABEZADO = 0
+        private const val TYPE_CITA = 1
     }
 
-    fun vistaEncabezado(position: Int, convertView: View?, parent: ViewGroup): View {
-        val c = getItem(position)!!
-        val vista: View
-        vista = convertView ?: LayoutInflater.from(context)
-            .inflate(R.layout.encabezado_citas, parent, false)
-        vista.findViewById<TextView>(R.id.textoEncabezado).text = c.fecha
-        return vista
+    override fun getItemViewType(position: Int): Int {
+        return if (lista[position].idCita == "encabezado") TYPE_ENCABEZADO else TYPE_CITA
     }
 
-    fun vistaNormal(position: Int, converterView: View?, parent: ViewGroup): View {
-        val c = lista[position]
-        val vista: View
-
-        if (tipo == "medico") {
-            vista = converterView ?: LayoutInflater.from(context)
-                .inflate(R.layout.cita_medico, parent, false)
-
-            vista.findViewById<TextView>(R.id.citaMFecha).text = c.fecha
-            vista.findViewById<TextView>(R.id.citaMHora).text = c.hora
-            vista.findViewById<TextView>(R.id.citaMotivo).text = c.motivo
-            vista.findViewById<TextView>(R.id.citaEstado).text = c.estado
-
-            c.idPaciente?.let { idPaciente ->
-                sesion.buscarPaciente(idPaciente) { paciente ->
-                    paciente?.let {
-                        vista.findViewById<TextView>(R.id.citaPaciente).text = it.nombre
-                    }
-                }
-            }
-
-            val selCita = vista.findViewById<LinearLayout>(R.id.panelCitaMedico)
-            val colorResId = when (c.estado) {
-                "Completada" -> R.color.BackCitaCompletada
-                "Pendiente" -> R.color.BackCitaPendiente
-                "Cancelada" -> R.color.BackCitaCancelada
-                else -> R.color.BackCitaPendiente
-            }
-            selCita.setBackgroundColor(ContextCompat.getColor(context, colorResId))
-
-            selCita.setOnClickListener {
-                onCitaSelected(c)
-            }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return if (viewType == TYPE_ENCABEZADO) {
+            val view = LayoutInflater.from(context).inflate(R.layout.encabezado_citas, parent, false)
+            EncabezadoViewHolder(view)
         } else {
-            vista = converterView ?: LayoutInflater.from(context)
-                .inflate(R.layout.cita_paciente, parent, false)
+            val layout = if (tipo == "medico") R.layout.cita_medico else R.layout.cita_paciente
+            val view = LayoutInflater.from(context).inflate(layout, parent, false)
+            CitaViewHolder(view)
+        }
+    }
 
-            vista.findViewById<TextView>(R.id.citaFecha)?.text = c.fecha
-            vista.findViewById<TextView>(R.id.citaHora)?.text = c.hora
+    override fun getItemCount(): Int = lista.size
 
-            c.idMedico?.let { idMedico ->
-                sesion.buscarMedico(idMedico) { medico ->
-                    medico?.let {
-                        vista.findViewById<TextView>(R.id.citaMedico)?.text = it.nombre
-                        vista.findViewById<TextView>(R.id.citaEspecialidad)?.text = it.especialidad
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        val cita = lista[position]
+        if (holder is EncabezadoViewHolder) {
+            holder.bind(cita)
+        } else if (holder is CitaViewHolder) {
+            holder.bind(cita)
+        }
+    }
+
+    inner class EncabezadoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val textoEncabezado: TextView = itemView.findViewById(R.id.textoEncabezado)
+        fun bind(cita: cita) {
+            textoEncabezado.text = cita.fecha
+        }
+    }
+
+    inner class CitaViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        fun bind(cita: cita) {
+            if (tipo == "medico") {
+                itemView.findViewById<TextView>(R.id.citaMFecha).text = cita.fecha
+                itemView.findViewById<TextView>(R.id.citaMHora).text = cita.hora
+                itemView.findViewById<TextView>(R.id.citaMotivo).text = cita.motivo
+                itemView.findViewById<TextView>(R.id.citaEstado).text = cita.estado
+
+                cita.idPaciente?.let { idPaciente ->
+                    sesion.buscarPaciente(idPaciente) { paciente ->
+                        paciente?.let {
+                            itemView.findViewById<TextView>(R.id.citaPaciente).text = it.nombre
+                        }
                     }
                 }
-            }
 
-            vista.findViewById<LinearLayout>(R.id.panelCitaPaciente)?.setOnClickListener {
-                onCitaSelected(c)
+                val selCita = itemView.findViewById<LinearLayout>(R.id.panelCitaMedico)
+                val colorResId = when (cita.estado) {
+                    "Completada" -> R.color.BackCitaCompletada
+                    "Pendiente" -> R.color.BackCitaPendiente
+                    "Cancelada" -> R.color.BackCitaCancelada
+                    else -> R.color.BackCitaPendiente
+                }
+                selCita.setBackgroundColor(ContextCompat.getColor(context, colorResId))
+
+                selCita.setOnClickListener {
+                    onCitaSelected(cita)
+                }
+            } else {
+                itemView.findViewById<TextView>(R.id.citaFecha)?.text = cita.fecha
+                itemView.findViewById<TextView>(R.id.citaHora)?.text = cita.hora
+
+                cita.idMedico?.let { idMedico ->
+                    sesion.buscarMedico(idMedico) { medico ->
+                        medico?.let {
+                            itemView.findViewById<TextView>(R.id.citaMedico)?.text = it.nombre
+                            itemView.findViewById<TextView>(R.id.citaEspecialidad)?.text = it.especialidad
+                        }
+                    }
+                }
+
+                itemView.findViewById<LinearLayout>(R.id.panelCitaPaciente)?.setOnClickListener {
+                    onCitaSelected(cita)
+                }
             }
         }
-        return vista
     }
 }
-
