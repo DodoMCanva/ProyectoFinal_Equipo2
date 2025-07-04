@@ -131,7 +131,7 @@ class CitasFragment : Fragment() {
                 }else{
                     lista = sesion.listaOrdenada().dia(fechaBusqueda)
                 }
-                adapter = AdapterCita(requireContext(), lista, sesion.tipo, filtroBusqueda, fechaBusqueda){ citaSeleccionada ->
+                adapter = AdapterCita(requireContext(), lista, sesion.tipo, filtroBusqueda){ citaSeleccionada ->
                     var fragment: Fragment
                     if (sesion.tipo == "paciente"){
                         fragment = DetalleCitaPacienteFragment()
@@ -159,9 +159,15 @@ class CitasFragment : Fragment() {
         val lista = ArrayList<cita>()
         val formato = SimpleDateFormat("dd/MM/yyyyy", Locale.getDefault())
         val fechaInicio = formato.parse(inicio)
-        val fechaFin =formato.parse(fin)
+        val fechaFin = formato.parse(fin)
+        var fechaActual = formato.parse(inicio)
+        lista.add(cita(idCita = "encabezado", fecha = formato.format(fechaActual.time)))
         for (cita in this){
             val fechaCita = formato.parse(cita.fecha)
+            if (fechaCita != fechaActual){
+                fechaActual == fechaCita
+                lista.add(cita(idCita = "encabezado", fecha = formato.format(fechaActual.time)))
+            }
             if (fechaCita.after(fechaInicio) && fechaCita.before(fechaFin)) {
                 lista.add(cita)
             }
