@@ -11,7 +11,7 @@
     <string name="btnEresMedicoSi">Sí</string>
     <string name="btnEresMedicoNo">No</string>
     <string name="misCitas">Mis Citas</string>
-    <string name="olviContra"><u>¿Olvidaste tu contraseña?</u>></string>
+    <string name="olviContra"><u>¿Olvidaste tu contraseña?</u></string>
     <string name="restacontra">Restablecer contraseña</string>
     <string name="textResContra">Ingresa tu correo electrónico y te enviaremos un código para restablecer tu contraseña.</string>
     <string name="botonEnviarCodigo">Enviar código</string>
