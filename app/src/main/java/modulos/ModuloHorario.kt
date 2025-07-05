@@ -2,7 +2,12 @@ package modulos
 
 import Persistencia.ConfiguracionHorario
 import Persistencia.Horario
+import Persistencia.cita
+import android.util.Log
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -93,4 +98,27 @@ class ModuloHorario {
         }
     }
 
+    fun validarDiaConsulta(uidMedico: String, fecha: String, hora: String, onResultado: (Boolean) -> Unit) {
+        val ref = FirebaseDatabase.getInstance()
+            .getReference("usuarios")
+            .child("citas")
+
+        val query = ref.orderByChild("idMedico").equalTo(uidMedico)
+        query.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (citaSnap in snapshot.children) {
+                    val c = citaSnap.getValue(cita::class.java)
+                    if (c != null && c.fecha == fecha && c.hora == hora) {
+                        onResultado(false)
+                        return
+                    }
+                }
+                onResultado(true)
+            }
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("Firebase", "Error validando cita: ${error.message}")
+                onResultado(false)
+            }
+        })
+    }
 }

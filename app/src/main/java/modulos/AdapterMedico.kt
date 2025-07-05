@@ -31,4 +31,5 @@ class AdapterMedico(
         return vista
     }
 
+
 }
