@@ -48,6 +48,18 @@
                 />
         </LinearLayout>
 
+        <FrameLayout
+            android:id="@+id/contenedorFiltros"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:background="@color/backFiltro">
+
+            <include layout="@layout/agendarfiltro" />
+        </FrameLayout>
+
         <ListView
             android:id="@+id/lvMedicos"
             android:layout_width="350dp"

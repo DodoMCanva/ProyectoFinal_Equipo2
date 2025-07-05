@@ -10,26 +10,31 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import equipo.dos.citasmedicas.R
 
-class AdapterMedico(
+class AdapterMedicoFiltrable(
     context: Context,
-    val lista: ArrayList<medico>,
+    private var medicos: List<medico>,
     val onMedicoSelected: (medico) -> Unit
-) : ArrayAdapter<medico>(context, 0, lista) {
+) : ArrayAdapter<medico>(context, 0, medicos) {
+
+    override fun getCount(): Int = medicos.size
+    override fun getItem(position: Int): medico? = medicos[position]
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val vista = convertView ?: LayoutInflater.from(context).inflate(R.layout.campo_medico, parent, false)
-        val me = lista[position]
+        val me = medicos[position]
+
         vista.findViewById<TextView>(R.id.medicoEspecialidad).text = me.especialidad
         vista.findViewById<TextView>(R.id.medicoNombre).text = me.nombre
 
-
-        val selecMedico: LinearLayout = vista.findViewById(R.id.btnCampoMedico)
-        selecMedico.setOnClickListener {
+        vista.findViewById<LinearLayout>(R.id.btnCampoMedico).setOnClickListener {
             onMedicoSelected(me)
         }
 
         return vista
     }
 
-
+    fun actualizarLista(nuevaLista: List<medico>) {
+        this.medicos = nuevaLista
+        notifyDataSetChanged()
+    }
 }
