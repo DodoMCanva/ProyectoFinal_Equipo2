@@ -17,7 +17,7 @@
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/btnPerfil"
-        android:layout_width="100dp"
+        android:layout_width="89dp"
         android:layout_height="100dp"
         android:layout_marginLeft="@dimen/menu50"
         android:src="@drawable/usuario"
