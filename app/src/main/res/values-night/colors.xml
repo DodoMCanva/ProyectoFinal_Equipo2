@@ -25,4 +25,8 @@
     <color name="filtroBtn">#408E8A</color>
 
     <color name="grisTexto">#AAAAAA</color>
+
+    <color name="whiteEditText">#31655D</color>
+    <color name="whiteBtn">#FFFFFFFF</color>
+    <color name="whiteTextMenu">#FFFFFF</color>
 </resources>

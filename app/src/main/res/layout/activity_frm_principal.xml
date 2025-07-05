@@ -57,7 +57,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:background="@color/azulBackMensajes"
-        app:itemTextColor="@color/white"
+        app:itemTextColor="@color/whiteTextMenu"
         app:itemIconTint="@null"
         app:menu="@menu/drawel_menu"
         app:headerLayout="@layout/menu" />
