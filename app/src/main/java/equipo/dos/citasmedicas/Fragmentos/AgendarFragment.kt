@@ -1,6 +1,7 @@
 package equipo.dos.citasmedicas.Fragmentos
 
 import Persistencia.medico
+import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,6 +12,7 @@ import android.widget.EditText
 import android.widget.ListView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -57,6 +59,7 @@ class AgendarFragment : Fragment() {
         }
 
         database.addListenerForSingleValueEvent(object : ValueEventListener {
+            @RequiresApi(Build.VERSION_CODES.O)
             override fun onDataChange(snapshot: DataSnapshot) {
                 val medicosList = ArrayList<medico>()
                 for (medicoSnapshot in snapshot.children) {
