@@ -67,8 +67,14 @@ class AgendarMedicoFragment : Fragment() {
                     mes,
                     dia
                 )
+            datePicker.datePicker.minDate = calendario.timeInMillis
+
+            val maxDateCalendar = Calendar.getInstance()
+            maxDateCalendar.add(Calendar.YEAR, 2)
+            datePicker.datePicker.maxDate = maxDateCalendar.timeInMillis
 
             datePicker.show()
+
         }
 
         //spinner hora
