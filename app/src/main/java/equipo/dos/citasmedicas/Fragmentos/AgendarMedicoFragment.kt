@@ -10,6 +10,7 @@ import android.app.Dialog
 import android.os.Build
 import android.os.Bundle
 import android.os.Parcel
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -48,7 +49,6 @@ class AgendarMedicoFragment : Fragment() {
     private lateinit var tvFecha: TextView
     private lateinit var tvHoraSeleccionada: TextView
     private lateinit var btnConfirmar : Button
-    private var config : ConfiguracionHorario? = null
     var m : medico? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -67,9 +67,10 @@ class AgendarMedicoFragment : Fragment() {
         val id = m?.uid
         if (id != null) {
             modulo.obtenerConfiguracionDelMedico(id) { config ->
-                this.config = config
                 view.findViewById<ImageButton>(R.id.btnCalendario).setOnClickListener {
-                    mostrarSelectorFecha()
+                    if (config != null) {
+                        mostrarSelectorFecha(config)
+                    }
                 }
 
                 spHora.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {

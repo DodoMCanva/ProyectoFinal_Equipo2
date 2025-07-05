@@ -100,7 +100,7 @@
     <string name="cerrarsesion">Cerrar Sesión</string>
     <string name="textoSubrayadoHabilitar"><u>Habilitar</u></string>
     <string name="textoSubrayadoDeshabilitar"><u>Deshabilitar</u></string>
-    <string name="filtroPrincipal">Filtrar Conusultas</string>
+    <string name="filtroPrincipal">Filtrar</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
