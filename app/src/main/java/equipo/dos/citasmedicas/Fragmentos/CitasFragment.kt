@@ -52,7 +52,7 @@ class CitasFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_principal, container, false)
 
     }
-
+    lateinit var listaCitas: RecyclerView
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val semana: Switch = view.findViewById(R.id.swSemana)
@@ -61,7 +61,7 @@ class CitasFragment : Fragment() {
         val fechaTexto: TextView = view.findViewById(R.id.tvConsultaFecha)
         val fechaInicio: TextView = view.findViewById(R.id.tvFechaInicio)
         val fechaFinal: TextView = view.findViewById(R.id.tvFechaFinal)
-        val listaCitas: RecyclerView = view.findViewById(R.id.rvCitas)
+        listaCitas = view.findViewById(R.id.rvCitas)
         val btnAgendar: FloatingActionButton? = view.findViewById(R.id.btnAgendar)
 
         fechaTexto.setText(fechaBusqueda)
@@ -69,9 +69,9 @@ class CitasFragment : Fragment() {
         fechaFinal.setText(fechaFinale)
         fechaInicio.visibility = View.INVISIBLE
         fechaFinal.visibility = View.INVISIBLE
-        listaCitas.layoutManager = LinearLayoutManager(requireContext())
+        this.listaCitas.layoutManager = LinearLayoutManager(requireContext())
 
-        adaptarCitas(listaCitas)
+        adaptarCitas(this.listaCitas)
 
         if (sesion.tipo == "paciente") {
             btnAgendar?.visibility = View.VISIBLE
@@ -252,10 +252,6 @@ class CitasFragment : Fragment() {
         val tvEncabezado: TextView? =
             (activity as? frmPrincipalActivity)?.findViewById(R.id.encabezadoPrincipal)
         tvEncabezado?.text = "Mis Citas"
-        val fragment = CitasFragment()
-        parentFragmentManager.beginTransaction()
-            .replace(R.id.contenedorFragmento, fragment)
-            .addToBackStack(null)
-            .commit()
+        adaptarCitas(this.listaCitas)
     }
 }
