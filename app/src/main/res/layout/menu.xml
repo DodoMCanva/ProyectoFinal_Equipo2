@@ -8,7 +8,7 @@
     <Button
         android:id="@+id/btnMenuCerrarMenu"
         android:layout_gravity="end"
-        android:layout_marginTop="30sp"
+        android:layout_marginTop="50sp"
         android:layout_marginRight="30sp"
         android:layout_width="@dimen/menu50"
         android:layout_height="@dimen/menu50"
