@@ -123,15 +123,9 @@
         android:gravity="center"
         android:paddingTop="8dp"
         android:paddingBottom="8dp"
-        android:text="¿Olvidaste tu contraseña?"
+        android:text="@string/olviContra"
         android:textColor="@color/azulTexto"
         android:textSize="@dimen/text18" />
-
-
-    <View
-        android:layout_width="210dp"
-        android:layout_height="2dp"
-        android:background="@color/azulTexto" />
 
     <Button
         android:id="@+id/btnIniciarSesion"
@@ -159,8 +153,5 @@
         android:textColor="@color/azulTexto"
         android:textSize="@dimen/text18" />
 
-    <View
-        android:layout_width="100dp"
-        android:layout_height="2dp"
-        android:background="@color/azulTexto" />
+
 </LinearLayout>
