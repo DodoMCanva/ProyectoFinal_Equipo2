@@ -50,7 +50,7 @@ class AgendarFragment : Fragment() {
         val lvMedicos = view.findViewById<ListView>(R.id.lvMedicos)
         etBuscar = view.findViewById(R.id.etBuscarMedico)
 
-        // Ocultar/mostrar filtros
+        // ocultar y mostrar filtros
         btnFiltros.setOnClickListener {
             contenedorFiltros.visibility =
                 if (contenedorFiltros.visibility == View.VISIBLE) View.GONE else View.VISIBLE
@@ -73,7 +73,7 @@ class AgendarFragment : Fragment() {
 
                 adapterFiltro = AdapterCheckEspecialidad(requireContext(), especialidadesUnicas).apply {
                     onSeleccionCambio = {
-                        aplicarFiltroYBusqueda() // 🔥 Se llama cada que el usuario toca un checkbox
+                        aplicarFiltroYBusqueda() //llama cada que selecciona un checkbox
                     }
                 }
 
@@ -115,9 +115,9 @@ class AgendarFragment : Fragment() {
 
 
         btnFiltrar.setOnClickListener {
-            especialidadesSeleccionadas = adapterFiltro.getSeleccionados()  // Guardar selección actual
+            especialidadesSeleccionadas = adapterFiltro.getSeleccionados()  //guardar selección actual
             contenedorFiltros.visibility = View.GONE
-            aplicarFiltroYBusqueda()  // Aplicar filtro combinado
+            aplicarFiltroYBusqueda()
         }
 
         etBuscar.addTextChangedListener {

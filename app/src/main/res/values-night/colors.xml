@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FFFFFFFF</color> <!-- texto claro sobre fondo oscuro -->
-    <color name="white">#31655D</color> <!-- fondo oscuro si lo usas como color "white" -->
+    <color name="black">#FFFFFFFF</color>
+    <color name="white">#31655D</color>
 
-    <color name="azulBackground">#102624</color> <!-- fondo principal más oscuro -->
-    <color name="azulTexto">#A8E6E3</color> <!-- texto claro con contraste -->
+    <color name="azulBackground">#102624</color>
+    <color name="azulTexto">#A8E6E3</color>
 
-    <color name="verdeBtn">#7CD0C1</color> <!-- versión más oscura -->
+    <color name="verdeBtn">#7CD0C1</color>
     <color name="verdeHabilitar">#1E5F20</color>
-    <color name="grisDeshabilitar">#888888</color> <!-- gris más claro para contraste -->
+    <color name="grisDeshabilitar">#888888</color>
 
-    <color name="amarilloBtn">#FFD580</color> <!-- tono más suave y legible -->
+    <color name="amarilloBtn">#FFD580</color>
     <color name="rojoBtn">#FF9797</color>
     <color name="azulClaroBtn">#66E4C4</color>
     <color name="azulBackMensajes">#2F6F6B</color>
 
-    <color name="BackCitaCompletada">#853B8B87</color> <!-- si este ya te gusta, lo dejamos igual -->
+    <color name="BackCitaCompletada">#853B8B87</color>
     <color name="BackCitaPendiente">#2F6F6B</color>
     <color name="BackCitaCancelada">#7366663B</color>
     <color name="BackHorarios">#264241</color>
 
-    <color name="colorAzulDegra">#1FD6CE</color> <!-- degradado en tonos oscuros -->
+    <color name="colorAzulDegra">#1FD6CE</color>
     <color name="backFiltro">#246D6A</color>
     <color name="filtroBtn">#408E8A</color>
 
-    <color name="grisTexto">#AAAAAA</color> <!-- gris claro para texto secundario -->
+    <color name="grisTexto">#AAAAAA</color>
 </resources>

@@ -16,7 +16,6 @@ class AdapterCheckEspecialidad(
 
     private val seleccionados = BooleanArray(especialidades.size)
 
-    // 🔧 Nuevo listener
     var onSeleccionCambio: (() -> Unit)? = null
 
     override fun getCount(): Int = especialidades.size
@@ -30,12 +29,12 @@ class AdapterCheckEspecialidad(
         val checkBox = view.findViewById<CheckBox>(R.id.cbCategoria)
 
         checkBox.text = especialidades[position]
-        checkBox.setOnCheckedChangeListener(null) // Evitar problemas con reciclado
+        checkBox.setOnCheckedChangeListener(null)
         checkBox.isChecked = seleccionados[position]
 
         checkBox.setOnCheckedChangeListener { _, isChecked ->
             seleccionados[position] = isChecked
-            onSeleccionCambio?.invoke() // 🔥 Notificar al fragmento
+            onSeleccionCambio?.invoke()
         }
 
         return view
