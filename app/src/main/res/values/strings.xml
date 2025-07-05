@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Citas Médicas</string>
-    <string name="btnRegistrarse">Registrarse</string>
+    <string name="btnRegistrarse"><u>Registrarse</u></string>
     <string name="contrasena">Contraseña</string>
     <string name="correo">Correo</string>
     <string name="made">Made</string>
@@ -11,6 +11,7 @@
     <string name="btnEresMedicoSi">Sí</string>
     <string name="btnEresMedicoNo">No</string>
     <string name="misCitas">Mis Citas</string>
+    <string name="olviContra"><u>¿Olvidaste tu contraseña?</u>></string>
     <string name="restacontra">Restablecer contraseña</string>
     <string name="textResContra">Ingresa tu correo electrónico y te enviaremos un código para restablecer tu contraseña.</string>
     <string name="botonEnviarCodigo">Enviar código</string>
@@ -29,7 +30,7 @@
     <string name="codigoVerificacion">Código de verificación</string>
     <string name="textVerificaTuidentidad">Hemos enviado un código a tu correo. Escríbelo aquí para continuar.</string>
     <string name="botonVerificar">Verificar</string>
-    <string name="noRecibisteElcodigo">¿No recibiste el código? \nReenviar</string>
+    <string name="noRecibisteElcodigo"><u>¿No recibiste el código?</u>\nReenviar</string>
     <string name="rebisaBandejaCorreo">Revisa tu bandeja de entrada o \ncorreo no deseado.</string>
     <string name="titulonuevaContrasena">Nueva \ncontraseña</string>
     <string name="txtnuevaContrasena">Ingresa una nueva \ncontraseña para tu cuenta.</string>
