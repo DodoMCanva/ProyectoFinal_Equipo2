@@ -252,5 +252,10 @@ class CitasFragment : Fragment() {
         val tvEncabezado: TextView? =
             (activity as? frmPrincipalActivity)?.findViewById(R.id.encabezadoPrincipal)
         tvEncabezado?.text = "Mis Citas"
+        val fragment = CitasFragment()
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.contenedorFragmento, fragment)
+            .addToBackStack(null)
+            .commit()
     }
 }
