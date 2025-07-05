@@ -50,7 +50,7 @@ class AgendarMedicoFragment : Fragment() {
         val tvNombreMedico = view.findViewById<TextView>(R.id.tvAgendarNombre)
         val tvCosto = view.findViewById<TextView>(R.id.tvMontoAgendar)
         val btnCancelar = view.findViewById<Button>(R.id.btnCancelar)
-
+        spHora.isEnabled = false
         btnConfirmar = view.findViewById(R.id.btnConfirmar)
         m = arguments?.getSerializable("medico") as? medico
         spHora = view.findViewById(R.id.spHora)
@@ -193,6 +193,8 @@ class AgendarMedicoFragment : Fragment() {
                     spHora.isEnabled = false
                     Toast.makeText(context, "No tiene Horarios Disponibles", Toast.LENGTH_SHORT).show()
                     return@obtenerConfiguracionDelMedico
+                } else {
+                    spHora.isEnabled = true
                 }
                 val (mañanaP, tardeP) = modulo.obtenerConfigDelDia(config, dow)
                 val horas = mutableListOf<String>()
@@ -202,6 +204,7 @@ class AgendarMedicoFragment : Fragment() {
                     Toast.makeText(context, "No hay horarios disponibles", Toast.LENGTH_SHORT).show()
                     spHora.adapter = null
                 } else {
+                    spHora.isEnabled = true
                     spHora.adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, horas).apply {
                         setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                     }
