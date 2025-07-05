@@ -1,9 +1,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:layout_width="300dp"
-    android:layout_height="500dp"
-    android:background="@color/backFiltro">
-
+    android:layout_width="260dp"
+    android:layout_height="wrap_content"
+    android:background="@drawable/backfiltroagendar"
+    android:paddingBottom="10dp"
+    android:maxHeight="400dp">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -26,24 +27,27 @@
 
         <Button
             android:id="@+id/btnFiltrar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="70dp"
+            android:layout_height="50dp"
             android:text="@string/filtrar"
-            android:textColor="@color/azulBackground"
-            android:fontFamily="@font/quicksandsemibold"
+            android:textColor="@color/white"
+            android:fontFamily="@font/quicksandmedium"
+            android:backgroundTint="@color/filtroBtn"
             android:layout_margin="0dp"
             android:padding="0dp"
-            android:textSize="@dimen/textcampo16"
-            android:backgroundTint="@color/filtroBtn"
+                android:textAllCaps="false"
             android:layout_gravity="top" />
+
+
     </LinearLayout>
 
 
     <ListView
         android:id="@+id/lvEspecialidades"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:scrollbars="vertical"
+        android:paddingLeft="10dp"
         android:divider="@null"
         android:dividerHeight="0dp" />
 </LinearLayout>

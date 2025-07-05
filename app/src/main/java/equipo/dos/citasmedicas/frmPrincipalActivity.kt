@@ -104,6 +104,8 @@ class frmPrincipalActivity : AppCompatActivity() {
 
     private fun setupUI() {
         MenuDesplegable.configurarMenu(this)
+        findViewById<com.google.android.material.navigation.NavigationView>(R.id.navegacion_menu).itemIconTintList = null
+
         if (this is frmPrincipalActivity) {
             this.supportFragmentManager.commit {
                 setReorderingAllowed(true)

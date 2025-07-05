@@ -42,23 +42,14 @@
                 android:layout_height="50sp"
                 android:textColor="@color/white"
                 android:fontFamily="@font/quicksandmedium"
-                android:backgroundTint="@color/azulClaroBtn"
+                android:backgroundTint="@color/backFiltro
+"
                 android:text="Filtro"
                 android:textAllCaps="false"
                 />
         </LinearLayout>
 
-        <FrameLayout
-            android:id="@+id/contenedorFiltros"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
-            android:background="@color/backFiltro">
 
-            <include layout="@layout/agendarfiltro" />
-        </FrameLayout>
 
         <ListView
             android:id="@+id/lvMedicos"
@@ -66,4 +57,19 @@
             android:layout_height="match_parent"
             android:layout_gravity="center_horizontal" />
     </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/contenedorFiltros"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="30dp"
+        android:visibility="gone"
+        android:background="@drawable/backfiltroagendar"
+        android:elevation="0dp">
+
+        <include layout="@layout/agendarfiltro" />
+    </FrameLayout>
+
 </FrameLayout>
