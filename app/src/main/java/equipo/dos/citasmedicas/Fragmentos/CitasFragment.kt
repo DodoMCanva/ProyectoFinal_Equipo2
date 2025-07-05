@@ -36,8 +36,8 @@ class CitasFragment : Fragment() {
 
 
     var adapter: AdapterCitaRecycler? = null
-    var filtroBusqueda: Boolean = false
-    var aplicarFiltros: Boolean = false
+    var filtroSemana: Boolean = false
+    var filtroDia: Boolean = false
 
     //NOTA: formato anterior yyyy-MM-dd
     var fechaBusqueda: String =
@@ -55,8 +55,8 @@ class CitasFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val aplicar: Switch = view.findViewById(R.id.swFiltrosCitas)
-        val filtro: Switch = view.findViewById(R.id.swMostrarTodaSemana)
+        val semana: Switch = view.findViewById(R.id.swSemana)
+        val dia: Switch = view.findViewById(R.id.swDia)
         val calendario: ImageButton = view.findViewById(R.id.btnCalendarioConsultaCitas)
         val fechaTexto: TextView = view.findViewById(R.id.tvConsultaFecha)
         val fechaInicio: TextView = view.findViewById(R.id.tvFechaInicio)
@@ -101,7 +101,7 @@ class CitasFragment : Fragment() {
                     val fechaSeleccionadaStr = formato.format(fechaSeleccionadaCal.time)
                     fechaTexto.text = fechaSeleccionadaStr
                     fechaBusqueda = fechaSeleccionadaStr
-                    if (filtroBusqueda) {
+                    if (filtroSemana) {
                         fechaInicio.visibility = View.VISIBLE
                         fechaFinal.visibility = View.VISIBLE
                         fechaInicio.setText(fechaBusqueda)
@@ -125,9 +125,10 @@ class CitasFragment : Fragment() {
             datePicker.show()
         }
 
-        filtro.setOnCheckedChangeListener { _, isChecked ->
-            filtroBusqueda = isChecked
-            if (filtroBusqueda) {
+        semana.setOnCheckedChangeListener { _, isChecked ->
+            filtroSemana = isChecked
+            dia.isChecked = false
+            if (filtroSemana) {
                 fechaInicio.visibility = View.VISIBLE
                 fechaFinal.visibility = View.VISIBLE
             } else {
@@ -136,8 +137,9 @@ class CitasFragment : Fragment() {
             }
             adaptarCitas(listaCitas)
         }
-        aplicar.setOnCheckedChangeListener { _, isChecked ->
-            aplicarFiltros = isChecked
+        dia.setOnCheckedChangeListener { _, isChecked ->
+            filtroDia = isChecked
+            semana.isChecked = false
             adaptarCitas(listaCitas)
         }
 
@@ -147,16 +149,18 @@ class CitasFragment : Fragment() {
         sesion.actualizarListaCitas {
             if (sesion.citas != null && sesion.citas.isNotEmpty()) {
                 var lista : ArrayList<cita>
-                if (aplicarFiltros){
-                    if (filtroBusqueda) {
-                        lista = sesion.listaOrdenada().semana(fechaBusqueda, fechaFinale)
-                        lista = lista.encabezar(fechaBusqueda, fechaFinale)
-                    } else {
-                        lista = sesion.listaOrdenada().dia(fechaBusqueda)
-                    }
-                }else{
-                    lista = sesion.listaOrdenada().actuales()
-                }
+
+//                when
+//                if (filtroSemana) {
+//                        lista = sesion.listaOrdenada().semana(fechaBusqueda, fechaFinale)
+//                        lista = lista.encabezar(fechaBusqueda, fechaFinale)
+//                } else {
+//                    lista = sesion.listaOrdenada().actuales()
+//                        lista = sesion.listaOrdenada().dia(fechaBusqueda)
+//                }
+//                if (filtroDia)
+
+
 
                 adapter = AdapterCitaRecycler(requireContext(), lista, sesion.tipo) { citaSeleccionada ->
                     val fragment = if (sesion.tipo == "paciente") {
