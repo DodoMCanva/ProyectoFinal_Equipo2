@@ -127,7 +127,9 @@ class CitasFragment : Fragment() {
 
         semana.setOnCheckedChangeListener { _, isChecked ->
             filtroSemana = isChecked
-            dia.isChecked = false
+            if (isChecked){
+                dia.isChecked = false
+            }
             if (filtroSemana) {
                 fechaInicio.visibility = View.VISIBLE
                 fechaFinal.visibility = View.VISIBLE
@@ -139,7 +141,9 @@ class CitasFragment : Fragment() {
         }
         dia.setOnCheckedChangeListener { _, isChecked ->
             filtroDia = isChecked
-            semana.isChecked = false
+            if (isChecked) {
+                semana.isChecked = false
+            }
             adaptarCitas(listaCitas)
         }
 
@@ -148,25 +152,33 @@ class CitasFragment : Fragment() {
     fun adaptarCitas(recyclerView: RecyclerView) {
         sesion.actualizarListaCitas {
             if (sesion.citas != null && sesion.citas.isNotEmpty()) {
-                var lista = when {
-                    filtroDia -> sesion.listaOrdenada().semana(fechaBusqueda, fechaFinale).encabezar(fechaBusqueda, fechaFinale)
-                    filtroSemana -> sesion.listaOrdenada().dia(fechaBusqueda)
-                    else -> sesion.listaOrdenada().actuales()
+                var lista: ArrayList<cita>
+
+                lista = if (filtroDia) {
+                    sesion.listaOrdenada().dia(fechaBusqueda)
+                } else if (filtroSemana) {
+                    sesion.listaOrdenada().semana(fechaBusqueda, fechaFinale)
+                    .encabezar(fechaBusqueda, fechaFinale)
+
+                } else {
+                    sesion.listaOrdenada().actuales()
                 }
 
-                adapter = AdapterCitaRecycler(requireContext(), lista, sesion.tipo) { citaSeleccionada ->
-                    val fragment = if (sesion.tipo == "paciente") {
-                        DetalleCitaPacienteFragment()
-                    } else {
-                        DetalleCitaMedicoFragment()
+
+                adapter =
+                    AdapterCitaRecycler(requireContext(), lista, sesion.tipo) { citaSeleccionada ->
+                        val fragment = if (sesion.tipo == "paciente") {
+                            DetalleCitaPacienteFragment()
+                        } else {
+                            DetalleCitaMedicoFragment()
+                        }
+                        val bundle = Bundle().apply { putString("citaId", citaSeleccionada.idCita) }
+                        fragment.arguments = bundle
+                        parentFragmentManager.beginTransaction()
+                            .replace(R.id.contenedorFragmento, fragment)
+                            .addToBackStack(null)
+                            .commit()
                     }
-                    val bundle = Bundle().apply { putString("citaId", citaSeleccionada.idCita) }
-                    fragment.arguments = bundle
-                    parentFragmentManager.beginTransaction()
-                        .replace(R.id.contenedorFragmento, fragment)
-                        .addToBackStack(null)
-                        .commit()
-                }
                 recyclerView.adapter = adapter
             }
         }
@@ -221,10 +233,11 @@ class CitasFragment : Fragment() {
         return lista
     }
 
-    fun ArrayList<cita>.actuales() : ArrayList<cita> {
+    fun ArrayList<cita>.actuales(): ArrayList<cita> {
         val lista = ArrayList<cita>()
         val formato = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-        val fechaInicio = formato.parse(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")))
+        val fechaInicio =
+            formato.parse(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")))
         for (cita in this) {
             val fechaCita = formato.parse(cita.fecha)
             if (!fechaCita.before(fechaInicio)) {
@@ -236,7 +249,8 @@ class CitasFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        val tvEncabezado: TextView? = (activity as? frmPrincipalActivity)?.findViewById(R.id.encabezadoPrincipal)
+        val tvEncabezado: TextView? =
+            (activity as? frmPrincipalActivity)?.findViewById(R.id.encabezadoPrincipal)
         tvEncabezado?.text = "Mis Citas"
     }
 }

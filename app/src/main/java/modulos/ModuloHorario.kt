@@ -175,4 +175,33 @@ class ModuloHorario {
             }
         })
     }
+
+    fun eliminarHorasOcupadas(uidMedico: String, fecha: String, horasDisponibles: MutableList<String>, onResultado: (MutableList<String>) -> Unit) {
+        val ref = FirebaseDatabase.getInstance()
+            .getReference("usuarios")
+            .child("citas")
+        val query = ref.orderByChild("idMedico").equalTo(uidMedico)
+        query.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val horasOcupadas = mutableListOf<String>()
+
+                for (citaSnap in snapshot.children) {
+                    val cita = citaSnap.getValue(cita::class.java)
+                    if (cita != null && cita.fecha == fecha) {
+                        horasOcupadas.add(cita.hora.toString())
+                    }
+                }
+
+                val horasRestantes = horasDisponibles.filter { !horasOcupadas.contains(it) }.toMutableList()
+
+                onResultado(horasRestantes)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("Firebase", "Error al eliminar horas ocupadas: ${error.message}")
+                onResultado(horasDisponibles) // Devolver la lista original si ocurre un error
+            }
+        })
+    }
+
 }

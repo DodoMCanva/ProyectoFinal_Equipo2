@@ -48,8 +48,8 @@ class AgendarMedicoFragment : Fragment() {
     private lateinit var spHora: Spinner
     private lateinit var tvFecha: TextView
     private lateinit var tvHoraSeleccionada: TextView
-    private lateinit var btnConfirmar : Button
-    var m : medico? = null
+    private lateinit var btnConfirmar: Button
+    var m: medico? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val tvNombreMedico = view.findViewById<TextView>(R.id.tvAgendarNombre)
@@ -74,9 +74,15 @@ class AgendarMedicoFragment : Fragment() {
                 }
 
                 spHora.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                    override fun onItemSelected(parent: AdapterView<*>, view: View?, pos: Int, id: Long) {
+                    override fun onItemSelected(
+                        parent: AdapterView<*>,
+                        view: View?,
+                        pos: Int,
+                        id: Long
+                    ) {
                         tvHoraSeleccionada.text = parent.getItemAtPosition(pos).toString()
                     }
+
                     override fun onNothingSelected(parent: AdapterView<*>) {}
                 }
 
@@ -89,7 +95,11 @@ class AgendarMedicoFragment : Fragment() {
                     val motivoStr = txtMotivo.text.toString().trim()
 
                     if (fechaStr.isBlank() || horaStr.isBlank() || motivoStr.isBlank()) {
-                        Toast.makeText(requireContext(), "Completa todos los campos", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            requireContext(),
+                            "Completa todos los campos",
+                            Toast.LENGTH_SHORT
+                        ).show()
                         return@setOnClickListener
                     }
 
@@ -106,16 +116,22 @@ class AgendarMedicoFragment : Fragment() {
                         .setOnClickListener {
 
                             val med = m ?: return@setOnClickListener
-                            val paciente = sesion.obtenerSesion() as? paciente ?: return@setOnClickListener
+                            val paciente =
+                                sesion.obtenerSesion() as? paciente ?: return@setOnClickListener
 
                             modulo.validarDiaConsulta(med.uid!!, fechaStr, horaStr) { válido ->
                                 if (!isAdded) return@validarDiaConsulta
 
                                 if (válido) {
-                                    val db = FirebaseDatabase.getInstance().getReference("usuarios").child("citas")
+                                    val db = FirebaseDatabase.getInstance().getReference("usuarios")
+                                        .child("citas")
                                     val citaId = db.push().key
                                     if (citaId == null) {
-                                        Toast.makeText(requireContext(), "Error generando ID", Toast.LENGTH_SHORT).show()
+                                        Toast.makeText(
+                                            requireContext(),
+                                            "Error generando ID",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
                                         dialog.dismiss()
                                         return@validarDiaConsulta
                                     }
@@ -138,9 +154,16 @@ class AgendarMedicoFragment : Fragment() {
                                     db.child(citaId).setValue(nuevaCita)
                                         .addOnSuccessListener {
                                             if (isAdded) {
-                                                Toast.makeText(requireContext(), "Cita agendada con éxito.", Toast.LENGTH_SHORT).show()
+                                                Toast.makeText(
+                                                    requireContext(),
+                                                    "Cita agendada con éxito.",
+                                                    Toast.LENGTH_SHORT
+                                                ).show()
                                                 parentFragmentManager.beginTransaction()
-                                                    .replace(R.id.contenedorFragmento, CitasFragment())
+                                                    .replace(
+                                                        R.id.contenedorFragmento,
+                                                        CitasFragment()
+                                                    )
                                                     .addToBackStack(null)
                                                     .commit()
                                             }
@@ -148,12 +171,20 @@ class AgendarMedicoFragment : Fragment() {
                                         }
                                         .addOnFailureListener {
                                             if (isAdded) {
-                                                Toast.makeText(requireContext(), "Error al agendar: ${it.message}", Toast.LENGTH_SHORT).show()
+                                                Toast.makeText(
+                                                    requireContext(),
+                                                    "Error al agendar: ${it.message}",
+                                                    Toast.LENGTH_SHORT
+                                                ).show()
                                             }
                                             dialog.dismiss()
                                         }
                                 } else {
-                                    if (isAdded) Toast.makeText(requireContext(), "Hora no disponible. Elige otra.", Toast.LENGTH_SHORT).show()
+                                    if (isAdded) Toast.makeText(
+                                        requireContext(),
+                                        "Hora no disponible. Elige otra.",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
                                     dialog.dismiss()
                                 }
                             }
@@ -174,7 +205,6 @@ class AgendarMedicoFragment : Fragment() {
     }
 
 
-
     private fun mostrarSelectorFecha(config: ConfiguracionHorario) {
         val calendar = Calendar.getInstance()
         val y = calendar.get(Calendar.YEAR)
@@ -188,7 +218,11 @@ class AgendarMedicoFragment : Fragment() {
                 calendar.set(year, month, dayOfMonth)
                 val dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK)
                 if (modulo.listaInhabiles(config).contains(dayOfWeek)) {
-                    Toast.makeText(requireContext(), "Este día no está disponible", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireContext(),
+                        "Este día no está disponible",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 } else {
                     val fechaStr = String.format("%02d/%02d/%04d", dayOfMonth, month + 1, year)
                     tvFecha.text = fechaStr
@@ -203,11 +237,12 @@ class AgendarMedicoFragment : Fragment() {
     }
 
 
-
-
     private fun configurarSpinnerHoras(year: Int, month: Int, day: Int) {
         val cal = Calendar.getInstance().apply { set(year, month, day) }
+
         val dow = cal.get(Calendar.DAY_OF_WEEK)
+
+        val fecha = String.format("%02d/%02d/%04d", day, month + 1, year)
 
         val uid = m?.uid
         if (uid != null) {
@@ -215,36 +250,63 @@ class AgendarMedicoFragment : Fragment() {
                 if (config == null) {
                     btnConfirmar.isEnabled = false
                     spHora.isEnabled = false
-                    Toast.makeText(context, "No tiene Horarios Disponibles", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "No tiene Horarios Disponibles", Toast.LENGTH_SHORT)
+                        .show()
                     return@obtenerConfiguracionDelMedico
                 } else {
                     btnConfirmar.isEnabled = true
                     spHora.isEnabled = true
                 }
+
                 val (mañanaP, tardeP) = modulo.obtenerConfigDelDia(config, dow)
                 val horas = mutableListOf<String>()
-                if (mañanaP.first) horas += modulo.generarHorasEnHorario(mañanaP.second.desde, mañanaP.second.hasta)
-                if (tardeP.first) horas += modulo.generarHorasEnHorario(tardeP.second.desde, tardeP.second.hasta)
+                if (mañanaP.first) horas += modulo.generarHorasEnHorario(
+                    mañanaP.second.desde,
+                    mañanaP.second.hasta
+                )
+                if (tardeP.first) horas += modulo.generarHorasEnHorario(
+                    tardeP.second.desde,
+                    tardeP.second.hasta
+                )
+
                 if (horas.isEmpty()) {
                     btnConfirmar.isEnabled = false
                     spHora.isEnabled = false
-                    Toast.makeText(context, "No hay horarios disponibles", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "No hay horarios disponibles", Toast.LENGTH_SHORT)
+                        .show()
                     spHora.adapter = null
                 } else {
-                    btnConfirmar.isEnabled = true
-                    spHora.isEnabled = true
-                    spHora.adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, horas).apply {
-                        setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                    modulo.eliminarHorasOcupadas(uid, fecha, horas) { horasRestantes ->
+                        if (horasRestantes.isEmpty()) {
+                            btnConfirmar.isEnabled = false
+                            spHora.isEnabled = false
+                            Toast.makeText(
+                                context,
+                                "No hay horarios disponibles",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            spHora.adapter = null
+                        } else {
+                            btnConfirmar.isEnabled = true
+                            spHora.isEnabled = true
+                            spHora.adapter = ArrayAdapter(
+                                requireContext(),
+                                android.R.layout.simple_spinner_item,
+                                horasRestantes
+                            ).apply {
+                                setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                            }
+                        }
                     }
                 }
             }
         }
-
     }
-    
+
     override fun onResume() {
         super.onResume()
-        val tvEncabezado: TextView? = (activity as? frmPrincipalActivity)?.findViewById(R.id.encabezadoPrincipal)
+        val tvEncabezado: TextView? =
+            (activity as? frmPrincipalActivity)?.findViewById(R.id.encabezadoPrincipal)
         tvEncabezado?.text = "Agendar"
     }
 }
