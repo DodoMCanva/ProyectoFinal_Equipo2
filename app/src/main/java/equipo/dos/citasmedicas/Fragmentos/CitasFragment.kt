@@ -148,20 +148,11 @@ class CitasFragment : Fragment() {
     fun adaptarCitas(recyclerView: RecyclerView) {
         sesion.actualizarListaCitas {
             if (sesion.citas != null && sesion.citas.isNotEmpty()) {
-                var lista : ArrayList<cita>
-                lista = ArrayList<cita>()
-
-//                when
-//                if (filtroSemana) {
-//                        lista = sesion.listaOrdenada().semana(fechaBusqueda, fechaFinale)
-//                        lista = lista.encabezar(fechaBusqueda, fechaFinale)
-//                } else {
-//                    lista = sesion.listaOrdenada().actuales()
-//                        lista = sesion.listaOrdenada().dia(fechaBusqueda)
-//                }
-//                if (filtroDia)
-
-
+                var lista = when {
+                    filtroDia -> sesion.listaOrdenada().semana(fechaBusqueda, fechaFinale).encabezar(fechaBusqueda, fechaFinale)
+                    filtroSemana -> sesion.listaOrdenada().dia(fechaBusqueda)
+                    else -> sesion.listaOrdenada().actuales()
+                }
 
                 adapter = AdapterCitaRecycler(requireContext(), lista, sesion.tipo) { citaSeleccionada ->
                     val fragment = if (sesion.tipo == "paciente") {
