@@ -55,6 +55,32 @@ class ModuloHorario {
         }
     }
 
+    fun listaInhabiles(config : ConfiguracionHorario) : ArrayList<Int>{
+        var lista = ArrayList<Int>()
+        if (!config.lunesMananaActivo && !config.lunesTardeActivo) {
+            lista.add(Calendar.MONDAY)
+        }
+        if (!config.martesMananaActivo && !config.martesTardeActivo) {
+            lista.add(Calendar.TUESDAY)
+        }
+        if (!config.miercolesMananaActivo && !config.miercolesTardeActivo) {
+            lista.add(Calendar.WEDNESDAY)
+        }
+        if (!config.juevesMananaActivo && !config.juevesTardeActivo) {
+            lista.add(Calendar.THURSDAY)
+        }
+        if (!config.viernesMananaActivo && !config.viernesTardeActivo) {
+            lista.add(Calendar.FRIDAY)
+        }
+        if (!config.sabadoMananaActivo && !config.sabadoTardeActivo) {
+            lista.add(Calendar.SATURDAY)
+        }
+        if (!config.domingoMananaActivo && !config.domingoTardeActivo) {
+            lista.add(Calendar.SUNDAY)
+        }
+        return lista
+    }
+
     fun generarHorasEnHorario(desde: String, hasta: String): List<String> {
         val formatoHora = SimpleDateFormat("HH:mm", Locale.getDefault())
         val horas = mutableListOf<String>()
