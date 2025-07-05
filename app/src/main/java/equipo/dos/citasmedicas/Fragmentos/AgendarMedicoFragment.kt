@@ -23,6 +23,7 @@ import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import com.google.android.material.datepicker.MaterialDatePicker.Builder.datePicker
 import com.google.firebase.database.FirebaseDatabase
 import equipo.dos.citasmedicas.R
 import equipo.dos.citasmedicas.frmPrincipalActivity
@@ -65,14 +66,21 @@ class AgendarMedicoFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.O)
     private fun mostrarSelectorFecha() {
         val cal = Calendar.getInstance()
-        DatePickerDialog(requireContext(),
+        val datePicker = DatePickerDialog(requireContext(),
             { _: DatePicker, y: Int, m: Int, d: Int ->
                 val fechaStr = String.format("%02d/%02d/%04d", d, m+1, y)
                 tvFecha.text = fechaStr
                 configurarSpinnerHoras(y, m, d)
             },
             cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)
-        ).show()
+        )
+        datePicker.datePicker.minDate = cal.timeInMillis
+        val maxDateCalendar = Calendar.getInstance()
+        maxDateCalendar.add(Calendar.YEAR, 2)
+        datePicker.datePicker.maxDate = maxDateCalendar.timeInMillis
+
+        datePicker.show()
+
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
