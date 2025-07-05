@@ -46,7 +46,6 @@ class DetalleCitaMedicoFragment : Fragment() {
 
     private lateinit var citaId: String
     private var imgFotoPacienteDetalle: ImageView? = null
-    // ivRecetaDetallesCitaMedico NO se necesita como variable de clase si la imagen no se muestra en la vista principal
     private var tvNotasReceta: TextView? = null
     private var imagenRecetaUri: Uri? = null
 
@@ -173,7 +172,6 @@ class DetalleCitaMedicoFragment : Fragment() {
                         }
                     }
 
-                    // Lógica para cargar la imagen del PACIENTE
                     val idPaciente =
                         citaData.idPaciente
                     if (!idPaciente.isNullOrEmpty()) {
