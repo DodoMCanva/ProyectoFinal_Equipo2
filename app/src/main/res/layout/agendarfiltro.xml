@@ -20,7 +20,7 @@
             android:layout_gravity="center_vertical"
             android:text="@string/especialidad"
             android:fontFamily="@font/quicksandbold"
-            android:textColor="@color/white"
+            android:textColor="@color/whiteBtn"
             android:textSize="@dimen/textomenu25"
             android:textStyle="bold"
             android:layout_margin="0dp" />
@@ -30,7 +30,7 @@
             android:layout_width="70dp"
             android:layout_height="50dp"
             android:text="@string/filtrar"
-            android:textColor="@color/white"
+            android:textColor="@color/whiteBtn"
             android:fontFamily="@font/quicksandmedium"
             android:backgroundTint="@color/filtroBtn"
             android:layout_margin="0dp"

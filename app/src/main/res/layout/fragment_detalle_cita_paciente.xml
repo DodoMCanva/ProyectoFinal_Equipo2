@@ -227,7 +227,7 @@
                 android:paddingBottom="12dp"
                 android:text="@string/btnCancelarCita"
                 android:textAllCaps="false"
-                android:textColor="@color/white"
+                android:textColor="@color/whiteBtn"
                 android:textSize="18sp" /> </LinearLayout>
     </ScrollView>
 

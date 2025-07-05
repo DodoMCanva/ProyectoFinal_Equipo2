@@ -40,10 +40,9 @@
                 android:id="@+id/btnFiltros"
                 android:layout_width="70dp"
                 android:layout_height="50sp"
-                android:textColor="@color/white"
+                android:textColor="@color/whiteBtn"
                 android:fontFamily="@font/quicksandmedium"
-                android:backgroundTint="@color/backFiltro
-"
+                android:backgroundTint="@color/backFiltro"
                 android:text="Filtro"
                 android:textAllCaps="false"
                 />

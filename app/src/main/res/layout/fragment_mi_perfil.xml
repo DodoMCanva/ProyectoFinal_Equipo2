@@ -68,7 +68,7 @@
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:text=" Editar Perfil "
-            android:textColor="@color/white"
+            android:textColor="@color/whiteBtn"
             android:textAllCaps="false"
             android:background="@drawable/btn_azul_redondeado_si"/>
 
@@ -79,7 +79,7 @@
             android:layout_height="wrap_content"
             android:text="@string/cerrarsesion"
             android:textAllCaps="false"
-            android:textColor="@color/white"
+            android:textColor="@color/whiteBtn"
             android:background="@drawable/btn_rojo_redondear_no"/>
 
     </LinearLayout>

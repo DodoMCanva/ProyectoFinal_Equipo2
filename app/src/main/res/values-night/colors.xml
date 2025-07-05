@@ -6,12 +6,12 @@
     <color name="azulBackground">#102624</color>
     <color name="azulTexto">#A8E6E3</color>
 
-    <color name="verdeBtn">#7CD0C1</color>
+    <color name="verdeBtn">#4FBB94</color>
     <color name="verdeHabilitar">#1E5F20</color>
     <color name="grisDeshabilitar">#888888</color>
 
-    <color name="amarilloBtn">#FFD580</color>
-    <color name="rojoBtn">#FF9797</color>
+    <color name="amarilloBtn">#E6AB4F</color>
+    <color name="rojoBtn">#E05555</color>
     <color name="azulClaroBtn">#66E4C4</color>
     <color name="azulBackMensajes">#2F6F6B</color>
 

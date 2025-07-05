@@ -399,7 +399,7 @@
                 android:minHeight="55dp"
                 android:text="@string/btnRegistrarse"
                 android:textAllCaps="false"
-                android:textColor="@android:color/white"
+                android:textColor="@color/whiteBtn"
                 android:textSize="20sp"
                 android:layout_gravity="center"/>
 

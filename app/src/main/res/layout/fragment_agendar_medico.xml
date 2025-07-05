@@ -201,7 +201,7 @@
                 android:background="@drawable/btn_azul_redondeado_si"
                 android:text="Confirmar"
                 android:textAllCaps="false"
-                android:textColor="@color/white" />
+                android:textColor="@color/whiteBtn" />
 
             <Button
                 android:id="@+id/btnCancelar"
@@ -211,7 +211,7 @@
                 android:background="@drawable/btn_rojo_redondear_no"
                 android:textAllCaps="false"
                 android:text="Cancelar"
-                android:textColor="@color/white" />
+                android:textColor="@color/whiteBtn" />
 
         </LinearLayout>
 

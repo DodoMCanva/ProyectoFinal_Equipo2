@@ -34,7 +34,7 @@
         android:background="@drawable/btn_azul_redondeado_si"
         android:text="@string/btnEresMedicoSi"
         android:textAllCaps="false"
-        android:textColor="@color/white"
+        android:textColor="@color/whiteBtn"
         android:textSize="20sp" />
 
     <Button
@@ -45,7 +45,7 @@
         android:background="@drawable/btn_rojo_redondear_no"
         android:text="@string/btnEresMedicoNo"
         android:textAllCaps="false"
-        android:textColor="@color/white"
+        android:textColor="@color/whiteBtn"
         android:textSize="20sp" />
 
     <ImageView

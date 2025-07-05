@@ -20,7 +20,7 @@
             android:fontFamily="@font/quicksandbold"
             android:textSize="@dimen/textcampo16"
             android:gravity="center"
-            android:textColor="@color/white"
+            android:textColor="@color/whiteBtn"
             android:text="Cardiologo"/>
         <TextView
             android:id="@+id/medicoNombre"
@@ -29,7 +29,7 @@
             android:gravity="center"
             android:fontFamily="@font/quicksandmedium"
             android:textSize="@dimen/textcampo16"
-            android:textColor="@color/white"
+            android:textColor="@color/whiteBtn"
             android:text="Emanuel Quiroz Soto"/>
     </LinearLayout>
 </LinearLayout>

@@ -12,7 +12,7 @@
         android:buttonTint="@color/white"
         android:textSize="@dimen/text18"
         android:fontFamily="@font/quicksandbold"
-        android:textColor="@color/white"
+        android:textColor="@color/whiteBtn"
         android:text="@string/especialidad"
         android:paddingLeft="0dp"/>
 

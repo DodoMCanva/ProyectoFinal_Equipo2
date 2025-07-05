@@ -62,7 +62,7 @@
         android:textAllCaps="false"
         android:background="@drawable/fondo_boton_gradiente"
         android:text="@string/botonVerificar"
-        android:textColor="@color/white"
+        android:textColor="@color/whiteBtn"
         />
     <TextView
         android:id="@+id/tvNoRecibisteCodigo"
