@@ -43,14 +43,15 @@ class AgendarMedicoFragment : Fragment() {
     private lateinit var spHora: Spinner
     private lateinit var tvFecha: TextView
     private lateinit var tvHoraSeleccionada: TextView
-    private lateinit var tvNombreMedico: TextView
-    private lateinit var tvCosto: TextView
+    private lateinit var btnConfirmar : Button
     var m : medico? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val tvNombreMedico = view.findViewById<TextView>(R.id.tvAgendarNombre)
         val tvCosto = view.findViewById<TextView>(R.id.tvMontoAgendar)
         val btnCancelar = view.findViewById<Button>(R.id.btnCancelar)
+
+        btnConfirmar = view.findViewById(R.id.btnConfirmar)
         m = arguments?.getSerializable("medico") as? medico
         spHora = view.findViewById(R.id.spHora)
         tvFecha = view.findViewById(R.id.tvAgendarFecha)
@@ -70,7 +71,7 @@ class AgendarMedicoFragment : Fragment() {
             override fun onNothingSelected(parent: AdapterView<*>) {}
         }
 
-        val btnConfirmar = view.findViewById<Button>(R.id.btnConfirmar)
+
         val txtMotivo = view.findViewById<EditText>(R.id.txtMotivo)
 
         btnConfirmar.setOnClickListener {
@@ -188,7 +189,9 @@ class AgendarMedicoFragment : Fragment() {
         if (uid != null) {
             modulo.obtenerConfiguracionDelMedico(uid) { config ->
                 if (config == null) {
-                    Toast.makeText(context, "Error al cargar configuración", Toast.LENGTH_SHORT).show()
+                    btnConfirmar.isEnabled = false
+                    spHora.isEnabled = false
+                    Toast.makeText(context, "No tiene Horarios Disponibles", Toast.LENGTH_SHORT).show()
                     return@obtenerConfiguracionDelMedico
                 }
                 val (mañanaP, tardeP) = modulo.obtenerConfigDelDia(config, dow)
