@@ -83,7 +83,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:padding="12dp" android:textSize="@dimen/text18"
+                android:padding="12dp"
+                android:textSize="@dimen/text18"
                 android:background="@color/white"
                 android:inputType="textPersonName"
                 android:hint="Fernando Jose..."
@@ -288,7 +289,7 @@
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
                     android:hint="Cd. Obregón"
-                    android:textColor="@color/azulTexto"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/text18" />
 
                 <TextView
