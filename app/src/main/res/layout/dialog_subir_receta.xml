@@ -39,12 +39,11 @@
             android:orientation="horizontal"
             android:layout_marginBottom="24dp">
 
-            <EditText
-                android:id="@+id/etImagePath"
+            <ImageView
+                android:id="@+id/ivPreviewReceta"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="80dp"
                 android:layout_weight="1"
-                android:hint="@string/dialogRutaImagen"
                 android:padding="12dp"
                 android:background="@color/white"
                 android:focusable="false"

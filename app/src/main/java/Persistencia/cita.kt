@@ -19,10 +19,12 @@ data class cita(
     var motivo: String? = null,
     var estado: String? = "Pendiente",
     var receta: String? = null,
-    var imagenReceta: String? = null
+    var imagenReceta: String? = null,
+    var notas: String? = null,
+    var urlReceta: String? = null
 
 
 ): Serializable {
 
-    constructor() : this(null, null, null, null, null, null, null, null, "Pendiente", null, null, null, null, null)
+    constructor() : this(null, null, null, null, null, null, null, null, "Pendiente", null, null, null, null, null, null,null)
 }

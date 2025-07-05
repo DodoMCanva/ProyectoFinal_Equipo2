@@ -63,11 +63,6 @@ class CitasFragment : Fragment() {
         val fechaFinal: TextView = view.findViewById(R.id.tvFechaFinal)
         val listaCitas: RecyclerView = view.findViewById(R.id.rvCitas)
         val btnAgendar: FloatingActionButton? = view.findViewById(R.id.btnAgendar)
-        val seccionFiltros : LinearLayout = view.findViewById(R.id.llfiltrosPrincipal)
-        val seccionFechas : LinearLayout = view.findViewById(R.id.llfechaRango)
-
-        seccionFiltros.visibility = View.GONE
-        seccionFechas.visibility = View.GONE
 
         fechaTexto.setText(fechaBusqueda)
         fechaInicio.setText(fechaBusqueda)
@@ -143,13 +138,6 @@ class CitasFragment : Fragment() {
         }
         aplicar.setOnCheckedChangeListener { _, isChecked ->
             aplicarFiltros = isChecked
-            if (aplicarFiltros) {
-                seccionFechas.visibility = View.VISIBLE
-                seccionFiltros.visibility = View.VISIBLE
-            } else {
-                seccionFiltros.visibility = View.GONE
-                seccionFechas.visibility = View.GONE
-            }
             adaptarCitas(listaCitas)
         }
 
