@@ -15,7 +15,7 @@ class AdapterCheckEspecialidad(
 ) : BaseAdapter() {
 
     private val seleccionados = BooleanArray(especialidades.size)
-
+    
     var onSeleccionCambio: (() -> Unit)? = null
 
     override fun getCount(): Int = especialidades.size
