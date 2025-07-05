@@ -1,7 +1,19 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
     <style name="Base.Theme.CitasMedicas" parent="Theme.AppCompat.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <!-- Colores principales en modo oscuro -->
+        <item name="colorPrimary">@color/azulBackMensajes</item>
+        <item name="colorPrimaryDark">@color/azulBackMensajes</item>
+        <item name="android:windowTranslucentStatus">true</item>
+
+        <item name="colorAccent">@color/azulClaroBtn</item>
+
+        <item name="android:colorBackground">@color/azulBackground</item>
+        <item name="colorOnPrimary">@color/black</item>
+        <item name="colorSurface">@color/azulBackground</item>
+        <item name="colorOnSurface">@color/azulTexto</item>
+
+        <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
+
+    <style name="Theme.CitasMedicas" parent="Base.Theme.CitasMedicas" />
 </resources>
