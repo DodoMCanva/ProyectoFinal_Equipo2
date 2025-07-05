@@ -22,6 +22,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import equipo.dos.citasmedicas.R
 import equipo.dos.citasmedicas.databinding.ActivityFrmPrincipalBinding
+import equipo.dos.citasmedicas.frmPrincipalActivity
 import equipo.dos.citasmedicas.helpers.MenuDesplegable
 
 
@@ -187,5 +188,10 @@ class DetalleCitaPacienteFragment : Fragment() {
                 Toast.makeText(requireContext(), "Error al cancelar la cita.", Toast.LENGTH_SHORT)
                     .show()
             }
+    }
+    override fun onResume() {
+        super.onResume()
+        val tvEncabezado: TextView? = (activity as? frmPrincipalActivity)?.findViewById(R.id.encabezadoPrincipal)
+        tvEncabezado?.text = "Detalle Cita"
     }
 }

@@ -2,6 +2,7 @@ package Persistencia
 
 data class ConfiguracionHorario(
     val costoCita: Double = 0.0,
+    val duracionConsulta: Int = 30,
 
     val lunesMananaActivo: Boolean = true,
     val lunesTardeActivo: Boolean = true,

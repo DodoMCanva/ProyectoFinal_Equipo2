@@ -16,6 +16,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import java.util.Calendar
+import Persistencia.direccion
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
 
 class frmRegistroMedicoActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,8 +51,28 @@ class frmRegistroMedicoActivity : AppCompatActivity() {
             val dia = calendario.get(Calendar.DAY_OF_MONTH)
 
             val selectorFecha = DatePickerDialog(this, { _, y, m, d ->
-                val fechaFormateada = String.format("%02d/%02d/%04d", d, m + 1, y)
-                tvFecha.text = fechaFormateada
+                val fechaSeleccionada = Calendar.getInstance()
+                fechaSeleccionada.set(y, m, d)
+
+                val hoy = Calendar.getInstance()
+                val edad = hoy.get(Calendar.YEAR) - fechaSeleccionada.get(Calendar.YEAR)
+
+                // Ajuste si aún no cumple años este año
+                if (hoy.get(Calendar.DAY_OF_YEAR) < fechaSeleccionada.get(Calendar.DAY_OF_YEAR)) {
+                    fechaSeleccionada.add(Calendar.YEAR, 1)
+                }
+
+                // Validar edad mínima de 23 años
+                val cumple23 = Calendar.getInstance()
+                cumple23.add(Calendar.YEAR, -23)
+
+                if (fechaSeleccionada.after(cumple23)) {
+                    Toast.makeText(this, "El médico debe tener al menos 23 años.", Toast.LENGTH_SHORT).show()
+                } else {
+                    val fechaFormateada = String.format("%02d/%02d/%04d", d, m + 1, y)
+                    tvFecha.text = fechaFormateada
+                }
+
             }, anio, mes, dia)
 
             selectorFecha.datePicker.maxDate = System.currentTimeMillis()
@@ -88,8 +110,8 @@ class frmRegistroMedicoActivity : AppCompatActivity() {
             val confContra = etConfContra.text.toString()
             val telefono = etTelefono.text.toString().trim()
             val genero = when {
-                cbHombre.isChecked -> "Hombre"
-                cbMujer.isChecked -> "Mujer"
+                cbHombre.isChecked -> "Masculino"
+                cbMujer.isChecked -> "Femenino"
                 else -> ""
             }
             val especialidad = spEspecialidad.selectedItem?.toString()?.trim() ?: ""
@@ -100,6 +122,7 @@ class frmRegistroMedicoActivity : AppCompatActivity() {
             val numero = etNumero.text.toString().trim()
             val codigoPostal = etCodigoPostal.text.toString().trim()
 
+            // Validación de campos vacíos
             if (nombre.isEmpty() || correo.isEmpty() || fecha.isEmpty() || contra.isEmpty() ||
                 confContra.isEmpty() || telefono.isEmpty() || genero.isEmpty() || especialidad.isEmpty() ||
                 cedula.isEmpty() || estado.isEmpty() || ciudad.isEmpty() || calle.isEmpty() ||
@@ -109,14 +132,21 @@ class frmRegistroMedicoActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
+            // Validación de formato de correo
             val emailRegex = Regex("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$")
             if (!emailRegex.matches(correo)) {
                 Toast.makeText(this, "Correo electrónico inválido.", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
-            if (contra.length < 5) {
-                Toast.makeText(this, "La contraseña debe tener al menos 5 caracteres.", Toast.LENGTH_SHORT).show()
+            // Validación de contraseña segura
+            val passwordRegex = Regex("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#\$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>/?]).{8,}$")
+            if (!passwordRegex.matches(contra)) {
+                Toast.makeText(
+                    this,
+                    "La contraseña debe tener al menos 8 caracteres, incluir una mayúscula, una minúscula, un número y un carácter especial.",
+                    Toast.LENGTH_LONG
+                ).show()
                 return@setOnClickListener
             }
 
@@ -125,9 +155,17 @@ class frmRegistroMedicoActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
+            // Validación de teléfono
             val telefonoRegex = Regex("^\\d{10}$")
             if (!telefonoRegex.matches(telefono)) {
                 Toast.makeText(this, "El teléfono debe tener exactamente 10 dígitos.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            // Validación de cédula alfanumérica (7–8 caracteres, mínimo una letra y un número)
+            val cedulaRegex = Regex("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{7,8}$")
+            if (!cedulaRegex.matches(cedula)) {
+                Toast.makeText(this, "La cédula debe tener entre 7 y 8 caracteres alfanuméricos (mínimo una letra y un número).", Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }
 
@@ -143,52 +181,67 @@ class frmRegistroMedicoActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
+            // Verificar si el correo ya existe en Firebase
             val auth = FirebaseAuth.getInstance()
-            val database = FirebaseDatabase.getInstance().reference
+            FirebaseAuth.getInstance().fetchSignInMethodsForEmail(correo)
+                .addOnSuccessListener { result ->
+                    val methods = result.signInMethods
+                    if (methods != null && methods.isNotEmpty()) {
+                        Toast.makeText(this, "El correo ya está registrado.", Toast.LENGTH_SHORT).show()
+                    } else {
+                        // Crear cuenta en Firebase
+                        auth.createUserWithEmailAndPassword(correo, contra)
+                            .addOnCompleteListener { task ->
+                                if (task.isSuccessful) {
+                                    val uid = auth.currentUser?.uid ?: return@addOnCompleteListener
+                                    val direccionObj = direccion(
+                                        estado = estado,
+                                        ciudad = ciudad,
+                                        calle = calle,
+                                        numero = numero,
+                                        cp = codigoPostal
+                                    )
 
-            auth.createUserWithEmailAndPassword(correo, contra)
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        val uid = auth.currentUser?.uid ?: return@addOnCompleteListener
-                        val medico = mapOf(
-                            "nombre" to nombre,
-                            "correo" to correo,
-                            "fechaNacimiento" to fecha,
-                            "telefono" to telefono,
-                            "genero" to genero,
-                            "especialidad" to especialidad,
-                            "cedula" to cedula,
-                            "direccion" to mapOf(
-                                "estado" to estado,
-                                "ciudad" to ciudad,
-                                "calle" to calle,
-                                "numero" to numero,
-                                "codigoPostal" to codigoPostal,
-                                "tipo" to "medico"
-                            ),
+                                    val medico = mapOf(
+                                        "uid" to uid,
+                                        "nombre" to nombre,
+                                        "correo" to correo,
+                                        "fechaNacimiento" to fecha,
+                                        "telefono" to telefono,
+                                        "genero" to genero,
+                                        "especialidad" to especialidad,
+                                        "cedula" to cedula,
+                                        "direccion" to direccionObj,
+                                        "fotoPerfil" to "usuario1",
+                                        "tipo" to "medico"
+                                    )
 
-                        )
-
-                        database.child("usuarios").child("medicos").child(uid).setValue(medico)
-                            .addOnSuccessListener {
-                                Toast.makeText(
-                                    this,
-                                    "Médico registrado correctamente.",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                                val intent = Intent(this, frmLoginActivity::class.java)
-                                startActivity(intent)
-                                finish()
-                            }
-                            .addOnFailureListener {
-                                Toast.makeText(
-                                    this,
-                                    "Error al guardar datos del médico.",
-                                    Toast.LENGTH_SHORT
-                                ).show()
+                                    FirebaseDatabase.getInstance().reference
+                                        .child("usuarios").child("medicos").child(uid)
+                                        .setValue(medico)
+                                        .addOnSuccessListener {
+                                            Toast.makeText(this, "Médico registrado correctamente.", Toast.LENGTH_SHORT).show()
+                                            startActivity(Intent(this, frmLoginActivity::class.java))
+                                            finish()
+                                        }
+                                        .addOnFailureListener {
+                                            Toast.makeText(this, "Error al guardar datos del médico.", Toast.LENGTH_SHORT).show()
+                                        }
+                                } else {
+                                    val exception = task.exception
+                                    if (exception is FirebaseAuthUserCollisionException) {
+                                        Toast.makeText(this, "El correo ya está registrado.", Toast.LENGTH_SHORT).show()
+                                    } else {
+                                        Toast.makeText(this, "Error al registrar: ${exception?.message}", Toast.LENGTH_SHORT).show()
+                                    }
+                                }
                             }
                     }
                 }
+                .addOnFailureListener {
+                    Toast.makeText(this, "Error al verificar el correo: ${it.message}", Toast.LENGTH_SHORT).show()
+                }
+
         }
     }
 }

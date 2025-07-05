@@ -14,12 +14,8 @@ data class medico(
     var costoConsulta: Double = 0.0,
     var cedula: String? = null,
     var especialidad: String? = null,
-    var estado: String? = null,
-    var ciudad: String? = null,
-    var calle: String? = null,
-    var numero: String? = null,
-    var cp: String? = null,
+    var direccion: direccion? = null,
     var fotoPerfil: String = ""
 ) : Serializable {
-    constructor() : this("","", "", "", "", "", "", "", 0.0, "", "", "", "", "", "", "", "")
+    constructor() : this("", "", "", "", "", "", "", "", 0.0, "", "", direccion(), "")
 }

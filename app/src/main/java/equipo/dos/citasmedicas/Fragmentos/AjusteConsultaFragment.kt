@@ -21,6 +21,7 @@ import android.text.TextWatcher
 import android.widget.Switch
 import com.google.firebase.auth.FirebaseAuth
 import equipo.dos.citasmedicas.R
+import equipo.dos.citasmedicas.frmPrincipalActivity
 
 class AjusteConsultaFragment : Fragment() {
 
@@ -72,9 +73,10 @@ class AjusteConsultaFragment : Fragment() {
             }
         }
 
-        val etCostoCita = view.findViewById<EditText>(R.id.etCostoCita)
+        val etDuracionConsulta = view.findViewById<EditText>(R.id.etDuracionConsulta)
+        val etCostoConsulta = view.findViewById<EditText>(R.id.etCostoConsulta)
 
-        etCostoCita.addTextChangedListener(object : TextWatcher {
+        etCostoConsulta.addTextChangedListener(object : TextWatcher {
             var current = ""
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -83,14 +85,14 @@ class AjusteConsultaFragment : Fragment() {
 
             override fun afterTextChanged(s: Editable?) {
                 if (s.toString() != current) {
-                    etCostoCita.removeTextChangedListener(this)
+                    etCostoConsulta.removeTextChangedListener(this)
 
                     val clean = s.toString().replace("[^\\d.]".toRegex(), "")
                     current = "$" + clean
-                    etCostoCita.setText(current)
-                    etCostoCita.setSelection(current.length)
+                    etCostoConsulta.setText(current)
+                    etCostoConsulta.setSelection(current.length)
 
-                    etCostoCita.addTextChangedListener(this)
+                    etCostoConsulta.addTextChangedListener(this)
                 }
             }
         })
@@ -319,14 +321,17 @@ class AjusteConsultaFragment : Fragment() {
 
         val btnGuardar = view.findViewById<Button>(R.id.btnGuardarConsulta)
         btnGuardar.setOnClickListener {
-            //val costoStr = etCostoCita.text.toString()
-            //val costo = String.format("%.2f", costoStr.toDoubleOrNull() ?: 0.0).toDouble()
-            val costoStr = etCostoCita.text.toString().replace("$", "").trim()
+
+            val costoStr = etCostoConsulta.text.toString().replace("$", "").trim()
             val costo = String.format("%.2f", costoStr.toDoubleOrNull() ?: 0.0).toDouble()
+
+            val duracionStr = etDuracionConsulta.text.toString().trim()
+            val duracion = duracionStr.toIntOrNull() ?: 30  // valor por defecto si no escriben nada o no es número
 
 
             val config = ConfiguracionHorario(
                 costoCita = costo,
+                duracionConsulta = duracion,
 
                 lunesMananaActivo = lunesManActivo,
                 lunesTardeActivo = lunesTarActivo,
@@ -434,11 +439,7 @@ class AjusteConsultaFragment : Fragment() {
         picker.show()
     }
 
-    private fun subrayar(texto: String): SpannableString {
-        val subrayado = SpannableString(texto)
-        subrayado.setSpan(UnderlineSpan(), 0, texto.length, 0)
-        return subrayado
-    }
+
 
     fun aplicarEstadoInicial(
         sw: Switch,
@@ -458,7 +459,6 @@ class AjusteConsultaFragment : Fragment() {
             onLoaded(null)
             return
         }
-
         val ref = FirebaseDatabase.getInstance().getReference("configuracionHorario/$userId")
         ref.get().addOnSuccessListener { snapshot ->
             if (snapshot.exists()) {
@@ -474,9 +474,11 @@ class AjusteConsultaFragment : Fragment() {
 
     private fun inicializarUIConConfiguracion(view: View, config: ConfiguracionHorario) {
         // Costo
-        val etCostoCita = view.findViewById<EditText>(R.id.etCostoCita)
-        //etCostoCita.setText(config.costoCita.toString())
+        val etCostoCita = view.findViewById<EditText>(R.id.etCostoConsulta)
         etCostoCita.setText(String.format("$%.2f", config.costoCita))
+        // Duracion
+        val etDuracionConsulta = view.findViewById<EditText>(R.id.etDuracionConsulta)
+        etDuracionConsulta.setText(config.duracionConsulta.toString())
 
         // Lunes
         val swLunesMañanaEstado = view.findViewById<Switch>(R.id.swLunesMañanaEstado)
@@ -622,8 +624,10 @@ class AjusteConsultaFragment : Fragment() {
             editText.alpha = 0.4f
         }
     }
-
-
-
+    override fun onResume() {
+        super.onResume()
+        val tvEncabezado: TextView? = (activity as? frmPrincipalActivity)?.findViewById(R.id.encabezadoPrincipal)
+        tvEncabezado?.text = "Ajustes Consulta"
+    }
 }
 

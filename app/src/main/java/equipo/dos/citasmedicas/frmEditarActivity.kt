@@ -2,6 +2,7 @@ package equipo.dos.citasmedicas
 
 import Persistencia.medico
 import Persistencia.paciente
+import Persistencia.sesion
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.Dialog
@@ -28,8 +29,6 @@ import com.cloudinary.android.MediaManager
 import com.cloudinary.android.callback.ErrorInfo
 import com.cloudinary.android.callback.UploadCallback
 import com.google.firebase.database.FirebaseDatabase
-import equipo.dos.citasmedicas.databinding.ActivityFrmEditarBinding
-import equipo.dos.citasmedicas.databinding.ActivityFrmPrincipalBinding
 import java.util.Calendar
 
 val UPLOAD_PRESET_CITAS_MEDICAS = "Citas Medicas"
@@ -66,11 +65,10 @@ class frmEditarActivity : AppCompatActivity() {
         val spEspecialidad = findViewById<Spinner>(R.id.spEditarEspecialidad)
         val etCedula = findViewById<EditText>(R.id.etEditarCedula)
         val etEstado = findViewById<EditText>(R.id.etEditarEstado)
-        val etCiudad = findViewById<EditText>(R.id.etEditarCiudad) // <- AGREGADO
+        val etCiudad = findViewById<EditText>(R.id.etEditarCiudad)
         val etCalle = findViewById<EditText>(R.id.etEditarCalle)
         val etNumero = findViewById<EditText>(R.id.etEditarNumero)
         val etCP = findViewById<EditText>(R.id.etEditarCodigoPostal)
-
 
         //calendario
         val btnCalendario = findViewById<ImageButton>(R.id.btnCalendarioRegistroMedico)
@@ -168,11 +166,11 @@ class frmEditarActivity : AppCompatActivity() {
                     return@setOnClickListener
                 }
 
-                val cedulaRegex = Regex("^\\d{7,8}$")
+                val cedulaRegex = Regex("^[a-zA-Z0-9]{7,8}$")
                 if (!cedulaRegex.matches(cedula)) {
                     Toast.makeText(
                         this,
-                        "La cédula profesional debe tener entre 7 y 8 dígitos numéricos.",
+                        "La cédula profesional debe tener entre 7 y 8 caracteres alfanuméricos.",
                         Toast.LENGTH_SHORT
                     ).show()
                     return@setOnClickListener
@@ -204,7 +202,7 @@ class frmEditarActivity : AppCompatActivity() {
                     return@setOnClickListener
                 }
 
-                // Validar fecha que no sea futura
+
                 val fechaSplit = tvFecha.text.toString().trim().split("/")
                 if (fechaSplit.size == 3) {
                     val dia = fechaSplit[0].toInt()
@@ -213,7 +211,11 @@ class frmEditarActivity : AppCompatActivity() {
 
                     val calendarNacimiento = Calendar.getInstance()
                     calendarNacimiento.set(anio, mes, dia)
-                    if (calendarNacimiento.after(Calendar.getInstance())) {
+
+                    val calendarHoy = Calendar.getInstance()
+
+                    // Validar que no sea futura
+                    if (calendarNacimiento.after(calendarHoy)) {
                         Toast.makeText(
                             this,
                             "La fecha de nacimiento no puede ser en el futuro.",
@@ -221,10 +223,31 @@ class frmEditarActivity : AppCompatActivity() {
                         ).show()
                         return@setOnClickListener
                     }
+
+                    // Validar edad mínima (23 años)
+                    val edad =
+                        calendarHoy.get(Calendar.YEAR) - calendarNacimiento.get(Calendar.YEAR)
+                    val cumpleEsteAnio =
+                        calendarHoy.get(Calendar.MONTH) > calendarNacimiento.get(Calendar.MONTH) ||
+                                (calendarHoy.get(Calendar.MONTH) == calendarNacimiento.get(Calendar.MONTH) &&
+                                        calendarHoy.get(Calendar.DAY_OF_MONTH) >= calendarNacimiento.get(
+                                    Calendar.DAY_OF_MONTH
+                                ))
+
+                    val edadFinal = if (cumpleEsteAnio) edad else edad - 1
+
+                    if (edadFinal < 23) {
+                        Toast.makeText(
+                            this,
+                            "Debes tener al menos 23 años para registrarte como médico.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        return@setOnClickListener
+                    }
                 }
             }
 
-            //mostrar el diálogo de confirmación
+                //mostrar el diálogo de confirmación
             val dialog = Dialog(this)
             dialog.setContentView(R.layout.dialog_confirmacion_edicion)
             dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
@@ -299,11 +322,11 @@ class frmEditarActivity : AppCompatActivity() {
                 val posicion = adapterEspecialidades.getPosition(m.especialidad)
                 spEspecialidad.setSelection(posicion)
                 etCedula.setText(m.cedula)
-                etEstado.setText(m.estado)
-                etCiudad.setText(m.ciudad)
-                etCalle.setText(m.calle)
-                etNumero.setText(m.numero)
-                etCP.setText(m.cp)
+                etEstado.setText(m.direccion?.estado)
+                etCiudad.setText(m.direccion?.ciudad)
+                etCalle.setText(m.direccion?.calle)
+                etNumero.setText(m.direccion?.numero)
+                etCP.setText(m.direccion?.cp)
 
                 Glide.with(this)
                     .load(m.fotoPerfil) // Aquí va la URL de Cloudinary
@@ -337,7 +360,6 @@ class frmEditarActivity : AppCompatActivity() {
             }
         }
     }
-
 
     private fun subirImagenACloudinary(uri: Uri, onComplete: (String?) -> Unit) {
         Toast.makeText(this, "Subiendo imagen...", Toast.LENGTH_SHORT).show()
@@ -400,7 +422,7 @@ class frmEditarActivity : AppCompatActivity() {
             cbMujer.isChecked -> "Femenino"
             else -> ""
         }
-        val sesionActual = Persistencia.sesion.obtenerSesion()
+        val sesionActual = sesion.obtenerSesion()
 
         if (sesionActual == null) {
             Toast.makeText(this, "Error: Sesión no válida para actualizar.", Toast.LENGTH_SHORT)
@@ -416,11 +438,11 @@ class frmEditarActivity : AppCompatActivity() {
                 sesionActual.genero = generoSeleccionado
                 sesionActual.especialidad = spEspecialidad.selectedItem.toString()
                 sesionActual.cedula = etCedula.text.toString().trim()
-                sesionActual.estado = etEstado.text.toString().trim()
-                sesionActual.ciudad = etCiudad.text.toString().trim()
-                sesionActual.calle = etCalle.text.toString().trim()
-                sesionActual.numero = etNumero.text.toString().trim()
-                sesionActual.cp = etCP.text.toString().trim()
+                sesionActual.direccion?.estado = etEstado.text.toString().trim()
+                sesionActual.direccion?.ciudad = etCiudad.text.toString().trim()
+                sesionActual.direccion?.calle = etCalle.text.toString().trim()
+                sesionActual.direccion?.numero = etNumero.text.toString().trim()
+                sesionActual.direccion?.cp = etCP.text.toString().trim()
                 sesionActual.fechaNacimiento = tvFecha.text.toString().trim()
                 imageUrl?.let { sesionActual.fotoPerfil = it }
                 sesionActual.uid?.let { uid ->
@@ -429,7 +451,7 @@ class frmEditarActivity : AppCompatActivity() {
                         .addOnSuccessListener {
                             Toast.makeText(this, "Perfil de médico/paciente actualizado en Firebase.", Toast.LENGTH_SHORT).show()
                             Log.d("EditarPerfil", "Perfil actualizado en Firebase. Foto URL en Firebase: ${sesionActual.fotoPerfil}")
-                            Persistencia.sesion.asignarSesion(sesionActual)
+                            sesion.asignarSesion(sesionActual)
                             Log.d("EditarPerfil", "Sesión global Persistencia.sesion.sesion actualizada. Foto URL: ${(Persistencia.sesion.obtenerSesion() as? medico)?.fotoPerfil ?: (Persistencia.sesion.obtenerSesion() as? paciente)?.fotoPerfil}")
                             val intent = Intent(this, frmPrincipalActivity::class.java)
                             startActivity(intent)
@@ -469,7 +491,7 @@ class frmEditarActivity : AppCompatActivity() {
                                 "Perfil de paciente actualizado en Firebase.",
                                 Toast.LENGTH_SHORT
                             ).show()
-                            Persistencia.sesion.asignarSesion(sesionActual) // Asegúrate de que la sesión global también se actualice
+                            sesion.asignarSesion(sesionActual)
                             val intent = Intent(this, frmPrincipalActivity::class.java)
                             startActivity(intent)
                             dialog.dismiss()

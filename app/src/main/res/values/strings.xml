@@ -78,6 +78,8 @@
     <string name="dialogReprogramarFecha">Fecha</string>
     <string name="dialogReprogramarHora">Hora</string>
     <string name="precioConsulta">Precio de consulta</string>
+    <string name="duracionConsulta">Duración de consulta</string>
+    <string name="minutos"> minutos</string>
     <string name="btnGuardar">Guardar</string>
     <string name="paciente">Paciente:</string>
     <string name="Edad">Edad:</string>

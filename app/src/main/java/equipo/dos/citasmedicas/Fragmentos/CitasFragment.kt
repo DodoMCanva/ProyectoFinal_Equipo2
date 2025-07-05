@@ -15,25 +15,33 @@ import android.widget.ListView
 import android.widget.Switch
 import android.widget.TextView
 import androidx.annotation.RequiresApi
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import equipo.dos.citasmedicas.R
-import modulos.AdapterCita
+import equipo.dos.citasmedicas.frmPrincipalActivity
+import modulos.AdapterCitaRecycler
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Calendar
+import java.util.Date
 import java.util.Locale
 
 @RequiresApi(Build.VERSION_CODES.O)
 
 
 class CitasFragment : Fragment() {
-    var adapter: AdapterCita? = null
-    var filtroBusqueda : Boolean = false
+
+
+    var adapter: AdapterCitaRecycler? = null
+    var filtroBusqueda: Boolean = false
 
     //NOTA: formato anterior yyyy-MM-dd
-    var fechaBusqueda: String = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
-    var fechaFinale : String = LocalDateTime.now().plusDays(7).format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+    var fechaBusqueda: String =
+        LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+    var fechaFinale: String =
+        LocalDateTime.now().plusDays(6).format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,12 +53,13 @@ class CitasFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         val filtro: Switch = view.findViewById(R.id.swMostrarTodaSemana)
         val calendario: ImageButton = view.findViewById(R.id.btnCalendarioConsultaCitas)
         val fechaTexto: TextView = view.findViewById(R.id.tvConsultaFecha)
-        val fechaInicio : TextView = view.findViewById(R.id.tvFechaInicio)
-        val fechaFinal : TextView = view.findViewById(R.id.tvFechaFinal)
-        val listaCitas: ListView = view.findViewById(R.id.lvCitas)
+        val fechaInicio: TextView = view.findViewById(R.id.tvFechaInicio)
+        val fechaFinal: TextView = view.findViewById(R.id.tvFechaFinal)
+        val listaCitas: RecyclerView = view.findViewById(R.id.rvCitas)
         val btnAgendar: FloatingActionButton? = view.findViewById(R.id.btnAgendar)
 
         fechaTexto.setText(fechaBusqueda)
@@ -58,6 +67,7 @@ class CitasFragment : Fragment() {
         fechaFinal.setText(fechaFinale)
         fechaInicio.visibility = View.INVISIBLE
         fechaFinal.visibility = View.INVISIBLE
+        listaCitas.layoutManager = LinearLayoutManager(requireContext())
 
         adaptarCitas(listaCitas)
 
@@ -80,30 +90,36 @@ class CitasFragment : Fragment() {
             val mes = calendario.get(Calendar.MONTH)
             val dia = calendario.get(Calendar.DAY_OF_MONTH)
 
-            val datePicker = DatePickerDialog(requireContext(), { _: DatePicker, year: Int, month: Int, dayOfMonth: Int ->
-                val fechaSeleccionadaCal = Calendar.getInstance()
-                fechaSeleccionadaCal.set(year, month, dayOfMonth)
-                val formato = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-                val fechaSeleccionadaStr = formato.format(fechaSeleccionadaCal.time)
-                fechaTexto.text = fechaSeleccionadaStr
-                fechaBusqueda = fechaSeleccionadaStr
-                if (filtroBusqueda) {
-                    fechaInicio.visibility = View.VISIBLE
-                    fechaFinal.visibility = View.VISIBLE
-                    fechaInicio.setText(fechaBusqueda)
-                    fechaSeleccionadaCal.add(Calendar.DAY_OF_MONTH, 7)
-                    fechaFinale = formato.format(fechaSeleccionadaCal.time)
-                    fechaFinal.setText(fechaFinale)
-                } else {
-                    fechaInicio.visibility = View.INVISIBLE
-                    fechaFinal.visibility = View.INVISIBLE
-                    fechaInicio.setText(fechaBusqueda)
-                    fechaSeleccionadaCal.add(Calendar.DAY_OF_MONTH, 7)
-                    fechaFinale = formato.format(fechaSeleccionadaCal.time)
-                    fechaFinal.setText(fechaFinale)
-                }
-                adaptarCitas(listaCitas)
-            }, anio, mes, dia)
+            val datePicker = DatePickerDialog(
+                requireContext(),
+                { _: DatePicker, year: Int, month: Int, dayOfMonth: Int ->
+                    val fechaSeleccionadaCal = Calendar.getInstance()
+                    fechaSeleccionadaCal.set(year, month, dayOfMonth)
+                    val formato = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                    val fechaSeleccionadaStr = formato.format(fechaSeleccionadaCal.time)
+                    fechaTexto.text = fechaSeleccionadaStr
+                    fechaBusqueda = fechaSeleccionadaStr
+                    if (filtroBusqueda) {
+                        fechaInicio.visibility = View.VISIBLE
+                        fechaFinal.visibility = View.VISIBLE
+                        fechaInicio.setText(fechaBusqueda)
+                        fechaSeleccionadaCal.add(Calendar.DAY_OF_MONTH, 6)
+                        fechaFinale = formato.format(fechaSeleccionadaCal.time)
+                        fechaFinal.setText(fechaFinale)
+                    } else {
+                        fechaInicio.visibility = View.INVISIBLE
+                        fechaFinal.visibility = View.INVISIBLE
+                        fechaInicio.setText(fechaBusqueda)
+                        fechaSeleccionadaCal.add(Calendar.DAY_OF_MONTH, 6)
+                        fechaFinale = formato.format(fechaSeleccionadaCal.time)
+                        fechaFinal.setText(fechaFinale)
+                    }
+                    adaptarCitas(listaCitas)
+                },
+                anio,
+                mes,
+                dia
+            )
             datePicker.show()
         }
 
@@ -121,35 +137,30 @@ class CitasFragment : Fragment() {
 
     }
 
-    fun adaptarCitas(listView: ListView) {
-        val listaCitas: ListView = listView
+    fun adaptarCitas(recyclerView: RecyclerView) {
         sesion.actualizarListaCitas {
             if (sesion.citas != null && sesion.citas.isNotEmpty()) {
                 var lista = ArrayList<cita>()
                 if (filtroBusqueda) {
                     lista = sesion.listaOrdenada().semana(fechaBusqueda, fechaFinale)
-                }else{
+                    lista = lista.encabezar(fechaBusqueda, fechaFinale)
+                } else {
                     lista = sesion.listaOrdenada().dia(fechaBusqueda)
                 }
-                adapter = AdapterCita(requireContext(), lista, sesion.tipo, filtroBusqueda){ citaSeleccionada ->
-                    var fragment: Fragment
-                    if (sesion.tipo == "paciente"){
-                        fragment = DetalleCitaPacienteFragment()
-                    }else{
-                        fragment = DetalleCitaMedicoFragment()
+                adapter = AdapterCitaRecycler(requireContext(), lista, sesion.tipo) { citaSeleccionada ->
+                    val fragment = if (sesion.tipo == "paciente") {
+                        DetalleCitaPacienteFragment()
+                    } else {
+                        DetalleCitaMedicoFragment()
                     }
-
-                    val bundle = Bundle().apply {
-                        putString("citaId", citaSeleccionada.idCita)
-                    }
+                    val bundle = Bundle().apply { putString("citaId", citaSeleccionada.idCita) }
                     fragment.arguments = bundle
-
                     parentFragmentManager.beginTransaction()
                         .replace(R.id.contenedorFragmento, fragment)
                         .addToBackStack(null)
                         .commit()
                 }
-                listaCitas.adapter = adapter
+                recyclerView.adapter = adapter
             }
         }
     }
@@ -160,37 +171,51 @@ class CitasFragment : Fragment() {
         val formato = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
         val fechaInicio = formato.parse(inicio)
         val fechaFin = formato.parse(fin)
-        var fechaActual = fechaInicio
-        while (!fechaActual.after(fechaFin)) {
-            lista.add(cita(idCita = "encabezado", fecha = formato.format(fechaActual.time)))
-            for (cita in this) {
-                val fechaCita = formato.parse(cita.fecha)
-                if (fechaCita.equals(fechaActual)) {
-                    lista.add(cita)
-                }
-            }
-            val calendar = Calendar.getInstance()
-            calendar.time = fechaActual
-            calendar.add(Calendar.DAY_OF_MONTH, 1)
-            fechaActual = calendar.time
-        }
-        return lista
-    }
-
-
-
-    fun ArrayList<cita>.dia(fecha : String) : ArrayList<cita>{
-        val lista = ArrayList<cita>()
-        val formato = SimpleDateFormat("dd/MM/yyyyy", Locale.getDefault())
-        val fecha = formato.parse(fecha)
-        for (cita in this){
+        for (cita in this) {
             val fechaCita = formato.parse(cita.fecha)
-            if (fechaCita == fecha ) {
+            if (!fechaCita.before(fechaInicio) && !fechaCita.after(fechaFin)) {
                 lista.add(cita)
             }
         }
         return lista
     }
 
+    fun ArrayList<cita>.encabezar(inicio: String, fin: String): ArrayList<cita> {
+        val lista = ArrayList<cita>()
+        val formato = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        val calendario = Calendar.getInstance()
+        calendario.time = formato.parse(inicio)
+        val fechaFinDate = formato.parse(fin)
+        while (!calendario.time.after(fechaFinDate)) {
+            val fechaStr = formato.format(calendario.time)
+            lista.add(cita(idCita = "encabezado", fecha = fechaStr))
+            for (cita in this) {
+                if (cita.fecha == fechaStr) {
+                    lista.add(cita)
+                }
+            }
+            calendario.add(Calendar.DAY_OF_MONTH, 1)
+        }
+        return lista
 
+    }
+
+
+    fun ArrayList<cita>.dia(fecha: String): ArrayList<cita> {
+        val lista = ArrayList<cita>()
+        val formato = SimpleDateFormat("dd/MM/yyyyy", Locale.getDefault())
+        val fecha = formato.parse(fecha)
+        for (cita in this) {
+            val fechaCita = formato.parse(cita.fecha)
+            if (fechaCita == fecha) {
+                lista.add(cita)
+            }
+        }
+        return lista
+    }
+    override fun onResume() {
+        super.onResume()
+        val tvEncabezado: TextView? = (activity as? frmPrincipalActivity)?.findViewById(R.id.encabezadoPrincipal)
+        tvEncabezado?.text = "Mis Citas"
+    }
 }

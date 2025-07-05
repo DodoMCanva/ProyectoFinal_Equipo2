@@ -64,8 +64,8 @@ class frmRegistroActivity : AppCompatActivity() {
             val confContra = etConfContra.text.toString()
             val telefono = etTelefono.text.toString().trim()
             val genero = when {
-                cbHombre.isChecked -> "Hombre"
-                cbMujer.isChecked -> "Mujer"
+                cbHombre.isChecked -> "Masculino"
+                cbMujer.isChecked -> "Femenino"
                 else -> ""
             }
 
@@ -82,8 +82,13 @@ class frmRegistroActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            if (contra.length < 5) {
-                Toast.makeText(this, "La contraseña debe tener al menos 5 caracteres.", Toast.LENGTH_SHORT).show()
+            val passwordRegex = Regex("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@\$!%*?&#+=_.-])[A-Za-z\\d@\$!%*?&#+=_.-]{8,}$")
+            if (!passwordRegex.matches(contra)) {
+                Toast.makeText(
+                    this,
+                    "La contraseña debe tener al menos 8 caracteres, incluyendo una mayúscula, números y un carácter especial.",
+                    Toast.LENGTH_LONG
+                ).show()
                 return@setOnClickListener
             }
 
@@ -98,42 +103,50 @@ class frmRegistroActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-
             val auth = FirebaseAuth.getInstance()
             val database = FirebaseDatabase.getInstance().reference
 
-            auth.createUserWithEmailAndPassword(correo, contra)
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        val uid = auth.currentUser?.uid ?: return@addOnCompleteListener
-
-                        val paciente = mapOf(
-                            "nombre" to nombre,
-                            "correo" to correo,
-                            "fechaNacimiento" to fecha,
-                            "telefono" to telefono,
-                            "genero" to genero,
-                            "tipo" to "paciente"
-                        )
-
-                        database.child("usuarios").child("pacientes").child(uid).setValue(paciente)
-                            .addOnSuccessListener {
-                                Toast.makeText(this, "Paciente registrado correctamente", Toast.LENGTH_SHORT).show()
-                                val intent = Intent(this, frmLoginActivity::class.java)
-                                startActivity(intent)
-                                finish()
-                            }
-                            .addOnFailureListener {
-                                Toast.makeText(this, "Error al guardar datos del paciente.", Toast.LENGTH_SHORT).show()
-                            }
-                    } else {
-                        Toast.makeText(this, "Error al registrar: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
+            auth.fetchSignInMethodsForEmail(correo).addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val signInMethods = task.result?.signInMethods
+                    if (!signInMethods.isNullOrEmpty()) {
+                        Toast.makeText(this, "Este correo ya está registrado.", Toast.LENGTH_SHORT).show()
+                        return@addOnCompleteListener
                     }
+
+                    // Si no está registrado, crear cuenta
+                    auth.createUserWithEmailAndPassword(correo, contra)
+                        .addOnCompleteListener { regTask ->
+                            if (regTask.isSuccessful) {
+                                val uid = auth.currentUser?.uid ?: return@addOnCompleteListener
+
+                                val paciente = mapOf(
+                                    "nombre" to nombre,
+                                    "correo" to correo,
+                                    "fechaNacimiento" to fecha,
+                                    "telefono" to telefono,
+                                    "genero" to genero,
+                                    "tipo" to "paciente"
+                                )
+
+                                database.child("usuarios").child("pacientes").child(uid).setValue(paciente)
+                                    .addOnSuccessListener {
+                                        Toast.makeText(this, "Paciente registrado correctamente", Toast.LENGTH_SHORT).show()
+                                        val intent = Intent(this, frmLoginActivity::class.java)
+                                        startActivity(intent)
+                                        finish()
+                                    }
+                                    .addOnFailureListener {
+                                        Toast.makeText(this, "Error al guardar datos del paciente.", Toast.LENGTH_SHORT).show()
+                                    }
+                            } else {
+                                Toast.makeText(this, "Error al registrar: ${regTask.exception?.message}", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                } else {
+                    Toast.makeText(this, "Error al verificar el correo.", Toast.LENGTH_SHORT).show()
                 }
-
-
-
-
+            }
         }
     }
 }
