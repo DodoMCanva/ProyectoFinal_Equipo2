@@ -149,6 +149,7 @@ class CitasFragment : Fragment() {
         sesion.actualizarListaCitas {
             if (sesion.citas != null && sesion.citas.isNotEmpty()) {
                 var lista : ArrayList<cita>
+                lista = ArrayList<cita>()
 
 //                when
 //                if (filtroSemana) {
