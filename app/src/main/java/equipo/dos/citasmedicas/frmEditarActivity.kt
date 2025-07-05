@@ -100,7 +100,7 @@ class frmEditarActivity : AppCompatActivity() {
             intent.type = "image/*"
             pickImage.launch(intent)
         }
-            cargarDatosPerfil()
+        cargarDatosPerfil()
 
 
         cbHombre.setOnCheckedChangeListener { _, isChecked ->
@@ -248,7 +248,7 @@ class frmEditarActivity : AppCompatActivity() {
                 }
             }
 
-                //mostrar el diálogo de confirmación
+            //mostrar el diálogo de confirmación
             val dialog = Dialog(this)
             dialog.setContentView(R.layout.dialog_confirmacion_edicion)
             dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
@@ -329,11 +329,26 @@ class frmEditarActivity : AppCompatActivity() {
                 etNumero.setText(m.direccion?.numero)
                 etCP.setText(m.direccion?.cp)
 
-                Glide.with(this)
-                    .load(m.fotoPerfil) // Aquí va la URL de Cloudinary
-                    .placeholder(R.drawable.usuario) // Imagen por defecto mientras carga
-                    .error(R.drawable.usuario)     // Imagen por defecto si hay error
-                    .into(imgFotoPerfil)
+                if (imagenSeleccionadaUri == null) {
+                    if (m.fotoPerfil != null && m.fotoPerfil!!.startsWith("http")) {
+                        Glide.with(this)
+                            .load(m.fotoPerfil) // Aquí va la URL de Cloudinary
+                            .placeholder(R.drawable.usuario) // Imagen por defecto mientras carga
+                            .error(R.drawable.usuario)     // Imagen por defecto si hay error
+                            .into(imgFotoPerfil)
+                        Log.d("CargarPerfil", "Cargando foto de médico desde URL: ${m.fotoPerfil}")
+                    } else {
+                        Glide.with(this)
+                            .load(R.drawable.usuario)
+                            .into(imgFotoPerfil)
+                        Log.d("CargarPerfil", "Cargando foto de médico desde drawable por defecto.")
+                    }
+                } else {
+                    Log.d(
+                        "CargarPerfil",
+                        "Manteniendo previsualización de imagen seleccionada para médico."
+                    )
+                }
             }
 
             is paciente -> {
@@ -348,11 +363,32 @@ class frmEditarActivity : AppCompatActivity() {
                 }
                 seccionMedico.visibility = LinearLayout.GONE
 
-                Glide.with(this)
-                    .load(p.fotoPerfil)
-                    .placeholder(R.drawable.usuario) // Imagen por defecto mientras carga
-                    .error(R.drawable.usuario)     // Imagen por defecto si hay error
-                    .into(imgFotoPerfil)
+                if (imagenSeleccionadaUri == null) {
+                    if (p.fotoPerfil != null && p.fotoPerfil!!.startsWith("http")) {
+                        Glide.with(this)
+                            .load(p.fotoPerfil)
+                            .placeholder(R.drawable.usuario) // Imagen por defecto mientras carga
+                            .error(R.drawable.usuario)     // Imagen por defecto si hay error
+                            .into(imgFotoPerfil)
+                        Log.d(
+                            "CargarPerfil",
+                            "Cargando foto de paciente desde URL: ${p.fotoPerfil}"
+                        )
+                    } else {
+                        Glide.with(this)
+                            .load(R.drawable.usuario)
+                            .into(imgFotoPerfil)
+                        Log.d(
+                            "CargarPerfil",
+                            "Cargando foto de paciente desde drawable por defecto."
+                        )
+                    }
+                } else {
+                    Log.d(
+                        "CargarPerfil",
+                        "Manteniendo previsualización de imagen seleccionada para paciente."
+                    )
+                }
             }
 
             else -> {
@@ -361,6 +397,7 @@ class frmEditarActivity : AppCompatActivity() {
             }
         }
     }
+
 
     private fun subirImagenACloudinary(uri: Uri, onComplete: (String?) -> Unit) {
         Toast.makeText(this, "Subiendo imagen...", Toast.LENGTH_SHORT).show()
@@ -450,10 +487,20 @@ class frmEditarActivity : AppCompatActivity() {
                     FirebaseDatabase.getInstance().getReference("usuarios/medicos").child(uid)
                         .setValue(sesionActual)
                         .addOnSuccessListener {
-                            Toast.makeText(this, "Perfil de médico/paciente actualizado en Firebase.", Toast.LENGTH_SHORT).show()
-                            Log.d("EditarPerfil", "Perfil actualizado en Firebase. Foto URL en Firebase: ${sesionActual.fotoPerfil}")
+                            Toast.makeText(
+                                this,
+                                "Perfil de médico/paciente actualizado en Firebase.",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            Log.d(
+                                "EditarPerfil",
+                                "Perfil actualizado en Firebase. Foto URL en Firebase: ${sesionActual.fotoPerfil}"
+                            )
                             sesion.asignarSesion(sesionActual)
-                            Log.d("EditarPerfil", "Sesión global Persistencia.sesion.sesion actualizada. Foto URL: ${(Persistencia.sesion.obtenerSesion() as? medico)?.fotoPerfil ?: (Persistencia.sesion.obtenerSesion() as? paciente)?.fotoPerfil}")
+                            Log.d(
+                                "EditarPerfil",
+                                "Sesión global Persistencia.sesion.sesion actualizada. Foto URL: ${(Persistencia.sesion.obtenerSesion() as? medico)?.fotoPerfil ?: (Persistencia.sesion.obtenerSesion() as? paciente)?.fotoPerfil}"
+                            )
                             val intent = Intent(this, frmPrincipalActivity::class.java)
                             startActivity(intent)
                             dialog.dismiss()
@@ -482,7 +529,10 @@ class frmEditarActivity : AppCompatActivity() {
                 sesionActual.telefono = telefono
                 sesionActual.genero = generoSeleccionado
                 imageUrl?.let { sesionActual.fotoPerfil = it }
-                Log.d("EditarPerfil", "Foto de perfil asignada en memoria: ${sesionActual.fotoPerfil}")
+                Log.d(
+                    "EditarPerfil",
+                    "Foto de perfil asignada en memoria: ${sesionActual.fotoPerfil}"
+                )
                 sesionActual.uid?.let { uid ->
                     FirebaseDatabase.getInstance().getReference("usuarios/pacientes").child(uid)
                         .setValue(sesionActual) // Guarda el objeto paciente actualizado en Firebase

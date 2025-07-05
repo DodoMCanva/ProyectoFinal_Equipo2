@@ -11,7 +11,7 @@
     <string name="btnEresMedicoSi">Sí</string>
     <string name="btnEresMedicoNo">No</string>
     <string name="misCitas">Mis Citas</string>
-    <string name="olviContra"><u>¿Olvidaste tu contraseña?</u>></string>
+    <string name="olviContra"><u>¿Olvidaste tu contraseña?</u></string>
     <string name="restacontra">Restablecer contraseña</string>
     <string name="textResContra">Ingresa tu correo electrónico y te enviaremos un código para restablecer tu contraseña.</string>
     <string name="botonEnviarCodigo">Enviar código</string>
@@ -23,6 +23,8 @@
     <string name="labelHora">Hora:</string>
     <string name="labelMotivo">Motivo:</string>
     <string name="labelReceta">Receta:</string>
+    <string name="labelTelefono">Teléfono:</string>
+    <string name="laberGenero">Género:</string>
     <string name="btnCancelarCita">Cancelar Cita</string>
     <string name="especialidad">Especialidad</string>
     <string name="filtrar">Filtrar</string>
@@ -55,8 +57,8 @@
     <string name="registro">Registro</string>
     <string name="nombre">Nombre</string>
     <string name="fechaNacimiento">Fecha de nacimiento</string>
-    <string name="telefono">Teléfono:</string>
-    <string name="genero">Género:</string>
+    <string name="telefono">Teléfono</string>
+    <string name="genero">Género</string>
     <string name="hombre">Masculino</string>
     <string name="mujer">Femenino</string>
     <string name="dialogRecetaTitulo">Receta</string>
@@ -100,6 +102,7 @@
     <string name="cerrarsesion">Cerrar Sesión</string>
     <string name="textoSubrayadoHabilitar"><u>Habilitar</u></string>
     <string name="textoSubrayadoDeshabilitar"><u>Deshabilitar</u></string>
+    <string name="filtroPrincipal">Filtrar Conusultas</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

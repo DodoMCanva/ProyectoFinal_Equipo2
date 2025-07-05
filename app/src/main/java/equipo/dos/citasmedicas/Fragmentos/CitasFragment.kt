@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.DatePicker
 import android.widget.ImageButton
+import android.widget.LinearLayout
 import android.widget.ListView
 import android.widget.Switch
 import android.widget.TextView
@@ -36,6 +37,7 @@ class CitasFragment : Fragment() {
 
     var adapter: AdapterCitaRecycler? = null
     var filtroBusqueda: Boolean = false
+    var aplicarFiltros: Boolean = false
 
     //NOTA: formato anterior yyyy-MM-dd
     var fechaBusqueda: String =
@@ -53,7 +55,7 @@ class CitasFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        val aplicar: Switch = view.findViewById(R.id.swFiltrosCitas)
         val filtro: Switch = view.findViewById(R.id.swMostrarTodaSemana)
         val calendario: ImageButton = view.findViewById(R.id.btnCalendarioConsultaCitas)
         val fechaTexto: TextView = view.findViewById(R.id.tvConsultaFecha)
@@ -61,6 +63,11 @@ class CitasFragment : Fragment() {
         val fechaFinal: TextView = view.findViewById(R.id.tvFechaFinal)
         val listaCitas: RecyclerView = view.findViewById(R.id.rvCitas)
         val btnAgendar: FloatingActionButton? = view.findViewById(R.id.btnAgendar)
+        val seccionFiltros : LinearLayout = view.findViewById(R.id.llfiltrosPrincipal)
+        val seccionFechas : LinearLayout = view.findViewById(R.id.llfechaRango)
+
+        seccionFiltros.visibility = View.GONE
+        seccionFechas.visibility = View.GONE
 
         fechaTexto.setText(fechaBusqueda)
         fechaInicio.setText(fechaBusqueda)
@@ -134,19 +141,35 @@ class CitasFragment : Fragment() {
             }
             adaptarCitas(listaCitas)
         }
+        aplicar.setOnCheckedChangeListener { _, isChecked ->
+            aplicarFiltros = isChecked
+            if (aplicarFiltros) {
+                seccionFechas.visibility = View.VISIBLE
+                seccionFiltros.visibility = View.VISIBLE
+            } else {
+                seccionFiltros.visibility = View.GONE
+                seccionFechas.visibility = View.GONE
+            }
+            adaptarCitas(listaCitas)
+        }
 
     }
 
     fun adaptarCitas(recyclerView: RecyclerView) {
         sesion.actualizarListaCitas {
             if (sesion.citas != null && sesion.citas.isNotEmpty()) {
-                var lista = ArrayList<cita>()
-                if (filtroBusqueda) {
-                    lista = sesion.listaOrdenada().semana(fechaBusqueda, fechaFinale)
-                    lista = lista.encabezar(fechaBusqueda, fechaFinale)
-                } else {
-                    lista = sesion.listaOrdenada().dia(fechaBusqueda)
+                var lista : ArrayList<cita>
+                if (aplicarFiltros){
+                    if (filtroBusqueda) {
+                        lista = sesion.listaOrdenada().semana(fechaBusqueda, fechaFinale)
+                        lista = lista.encabezar(fechaBusqueda, fechaFinale)
+                    } else {
+                        lista = sesion.listaOrdenada().dia(fechaBusqueda)
+                    }
+                }else{
+                    lista = sesion.listaOrdenada().actuales(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")))
                 }
+
                 adapter = AdapterCitaRecycler(requireContext(), lista, sesion.tipo) { citaSeleccionada ->
                     val fragment = if (sesion.tipo == "paciente") {
                         DetalleCitaPacienteFragment()
@@ -213,6 +236,20 @@ class CitasFragment : Fragment() {
         }
         return lista
     }
+
+    fun ArrayList<cita>.actuales(inicio: String): ArrayList<cita> {
+        val lista = ArrayList<cita>()
+        val formato = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        val fechaInicio = formato.parse(inicio)
+        for (cita in this) {
+            val fechaCita = formato.parse(cita.fecha)
+            if (!fechaCita.before(fechaInicio)) {
+                lista.add(cita)
+            }
+        }
+        return lista
+    }
+
     override fun onResume() {
         super.onResume()
         val tvEncabezado: TextView? = (activity as? frmPrincipalActivity)?.findViewById(R.id.encabezadoPrincipal)

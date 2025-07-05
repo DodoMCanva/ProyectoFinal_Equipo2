@@ -3,12 +3,16 @@ package modulos
 import Persistencia.ConfiguracionHorario
 import Persistencia.Horario
 import Persistencia.cita
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.Calendar
 import java.util.Locale
 
@@ -98,7 +102,31 @@ class ModuloHorario {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun validarDiaConsulta(uidMedico: String, fecha: String, hora: String, onResultado: (Boolean) -> Unit) {
+        try {
+            val formato = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+            val fechaConsulta = formato.parse(fecha) ?: run {
+                onResultado(false)
+                return
+            }
+
+            val fechaActual = formato.parse(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")))
+
+            val calendario = Calendar.getInstance()
+            calendario.time = fechaActual!!
+            calendario.add(Calendar.YEAR, 2)
+            val  fechaLimite = calendario.time
+
+            if (fechaConsulta.before(fechaActual) || fechaConsulta.after(fechaLimite)) {
+                onResultado(false)
+                return
+            }
+
+        }catch (e : Exception){
+            onResultado(false)
+            return
+        }
         val ref = FirebaseDatabase.getInstance()
             .getReference("usuarios")
             .child("citas")
@@ -108,7 +136,7 @@ class ModuloHorario {
             override fun onDataChange(snapshot: DataSnapshot) {
                 for (citaSnap in snapshot.children) {
                     val c = citaSnap.getValue(cita::class.java)
-                    if (c != null && c.fecha == fecha && c.hora == hora) {
+                    if (c != null && c.fecha == fecha && c.hora == hora ) {
                         onResultado(false)
                         return
                     }

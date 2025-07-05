@@ -119,8 +119,6 @@ object sesion {
         })
         return ArrayList(listaOrdenada)
             }
-
-
     }
 
 
