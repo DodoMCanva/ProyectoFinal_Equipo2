@@ -111,54 +111,63 @@ class AgendarMedicoFragment : Fragment() {
                     return@setOnClickListener
                 }
 
-                val uid = medicoSeleccionado.uid
-                if (uid != null) {
-                    modulo.validarDiaConsulta(uid, fecha, hora) { esValido ->
-                        if (esValido == true) {
-                            val database = FirebaseDatabase.getInstance().getReference("usuarios").child("citas")
-                            val citaId = database.push().key
+                val database =
+                    FirebaseDatabase.getInstance().getReference("usuarios").child("citas")
+                val citaId = database.push().key
 
-                            if (citaId == null) {
-                                Toast.makeText(requireContext(), "Error al generar el ID de la cita.", Toast.LENGTH_SHORT).show()
-                                dialog.dismiss()
-                                return@validarDiaConsulta
-                            }
-
-                            val nuevaCita = cita(
-                                idCita = citaId,
-                                idMedico = medicoSeleccionado.uid,
-                                idPaciente = sesion.uid,
-                                nombreMedico = medicoSeleccionado.nombre,
-                                nombrePaciente = pacienteActual.nombre,
-                                fecha = fecha,
-                                hora = hora,
-                                motivo = motivo,
-                                estado = "Pendiente",
-                                especialidad = medicoSeleccionado.especialidad,
-                                imagenMedico = medicoSeleccionado.fotoPerfil,
-                                imagenPaciente = pacienteActual.fotoPerfil
-                            )
-
-                            database.child(citaId).setValue(nuevaCita)
-                                .addOnSuccessListener {
-                                    Toast.makeText(requireContext(), "Cita agendada con éxito.", Toast.LENGTH_SHORT).show()
-                                    parentFragmentManager.beginTransaction()
-                                        .replace(R.id.contenedorFragmento, CitasFragment())
-                                        .addToBackStack(null)
-                                        .commit()
-                                    dialog.dismiss()
-                                }
-                                .addOnFailureListener {
-                                    Toast.makeText(requireContext(), "Error al agendar la cita: ${it.message}", Toast.LENGTH_SHORT).show()
-                                    dialog.dismiss()
-                                }
-                        } else {
-                            Toast.makeText(requireContext(), "Ese horario ya está ocupado. Elige otro.", Toast.LENGTH_SHORT).show()
-                            dialog.dismiss()
-                        }
-                    }
+                if (citaId == null) {
+                    Toast.makeText(
+                        requireContext(),
+                        "Error al generar el ID de la cita.",
+                        Toast.LENGTH_SHORT
+                    )
+                        .show()
+                    dialog.dismiss()
+                    return@setOnClickListener
                 }
+
+                val nuevaCita = cita(
+                    idCita = citaId,
+                    idMedico = medicoSeleccionado.uid,
+                    idPaciente = sesion.uid,
+                    nombreMedico = medicoSeleccionado.nombre,
+                    nombrePaciente = pacienteActual.nombre,
+                    fecha = fecha,
+                    hora = hora,
+                    motivo = motivo,
+                    estado = "Pendiente",
+                    especialidad = medicoSeleccionado.especialidad,
+                    imagenMedico = medicoSeleccionado.fotoPerfil,
+                    imagenPaciente = pacienteActual.fotoPerfil
+                )
+
+                database.child(citaId).setValue(nuevaCita)
+                    .addOnSuccessListener {
+                        Toast.makeText(
+                            requireContext(),
+                            "Cita agendada con éxito.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+
+                        parentFragmentManager.beginTransaction()
+                            .replace(R.id.contenedorFragmento, CitasFragment())
+                            .addToBackStack(null)
+                            .commit()
+
+                        dialog.dismiss()
+                    }
+                    .addOnFailureListener {
+                        Toast.makeText(
+                            requireContext(),
+                            "Error al agendar la cita: ${it.message}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        dialog.dismiss()
+                    }
+
             }
+            dialog.show()
+
         }
 
         btnCancelar.setOnClickListener {
