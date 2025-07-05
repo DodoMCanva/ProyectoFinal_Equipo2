@@ -17,49 +17,48 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingBottom="24dp"> <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="40dp"
+            android:orientation="horizontal">
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="40dp"
-                android:orientation="horizontal">
+                android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_gravity="bottom">
 
-                <LinearLayout
-                    android:layout_width="250dp"
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_gravity="bottom">
+                    android:text="@string/labelMedico"
+                    android:textSize="20sp"
+                    android:fontFamily="@font/quicksandbold"
+                    android:textColor="@color/azulTexto" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/labelMedico"
-                        android:textSize="20sp"
-                        android:fontFamily="@font/quicksandbold"
-                        android:textColor="@color/azulTexto" />
-
-                    <TextView
-                        android:id="@+id/tvMedicoD"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Emmanuel Quiroz Soto"
-                        android:textSize="22sp"
-                        android:textColor="@color/azulTexto"
-                        android:fontFamily="@font/quicksandregular" />
-
-                </LinearLayout>
-
-                <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/imgFotoPerfil"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:src="@drawable/usuario"
-                    android:contentDescription="Foto de perfil"
-                    app:shapeAppearanceOverlay="@style/CircularImage"
-                    android:scaleType="centerCrop" />
+                <TextView
+                    android:id="@+id/tvMedicoD"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Emmanuel Quiroz Soto"
+                    android:textSize="22sp"
+                    android:textColor="@color/azulTexto"
+                    android:fontFamily="@font/quicksandregular" />
 
             </LinearLayout>
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/imgFotoPerfil"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/usuario"
+                android:contentDescription="Foto de perfil"
+                app:shapeAppearanceOverlay="@style/CircularImage"
+                android:scaleType="centerCrop" />
+
+        </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -67,7 +66,7 @@
                 android:layout_marginTop="15dp"
                 android:orientation="vertical"
                 android:paddingLeft="40dp"
-                android:paddingBottom="24dp">
+                android:paddingRight="40dp"  android:paddingBottom="24dp">
 
 
                 <TextView
@@ -176,44 +175,40 @@
 
                 <TextView
                     android:id="@+id/tvMotivoD"
-                    android:layout_width="350dp"
-                    android:layout_height="80dp"
-                    android:layout_marginBottom="24dp"
+                    android:layout_width="match_parent" android:layout_height="wrap_content" android:minHeight="80dp" android:layout_marginBottom="24dp"
                     android:fontFamily="@font/quicksandregular"
                     android:gravity="top|start"
                     android:paddingRight="20dp"
                     android:maxLines="5"
-                    android:minLines="3"
                     android:scrollbars="vertical"
                     android:text="Motivo"
                     android:textColor="@color/azulTexto"
-                    android:textSize="22sp"/>
+                    android:textSize="22sp"
+                  />
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/sdr"
+                android:id="@+id/llSeccionRecetaPaciente"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:layout_marginHorizontal="40dp" android:layout_marginBottom="16dp"
+                android:orientation="vertical"
+                android:gravity="center_horizontal"
+                android:visibility="gone"> <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:fontFamily="@font/quicksandbold"
-                    android:text="@string/labelReceta"
-                    android:textColor="@color/azulTexto"
-                    android:textSize="20sp" />
+                android:layout_marginBottom="8dp"
+                android:fontFamily="@font/quicksandbold"
+                android:text="@string/labelReceta"
+                android:textColor="@color/azulTexto"
+                android:textSize="20sp" />
 
                 <ImageView
                     android:id="@+id/ivRecetaDetallesCita"
-                    android:layout_width="200dp"
-                    android:layout_height="100dp"
-                    android:layout_gravity="center"
+                    android:layout_width="match_parent" android:layout_height="wrap_content" android:adjustViewBounds="true" android:scaleType="fitCenter" android:layout_gravity="center"
                     android:layout_marginBottom="10dp"
-                    android:src="@drawable/receta_detalle_cita_medico" />
-            </LinearLayout>
+                    android:src="@drawable/receta_detalle_cita_medico"
+                    android:contentDescription="Imagen de la receta subida por el médico"/>
+                    </LinearLayout>
 
             <Button
                 android:id="@+id/btnCancelarCita"
@@ -228,7 +223,9 @@
                 android:text="@string/btnCancelarCita"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
-                android:textSize="18sp" /> </LinearLayout>
+                android:textSize="18sp" />
+
+        </LinearLayout>
     </ScrollView>
 
 </LinearLayout>

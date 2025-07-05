@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import android.widget.ImageView
+import Persistencia.cita
 import Persistencia.paciente
 import android.widget.Button
 import android.widget.LinearLayout
@@ -21,15 +22,14 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import equipo.dos.citasmedicas.R
-import equipo.dos.citasmedicas.databinding.ActivityFrmPrincipalBinding
 import equipo.dos.citasmedicas.frmPrincipalActivity
-import equipo.dos.citasmedicas.helpers.MenuDesplegable
 
 
 class DetalleCitaPacienteFragment : Fragment() {
 
     private lateinit var citaId: String
     private lateinit var imgFotoMedicoDetalle: ImageView
+    private lateinit var ivRecetaDetallesCitaPaciente: ImageView
 
 
     @SuppressLint("MissingInflatedId")
@@ -48,11 +48,12 @@ class DetalleCitaPacienteFragment : Fragment() {
             return
         }
         imgFotoMedicoDetalle = view.findViewById(R.id.imgFotoPerfil)
+        ivRecetaDetallesCitaPaciente = view.findViewById(R.id.ivRecetaDetallesCita)
 
         cargarDatosDeCita(citaId)
 
 
-        val cancelar: TextView = view.findViewById(R.id.btnCancelarCita)
+        val cancelar: Button = view.findViewById(R.id.btnCancelarCita)
         cancelar.setOnClickListener {
             mostrarDialogDeCancelacion()
         }
@@ -65,7 +66,7 @@ class DetalleCitaPacienteFragment : Fragment() {
 
         databaseRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                val citaData = snapshot.getValue(Persistencia.cita::class.java)
+                val citaData = snapshot.getValue(cita::class.java)
 
                 if (citaData != null) {
                     val nm: TextView = view!!.findViewById(R.id.tvMedicoD)
@@ -74,8 +75,9 @@ class DetalleCitaPacienteFragment : Fragment() {
                     val hora: TextView = view!!.findViewById(R.id.tvHoraD)
                     val estado: TextView = view!!.findViewById(R.id.tvEstadoD)
                     val motivo: TextView = view!!.findViewById(R.id.tvMotivoD)
-                    val seccion: LinearLayout = view!!.findViewById(R.id.sdr)
-                    val cancelar: TextView = view!!.findViewById(R.id.btnCancelarCita)
+                    // CAMBIO AQUÍ: Usa el ID correcto del LinearLayout de la receta
+                    val seccionRecetaPaciente: LinearLayout = view!!.findViewById(R.id.llSeccionRecetaPaciente)
+                    val btnCancelar: Button = view!!.findViewById(R.id.btnCancelarCita)
 
                     nm.text = citaData.nombreMedico
                     esp.text = citaData.especialidad
@@ -84,25 +86,40 @@ class DetalleCitaPacienteFragment : Fragment() {
                     motivo.text = citaData.motivo
                     estado.text = citaData.estado
 
+                    if (citaData.estado == "Completada" && !citaData.urlReceta.isNullOrEmpty()) {
+                        Glide.with(this@DetalleCitaPacienteFragment)
+                            .load(citaData.urlReceta)
+                            .placeholder(R.drawable.receta_detalle_cita_medico)
+                            .error(R.drawable.receta_detalle_cita_medico)
+                            .into(ivRecetaDetallesCitaPaciente)
+                        ivRecetaDetallesCitaPaciente.visibility = View.VISIBLE
+                    } else {
+                        ivRecetaDetallesCitaPaciente.visibility = View.GONE
+                    }
+
                     when (citaData.estado) {
                         "Pendiente" -> {
-                            seccion.visibility = View.GONE
-                            cancelar.visibility = View.VISIBLE
+                            seccionRecetaPaciente.visibility = View.GONE
+                            btnCancelar.visibility = View.VISIBLE
+                            btnCancelar.isEnabled = true
                         }
 
                         "Completada" -> {
-                            seccion.visibility = View.VISIBLE
-                            cancelar.visibility = View.GONE
+                            seccionRecetaPaciente.visibility = View.VISIBLE
+                            btnCancelar.visibility = View.GONE
+                            btnCancelar.isEnabled = false
                         }
 
                         "Cancelada" -> {
-                            seccion.visibility = View.GONE
-                            cancelar.visibility = View.GONE
+                            seccionRecetaPaciente.visibility = View.GONE
+                            btnCancelar.visibility = View.GONE
+                            btnCancelar.isEnabled = false
                         }
 
                         else -> {
-                            seccion.visibility = View.GONE
-                            cancelar.visibility = View.GONE
+                            seccionRecetaPaciente.visibility = View.GONE
+                            btnCancelar.visibility = View.GONE
+                            btnCancelar.isEnabled = false
                         }
                     }
 
@@ -113,11 +130,15 @@ class DetalleCitaPacienteFragment : Fragment() {
                         refMedico.get().addOnSuccessListener { medicoSnapshot ->
                             val medicoData = medicoSnapshot.getValue(medico::class.java)
                             medicoData?.fotoPerfil?.let { fotoUrl ->
-                                Glide.with(this@DetalleCitaPacienteFragment)
-                                    .load(fotoUrl)
-                                    .placeholder(R.drawable.usuario)
-                                    .error(R.drawable.usuario)
-                                    .into(imgFotoMedicoDetalle)
+                                if (fotoUrl.startsWith("http")) {
+                                    Glide.with(this@DetalleCitaPacienteFragment)
+                                        .load(fotoUrl)
+                                        .placeholder(R.drawable.usuario)
+                                        .error(R.drawable.usuario)
+                                        .into(imgFotoMedicoDetalle)
+                                } else {
+                                    imgFotoMedicoDetalle.setImageResource(R.drawable.usuario)
+                                }
                             } ?: run {
                                 imgFotoMedicoDetalle.setImageResource(R.drawable.usuario)
                             }
@@ -140,7 +161,7 @@ class DetalleCitaPacienteFragment : Fragment() {
 
             override fun onCancelled(error: DatabaseError) {
                 Log.e("Firebase", "Error al cargar datos de la cita: ${error.message}")
-                Toast.LENGTH_SHORT
+                Toast.makeText(requireContext(), "Error al cargar la cita.", Toast.LENGTH_SHORT).show()
 
             }
         })
@@ -178,7 +199,7 @@ class DetalleCitaPacienteFragment : Fragment() {
             .addOnSuccessListener {
                 Toast.makeText(
                     requireContext(),
-                    "Cita cancelada con éxito en la base de datos.",
+                    "Cita cancelada con éxito.",
                     Toast.LENGTH_SHORT
                 ).show()
                 cargarDatosDeCita(citaId)
@@ -189,6 +210,7 @@ class DetalleCitaPacienteFragment : Fragment() {
                     .show()
             }
     }
+
     override fun onResume() {
         super.onResume()
         val tvEncabezado: TextView? = (activity as? frmPrincipalActivity)?.findViewById(R.id.encabezadoPrincipal)
