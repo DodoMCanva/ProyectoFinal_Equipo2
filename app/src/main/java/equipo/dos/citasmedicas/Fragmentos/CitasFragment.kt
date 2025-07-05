@@ -167,7 +167,7 @@ class CitasFragment : Fragment() {
                         lista = sesion.listaOrdenada().dia(fechaBusqueda)
                     }
                 }else{
-                    lista = sesion.listaOrdenada().actuales(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")))
+                    lista = sesion.listaOrdenada().actuales()
                 }
 
                 adapter = AdapterCitaRecycler(requireContext(), lista, sesion.tipo) { citaSeleccionada ->
@@ -237,10 +237,10 @@ class CitasFragment : Fragment() {
         return lista
     }
 
-    fun ArrayList<cita>.actuales(inicio: String): ArrayList<cita> {
+    fun ArrayList<cita>.actuales() : ArrayList<cita> {
         val lista = ArrayList<cita>()
         val formato = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-        val fechaInicio = formato.parse(inicio)
+        val fechaInicio = formato.parse(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")))
         for (cita in this) {
             val fechaCita = formato.parse(cita.fecha)
             if (!fechaCita.before(fechaInicio)) {
