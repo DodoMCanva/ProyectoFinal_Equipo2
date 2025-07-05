@@ -93,13 +93,14 @@ class frmEditarActivity : AppCompatActivity() {
         cbHombre.setOnCheckedChangeListener(null)
         cbMujer.setOnCheckedChangeListener(null)
 
-        imgFotoPerfil.setOnClickListener {
+        val btnCambiarFoto = findViewById<Button>(R.id.btnCambiarFoto)
+
+        btnCambiarFoto.setOnClickListener {
             val intent = Intent(Intent.ACTION_PICK)
             intent.type = "image/*"
             pickImage.launch(intent)
         }
-        // Cargar datos de la sesión y la foto de perfil (ahora con Glide)
-        cargarDatosPerfil()
+            cargarDatosPerfil()
 
 
         cbHombre.setOnCheckedChangeListener { _, isChecked ->
