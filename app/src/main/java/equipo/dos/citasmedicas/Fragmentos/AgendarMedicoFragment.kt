@@ -1,7 +1,11 @@
 package equipo.dos.citasmedicas.Fragmentos
 
+import Persistencia.cita
 import Persistencia.medico
+import Persistencia.paciente
+import Persistencia.sesion
 import android.app.DatePickerDialog
+import android.app.Dialog
 import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,12 +14,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Button
 import android.widget.DatePicker
+import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import com.google.firebase.database.FirebaseDatabase
 import equipo.dos.citasmedicas.R
 import equipo.dos.citasmedicas.frmPrincipalActivity
 import modulos.ModuloHorario
@@ -41,12 +48,13 @@ class AgendarMedicoFragment : Fragment() {
     var m : medico? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val tvNombreMedico = view.findViewById<TextView>(R.id.tvAgendarNombre)
+        val tvCosto = view.findViewById<TextView>(R.id.tvMontoAgendar)
+        val btnCancelar = view.findViewById<Button>(R.id.btnCancelar)
         m = arguments?.getSerializable("medico") as? medico
         spHora = view.findViewById(R.id.spHora)
         tvFecha = view.findViewById(R.id.tvAgendarFecha)
         tvHoraSeleccionada = view.findViewById(R.id.tvHoraSeleccionada)
-        tvNombreMedico  = view.findViewById(R.id.tvAgendarNombre)
-        tvCosto = view.findViewById(R.id.tvMontoAgendar)
 
         tvNombreMedico.setText(m?.nombre)
         tvCosto.setText(m?.costoConsulta.toString())
@@ -62,7 +70,103 @@ class AgendarMedicoFragment : Fragment() {
             override fun onNothingSelected(parent: AdapterView<*>) {}
         }
 
+        val btnConfirmar = view.findViewById<Button>(R.id.btnConfirmar)
+        val txtMotivo = view.findViewById<EditText>(R.id.txtMotivo)
 
+        btnConfirmar.setOnClickListener {
+            val fecha = tvFecha.text.toString()
+            val hora = spHora.selectedItem.toString()
+            val motivo = txtMotivo.text.toString()
+
+            if (motivo.isEmpty()) {
+                Toast.makeText(
+                    requireContext(),
+                    "Escribe un motivo para la cita",
+                    Toast.LENGTH_SHORT
+                ).show()
+                return@setOnClickListener
+            }
+
+            val dialog = Dialog(requireContext())
+            dialog.setContentView(R.layout.dialog_confirmacion_cita)
+            dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+            dialog.window?.setLayout(
+                (resources.displayMetrics.widthPixels * 0.9).toInt(),
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            )
+
+            val btnAceptar = dialog.findViewById<Button>(R.id.btnConfirmarCancelacion)
+
+            btnAceptar.setOnClickListener {
+                val medicoSeleccionado = arguments?.getSerializable("medico") as? medico
+                val pacienteActual = sesion.obtenerSesion() as? paciente
+
+                if (medicoSeleccionado == null || pacienteActual == null) {
+                    Toast.makeText(
+                        requireContext(),
+                        "Error: No se pudo obtener la información de usuario.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    dialog.dismiss()
+                    return@setOnClickListener
+                }
+
+                val uid = medicoSeleccionado.uid
+                if (uid != null) {
+                    modulo.validarDiaConsulta(uid, fecha, hora) { esValido ->
+                        if (esValido == true) {
+                            val database = FirebaseDatabase.getInstance().getReference("usuarios").child("citas")
+                            val citaId = database.push().key
+
+                            if (citaId == null) {
+                                Toast.makeText(requireContext(), "Error al generar el ID de la cita.", Toast.LENGTH_SHORT).show()
+                                dialog.dismiss()
+                                return@validarDiaConsulta
+                            }
+
+                            val nuevaCita = cita(
+                                idCita = citaId,
+                                idMedico = medicoSeleccionado.uid,
+                                idPaciente = sesion.uid,
+                                nombreMedico = medicoSeleccionado.nombre,
+                                nombrePaciente = pacienteActual.nombre,
+                                fecha = fecha,
+                                hora = hora,
+                                motivo = motivo,
+                                estado = "Pendiente",
+                                especialidad = medicoSeleccionado.especialidad,
+                                imagenMedico = medicoSeleccionado.fotoPerfil,
+                                imagenPaciente = pacienteActual.fotoPerfil
+                            )
+
+                            database.child(citaId).setValue(nuevaCita)
+                                .addOnSuccessListener {
+                                    Toast.makeText(requireContext(), "Cita agendada con éxito.", Toast.LENGTH_SHORT).show()
+                                    parentFragmentManager.beginTransaction()
+                                        .replace(R.id.contenedorFragmento, CitasFragment())
+                                        .addToBackStack(null)
+                                        .commit()
+                                    dialog.dismiss()
+                                }
+                                .addOnFailureListener {
+                                    Toast.makeText(requireContext(), "Error al agendar la cita: ${it.message}", Toast.LENGTH_SHORT).show()
+                                    dialog.dismiss()
+                                }
+                        } else {
+                            Toast.makeText(requireContext(), "Ese horario ya está ocupado. Elige otro.", Toast.LENGTH_SHORT).show()
+                            dialog.dismiss()
+                        }
+                    }
+                }
+            }
+        }
+
+        btnCancelar.setOnClickListener {
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.contenedorFragmento, CitasFragment())
+                .addToBackStack(null)
+                .commit()
+        }
     }
 
     private fun mostrarSelectorFecha() {

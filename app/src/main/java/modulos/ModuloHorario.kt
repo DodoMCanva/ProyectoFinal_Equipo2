@@ -93,18 +93,8 @@ class ModuloHorario {
         }
     }
 
-    fun validarDiaConsulta(uidMedico: String, onResultado: (ConfiguracionHorario?) -> Unit) {
-        val database = FirebaseDatabase.getInstance().getReference("configuracionHorario").child(uidMedico)
-        database.get().addOnSuccessListener { snapshot ->
-            if (snapshot.exists()) {
-                val config = snapshot.getValue(ConfiguracionHorario::class.java)
-                onResultado(config)
-            } else {
-                onResultado(null)
-            }
-        }.addOnFailureListener {
-            onResultado(null)
-        }
+    fun validarDiaConsulta(uidMedico: String, fecha : String, hora: String, onResultado: (Boolean?) -> Unit) {
+
     }
 
 }
