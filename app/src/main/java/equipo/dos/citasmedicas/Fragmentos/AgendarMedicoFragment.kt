@@ -177,45 +177,33 @@ class AgendarMedicoFragment : Fragment() {
 
 
     private fun mostrarSelectorFecha(config: ConfiguracionHorario) {
-        val datePicker = crearDatePicker(config)
+        val calendar = Calendar.getInstance()
+        val y = calendar.get(Calendar.YEAR)
+        val m = calendar.get(Calendar.MONTH)
+        val d = calendar.get(Calendar.DAY_OF_MONTH)
 
-        datePicker.addOnPositiveButtonClickListener { fechaMillis ->
-            val calendar = Calendar.getInstance()
-            calendar.timeInMillis = fechaMillis
-
-            val y = calendar.get(Calendar.YEAR)
-            val m = calendar.get(Calendar.MONTH)
-            val d = calendar.get(Calendar.DAY_OF_MONTH)
-
-            val fechaStr = String.format("%02d/%02d/%04d", d, m + 1, y)
-            tvFecha.text = fechaStr
-            configurarSpinnerHoras(y, m, d)
-        }
-        datePicker.show(parentFragmentManager, "fechaPicker")
-    }
-
-
-    fun crearDatePicker(config: ConfiguracionHorario): MaterialDatePicker<Long> {
-        val diasInhabiles = modulo.listaInhabiles(config)
-
-        val constraintsBuilder = CalendarConstraints.Builder()
-        constraintsBuilder.setValidator(object : CalendarConstraints.DateValidator {
-            override fun isValid(date: Long): Boolean {
+        val datePickerDialog = DatePickerDialog(
+            requireContext(),
+            { _, year, month, dayOfMonth ->
                 val calendar = Calendar.getInstance()
-                calendar.timeInMillis = date
+                calendar.set(year, month, dayOfMonth)
                 val dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK)
-                return !diasInhabiles.contains(dayOfWeek)
-            }
+                if (modulo.listaInhabiles(config).contains(dayOfWeek)) {
+                    Toast.makeText(requireContext(), "Este día no está disponible", Toast.LENGTH_SHORT).show()
+                } else {
+                    val fechaStr = String.format("%02d/%02d/%04d", dayOfMonth, month + 1, year)
+                    tvFecha.text = fechaStr
+                    configurarSpinnerHoras(year, month, dayOfMonth)
+                }
+            },
+            y, m, d
+        )
 
-            override fun describeContents(): Int = 0
-            override fun writeToParcel(dest: Parcel, flags: Int) {}
-        })
 
-        return MaterialDatePicker.Builder.datePicker()
-            .setTitleText("Selecciona una fecha")
-            .setCalendarConstraints(constraintsBuilder.build())
-            .build()
+        datePickerDialog.show()
     }
+
+
 
 
     private fun configurarSpinnerHoras(year: Int, month: Int, day: Int) {
