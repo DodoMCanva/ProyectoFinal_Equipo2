@@ -2,6 +2,7 @@ package equipo.dos.citasmedicas.Fragmentos
 
 import Persistencia.cita
 import Persistencia.paciente
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.Dialog
@@ -27,6 +28,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
+import androidx.fragment.app.commit
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -42,6 +44,7 @@ import java.util.Locale
 
 val UPLOAD_PRESET_CITAS_MEDICAS = "Citas Medicas"
 
+@RequiresApi(Build.VERSION_CODES.O)
 class DetalleCitaMedicoFragment : Fragment() {
 
     private lateinit var citaId: String
@@ -212,6 +215,7 @@ class DetalleCitaMedicoFragment : Fragment() {
         })
     }
 
+
     private fun mostrarDialogSubirReceta() {
         val dialog = Dialog(requireContext())
         dialog.setContentView(R.layout.dialog_subir_receta)
@@ -294,6 +298,13 @@ class DetalleCitaMedicoFragment : Fragment() {
                 actualizarCompletada(citaId, existingImageUrl, notas)
                 dialog.dismiss()
             }
+
+            val fragment = CitasFragment()
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.contenedorFragmento, fragment)
+                .addToBackStack(null)
+                .commit()
+
         }
         dialog.show()
     }
