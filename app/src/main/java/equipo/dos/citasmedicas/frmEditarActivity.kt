@@ -528,6 +528,7 @@ class frmEditarActivity : AppCompatActivity() {
                 sesionActual.nombre = nombre
                 sesionActual.telefono = telefono
                 sesionActual.genero = generoSeleccionado
+                sesionActual.fechaNacimiento = tvFecha.text.toString().trim()
                 imageUrl?.let { sesionActual.fotoPerfil = it }
                 Log.d(
                     "EditarPerfil",
@@ -565,7 +566,7 @@ class frmEditarActivity : AppCompatActivity() {
                     dialog.dismiss()
                 }
             }
-
+            
             else -> {
                 Toast.makeText(this, "Tipo de sesión desconocido.", Toast.LENGTH_SHORT).show()
                 dialog.dismiss()
