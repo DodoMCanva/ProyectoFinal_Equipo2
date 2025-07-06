@@ -189,6 +189,20 @@ class DetalleCitaMedicoFragment : Fragment() {
                             } ?: run {
                                 imgFotoPacienteDetalle!!.setImageResource(R.drawable.usuario)
                             }
+
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                val edadCalculada = pacienteData?.calcularEdad() ?: 0
+                                view?.findViewById<TextView>(R.id.tvEdadDetalleCitaMedico)?.text = edadCalculada.toString()
+                            } else {
+                                view?.findViewById<TextView>(R.id.tvEdadDetalleCitaMedico)?.text = "N/D"
+                            }
+
+                            view?.findViewById<TextView>(R.id.tvGeneroDetalleCitaMedico)?.text =
+                                pacienteData?.genero ?: "No disponible"
+
+                            view?.findViewById<TextView>(R.id.tvTelefonoDetalleCitaMedico)?.text =
+                                pacienteData?.telefono ?: "No disponible"
+
                         }.addOnFailureListener {
                             Log.e("Firebase", "Error al cargar datos del paciente: ${it.message}")
                             imgFotoPacienteDetalle!!.setImageResource(R.drawable.usuario)
