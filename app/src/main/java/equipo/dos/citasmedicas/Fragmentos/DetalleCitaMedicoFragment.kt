@@ -290,21 +290,22 @@ class DetalleCitaMedicoFragment : Fragment() {
             if (imagenRecetaUri != null) {
                 subirImagenARecetaCloudinary(imagenRecetaUri!!) { imageUrl ->
                     actualizarCompletada(citaId, imageUrl, notas)
-                    dialog.dismiss()
                     imagenRecetaUri = null
+                    dialog.dismiss()
+
+                    //Borrar si hace dano
+                    val fragment = CitasFragment()
+                    parentFragmentManager.beginTransaction()
+                        .replace(R.id.contenedorFragmento, fragment)
+                        .addToBackStack(null)
+                        .commit()
+
                 }
             } else {
                 val existingImageUrl = ivPreviewReceta.tag as? String
                 actualizarCompletada(citaId, existingImageUrl, notas)
                 dialog.dismiss()
             }
-
-            val fragment = CitasFragment()
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.contenedorFragmento, fragment)
-                .addToBackStack(null)
-                .commit()
-
         }
         dialog.show()
     }
