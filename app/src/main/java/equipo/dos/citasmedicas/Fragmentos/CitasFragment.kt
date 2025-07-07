@@ -95,6 +95,7 @@ class CitasFragment : Fragment() {
 
             val datePicker = DatePickerDialog(
                 requireContext(),
+                (R.style.MyDatePickerDialogTheme),
                 { _: DatePicker, year: Int, month: Int, dayOfMonth: Int ->
                     val fechaSeleccionadaCal = Calendar.getInstance()
                     fechaSeleccionadaCal.set(year, month, dayOfMonth)

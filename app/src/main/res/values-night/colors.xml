@@ -10,18 +10,18 @@
     <color name="verdeHabilitar">#1E5F20</color>
     <color name="grisDeshabilitar">#888888</color>
 
-    <color name="amarilloBtn">#E6AB4F</color>
-    <color name="rojoBtn">#E05555</color>
-    <color name="azulClaroBtn">#66E4C4</color>
+    <color name="amarilloBtn">#B78D3D</color>
+    <color name="rojoBtn">#973333</color>
+    <color name="azulClaroBtn">#4DAB93</color>
     <color name="azulBackMensajes">#2F6F6B</color>
 
     <color name="BackCitaCompletada">#853B8B87</color>
-    <color name="BackCitaPendiente">#2F6F6B</color>
-    <color name="BackCitaCancelada">#7366663B</color>
+    <color name="BackCitaPendiente">#3B8B87</color>
+    <color name="BackCitaCancelada">#4DDFCC6A</color>
     <color name="BackHorarios">#264241</color>
 
     <color name="colorAzulDegra">#1FD6CE</color>
-    <color name="backFiltro">#246D6A</color>
+    <color name="backFiltro">#2A8884</color>
     <color name="filtroBtn">#408E8A</color>
 
     <color name="grisTexto">#AAAAAA</color>
@@ -29,4 +29,12 @@
     <color name="whiteEditText">#31655D</color>
     <color name="whiteBtn">#FFFFFFFF</color>
     <color name="whiteTextMenu">#FFFFFF</color>
+    <color name="azulBtnBuscar">#2CB5AF</color>
+    <color name="backFiltroModoOscuro">#009E97</color>
+    <color name="edittext_background">#31655D</color>
+    <color name="degraUno">#0F5E5A</color>
+    <color name="degraDos">#2FF6EC</color>
+    <color name="azulsppiner">#4DAB93</color>
+    <color name="azulsppineroscuro">#2CB5AF</color>
+
 </resources>

@@ -21,19 +21,31 @@ import equipo.dos.citasmedicas.helpers.MenuDesplegable
 import Persistencia.medico
 import Persistencia.paciente
 import Persistencia.sesion
+import androidx.appcompat.app.AppCompatDelegate
 
 @RequiresApi(Build.VERSION_CODES.O)
 class frmPrincipalActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        val prefs = androidx.preference.PreferenceManager.getDefaultSharedPreferences(this)
+        val modoOscuro = prefs.getBoolean("modo_oscuro", false)
+        if (modoOscuro) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        }
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_frm_principal)
+
         if (sesion.sesion != null){
             setupUI()
-        }else{
+        } else {
             cargarSesionDesdeFirebase()
         }
     }
+
 
     override fun onResume() {
         super.onResume()

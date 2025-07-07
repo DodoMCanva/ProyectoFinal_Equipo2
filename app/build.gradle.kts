@@ -83,3 +83,6 @@ android {
 
     }
 }
+dependencies {
+    implementation(libs.androidx.preference.ktx)
+}

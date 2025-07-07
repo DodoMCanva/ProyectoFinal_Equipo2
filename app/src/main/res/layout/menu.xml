@@ -27,5 +27,16 @@
         app:shapeAppearanceOverlay="@style/CircularImage"
         android:scaleType="centerCrop" />
 
+    <Switch
+        android:id="@+id/swModoOscuro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/quicksandbold"
+        android:textSize="@dimen/text20"
+        android:text="Modo Oscuro"
+        android:layout_marginTop="16dp"
+        android:textColor="@color/whiteBtn"
+        android:layout_marginStart="30dp" />
+
 
 </LinearLayout>

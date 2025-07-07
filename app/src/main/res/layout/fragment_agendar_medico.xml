@@ -103,14 +103,18 @@
 
                     <Spinner
                         android:id="@+id/spHora"
-                        android:layout_width="30dp"
+                        android:layout_width="36dp"
                         android:layout_height="40dp"
+                        android:background="@drawable/btnsppinerazuloscuro"
                         android:orientation="vertical"
-                        android:paddingLeft="5sp"
+                        android:layout_gravity="center"
+                        style="@style/MySpinnerStyle"
                         android:spinnerMode="dropdown"
-                        android:layout_marginLeft="10dp"
-                        android:textColor="@color/azulTexto"
-                        android:dropDownVerticalOffset="?attr/actionBarSize"/>
+                        android:dropDownVerticalOffset="48dp"
+                        android:dropDownHorizontalOffset="40dp"
+                        android:dropDownWidth="120dp"
+                        />
+
                     <TextView
                         android:id="@+id/tvHoraSeleccionada"
                         android:layout_width="85dp"
@@ -121,7 +125,9 @@
                         android:gravity="center"
                         android:textSize="20sp"
                         android:fontFamily="@font/quicksandsemibold"
-                        android:layout_marginEnd="5dp" />
+                        />
+
+
 
 
                 </LinearLayout>
@@ -174,7 +180,7 @@
                 android:id="@+id/txtMotivo"
                 android:layout_width="350dp"
                 android:layout_height="200dp"
-                android:background="@android:drawable/edit_text"
+                android:background="@drawable/edittext_background"
                 android:gravity="top|start"
                 android:layout_gravity="center_horizontal"
                 android:hint="Escribe tu mensaje aquí..."

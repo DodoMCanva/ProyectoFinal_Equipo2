@@ -81,12 +81,12 @@ class AdapterCitaRecycler(
 
                 val selCita = itemView.findViewById<LinearLayout>(R.id.panelCitaMedico)
                 val colorResId = when (cita.estado) {
-                    "Completada" -> R.color.BackCitaCompletada
-                    "Pendiente" -> R.color.BackCitaPendiente
-                    "Cancelada" -> R.color.BackCitaCancelada
-                    else -> R.color.BackCitaPendiente
+                    "Completada" -> R.drawable.fondocitacompletada
+                    "Pendiente" -> R.drawable.fondocitapendiente
+                    "Cancelada" -> R.drawable.fondocitacancelada
+                    else -> R.drawable.fondocitapendiente
                 }
-                selCita.setBackgroundColor(ContextCompat.getColor(context, colorResId))
+                selCita.setBackgroundResource(colorResId)
 
                 selCita.setOnClickListener {
                     onCitaSelected(cita)

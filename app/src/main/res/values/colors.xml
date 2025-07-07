@@ -22,4 +22,12 @@
     <color name="whiteEditText">#FFFFFFFF</color>
     <color name="whiteBtn">#FFFFFFFF</color>
     <color name="whiteTextMenu">#FFFFFFFF</color>
+    <color name="azulBtnBuscar">#3B8B87</color>
+    <color name="backFiltroModoOscuro">#66CDC8</color>
+    <color name="edittext_background">#FFFFFF</color>
+    <color name="degraUno">#0F5E5A</color>
+    <color name="degraDos">#2FF6EC</color>
+    <color name="azulsppiner">#44D3A5</color>
+    <color name="azulsppineroscuro">#3B8B87</color>
+
 </resources>
