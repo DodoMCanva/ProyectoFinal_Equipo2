@@ -160,9 +160,12 @@ class CitasFragment : Fragment() {
                 } else if (filtroSemana) {
                     sesion.listaOrdenada().semana(fechaBusqueda, fechaFinale)
                     .encabezar(fechaBusqueda, fechaFinale)
-
                 } else {
                     sesion.listaOrdenada().actuales()
+                }
+
+                if (sesion.tipo == "paciente") {
+                    lista = lista.eliminarCompletadas()
                 }
 
 
@@ -246,6 +249,10 @@ class CitasFragment : Fragment() {
             }
         }
         return lista
+    }
+
+    fun ArrayList<cita>.eliminarCompletadas(): ArrayList<cita> {
+        return ArrayList(this.filterNot { it.estado == "Completada" || it.estado == "Cancelada" })
     }
 
     override fun onResume() {

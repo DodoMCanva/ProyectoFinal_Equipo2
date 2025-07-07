@@ -55,12 +55,12 @@ class AgendarMedicoFragment : Fragment() {
         val tvNombreMedico = view.findViewById<TextView>(R.id.tvAgendarNombre)
         val tvCosto = view.findViewById<TextView>(R.id.tvMontoAgendar)
         val btnCancelar = view.findViewById<Button>(R.id.btnCancelar)
-
         btnConfirmar = view.findViewById(R.id.btnConfirmar)
-        m = arguments?.getSerializable("medico") as? medico
         spHora = view.findViewById(R.id.spHora)
+        m = arguments?.getSerializable("medico") as? medico
         spHora.isEnabled = false
         btnConfirmar.isEnabled = false
+        tvNombreMedico.setText(m?.nombre)
         tvFecha = view.findViewById(R.id.tvAgendarFecha)
         tvHoraSeleccionada = view.findViewById(R.id.tvHoraSeleccionada)
 
@@ -72,6 +72,7 @@ class AgendarMedicoFragment : Fragment() {
                         mostrarSelectorFecha(config)
                     }
                 }
+                tvCosto.setText(config?.costoCita.toString())
 
                 spHora.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                     override fun onItemSelected(
