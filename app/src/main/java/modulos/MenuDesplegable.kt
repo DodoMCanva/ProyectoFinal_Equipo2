@@ -1,17 +1,23 @@
 package equipo.dos.citasmedicas.helpers
 
+import CustomTypefaceSpan
 import Persistencia.medico
 import Persistencia.paciente
 import Persistencia.sesion
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Intent
+import android.graphics.Typeface
 import android.os.Build
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.MenuItem
 import com.bumptech.glide.Glide
 import android.view.View
 import android.widget.*
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.commit
@@ -35,11 +41,27 @@ object MenuDesplegable {
         val nav = activity.findViewById<NavigationView>(R.id.navegacion_menu)
         val encabezado: TextView = activity.findViewById(R.id.encabezadoPrincipal)
 
+        val typeface = ResourcesCompat.getFont(activity, R.font.quicksandbold)
+
+
+
+
         toolbar.setOnClickListener {
             drawerLayout.openDrawer(GravityCompat.START)
         }
 
         val menu = nav.menu
+
+
+        for (i in 0 until menu.size()) {
+            val item = menu.getItem(i)
+            val originalTitle = item.title.toString()
+            val spannableTitle = android.text.SpannableString(originalTitle)
+            spannableTitle.setSpan(CustomTypefaceSpan(typeface), 0, originalTitle.length, 0)
+            item.title = spannableTitle
+        }
+
+
         val opcion = menu.findItem(R.id.btnOpcion)
 
         if (sesion.tipo == "paciente") {
@@ -51,6 +73,22 @@ object MenuDesplegable {
             opcion.setIcon(R.drawable.settings30)
 
         }
+        for (i in 0 until menu.size()) {
+            val item = menu.getItem(i)
+            val titleStr = item.title.toString()
+            setMenuItemTitleWithFont(item, titleStr, typeface)
+        }
+        /*val inflater = LayoutInflater.from(activity)
+        for (i in 0 until menu.size()) {
+            val item = menu.getItem(i)
+            val customText = item.title?.toString() ?: ""
+            item.title = customText
+
+            val customView = inflater.inflate(R.layout.menu_item_custom, null) as TextView
+            customView.text = customText
+
+            item.actionView = customView
+        }*/
 
         nav.setNavigationItemSelectedListener { item ->
             when (item.itemId) {
@@ -63,6 +101,8 @@ object MenuDesplegable {
                             encabezado.setText("Mis Citas")
                         }
                     }
+                    val menuItem = nav.menu.findItem(R.id.btnMenuMisCitas)
+                    setMenuItemTitleWithFont(menuItem, "Mis Citas", typeface)
                 }
 
                 R.id.btnMenuHistorial -> {
@@ -74,6 +114,8 @@ object MenuDesplegable {
                             encabezado.setText("Historial")
                         }
                     }
+                    val menuItem = nav.menu.findItem(R.id.btnMenuMisCitas)
+                    setMenuItemTitleWithFont(menuItem, "Mis Citas", typeface)
                 }
 
                 R.id.btnOpcion -> {
@@ -110,6 +152,31 @@ object MenuDesplegable {
         val headerView = nav.getHeaderView(0)
         val btnPerfil = headerView.findViewById<ImageView>(R.id.btnPerfil)
         val btnMenuCerrar = headerView.findViewById<Button>(R.id.btnMenuCerrarMenu)
+
+
+
+
+
+        val switchModoOscuro = headerView.findViewById<Switch>(R.id.swModoOscuro)
+
+        // Obtener SharedPreferences
+        val prefs = androidx.preference.PreferenceManager.getDefaultSharedPreferences(activity)
+        val modoOscuroActivado = prefs.getBoolean("modo_oscuro", false)
+        switchModoOscuro.isChecked = modoOscuroActivado
+
+        switchModoOscuro.setOnCheckedChangeListener { _, isChecked ->
+            prefs.edit().putBoolean("modo_oscuro", isChecked).apply()
+
+            if (isChecked) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            }
+        }
+
+
+
+
 
         val sesionActual = sesion.obtenerSesion()
         Log.d("MenuDesplegable", "Configurando menú. Foto URL en sesion global: ${(sesionActual as? medico)?.fotoPerfil ?: (sesionActual as? paciente)?.fotoPerfil}")
@@ -168,5 +235,11 @@ object MenuDesplegable {
         }
 
 
+    }
+
+    private fun setMenuItemTitleWithFont(item: MenuItem, title: String, typeface: Typeface?) {
+        val spannableTitle = android.text.SpannableString(title)
+        spannableTitle.setSpan(CustomTypefaceSpan(typeface), 0, title.length, 0)
+        item.title = spannableTitle
     }
 }

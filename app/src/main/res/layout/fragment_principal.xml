@@ -145,7 +145,7 @@
             android:layout_margin="16dp"
             android:src="@drawable/date48"
             app:backgroundTint="@color/amarilloBtn"
-            app:tint="@color/white" />
+            app:tint="@color/whiteBtn" />
 
     </LinearLayout>
 </LinearLayout>

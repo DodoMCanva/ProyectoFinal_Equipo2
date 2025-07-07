@@ -46,12 +46,11 @@
             <TextView
                 android:id="@+id/tvRepFecha"
                 android:layout_width="160dp"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:textAlignment="center"
-                android:padding="2sp"
                 android:text="29/05/2025"
                 android:background="@color/white"
-                android:textSize="@dimen/text18"
+                android:textSize="@dimen/textomenu25"
                 android:fontFamily="@font/quicksandsemibold"
                 android:textColor="@color/black"/>
 
@@ -96,15 +95,16 @@
                 android:background="@color/white"
                 android:textSize="@dimen/textomenu25"
                 android:fontFamily="@font/quicksandsemibold"
-                android:layout_marginRight="5sp"/>
+                />
 
             <Spinner
                 android:id="@+id/spHoraReprogramarCita"
-                android:layout_width="30dp"
+                android:layout_width="36dp"
                 android:layout_height="40dp"
-                android:backgroundTint="@color/azulTexto"
+                android:background="@drawable/btnsppiner"
                 android:orientation="vertical"
-                android:paddingLeft="40sp" />
+                android:layout_gravity="center"
+                style="@style/MySpinnerStyle"/>
         </LinearLayout>
 
         <LinearLayout
@@ -117,15 +117,15 @@
                 android:id="@+id/btnCompletarRep"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
                 android:layout_weight="1"
-                android:text="@string/btnDialogConfirmar"
                 android:background="@drawable/btn_azulclaro_redondeado"
-                android:textColor="@color/whiteBtn"
-                android:paddingVertical="12dp"
-                android:textAllCaps="false"
-                android:textSize="@dimen/text18"
                 android:fontFamily="@font/quicksandbold"
-                android:layout_marginEnd="8dp"/>
+                android:paddingVertical="12dp"
+                android:text="@string/btnDialogConfirmar"
+                android:textAllCaps="false"
+                android:textColor="@color/whiteBtn"
+                android:textSize="@dimen/text18" />
 
             <Button
                 android:id="@+id/btnCancelarRep"

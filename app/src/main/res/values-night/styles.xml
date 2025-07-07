@@ -16,18 +16,18 @@
         <item name="android:background">@color/white</item>
         <item name="android:textColorPrimary">@color/azulTexto</item>
         <item name="colorPrimary">@color/azulBackMensajes</item>
-        <item name="colorOnPrimary">@color/azulTexto</item>
-        <item name="colorSurface">@color/azulClaroBtn</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorSurface">@color/white</item>
         <item name="colorOnSurface">@color/azulTexto</item>
-        <item name="android:windowBackground">@color/azulTexto</item>
+        <item name="android:windowBackground">@color/white</item>
     </style>
 
     <style name="NavigationMenuItemTextStyle" parent="TextAppearance.AppCompat.Body1">
         <item name="android:fontFamily">@font/quicksandbold</item>
         <item name="android:textSize">@dimen/text20</item>
         <item name="android:textColor">@color/whiteBtn</item>
-        <item name="android:paddingLeft">0dp</item>
     </style>
+
 
 
 </resources>

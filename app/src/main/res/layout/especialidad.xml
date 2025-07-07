@@ -9,7 +9,7 @@
         android:id="@+id/cbCategoria"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:buttonTint="@color/white"
+        android:buttonTint="@color/whiteBtn"
         android:textSize="@dimen/text18"
         android:fontFamily="@font/quicksandbold"
         android:textColor="@color/whiteBtn"
