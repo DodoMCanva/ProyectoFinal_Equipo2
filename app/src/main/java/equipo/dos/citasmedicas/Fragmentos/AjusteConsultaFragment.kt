@@ -22,6 +22,7 @@ import android.widget.Switch
 import com.google.firebase.auth.FirebaseAuth
 import equipo.dos.citasmedicas.R
 import equipo.dos.citasmedicas.frmPrincipalActivity
+import modulos.ModuloHorario
 
 class AjusteConsultaFragment : Fragment() {
 
@@ -39,6 +40,7 @@ class AjusteConsultaFragment : Fragment() {
     private var sabadoTarActivo = false
     private var domingoManActivo = false
     private var domingoTarActivo = false
+    private val modulo = ModuloHorario()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,30 +49,20 @@ class AjusteConsultaFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_ajuste_consulta, container, false)
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val database = FirebaseDatabase.getInstance().getReference("usuarios/medicos")
-        val medicoId = FirebaseAuth.getInstance().currentUser?.uid ?: return
-
-        database.child(medicoId).child("configuracionHorario").get().addOnSuccessListener { snapshot ->
-            val configGuardada = snapshot.getValue(ConfiguracionHorario::class.java)
-            if (configGuardada != null) {
-                inicializarUIConConfiguracion(view, configGuardada)
-            } else {
-                desactivarTodosLosCampos(view)
-            }
-        }.addOnFailureListener {
-            Toast.makeText(requireContext(), "No hay horario configurado", Toast.LENGTH_SHORT).show()
-        }
-
-        cargarConfiguracionGuardada { config ->
-            if (config != null) {
-                activity?.runOnUiThread {
-                    inicializarUIConConfiguracion(view, config)
+        val uid = sesion.uid
+        if (uid != null) {
+            modulo.obtenerConfiguracionDelMedico(uid) { config ->
+                if (config != null) {
+                    activity?.runOnUiThread {
+                        inicializarUIConConfiguracion(view, config)
+                    }
                 }
             }
+        }else{
+            Toast.makeText(requireContext(), "Error al obtener el uid", Toast.LENGTH_SHORT).show()
         }
         val etDuracionConsulta = view.findViewById<EditText>(R.id.etDuracionConsulta)
         val etCostoConsulta = view.findViewById<EditText>(R.id.etCostoConsulta)
@@ -449,23 +441,6 @@ class AjusteConsultaFragment : Fragment() {
         sw.isChecked = activo  // switch encendido = desactivado
     }
 
-    private fun cargarConfiguracionGuardada(onLoaded: (ConfiguracionHorario?) -> Unit) {
-        val userId = FirebaseAuth.getInstance().currentUser?.uid ?: run {
-            onLoaded(null)
-            return
-        }
-        val ref = FirebaseDatabase.getInstance().getReference("medicos/$userId/configuracionHorario")
-        ref.get().addOnSuccessListener { snapshot ->
-            if (snapshot.exists()) {
-                val config = snapshot.getValue(ConfiguracionHorario::class.java)
-                onLoaded(config)
-            } else {
-                onLoaded(null)
-            }
-        }.addOnFailureListener {
-            onLoaded(null)
-        }
-    }
 
     private fun inicializarUIConConfiguracion(view: View, config: ConfiguracionHorario) {
         // Costo

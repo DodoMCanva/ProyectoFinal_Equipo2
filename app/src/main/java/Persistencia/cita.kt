@@ -7,7 +7,7 @@ data class cita(
     var idMedico: String? = null,
     var idPaciente: String? = null,
 
-    //esto no deberia de existir
+    //auxiliar
     var nombreMedico: String? = null,
     var nombrePaciente: String? = null,
     var especialidad: String? = null,

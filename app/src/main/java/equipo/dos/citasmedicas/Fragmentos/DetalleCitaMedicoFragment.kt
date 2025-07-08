@@ -341,6 +341,7 @@ class DetalleCitaMedicoFragment : Fragment() {
         val btnCompletarReprogramacionDialog = dialog.findViewById<Button>(R.id.btnCompletarRep)
         val btnCancelarReprogramacion = dialog.findViewById<Button>(R.id.btnCancelarRep)
 
+        //0a
         fun generarHorasCada30Min(): List<String> {
             val horas = mutableListOf<String>()
             var hora = 7
@@ -433,25 +434,6 @@ class DetalleCitaMedicoFragment : Fragment() {
         dialog.show()
     }
 
-    private fun generarHorasCada30Min(): List<String> {
-        val horas = mutableListOf<String>()
-        var hora = 7
-        var minuto = 0
-
-        while (hora < 19 || (hora == 19 && minuto == 0)) {
-            val amPm = if (hora < 12) "AM" else "PM"
-            val hora12 = if (hora % 12 == 0) 12 else hora % 12
-            val horaFormateada = String.format(Locale.getDefault(), "%d:%02d %s", hora12, minuto, amPm)
-            horas.add(horaFormateada)
-
-            minuto += 30
-            if (minuto >= 60) {
-                minuto = 0
-                hora++
-            }
-        }
-        return horas
-    }
 
     private fun mostrarDialogDeCancelacion() {
         val dialog = Dialog(requireContext())

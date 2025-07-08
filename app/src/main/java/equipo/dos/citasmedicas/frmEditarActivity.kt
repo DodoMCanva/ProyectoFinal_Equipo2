@@ -54,15 +54,12 @@ class frmEditarActivity : AppCompatActivity() {
 
         imgFotoPerfil = findViewById(R.id.imgFotoPerfil)
         val etNombre = findViewById<EditText>(R.id.etEditarNombre)
-        val tvCorreo = findViewById<TextView>(R.id.tvEditarCorreo)
         val tvFecha = findViewById<TextView>(R.id.tvFechaRegistroRegistro)
         val etTelefono = findViewById<EditText>(R.id.etEditarTelefono)
         val cbHombre = findViewById<CheckBox>(R.id.cbEditarHombre)
         val cbMujer = findViewById<CheckBox>(R.id.cbEditarMujer)
 
         // Campos exclusivos del médico
-        val seccionMedico = findViewById<LinearLayout>(R.id.editarPerfilMedicoSeccion)
-        val spEspecialidad = findViewById<Spinner>(R.id.spEditarEspecialidad)
         val etCedula = findViewById<EditText>(R.id.etEditarCedula)
         val etEstado = findViewById<EditText>(R.id.etEditarEstado)
         val etCiudad = findViewById<EditText>(R.id.etEditarCiudad)
@@ -146,7 +143,7 @@ class frmEditarActivity : AppCompatActivity() {
 
             // Validaciones SOLO para MÉDICOS
             val sesionActual =
-                Persistencia.sesion.sesion // Obtener la sesión aquí para las validaciones
+                sesion.sesion
             if (sesionActual is medico) { // Usamos sesionActual para las validaciones
                 if (tvFecha.text.toString().trim().isEmpty()) {
                     Toast.makeText(
@@ -499,7 +496,7 @@ class frmEditarActivity : AppCompatActivity() {
                             sesion.asignarSesion(sesionActual)
                             Log.d(
                                 "EditarPerfil",
-                                "Sesión global Persistencia.sesion.sesion actualizada. Foto URL: ${(Persistencia.sesion.obtenerSesion() as? medico)?.fotoPerfil ?: (Persistencia.sesion.obtenerSesion() as? paciente)?.fotoPerfil}"
+                                "Sesión global Persistencia.sesion.sesion actualizada. Foto URL: ${(sesion.obtenerSesion() as? medico)?.fotoPerfil ?: (sesion.obtenerSesion() as? paciente)?.fotoPerfil}"
                             )
                             val intent = Intent(this, frmPrincipalActivity::class.java)
                             startActivity(intent)
