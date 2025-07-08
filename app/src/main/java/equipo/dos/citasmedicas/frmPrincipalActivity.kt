@@ -35,23 +35,18 @@ class frmPrincipalActivity : AppCompatActivity() {
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         }
-
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_frm_principal)
-
         restaurarFragmentoGuardado()
-
         if (sesion.sesion != null){
             setupUI()
-        } else {
-            //sesion.cargarSesionDesdeFirebase(this)
         }
     }
 
 
     override fun onResume() {
         super.onResume()
-        //sesion.cargarSesionDesdeFirebase(this)
+        restaurarFragmentoGuardado()
     }
 
 
