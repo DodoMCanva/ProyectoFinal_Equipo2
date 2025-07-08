@@ -91,8 +91,12 @@ object MenuDesplegable {
         }*/
 
         nav.setNavigationItemSelectedListener { item ->
+            val prefs = androidx.preference.PreferenceManager.getDefaultSharedPreferences(activity)
+
             when (item.itemId) {
                 R.id.btnMenuMisCitas -> {
+                    prefs.edit().putString("fragmento_actual", "CitasFragment").apply()
+
                     if (activity is frmPrincipalActivity) {
                         activity.supportFragmentManager.commit {
                             setReorderingAllowed(true)
@@ -106,6 +110,8 @@ object MenuDesplegable {
                 }
 
                 R.id.btnMenuHistorial -> {
+                    prefs.edit().putString("fragmento_actual", "HistorialFragment").apply()
+
                     if (activity is frmPrincipalActivity) {
                         activity.supportFragmentManager.commit {
                             setReorderingAllowed(true)
@@ -114,12 +120,14 @@ object MenuDesplegable {
                             encabezado.setText("Historial")
                         }
                     }
-                    val menuItem = nav.menu.findItem(R.id.btnMenuMisCitas)
-                    setMenuItemTitleWithFont(menuItem, "Mis Citas", typeface)
+                    val menuItem = nav.menu.findItem(R.id.btnMenuHistorial)
+                    setMenuItemTitleWithFont(menuItem, "Historial", typeface)
                 }
 
                 R.id.btnOpcion -> {
                     if (sesion.tipo == "paciente") {
+                        prefs.edit().putString("fragmento_actual", "AgendarFragment").apply()
+
                         if (activity is frmPrincipalActivity) {
                             activity.supportFragmentManager.commit {
                                 setReorderingAllowed(true)
@@ -129,6 +137,8 @@ object MenuDesplegable {
                             }
                         }
                     } else {
+                        prefs.edit().putString("fragmento_actual", "AjusteConsultaFragment").apply()
+
                         if (activity is frmPrincipalActivity) {
                             activity.supportFragmentManager.commit {
                                 setReorderingAllowed(true)
@@ -141,10 +151,12 @@ object MenuDesplegable {
                 }
 
                 R.id.btnMenuCerrarSesion -> {
+                    prefs.edit().remove("fragmento_actual").apply()
                     sesion.cerrarSesion()
                     activity.startActivity(Intent(activity, frmLoginActivity::class.java))
                 }
             }
+
             drawerLayout.closeDrawer(GravityCompat.START)
             true
         }
@@ -165,7 +177,11 @@ object MenuDesplegable {
         switchModoOscuro.isChecked = modoOscuroActivado
 
         switchModoOscuro.setOnCheckedChangeListener { _, isChecked ->
-            prefs.edit().putBoolean("modo_oscuro", isChecked).apply()
+            val fragmentoActual = obtenerNombreDelFragmentoActual(activity)
+            prefs.edit()
+                .putBoolean("modo_oscuro", isChecked)
+                .putString("fragmento_actual", fragmentoActual)
+                .apply()
 
             if (isChecked) {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
@@ -200,6 +216,9 @@ object MenuDesplegable {
         }
 
         btnPerfil.setOnClickListener {
+            val prefs = androidx.preference.PreferenceManager.getDefaultSharedPreferences(activity)
+            prefs.edit().putString("fragmento_actual", "MiPerfilFragment").apply()
+
             if (activity is frmPrincipalActivity) {
                 activity.supportFragmentManager.commit {
                     setReorderingAllowed(true)
@@ -210,6 +229,7 @@ object MenuDesplegable {
             }
             drawerLayout.closeDrawer(GravityCompat.START)
         }
+
 
         btnMenuCerrar.setOnClickListener {
             drawerLayout.closeDrawer(GravityCompat.START)
@@ -241,5 +261,20 @@ object MenuDesplegable {
         val spannableTitle = android.text.SpannableString(title)
         spannableTitle.setSpan(CustomTypefaceSpan(typeface), 0, title.length, 0)
         item.title = spannableTitle
+    }
+
+    private fun obtenerNombreDelFragmentoActual(activity: Activity): String {
+        val fragment = (activity as? frmPrincipalActivity)
+            ?.supportFragmentManager
+            ?.findFragmentById(R.id.contenedorFragmento)
+
+        return when (fragment) {
+            is CitasFragment -> "CitasFragment"
+            is HistorialFragment -> "HistorialFragment"
+            is AgendarFragment -> "AgendarFragment"
+            is AjusteConsultaFragment -> "AjusteConsultaFragment"
+            is MiPerfilFragment -> "MiPerfilFragment"
+            else -> "CitasFragment"
+        }
     }
 }

@@ -39,6 +39,8 @@ class frmPrincipalActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_frm_principal)
 
+        restaurarFragmentoGuardado()
+
         if (sesion.sesion != null){
             setupUI()
         } else {
@@ -117,14 +119,6 @@ class frmPrincipalActivity : AppCompatActivity() {
     private fun setupUI() {
         MenuDesplegable.configurarMenu(this)
         findViewById<com.google.android.material.navigation.NavigationView>(R.id.navegacion_menu).itemIconTintList = null
-
-        if (this is frmPrincipalActivity) {
-            this.supportFragmentManager.commit {
-                setReorderingAllowed(true)
-                replace(R.id.contenedorFragmento, CitasFragment())
-                addToBackStack(null)
-            }
-        }
     }
 
     private fun handleSessionError() {
@@ -134,5 +128,38 @@ class frmPrincipalActivity : AppCompatActivity() {
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
         finish()
+    }
+    private fun restaurarFragmentoGuardado() {
+        val prefs = androidx.preference.PreferenceManager.getDefaultSharedPreferences(this)
+        val fragmentoGuardado = prefs.getString("fragmento_actual", null)
+
+        if (fragmentoGuardado != null) {
+            val encabezado = findViewById<android.widget.TextView>(R.id.encabezadoPrincipal)
+
+            val fragment = when (fragmentoGuardado) {
+                "HistorialFragment" -> equipo.dos.citasmedicas.Fragmentos.HistorialFragment().also {
+                    encabezado?.text = "Historial"
+                }
+                "AgendarFragment" -> equipo.dos.citasmedicas.Fragmentos.AgendarFragment().also {
+                    encabezado?.text = "Agendar"
+                }
+                "AjusteConsultaFragment" -> equipo.dos.citasmedicas.Fragmentos.AjusteConsultaFragment().also {
+                    encabezado?.text = "Ajustar Consulta"
+                }
+                "MiPerfilFragment" -> equipo.dos.citasmedicas.Fragmentos.MiPerfilFragment().also {
+                    encabezado?.text = "Mi Perfil"
+                }
+                else -> equipo.dos.citasmedicas.Fragmentos.CitasFragment().also {
+                    encabezado?.text = "Mis Citas"
+                }
+            }
+
+            supportFragmentManager.commit {
+                setReorderingAllowed(true)
+                replace(R.id.contenedorFragmento, fragment)
+            }
+
+            prefs.edit().remove("fragmento_actual").apply()
+        }
     }
 }

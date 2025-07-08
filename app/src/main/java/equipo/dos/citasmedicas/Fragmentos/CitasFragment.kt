@@ -167,8 +167,9 @@ class CitasFragment : Fragment() {
                 }
 
 
-                adapter =
-                    AdapterCitaRecycler(requireContext(), lista, sesion.tipo) { citaSeleccionada ->
+                val ctx = context ?: return@actualizarListaCitas
+
+                adapter = AdapterCitaRecycler(ctx, lista, sesion.tipo) { citaSeleccionada ->
                         val fragment = if (sesion.tipo == "paciente") {
                             DetalleCitaPacienteFragment()
                         } else {
