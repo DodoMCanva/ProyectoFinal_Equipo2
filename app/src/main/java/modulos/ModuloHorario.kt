@@ -55,7 +55,7 @@ class ModuloHorario {
         }
     }
 
-    fun listaInhabiles(config : ConfiguracionHorario) : ArrayList<Int>{
+    fun listaInhabiles(config : ConfiguracionHorario) : ArrayList<Int> {
         var lista = ArrayList<Int>()
         if (!config.lunesMananaActivo && !config.lunesTardeActivo) {
             lista.add(Calendar.MONDAY)
@@ -81,7 +81,7 @@ class ModuloHorario {
         return lista
     }
 
-    fun generarHorasEnHorario(desde: String, hasta: String): List<String> {
+    fun generarHorasEnHorario(desde: String, hasta: String, salto : Int): List<String> {
         val formatoHora = SimpleDateFormat("HH:mm", Locale.getDefault())
         val horas = mutableListOf<String>()
 
@@ -105,7 +105,7 @@ class ModuloHorario {
                 val horaFormateada = String.format("%d:%02d %s", hora12, minuto, amPm)
                 horas.add(horaFormateada)
 
-                calendarDesde.add(Calendar.MINUTE, 30)
+                calendarDesde.add(Calendar.MINUTE, salto)
             }
         } catch (e: Exception) {
             return horas
@@ -115,7 +115,7 @@ class ModuloHorario {
     }
 
     fun obtenerConfiguracionDelMedico(uidMedico: String, onResultado: (ConfiguracionHorario?) -> Unit) {
-        val database = FirebaseDatabase.getInstance().getReference("configuracionHorario").child(uidMedico)
+        val database = FirebaseDatabase.getInstance().getReference("usuarios").child("medicos").child(uidMedico).child("configuracionHorario")
         database.get().addOnSuccessListener { snapshot ->
             if (snapshot.exists()) {
                 val config = snapshot.getValue(ConfiguracionHorario::class.java)
@@ -149,7 +149,7 @@ class ModuloHorario {
                 return
             }
 
-        }catch (e : Exception){
+        } catch (e: Exception) {
             onResultado(false)
             return
         }
@@ -184,24 +184,19 @@ class ModuloHorario {
         query.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val horasOcupadas = mutableListOf<String>()
-
                 for (citaSnap in snapshot.children) {
                     val cita = citaSnap.getValue(cita::class.java)
                     if (cita != null && cita.fecha == fecha) {
                         horasOcupadas.add(cita.hora.toString())
                     }
                 }
-
                 val horasRestantes = horasDisponibles.filter { !horasOcupadas.contains(it) }.toMutableList()
-
                 onResultado(horasRestantes)
             }
-
             override fun onCancelled(error: DatabaseError) {
                 Log.e("Firebase", "Error al eliminar horas ocupadas: ${error.message}")
-                onResultado(horasDisponibles) // Devolver la lista original si ocurre un error
+                onResultado(horasDisponibles)
             }
         })
     }
-
 }
