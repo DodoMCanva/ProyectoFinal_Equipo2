@@ -9,8 +9,6 @@ import android.app.DatePickerDialog
 import android.app.Dialog
 import android.os.Build
 import android.os.Bundle
-import android.os.Parcel
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -18,15 +16,12 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
-import android.widget.DatePicker
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
-import com.google.android.material.datepicker.CalendarConstraints
-import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.firebase.database.FirebaseDatabase
 import equipo.dos.citasmedicas.R
 import equipo.dos.citasmedicas.frmPrincipalActivity
@@ -49,29 +44,39 @@ class AgendarMedicoFragment : Fragment() {
     private lateinit var tvFecha: TextView
     private lateinit var tvHoraSeleccionada: TextView
     private lateinit var btnConfirmar: Button
+    private lateinit var tvEtiqueta : TextView
     var m: medico? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val tvNombreMedico = view.findViewById<TextView>(R.id.tvAgendarNombre)
         val tvCosto = view.findViewById<TextView>(R.id.tvMontoAgendar)
+        tvEtiqueta = view.findViewById<TextView>(R.id.etiquetaHora)
         val btnCancelar = view.findViewById<Button>(R.id.btnCancelar)
-
         btnConfirmar = view.findViewById(R.id.btnConfirmar)
-        m = arguments?.getSerializable("medico") as? medico
         spHora = view.findViewById(R.id.spHora)
+        m = arguments?.getSerializable("medico") as? medico
         spHora.isEnabled = false
+        spHora.visibility = View.INVISIBLE
+        tvEtiqueta.visibility = View.INVISIBLE
         btnConfirmar.isEnabled = false
+        tvNombreMedico.setText(m?.nombre)
         tvFecha = view.findViewById(R.id.tvAgendarFecha)
         tvHoraSeleccionada = view.findViewById(R.id.tvHoraSeleccionada)
-
+        tvHoraSeleccionada.visibility = View.INVISIBLE
         val id = m?.uid
         if (id != null) {
             modulo.obtenerConfiguracionDelMedico(id) { config ->
                 view.findViewById<ImageButton>(R.id.btnCalendario).setOnClickListener {
                     if (config != null) {
+                        spHora.visibility = View.INVISIBLE
+                        tvEtiqueta.visibility = View.INVISIBLE
+                        tvHoraSeleccionada.visibility = View.INVISIBLE
+                        btnConfirmar.isEnabled = false
+                        spHora.isEnabled = false
                         mostrarSelectorFecha(config)
                     }
                 }
+                tvCosto.setText(config?.costoCita.toString())
 
                 spHora.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                     override fun onItemSelected(
@@ -231,8 +236,6 @@ class AgendarMedicoFragment : Fragment() {
             },
             y, m, d
         )
-
-
         datePickerDialog.show()
     }
 
@@ -248,12 +251,18 @@ class AgendarMedicoFragment : Fragment() {
         if (uid != null) {
             modulo.obtenerConfiguracionDelMedico(uid) { config ->
                 if (config == null) {
+                    spHora.visibility = View.INVISIBLE
+                    tvEtiqueta.visibility = View.INVISIBLE
+                    tvHoraSeleccionada.visibility = View.INVISIBLE
                     btnConfirmar.isEnabled = false
                     spHora.isEnabled = false
                     Toast.makeText(context, "No tiene Horarios Disponibles", Toast.LENGTH_SHORT)
                         .show()
                     return@obtenerConfiguracionDelMedico
                 } else {
+                    spHora.visibility = View.VISIBLE
+                    tvEtiqueta.visibility = View.VISIBLE
+                    tvHoraSeleccionada.visibility = View.VISIBLE
                     btnConfirmar.isEnabled = true
                     spHora.isEnabled = true
                 }
@@ -262,14 +271,19 @@ class AgendarMedicoFragment : Fragment() {
                 val horas = mutableListOf<String>()
                 if (mañanaP.first) horas += modulo.generarHorasEnHorario(
                     mañanaP.second.desde,
-                    mañanaP.second.hasta
+                    mañanaP.second.hasta,
+                    config.duracionConsulta
                 )
                 if (tardeP.first) horas += modulo.generarHorasEnHorario(
                     tardeP.second.desde,
-                    tardeP.second.hasta
+                    tardeP.second.hasta,
+                    config.duracionConsulta
                 )
 
                 if (horas.isEmpty()) {
+                    spHora.visibility = View.INVISIBLE
+                    tvEtiqueta.visibility = View.INVISIBLE
+                    tvHoraSeleccionada.visibility = View.INVISIBLE
                     btnConfirmar.isEnabled = false
                     spHora.isEnabled = false
                     Toast.makeText(context, "No hay horarios disponibles", Toast.LENGTH_SHORT)
@@ -278,6 +292,9 @@ class AgendarMedicoFragment : Fragment() {
                 } else {
                     modulo.eliminarHorasOcupadas(uid, fecha, horas) { horasRestantes ->
                         if (horasRestantes.isEmpty()) {
+                            spHora.visibility = View.INVISIBLE
+                            tvEtiqueta.visibility = View.INVISIBLE
+                            tvHoraSeleccionada.visibility = View.INVISIBLE
                             btnConfirmar.isEnabled = false
                             spHora.isEnabled = false
                             Toast.makeText(
@@ -289,6 +306,9 @@ class AgendarMedicoFragment : Fragment() {
                         } else {
                             btnConfirmar.isEnabled = true
                             spHora.isEnabled = true
+                            tvHoraSeleccionada.visibility = View.VISIBLE
+                            tvEtiqueta.visibility = View.VISIBLE
+                            spHora.visibility = View.VISIBLE
                             spHora.adapter = ArrayAdapter(
                                 requireContext(),
                                 android.R.layout.simple_spinner_item,

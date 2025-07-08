@@ -51,10 +51,10 @@ class AjusteConsultaFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val userId = sesion.uid.toString()
-        val database = FirebaseDatabase.getInstance().getReference("configuracionHorario")
+        val database = FirebaseDatabase.getInstance().getReference("usuarios/medicos")
+        val medicoId = FirebaseAuth.getInstance().currentUser?.uid ?: return
 
-        database.child(userId).get().addOnSuccessListener { snapshot ->
+        database.child(medicoId).child("configuracionHorario").get().addOnSuccessListener { snapshot ->
             val configGuardada = snapshot.getValue(ConfiguracionHorario::class.java)
             if (configGuardada != null) {
                 inicializarUIConConfiguracion(view, configGuardada)
@@ -72,7 +72,6 @@ class AjusteConsultaFragment : Fragment() {
                 }
             }
         }
-
         val etDuracionConsulta = view.findViewById<EditText>(R.id.etDuracionConsulta)
         val etCostoConsulta = view.findViewById<EditText>(R.id.etCostoConsulta)
 
@@ -326,9 +325,7 @@ class AjusteConsultaFragment : Fragment() {
             val costo = String.format("%.2f", costoStr.toDoubleOrNull() ?: 0.0).toDouble()
 
             val duracionStr = etDuracionConsulta.text.toString().trim()
-            val duracion = duracionStr.toIntOrNull() ?: 30  // valor por defecto si no escriben nada o no es número
-
-
+            val duracion = duracionStr.toIntOrNull() ?: 30
             val config = ConfiguracionHorario(
                 costoCita = costo,
                 duracionConsulta = duracion,
@@ -411,11 +408,9 @@ class AjusteConsultaFragment : Fragment() {
                 )
             )
 
-            // Guardar en Firebase
-            val database = FirebaseDatabase.getInstance().getReference("configuracionHorario")
-            val usuarioId = sesion.uid.toString()
-
-            database.child(usuarioId).setValue(config)
+            val database = FirebaseDatabase.getInstance().getReference("usuarios/medicos")
+            val medicoId = sesion.uid.toString()
+            database.child(medicoId).child("configuracionHorario").setValue(config)
                 .addOnSuccessListener {
                     Toast.makeText(requireContext(), "Configuración guardada con éxito", Toast.LENGTH_SHORT).show()
                 }
@@ -459,7 +454,7 @@ class AjusteConsultaFragment : Fragment() {
             onLoaded(null)
             return
         }
-        val ref = FirebaseDatabase.getInstance().getReference("configuracionHorario/$userId")
+        val ref = FirebaseDatabase.getInstance().getReference("medicos/$userId/configuracionHorario")
         ref.get().addOnSuccessListener { snapshot ->
             if (snapshot.exists()) {
                 val config = snapshot.getValue(ConfiguracionHorario::class.java)

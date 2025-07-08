@@ -11,6 +11,8 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import equipo.dos.citasmedicas.R
 import androidx.recyclerview.widget.RecyclerView
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class AdapterCitaRecycler(
     private val context: Context,
@@ -53,7 +55,11 @@ class AdapterCitaRecycler(
     inner class EncabezadoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val textoEncabezado: TextView = itemView.findViewById(R.id.textoEncabezado)
         fun bind(cita: cita) {
-            textoEncabezado.text = cita.fecha
+            val formatoEntrada = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+            val fecha = formatoEntrada.parse(cita.fecha)
+            val formatoSalida = SimpleDateFormat("d 'de' MMMM 'del' yyyy", Locale("es", "ES"))
+            val fechaFormateada = formatoSalida.format(fecha)
+            textoEncabezado.text = fechaFormateada
         }
     }
 

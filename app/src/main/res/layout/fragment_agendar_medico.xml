@@ -36,6 +36,7 @@
                 android:orientation="vertical">
 
                 <TextView
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -85,6 +86,7 @@
                 android:paddingLeft="20sp">
 
                 <TextView
+                    android:id="@+id/etiquetaHora"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
