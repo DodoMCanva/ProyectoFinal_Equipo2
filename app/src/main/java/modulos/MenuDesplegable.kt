@@ -1,6 +1,5 @@
 package equipo.dos.citasmedicas.helpers
 
-import CustomTypefaceSpan
 import Persistencia.medico
 import Persistencia.paciente
 import Persistencia.sesion
@@ -41,54 +40,21 @@ object MenuDesplegable {
         val nav = activity.findViewById<NavigationView>(R.id.navegacion_menu)
         val encabezado: TextView = activity.findViewById(R.id.encabezadoPrincipal)
 
-        val typeface = ResourcesCompat.getFont(activity, R.font.quicksandbold)
-
-
-
-
         toolbar.setOnClickListener {
             drawerLayout.openDrawer(GravityCompat.START)
         }
 
         val menu = nav.menu
 
-
-        for (i in 0 until menu.size()) {
-            val item = menu.getItem(i)
-            val originalTitle = item.title.toString()
-            val spannableTitle = android.text.SpannableString(originalTitle)
-            spannableTitle.setSpan(CustomTypefaceSpan(typeface), 0, originalTitle.length, 0)
-            item.title = spannableTitle
-        }
-
-
         val opcion = menu.findItem(R.id.btnOpcion)
 
         if (sesion.tipo == "paciente") {
             opcion.title = "Agendar"
             opcion.setIcon(R.drawable.date48)
-
         } else {
             opcion.title = "Ajustar Consulta"
             opcion.setIcon(R.drawable.settings30)
-
         }
-        for (i in 0 until menu.size()) {
-            val item = menu.getItem(i)
-            val titleStr = item.title.toString()
-            setMenuItemTitleWithFont(item, titleStr, typeface)
-        }
-        /*val inflater = LayoutInflater.from(activity)
-        for (i in 0 until menu.size()) {
-            val item = menu.getItem(i)
-            val customText = item.title?.toString() ?: ""
-            item.title = customText
-
-            val customView = inflater.inflate(R.layout.menu_item_custom, null) as TextView
-            customView.text = customText
-
-            item.actionView = customView
-        }*/
 
         nav.setNavigationItemSelectedListener { item ->
             val prefs = androidx.preference.PreferenceManager.getDefaultSharedPreferences(activity)
@@ -105,8 +71,6 @@ object MenuDesplegable {
                             encabezado.setText("Mis Citas")
                         }
                     }
-                    val menuItem = nav.menu.findItem(R.id.btnMenuMisCitas)
-                    setMenuItemTitleWithFont(menuItem, "Mis Citas", typeface)
                 }
 
                 R.id.btnMenuHistorial -> {
@@ -120,14 +84,11 @@ object MenuDesplegable {
                             encabezado.setText("Historial")
                         }
                     }
-                    val menuItem = nav.menu.findItem(R.id.btnMenuHistorial)
-                    setMenuItemTitleWithFont(menuItem, "Historial", typeface)
                 }
 
                 R.id.btnOpcion -> {
                     if (sesion.tipo == "paciente") {
                         prefs.edit().putString("fragmento_actual", "AgendarFragment").apply()
-
                         if (activity is frmPrincipalActivity) {
                             activity.supportFragmentManager.commit {
                                 setReorderingAllowed(true)
@@ -255,12 +216,6 @@ object MenuDesplegable {
         }
 
 
-    }
-
-    private fun setMenuItemTitleWithFont(item: MenuItem, title: String, typeface: Typeface?) {
-        val spannableTitle = android.text.SpannableString(title)
-        spannableTitle.setSpan(CustomTypefaceSpan(typeface), 0, title.length, 0)
-        item.title = spannableTitle
     }
 
     private fun obtenerNombreDelFragmentoActual(activity: Activity): String {
