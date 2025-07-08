@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/azulBackground"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:background="@color/azulBackground"
     tools:context=".Fragmentos.AjusteConsultaFragment">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="20dp">
 
     <TextView
         android:layout_width="match_parent"
@@ -17,15 +21,11 @@
         android:textColor="@color/azulTexto"
         android:textSize="@dimen/textomenu25" />
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="470dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
 
             <LinearLayout
                 android:id="@+id/layoutLunes"
@@ -1277,12 +1277,7 @@
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
-
-
         </LinearLayout>
-
-    </ScrollView>
-
     <LinearLayout
         android:layout_width="350dp"
         android:layout_height="wrap_content"
@@ -1302,9 +1297,7 @@
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginStart="10dp"
-
-            >
+            android:layout_marginStart="10dp">
 
         <EditText
             android:id="@+id/etDuracionConsulta"
@@ -1329,7 +1322,6 @@
                 android:text="@string/minutos"
                 android:textColor="@color/azulTexto"
                 android:textSize="@dimen/text20" />
-
         </LinearLayout>
     </LinearLayout>
 
@@ -1374,4 +1366,6 @@
         android:textAllCaps="false"
         android:textSize="20sp" />
 
-</LinearLayout>
+    </LinearLayout>
+
+    </ScrollView>
