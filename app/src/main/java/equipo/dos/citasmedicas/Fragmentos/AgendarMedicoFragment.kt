@@ -63,6 +63,11 @@ class AgendarMedicoFragment : Fragment() {
         tvFecha = view.findViewById(R.id.tvAgendarFecha)
         tvHoraSeleccionada = view.findViewById(R.id.tvHoraSeleccionada)
         tvHoraSeleccionada.visibility = View.INVISIBLE
+        Toast.makeText(
+            requireContext(),
+            "Seleccione una fecha primero",
+            Toast.LENGTH_SHORT
+        ).show()
         val id = m?.uid
         if (id != null) {
             modulo.obtenerConfiguracionDelMedico(id) { config ->
@@ -260,6 +265,11 @@ class AgendarMedicoFragment : Fragment() {
                         .show()
                     return@obtenerConfiguracionDelMedico
                 } else {
+                    Toast.makeText(
+                        requireContext(),
+                        "Selecciona la hora",
+                        Toast.LENGTH_SHORT
+                    ).show()
                     spHora.visibility = View.VISIBLE
                     tvEtiqueta.visibility = View.VISIBLE
                     tvHoraSeleccionada.visibility = View.VISIBLE
