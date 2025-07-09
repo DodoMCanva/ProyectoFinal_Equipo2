@@ -44,7 +44,7 @@ class DetalleCitaPacienteFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         citaId = arguments?.getString("citaId") ?: ""
         if (citaId == null){
-            citaId = sesion.guardadoEmergente
+            citaId = sesion.guardadoEmergente.toString()
         }else{
             sesion.asignarGuardado(citaId!!)
         }
