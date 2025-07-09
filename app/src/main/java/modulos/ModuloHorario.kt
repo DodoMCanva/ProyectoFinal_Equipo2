@@ -103,12 +103,14 @@ class ModuloHorario {
                 val amPm = if (hora < 12) "AM" else "PM"
                 val hora12 = if (hora % 12 == 0) 12 else hora % 12
                 val horaFormateada = String.format("%d:%02d %s", hora12, minuto, amPm)
-                //quiero que la hora generada mas el salto no sobrepase la hora hasta
-                //if (){
+                val tempCalendar = calendarDesde.clone() as Calendar
+                tempCalendar.add(Calendar.MINUTE, salto)
+                if (!tempCalendar.after(calendarHasta)) {
                     horas.add(horaFormateada)
-                //}
-
-
+                    calendarDesde.add(Calendar.MINUTE, salto)
+                } else {
+                    break
+                }
                 calendarDesde.add(Calendar.MINUTE, salto)
             }
         } catch (e: Exception) {
