@@ -2,6 +2,7 @@ package equipo.dos.citasmedicas.Fragmentos
 
 import Persistencia.cita
 import Persistencia.paciente
+import Persistencia.sesion
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.DatePickerDialog
@@ -82,10 +83,10 @@ class DetalleCitaMedicoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         citaId = arguments?.getString("citaId") ?: ""
-        if (citaId.isEmpty()) {
-            Toast.makeText(requireContext(), "Error: ID de cita no recibido.", Toast.LENGTH_SHORT)
-                .show()
-            return
+        if (citaId == null){
+            citaId = sesion.guardadoEmergente
+        }else{
+            sesion.asignarGuardado(citaId!!)
         }
 
         imgFotoPacienteDetalle = view.findViewById(R.id.imgFotoPerfil)

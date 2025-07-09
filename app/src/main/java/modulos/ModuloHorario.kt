@@ -12,10 +12,11 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
+import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.util.Calendar
 import java.util.Locale
-
+@RequiresApi(Build.VERSION_CODES.O)
 class ModuloHorario {
 
     fun obtenerConfigDelDia(config: ConfiguracionHorario, dayOfWeek: Int): Pair<Pair<Boolean, Horario>, Pair<Boolean, Horario>> {
@@ -190,8 +191,13 @@ class ModuloHorario {
                 val horasOcupadas = mutableListOf<String>()
                 for (citaSnap in snapshot.children) {
                     val cita = citaSnap.getValue(cita::class.java)
+                    val horaActual = LocalTime.now()
                     if (cita != null && cita.fecha == fecha) {
-                        horasOcupadas.add(cita.hora.toString())
+                        val formatoHora = DateTimeFormatter.ofPattern("HH:mm")
+                        val horaCita = LocalTime.parse(cita.hora, formatoHora)
+                        if (horaCita.isAfter(horaActual)) {
+                            horasOcupadas.add(cita.hora.toString())
+                        }
                     }
                 }
                 val horasRestantes = horasDisponibles.filter { !horasOcupadas.contains(it) }.toMutableList()

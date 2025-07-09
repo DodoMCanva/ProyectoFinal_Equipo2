@@ -226,8 +226,8 @@ object MenuDesplegable {
             is AjusteConsultaFragment -> "AjusteConsultaFragment"
             is MiPerfilFragment -> "MiPerfilFragment"
             //descomentarear si se quiere implementar
-            //is DetalleCitaPacienteFragment -> "DetalleCitaPacienteFragment"
-            //is DetalleCitaMedicoFragment -> "DetalleCitaMedicoFragment"
+            is DetalleCitaPacienteFragment -> "DetalleCitaPacienteFragment"
+            is DetalleCitaMedicoFragment -> "DetalleCitaMedicoFragment"
             else -> "CitasFragment"
         }
     }

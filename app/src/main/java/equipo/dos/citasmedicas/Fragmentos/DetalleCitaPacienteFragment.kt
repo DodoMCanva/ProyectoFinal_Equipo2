@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide
 import android.widget.ImageView
 import Persistencia.cita
 import Persistencia.paciente
+import Persistencia.sesion
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -42,11 +43,12 @@ class DetalleCitaPacienteFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         citaId = arguments?.getString("citaId") ?: ""
-        if (citaId.isEmpty()) {
-            Toast.makeText(requireContext(), "Error: ID de cita no recibido.", Toast.LENGTH_SHORT)
-                .show()
-            return
+        if (citaId == null){
+            citaId = sesion.guardadoEmergente
+        }else{
+            sesion.asignarGuardado(citaId!!)
         }
+
         imgFotoMedicoDetalle = view.findViewById(R.id.imgFotoPerfil)
         ivRecetaDetallesCitaPaciente = view.findViewById(R.id.ivRecetaDetallesCita)
 
