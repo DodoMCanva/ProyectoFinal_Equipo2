@@ -4,21 +4,21 @@
         android:id="@+id/btnMenuMisCitas"
         android:title="Mis Citas"
         android:icon="@drawable/home48"
-        android:textSize="@dimen/text20"
+        android:textSize="40sp"
         />
     <item
         android:id="@+id/btnMenuHistorial"
         android:title="Historial"
         android:icon="@drawable/historialblanco"
-        android:textSize="@dimen/text20"/>
+        android:textSize="40sp"/>
     <item
         android:id="@+id/btnOpcion"
         android:title="Opcion de Sesion"
         android:icon="@drawable/ic_launcher_foreground"
-        android:textSize="@dimen/text20"/>
+        android:textSize="40sp"/>
     <item
         android:id="@+id/btnMenuCerrarSesion"
         android:title="@string/cerrarsesion"
         android:icon="@drawable/exit30"
-        android:textSize="@dimen/text20"/>
+        android:textSize="40sp"/>
 </menu>

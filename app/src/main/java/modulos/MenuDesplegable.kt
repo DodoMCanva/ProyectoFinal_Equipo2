@@ -6,21 +6,15 @@ import Persistencia.sesion
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Intent
-import android.graphics.Typeface
 import android.os.Build
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.MenuItem
 import com.bumptech.glide.Glide
-import android.view.View
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.commit
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import equipo.dos.citasmedicas.*
 import equipo.dos.citasmedicas.Fragmentos.AgendarFragment
@@ -39,6 +33,7 @@ object MenuDesplegable {
         val drawerLayout = activity.findViewById<DrawerLayout>(R.id.drawer)
         val nav = activity.findViewById<NavigationView>(R.id.navegacion_menu)
         val encabezado: TextView = activity.findViewById(R.id.encabezadoPrincipal)
+
 
         toolbar.setOnClickListener {
             drawerLayout.openDrawer(GravityCompat.START)
@@ -89,6 +84,7 @@ object MenuDesplegable {
                 R.id.btnOpcion -> {
                     if (sesion.tipo == "paciente") {
                         prefs.edit().putString("fragmento_actual", "AgendarFragment").apply()
+
                         if (activity is frmPrincipalActivity) {
                             activity.supportFragmentManager.commit {
                                 setReorderingAllowed(true)

@@ -1,25 +1,11 @@
 package equipo.dos.citasmedicas
 
-import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
-import android.widget.Button
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.add
 import androidx.fragment.app.commit
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
-import equipo.dos.citasmedicas.Fragmentos.CitasFragment
-import equipo.dos.citasmedicas.databinding.ActivityFrmPrincipalBinding
 import equipo.dos.citasmedicas.helpers.MenuDesplegable
-import Persistencia.medico
-import Persistencia.paciente
 import Persistencia.sesion
 import androidx.appcompat.app.AppCompatDelegate
 
