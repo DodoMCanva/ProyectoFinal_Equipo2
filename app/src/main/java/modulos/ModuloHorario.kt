@@ -193,7 +193,7 @@ class ModuloHorario {
                     val cita = citaSnap.getValue(cita::class.java)
                     val horaActual = LocalTime.now()
                     if (cita != null && cita.fecha == fecha) {
-                        val formatoHora = DateTimeFormatter.ofPattern("HH:mm")
+                        val formatoHora = DateTimeFormatter.ofPattern("hh:mm a", Locale.getDefault())
                         val horaCita = LocalTime.parse(cita.hora, formatoHora)
                         if (horaCita.isAfter(horaActual)) {
                             horasOcupadas.add(cita.hora.toString())
