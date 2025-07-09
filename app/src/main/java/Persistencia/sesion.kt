@@ -20,6 +20,13 @@ object sesion {
     var sesion: Serializable? = null
     var uid: String? = null
     var tipo: String = "no asignado"
+    var guardadoEmergente: String = ""
+
+    fun asignarGuardado(s: String) {
+        guardadoEmergente = s
+    }
+
+
 
     fun asignarSesion(s: Serializable?) {
         sesion = s

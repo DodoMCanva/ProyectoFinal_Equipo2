@@ -18,8 +18,11 @@ import androidx.fragment.app.commit
 import com.google.android.material.navigation.NavigationView
 import equipo.dos.citasmedicas.*
 import equipo.dos.citasmedicas.Fragmentos.AgendarFragment
+import equipo.dos.citasmedicas.Fragmentos.AgendarMedicoFragment
 import equipo.dos.citasmedicas.Fragmentos.AjusteConsultaFragment
 import equipo.dos.citasmedicas.Fragmentos.CitasFragment
+import equipo.dos.citasmedicas.Fragmentos.DetalleCitaMedicoFragment
+import equipo.dos.citasmedicas.Fragmentos.DetalleCitaPacienteFragment
 import equipo.dos.citasmedicas.Fragmentos.HistorialFragment
 import equipo.dos.citasmedicas.Fragmentos.MiPerfilFragment
 
@@ -147,10 +150,6 @@ object MenuDesplegable {
             }
         }
 
-
-
-
-
         val sesionActual = sesion.obtenerSesion()
         Log.d("MenuDesplegable", "Configurando menú. Foto URL en sesion global: ${(sesionActual as? medico)?.fotoPerfil ?: (sesionActual as? paciente)?.fotoPerfil}")
 
@@ -223,8 +222,12 @@ object MenuDesplegable {
             is CitasFragment -> "CitasFragment"
             is HistorialFragment -> "HistorialFragment"
             is AgendarFragment -> "AgendarFragment"
+            is AgendarMedicoFragment -> "AgendarMedicoFragment"
             is AjusteConsultaFragment -> "AjusteConsultaFragment"
             is MiPerfilFragment -> "MiPerfilFragment"
+            //descomentarear si se quiere implementar
+            //is DetalleCitaPacienteFragment -> "DetalleCitaPacienteFragment"
+            //is DetalleCitaMedicoFragment -> "DetalleCitaMedicoFragment"
             else -> "CitasFragment"
         }
     }

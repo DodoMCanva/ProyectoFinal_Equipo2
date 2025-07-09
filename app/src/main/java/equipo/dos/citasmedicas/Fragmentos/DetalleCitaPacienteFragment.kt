@@ -66,6 +66,7 @@ class DetalleCitaPacienteFragment : Fragment() {
 
         databaseRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
+                if (!isAdded) return
                 val citaData = snapshot.getValue(cita::class.java)
 
                 if (citaData != null) {
@@ -75,7 +76,6 @@ class DetalleCitaPacienteFragment : Fragment() {
                     val hora: TextView = view!!.findViewById(R.id.tvHoraD)
                     val estado: TextView = view!!.findViewById(R.id.tvEstadoD)
                     val motivo: TextView = view!!.findViewById(R.id.tvMotivoD)
-                    // CAMBIO AQUÍ: Usa el ID correcto del LinearLayout de la receta
                     val seccionRecetaPaciente: LinearLayout = view!!.findViewById(R.id.llSeccionRecetaPaciente)
                     val btnCancelar: Button = view!!.findViewById(R.id.btnCancelarCita)
 
@@ -160,9 +160,10 @@ class DetalleCitaPacienteFragment : Fragment() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                Log.e("Firebase", "Error al cargar datos de la cita: ${error.message}")
-                Toast.makeText(requireContext(), "Error al cargar la cita.", Toast.LENGTH_SHORT).show()
-
+                if (!isAdded) return
+                context?.let { ctx ->
+                    Toast.makeText(ctx, "Error al cargar.", Toast.LENGTH_SHORT).show()
+                }
             }
         })
     }

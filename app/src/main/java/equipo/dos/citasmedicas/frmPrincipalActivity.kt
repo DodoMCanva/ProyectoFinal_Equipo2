@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.commit
 import equipo.dos.citasmedicas.helpers.MenuDesplegable
 import Persistencia.sesion
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatDelegate
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -48,7 +49,7 @@ class frmPrincipalActivity : AppCompatActivity() {
         val fragmentoGuardado = prefs.getString("fragmento_actual", null)
 
         if (fragmentoGuardado != null) {
-            val encabezado = findViewById<android.widget.TextView>(R.id.encabezadoPrincipal)
+            val encabezado = findViewById<TextView>(R.id.encabezadoPrincipal)
 
             val fragment = when (fragmentoGuardado) {
                 "HistorialFragment" -> equipo.dos.citasmedicas.Fragmentos.HistorialFragment().also {
@@ -63,6 +64,15 @@ class frmPrincipalActivity : AppCompatActivity() {
                 "MiPerfilFragment" -> equipo.dos.citasmedicas.Fragmentos.MiPerfilFragment().also {
                     encabezado?.text = "Mi Perfil"
                 }
+                "AgendarMedicoFragment" -> equipo.dos.citasmedicas.Fragmentos.AgendarMedicoFragment().also {
+                    encabezado?.text = "Agendar"
+                }
+                "DetalleCitaPacienteFragment" -> equipo.dos.citasmedicas.Fragmentos.DetalleCitaPacienteFragment().also {
+                    encabezado?.text = "Detalle Cita"
+                }
+                "DetalleCitaMedicoFragment" -> equipo.dos.citasmedicas.Fragmentos.DetalleCitaMedicoFragment().also {
+                    encabezado?.text = "Detalle Cita"
+                }
                 else -> equipo.dos.citasmedicas.Fragmentos.CitasFragment().also {
                     encabezado?.text = "Mis Citas"
                 }
@@ -76,4 +86,5 @@ class frmPrincipalActivity : AppCompatActivity() {
             prefs.edit().remove("fragmento_actual").apply()
         }
     }
+
 }

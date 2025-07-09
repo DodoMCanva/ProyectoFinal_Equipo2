@@ -66,6 +66,11 @@ class AgendarMedicoFragment : Fragment() {
         m = arguments?.getSerializable("medico") as? medico
         view.findViewById<TextView>(R.id.tvAgendarNombre).setText(m?.nombre)
         id = m?.uid
+        if (id == null){
+            id = sesion.guardadoEmergente
+        }else{
+            sesion.asignarGuardado(id!!)
+        }
 
         deshbilitarHoras()
 

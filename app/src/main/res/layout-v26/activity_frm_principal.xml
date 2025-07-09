@@ -58,6 +58,7 @@
         android:layout_gravity="start"
         android:background="@color/azulBackMensajes"
         app:itemTextColor="@color/whiteTextMenu"
+        app:itemTextAppearance="@style/CustomNavigationMenuItemStyle"
         app:menu="@menu/drawel_menu"
         app:headerLayout="@layout/menu" />
 </androidx.drawerlayout.widget.DrawerLayout>

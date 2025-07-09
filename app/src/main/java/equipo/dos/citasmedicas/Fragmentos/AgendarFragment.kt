@@ -23,7 +23,7 @@ import modulos.AdapterCheckEspecialidad
 import androidx.core.widget.addTextChangedListener
 import modulos.AdapterMedicoFiltrable
 
-
+@RequiresApi(Build.VERSION_CODES.O)
 class AgendarFragment : Fragment() {
     var adapter: AdapterMedicoFiltrable? = null
 
@@ -59,8 +59,9 @@ class AgendarFragment : Fragment() {
         }
 
         database.addListenerForSingleValueEvent(object : ValueEventListener {
-            @RequiresApi(Build.VERSION_CODES.O)
+
             override fun onDataChange(snapshot: DataSnapshot) {
+                if (!isAdded) return
                 val medicosList = ArrayList<medico>()
                 for (medicoSnapshot in snapshot.children) {
                     val medicoData = medicoSnapshot.getValue(medico::class.java)
@@ -72,11 +73,9 @@ class AgendarFragment : Fragment() {
 
                 listaOriginal = medicosList
                 val especialidadesUnicas = medicosList.mapNotNull { it.especialidad }.toSet().toList()
-               // adapterFiltro = AdapterCheckEspecialidad(requireContext(), especialidadesUnicas)
-
-                adapterFiltro = AdapterCheckEspecialidad(requireContext(), especialidadesUnicas).apply {
+               adapterFiltro = AdapterCheckEspecialidad(requireContext(), especialidadesUnicas).apply {
                     onSeleccionCambio = {
-                        aplicarFiltroYBusqueda() //llama cada que selecciona un checkbox
+                        aplicarFiltroYBusqueda()
                     }
                 }
 
@@ -107,13 +106,13 @@ class AgendarFragment : Fragment() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(
-                    requireContext(),
-                    "Error al obtener los médicos.",
-                    Toast.LENGTH_SHORT
-                ).show()
+                if (!isAdded) return
+                context?.let { ctx ->
+                    Toast.makeText(ctx, "Error al obtener los médicos.", Toast.LENGTH_SHORT).show()
+                }
             }
         })
+
 
 
 

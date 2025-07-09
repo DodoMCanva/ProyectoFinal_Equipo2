@@ -116,8 +116,8 @@ class DetalleCitaMedicoFragment : Fragment() {
 
         databaseRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
+                if (!isAdded) return
                 val citaData = snapshot.getValue(cita::class.java)
-
                 if (citaData != null) {
                     view?.findViewById<TextView>(R.id.tvPacienteDetalleCitaMedico)?.text =
                         citaData.nombrePaciente
@@ -220,11 +220,10 @@ class DetalleCitaMedicoFragment : Fragment() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(
-                    requireContext(),
-                    "Error al cargar cita: ${error.message}",
-                    Toast.LENGTH_SHORT
-                ).show()
+                if (!isAdded) return
+                context?.let { ctx ->
+                    Toast.makeText(ctx, "Error", Toast.LENGTH_SHORT).show()
+                }
             }
         })
     }
@@ -255,6 +254,7 @@ class DetalleCitaMedicoFragment : Fragment() {
             FirebaseDatabase.getInstance().getReference("usuarios/citas").child(citaId)
         databaseRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
+                if (!isAdded) return
                 val citaData = snapshot.getValue(cita::class.java)
                 citaData?.notas?.let {
                     etNotas.setText(it)
@@ -284,7 +284,10 @@ class DetalleCitaMedicoFragment : Fragment() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                Log.e("DetalleCita", "Error al cargar datos para dialog: ${error.message}")
+                if (!isAdded) return
+                context?.let { ctx ->
+                    Toast.makeText(ctx, "Error.", Toast.LENGTH_SHORT).show()
+                }
             }
         })
 
@@ -404,6 +407,7 @@ class DetalleCitaMedicoFragment : Fragment() {
         FirebaseDatabase.getInstance().getReference("usuarios/citas").child(citaId)
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
+                    if (!isAdded) return
                     val citaData = snapshot.getValue(cita::class.java)
                     if (citaData != null) {
                         tvFechaDialog.text = citaData.fecha
@@ -415,7 +419,12 @@ class DetalleCitaMedicoFragment : Fragment() {
                     }
                 }
 
-                override fun onCancelled(error: DatabaseError) {}
+                override fun onCancelled(error: DatabaseError) {
+                    if (!isAdded) return
+                    context?.let { ctx ->
+                        Toast.makeText(ctx, "Error", Toast.LENGTH_SHORT).show()
+                    }
+                }
             })
 
 

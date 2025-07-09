@@ -111,12 +111,10 @@ class ModuloHorario {
                 } else {
                     break
                 }
-                calendarDesde.add(Calendar.MINUTE, salto)
             }
         } catch (e: Exception) {
             return horas
         }
-
         return horas
     }
 

@@ -6,6 +6,10 @@
 
     </style>
 
+    <style name="CustomNavigationMenuItemStyle" parent="TextAppearance.AppCompat.Body1">
+        <item name="android:textSize">20sp</item>
+    </style>
+
     <style name="MySpinnerStyle" parent="Widget.AppCompat.Spinner">
         <item name="android:background">@color/azulBackMensajes</item>
         <item name="android:textColor">@color/whiteBtn</item>
