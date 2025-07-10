@@ -34,7 +34,7 @@
                     android:fontFamily="@font/quicksandbold"
                     android:text="@string/paciente"
                     android:textColor="@color/azulTexto"
-                    android:textSize="@dimen/text18" />
+                    android:textSize="@dimen/text22" />
 
                 <TextView
                     android:id="@+id/tvPacienteDetalleCitaMedico"
@@ -71,7 +71,7 @@
                     android:fontFamily="@font/quicksandbold"
                     android:text="@string/Edad"
                     android:textColor="@color/azulTexto"
-                    android:textSize="@dimen/text18" />
+                    android:textSize="@dimen/text22" />
 
                 <TextView
                     android:id="@+id/tvEdadDetalleCitaMedico"
@@ -105,7 +105,7 @@
                     android:fontFamily="@font/quicksandbold"
                     android:text="@string/laberGenero"
                     android:textColor="@color/azulTexto"
-                    android:textSize="@dimen/text18" />
+                    android:textSize="@dimen/text22" />
 
                 <TextView
                     android:id="@+id/tvGeneroDetalleCitaMedico"
@@ -130,7 +130,7 @@
                     android:fontFamily="@font/quicksandbold"
                     android:text="@string/labelTelefono"
                     android:textColor="@color/azulTexto"
-                    android:textSize="@dimen/text18" />
+                    android:textSize="@dimen/text22" />
 
                 <TextView
                     android:id="@+id/tvTelefonoDetalleCitaMedico"
@@ -156,7 +156,7 @@
                     android:fontFamily="@font/quicksandbold"
                     android:text="@string/labelFecha"
                     android:textColor="@color/azulTexto"
-                    android:textSize="@dimen/text18" />
+                    android:textSize="@dimen/text22" />
 
                 <TextView
                     android:id="@+id/tvFechaDetalleCitaMedico"
@@ -182,7 +182,7 @@
                     android:fontFamily="@font/quicksandbold"
                     android:text="@string/labelHora"
                     android:textColor="@color/azulTexto"
-                    android:textSize="@dimen/text18" />
+                    android:textSize="@dimen/text22" />
 
                 <TextView
                     android:id="@+id/tvHoraDetalleCitaMedico"
@@ -208,7 +208,7 @@
                     android:fontFamily="@font/quicksandbold"
                     android:text="@string/labelEstado"
                     android:textColor="@color/azulTexto"
-                    android:textSize="@dimen/text18" />
+                    android:textSize="@dimen/text22" />
 
                 <TextView
                     android:id="@+id/tvEstadoDetalleCitaMedico"
@@ -234,7 +234,7 @@
                     android:fontFamily="@font/quicksandbold"
                     android:text="@string/labelMotivo"
                     android:textColor="@color/azulTexto"
-                    android:textSize="@dimen/text18" />
+                    android:textSize="@dimen/text22" />
 
                 <TextView
                     android:id="@+id/tvMotivoDetalleCitaMedico"
@@ -258,7 +258,7 @@
 
                 <Button
                     android:id="@+id/btnFinalizarDetallesCitaMedico"
-                    android:layout_width="150dp"
+                    android:layout_width="175dp"
                     android:layout_height="wrap_content"
                     android:text="@string/finalizaCita"
                     android:fontFamily="@font/quicksandbold"
@@ -266,28 +266,31 @@
                     android:textColor="@color/whiteBtn"
                     android:textAllCaps="false"
                     android:paddingVertical="12dp"
+                    android:textSize="@dimen/text18"
                     android:layout_marginBottom="10dp" />
 
                 <Button
                     android:id="@+id/btnReprogramarDetallesMedico"
-                    android:layout_width="150dp"
+                    android:layout_width="175dp"
                     android:layout_height="wrap_content"
                     android:text="@string/reprogramarCita"
                     android:fontFamily="@font/quicksandbold"
                     android:textAllCaps="false"
                     android:layout_marginBottom="10dp"
+                    android:textSize="@dimen/text18"
                     android:textColor="@color/whiteBtn"
                     android:background="@drawable/btn_amarillo_redondeado"
                     android:paddingVertical="12dp" />
 
                 <Button
                     android:id="@+id/btnCancelarDetallesMedico"
-                    android:layout_width="150dp"
+                    android:layout_width="175dp"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/quicksandbold"
                     android:background="@drawable/btn_rojo_redondear_no"
                     android:text="@string/cancelarCita"
                     android:textAllCaps="false"
+                    android:textSize="@dimen/text18"
                     android:textColor="@color/whiteBtn"
                     android:paddingVertical="12dp" />
             </LinearLayout>

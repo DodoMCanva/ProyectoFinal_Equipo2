@@ -3,7 +3,7 @@
     <item android:state_pressed="true">
         <shape android:shape="rectangle">
             <gradient android:angle="270"
-                android:endColor="@color/azulTexto"
+                android:endColor="@color/colorAzulDegraDos"
                 android:startColor="@color/colorAzulDegra"
                 android:type="linear" />
             <corners android:radius="25dp" />
@@ -13,7 +13,7 @@
     <item>
         <shape android:shape="rectangle">
             <gradient android:angle="270"
-                android:endColor="@color/azulTexto"
+                android:endColor="@color/colorAzulDegraDos"
                 android:startColor="@color/colorAzulDegra"
                 android:type="linear" />
             <corners android:radius="25dp" />

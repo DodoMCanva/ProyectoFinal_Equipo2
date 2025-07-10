@@ -41,7 +41,7 @@
                 android:layout_width="70dp"
                 android:layout_height="50sp"
                 android:textColor="@color/whiteBtn"
-                android:fontFamily="@font/quicksandmedium"
+                android:fontFamily="@font/quicksandbold"
                 android:backgroundTint="@color/backFiltroModoOscuro"
                 android:text="Filtro"
                 android:textAllCaps="false"

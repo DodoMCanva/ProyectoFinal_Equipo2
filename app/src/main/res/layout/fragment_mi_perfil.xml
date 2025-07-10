@@ -24,61 +24,69 @@
         <TextView
             android:layout_marginTop="30dp"
             android:id="@+id/perfilNombre"
-            android:textSize="25dp"
+            android:textSize="25sp"
             android:textStyle="bold"
             android:textColor="@color/azulTexto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/quicksandbold"
             android:text="Jose Fernando Quinteroz Rojas"
             />
         <TextView
             android:layout_marginTop="30dp"
             android:id="@+id/perfilNumero"
-            android:textSize="25dp"
+            android:textSize="25sp"
             android:textStyle="bold"
             android:textColor="@color/azulTexto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/quicksandbold"
             android:text="644 158 1235"
             />
         <TextView
             android:layout_marginTop="30dp"
             android:id="@+id/perfilFechaNa"
-            android:textSize="25dp"
+            android:textSize="25sp"
             android:textStyle="bold"
             android:textColor="@color/azulTexto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/quicksandbold"
             android:text="10 de enero del 1980"
             />
         <TextView
             android:layout_marginTop="30dp"
             android:id="@+id/perfilGenero"
-            android:textSize="25dp"
+            android:textSize="25sp"
             android:textStyle="bold"
             android:textColor="@color/azulTexto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/quicksandbold"
             android:text="Hombre"
             />
 
         <Button
             android:layout_marginTop="60sp"
             android:id="@+id/btnEditarPerfil"
-            android:layout_width="100dp"
+            android:layout_width="130dp"
             android:layout_height="wrap_content"
             android:text=" Editar Perfil "
+            android:fontFamily="@font/quicksandbold"
             android:textColor="@color/whiteBtn"
             android:textAllCaps="false"
+            android:textSize="@dimen/text18"
             android:background="@drawable/btn_azul_redondeado_si"/>
 
         <Button
             android:layout_marginTop="20sp"
             android:id="@+id/btnCerrarSesion"
-            android:layout_width="100dp"
+            android:layout_width="130dp"
             android:layout_height="wrap_content"
             android:text="@string/cerrarsesion"
             android:textAllCaps="false"
+            android:fontFamily="@font/quicksandbold"
+            android:textSize="@dimen/text18"
             android:textColor="@color/whiteBtn"
             android:background="@drawable/btn_rojo_redondear_no"/>
 

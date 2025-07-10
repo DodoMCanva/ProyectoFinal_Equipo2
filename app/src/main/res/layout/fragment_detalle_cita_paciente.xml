@@ -34,7 +34,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/labelMedico"
-                    android:textSize="20sp"
+                    android:textSize="@dimen/text22"
                     android:fontFamily="@font/quicksandbold"
                     android:textColor="@color/azulTexto" />
 
@@ -43,7 +43,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Emmanuel Quiroz Soto"
-                    android:textSize="22sp"
+                    android:textSize="@dimen/text22"
                     android:textColor="@color/azulTexto"
                     android:fontFamily="@font/quicksandregular" />
 
@@ -75,7 +75,7 @@
                     android:fontFamily="@font/quicksandbold"
                     android:text="@string/labelEspecialidad"
                     android:textColor="@color/azulTexto"
-                    android:textSize="20sp" />
+                    android:textSize="@dimen/text22" />
 
                 <TextView
                     android:id="@+id/tvEspecialidadD"
@@ -85,7 +85,7 @@
                     android:fontFamily="@font/quicksandregular"
                     android:text="Cardiólogo"
                     android:textColor="@color/azulTexto"
-                    android:textSize="22sp" />
+                    android:textSize="@dimen/text22" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -99,7 +99,7 @@
                         android:fontFamily="@font/quicksandbold"
                         android:text="@string/labelFecha"
                         android:textColor="@color/azulTexto"
-                        android:textSize="20sp" />
+                        android:textSize="@dimen/text22" />
 
                     <TextView
                         android:id="@+id/tvFechaD"
@@ -110,7 +110,7 @@
                         android:fontFamily="@font/quicksandregular"
                         android:text="19/07/2025"
                         android:textColor="@color/azulTexto"
-                        android:textSize="22sp" />
+                        android:textSize="@dimen/text22" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -125,7 +125,7 @@
                         android:fontFamily="@font/quicksandbold"
                         android:text="@string/labelHora"
                         android:textColor="@color/azulTexto"
-                        android:textSize="20sp" />
+                        android:textSize="@dimen/text22" />
 
                     <TextView
                         android:id="@+id/tvHoraD"
@@ -136,7 +136,7 @@
                         android:fontFamily="@font/quicksandregular"
                         android:text="14:00"
                         android:textColor="@color/azulTexto"
-                        android:textSize="22sp"/>
+                        android:textSize="@dimen/text22"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -151,7 +151,7 @@
                         android:fontFamily="@font/quicksandbold"
                         android:text="@string/labelEstado"
                         android:textColor="@color/azulTexto"
-                        android:textSize="20sp" />
+                        android:textSize="@dimen/text22" />
 
                     <TextView
                         android:id="@+id/tvEstadoD"
@@ -162,7 +162,7 @@
                         android:fontFamily="@font/quicksandregular"
                         android:text="Pendiente"
                         android:textColor="@color/azulTexto"
-                        android:textSize="22sp"/>
+                        android:textSize="@dimen/text22"/>
                 </LinearLayout>
 
                 <TextView
@@ -171,7 +171,7 @@
                     android:fontFamily="@font/quicksandbold"
                     android:text="@string/labelMotivo"
                     android:textColor="@color/azulTexto"
-                    android:textSize="20sp" />
+                    android:textSize="@dimen/text22" />
 
                 <TextView
                     android:id="@+id/tvMotivoD"
@@ -183,7 +183,7 @@
                     android:scrollbars="vertical"
                     android:text="Motivo"
                     android:textColor="@color/azulTexto"
-                    android:textSize="22sp"
+                    android:textSize="@dimen/text22"
                   />
             </LinearLayout>
 
