@@ -53,7 +53,10 @@ class CitasFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_principal, container, false)
 
     }
+
     lateinit var listaCitas: RecyclerView
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val semana: Switch = view.findViewById(R.id.swSemana)
@@ -62,14 +65,17 @@ class CitasFragment : Fragment() {
         val fechaTexto: TextView = view.findViewById(R.id.tvConsultaFecha)
         val fechaInicio: TextView = view.findViewById(R.id.tvFechaInicio)
         val fechaFinal: TextView = view.findViewById(R.id.tvFechaFinal)
+        val guion : TextView = view.findViewById(R.id.tvGuionPrincipal)
         listaCitas = view.findViewById(R.id.rvCitas)
         val btnAgendar: FloatingActionButton? = view.findViewById(R.id.btnAgendar)
 
         fechaTexto.setText(fechaBusqueda)
         fechaInicio.setText(fechaBusqueda)
         fechaFinal.setText(fechaFinale)
-        fechaInicio.visibility = View.INVISIBLE
-        fechaFinal.visibility = View.INVISIBLE
+        fechaInicio.visibility = View.GONE
+        fechaFinal.visibility = View.GONE
+        guion.visibility = View.INVISIBLE
+
         this.listaCitas.layoutManager = LinearLayoutManager(requireContext())
 
         adaptarCitas(this.listaCitas)
@@ -110,12 +116,15 @@ class CitasFragment : Fragment() {
                         fechaFinale = formato.format(fechaSeleccionadaCal.time)
                         fechaFinal.setText(fechaFinale)
                     } else {
-                        fechaInicio.visibility = View.INVISIBLE
-                        fechaFinal.visibility = View.INVISIBLE
+                        fechaInicio.visibility = View.GONE
+                        fechaFinal.visibility = View.GONE
                         fechaInicio.setText(fechaBusqueda)
                         fechaSeleccionadaCal.add(Calendar.DAY_OF_MONTH, 6)
                         fechaFinale = formato.format(fechaSeleccionadaCal.time)
                         fechaFinal.setText(fechaFinale)
+                    }
+                    if (!filtroSemana && !filtroDia){
+                        guion.visibility = View.INVISIBLE
                     }
                     adaptarCitas(listaCitas)
                 },
@@ -134,9 +143,14 @@ class CitasFragment : Fragment() {
             if (filtroSemana) {
                 fechaInicio.visibility = View.VISIBLE
                 fechaFinal.visibility = View.VISIBLE
+                guion.visibility = View.VISIBLE
+                guion.text = " - "
             } else {
-                fechaInicio.visibility = View.INVISIBLE
-                fechaFinal.visibility = View.INVISIBLE
+                fechaInicio.visibility = View.GONE
+                fechaFinal.visibility = View.GONE
+            }
+            if (!filtroSemana && !filtroDia){
+                guion.visibility = View.INVISIBLE
             }
             adaptarCitas(listaCitas)
         }
@@ -144,6 +158,15 @@ class CitasFragment : Fragment() {
             filtroDia = isChecked
             if (isChecked) {
                 semana.isChecked = false
+                val formatoEntrada = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                val fecha = formatoEntrada.parse(fechaTexto.text.toString())
+                val formatoSalida = SimpleDateFormat("d 'de' MMMM 'del' yyyy", Locale("es", "ES"))
+                val fechaFormateada = formatoSalida.format(fecha)
+                guion.visibility = View.VISIBLE
+                guion.text = fechaFormateada
+            }
+            if (!filtroSemana && !filtroDia){
+                guion.visibility = View.INVISIBLE
             }
             adaptarCitas(listaCitas)
         }
@@ -162,6 +185,7 @@ class CitasFragment : Fragment() {
                     .encabezar(fechaBusqueda, fechaFinale)
                 } else {
                     sesion.listaOrdenada().actuales()
+
                 }
 
                 if (sesion.tipo == "paciente") {
