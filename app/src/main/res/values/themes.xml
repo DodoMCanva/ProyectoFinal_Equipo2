@@ -1,5 +1,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <style name="Base.Theme.CitasMedicas" parent="Theme.AppCompat.DayNight.NoActionBar">
+
+        <item name="android:fontFamily">@font/quicksandregular</item>
+
         <!-- Colores principales -->
         <item name="colorPrimary">@color/azulBackMensajes</item>
 

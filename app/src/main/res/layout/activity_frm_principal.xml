@@ -60,5 +60,6 @@
         app:itemTextColor="@color/whiteTextMenu"
         app:itemIconTint="@null"
         app:menu="@menu/drawel_menu"
-        app:headerLayout="@layout/menu" />
+        app:headerLayout="@layout/menu"
+        />
 </androidx.drawerlayout.widget.DrawerLayout>

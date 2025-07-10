@@ -10,6 +10,8 @@ import android.view.ViewGroup
 import android.widget.ListView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import equipo.dos.citasmedicas.R
 import equipo.dos.citasmedicas.frmPrincipalActivity
 import modulos.AdapterHistorial
@@ -27,8 +29,10 @@ class HistorialFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val listaCitasView = view.findViewById<ListView>(R.id.lvHistorial)
-        adapter = AdapterHistorial(requireContext(), ArrayList(), sesion.tipo) { citaSeleccionada ->
+        val rvCitas = view.findViewById<RecyclerView>(R.id.rvCitas)
+        rvCitas.layoutManager = LinearLayoutManager(requireContext())
+
+        adapter = AdapterHistorial(requireContext(), listOf(), sesion.tipo) { citaSeleccionada ->
             val fragment = if (sesion.tipo == "paciente") {
                 DetalleCitaPacienteFragment()
             } else {
@@ -40,10 +44,10 @@ class HistorialFragment : Fragment() {
             fragment.arguments = bundle
             parentFragmentManager.beginTransaction()
                 .replace(R.id.contenedorFragmento, fragment)
-                .addToBackStack(null).commit()
-
+                .addToBackStack(null)
+                .commit()
         }
-        listaCitasView.adapter = adapter
+        rvCitas.adapter = adapter
         cargarHistorial()
     }
 

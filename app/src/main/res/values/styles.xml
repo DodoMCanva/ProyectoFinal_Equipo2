@@ -7,7 +7,11 @@
     </style>
 
     <style name="CustomNavigationMenuItemStyle" parent="TextAppearance.AppCompat.Body1">
-        <item name="android:textSize">20sp</item>
+        <item name="android:fontFamily">@font/quicksandbold</item>
+        <item name="android:textSize">@dimen/text20</item>
+        <item name="android:textColor">@color/whiteBtn</item>
+        <item name="android:layout_marginStart">5dp</item>
+
     </style>
 
     <style name="MySpinnerStyle" parent="Widget.AppCompat.Spinner">

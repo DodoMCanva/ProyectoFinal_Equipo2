@@ -1,98 +1,94 @@
 package modulos
 
 import Persistencia.cita
-import Persistencia.medico
-import Persistencia.paciente
-import Persistencia.sesion
 import android.content.Context
-import android.content.Intent
 import android.os.Build
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.RecyclerView
 import equipo.dos.citasmedicas.R
 
 class AdapterHistorial(
-    context: Context,
-    lista: ArrayList<cita>,
-    val tipo: String,
-    val onCitaSelected: (cita) -> Unit
-) : ArrayAdapter<cita>(context, 0, lista) {
+    private val context: Context,
+    private var listaCitas: List<cita>,
+    private val tipo: String,
+    private val onCitaSelected: (cita) -> Unit
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    // ViewType para médico o paciente
+    private val TYPE_MEDICO = 1
+    private val TYPE_PACIENTE = 2
+
+    override fun getItemViewType(position: Int): Int {
+        return if (tipo == "medico") TYPE_MEDICO else TYPE_PACIENTE
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        val inflater = LayoutInflater.from(context)
+        return if (viewType == TYPE_MEDICO) {
+            val view = inflater.inflate(R.layout.cita_medico, parent, false)
+            MedicoViewHolder(view)
+        } else {
+            val view = inflater.inflate(R.layout.cita_paciente, parent, false)
+            PacienteViewHolder(view)
+        }
+    }
+
+    override fun getItemCount(): Int = listaCitas.size
 
     @RequiresApi(Build.VERSION_CODES.O)
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        val c = getItem(position)!!
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        val c = listaCitas[position]
 
-        val vista: View
-        if (tipo == "medico") {
-            vista = convertView ?: LayoutInflater.from(context)
-                .inflate(R.layout.cita_medico, parent, false)
-            vista.findViewById<TextView>(R.id.citaMFecha).text = c.fecha
-            vista.findViewById<TextView>(R.id.citaMHora).text = c.hora
-            vista.findViewById<TextView>(R.id.citaPaciente).text = c.nombrePaciente
-            vista.findViewById<TextView>(R.id.citaMotivo).text = c.motivo
-            vista.findViewById<TextView>(R.id.citaEstado).text = c.estado
+        if (holder is MedicoViewHolder) {
+            holder.fecha.text = c.fecha
+            holder.hora.text = c.hora
+            holder.nombrePaciente.text = c.nombrePaciente
+            holder.motivo.text = c.motivo
+            holder.estado.text = c.estado
 
-            val selCita = vista.findViewById<LinearLayout>(R.id.panelCitaMedico)
-            when (c.estado) {
-                "Completada" -> selCita.setBackgroundColor(
-                    ContextCompat.getColor(
-                        context,
-                        R.color.BackCitaCompletada
-                    )
-                )
-
-                "Pendiente" -> selCita.setBackgroundColor(
-                    ContextCompat.getColor(
-                        context,
-                        R.color.BackCitaPendiente
-                    )
-                )
-
-                "Cancelada" -> selCita.setBackgroundColor(
-                    ContextCompat.getColor(
-                        context,
-                        R.color.BackCitaCancelada
-                    )
-                )
-
-                else -> selCita.setBackgroundColor(
-                    ContextCompat.getColor(
-                        context,
-                        R.color.BackCitaPendiente
-                    )
-                )
+            val drawableRes = when (c.estado) {
+                "Completada" -> R.drawable.fondocitacompletada
+                "Pendiente" -> R.drawable.fondocitapendiente
+                "Cancelada" -> R.drawable.fondocitacancelada
+                else -> R.drawable.fondocitapendiente
             }
+            holder.panel.background = ContextCompat.getDrawable(context, drawableRes)
+            holder.panel.setOnClickListener { onCitaSelected(c) }
 
-            selCita.setOnClickListener {
-                onCitaSelected(c)
-            }
-
-        } else {
-            vista = convertView ?: LayoutInflater.from(context)
-                .inflate(R.layout.cita_paciente, parent, false)
-            vista.findViewById<TextView>(R.id.citaFecha).text = c.fecha
-            vista.findViewById<TextView>(R.id.citaHora).text = c.hora
-            vista.findViewById<TextView>(R.id.citaEspecialidad).text = c.especialidad
-            vista.findViewById<TextView>(R.id.citaMedico).text = c.nombreMedico
-            val selecCita = vista.findViewById<LinearLayout>(R.id.panelCitaPaciente)
-            selecCita.setOnClickListener {
-                onCitaSelected(c)
-            }
+        } else if (holder is PacienteViewHolder) {
+            holder.fecha.text = c.fecha
+            holder.hora.text = c.hora
+            holder.especialidad.text = c.especialidad
+            holder.nombreMedico.text = c.nombreMedico
+            holder.panel.setOnClickListener { onCitaSelected(c) }
         }
-        return vista
     }
 
     fun actualizarDatos(nuevasCitas: List<cita>) {
-        clear()
-        addAll(nuevasCitas)
+        listaCitas = nuevasCitas
         notifyDataSetChanged()
     }
-}
 
+    inner class MedicoViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val fecha: TextView = view.findViewById(R.id.citaMFecha)
+        val hora: TextView = view.findViewById(R.id.citaMHora)
+        val nombrePaciente: TextView = view.findViewById(R.id.citaPaciente)
+        val motivo: TextView = view.findViewById(R.id.citaMotivo)
+        val estado: TextView = view.findViewById(R.id.citaEstado)
+        val panel: LinearLayout = view.findViewById(R.id.panelCitaMedico)
+    }
+
+    inner class PacienteViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val fecha: TextView = view.findViewById(R.id.citaFecha)
+        val hora: TextView = view.findViewById(R.id.citaHora)
+        val especialidad: TextView = view.findViewById(R.id.citaEspecialidad)
+        val nombreMedico: TextView = view.findViewById(R.id.citaMedico)
+        val panel: LinearLayout = view.findViewById(R.id.panelCitaPaciente)
+    }
+}
