@@ -11,6 +11,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import java.text.SimpleDateFormat
+import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
@@ -209,12 +210,28 @@ class ModuloHorario {
                     }
                 }
 
+                val hoy = LocalDate.now()
+                val ahora = LocalTime.now()
+                val fechaConsulta = try {
+                    LocalDate.parse(fecha, DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+                } catch (e: Exception) {
+                    null
+                }
+
                 val horasRestantes = horasDisponibles.filter { horaStr ->
                     try {
                         val hora = LocalTime.parse(horaStr.trim(), formatoHora)
-                        hora !in horasOcupadas
+
+                        val esFutura = if (fechaConsulta != null && fechaConsulta.isEqual(hoy)) {
+                            hora.isAfter(ahora)
+                        } else {
+                            true
+                        }
+
+                        hora !in horasOcupadas && esFutura
                     } catch (e: Exception) {
-                        true
+                        Log.e("ParseError", "Error al parsear hora disponible: '$horaStr'")
+                        false
                     }
                 }.toMutableList()
 
@@ -227,4 +244,6 @@ class ModuloHorario {
             }
         })
     }
+
+
 }
