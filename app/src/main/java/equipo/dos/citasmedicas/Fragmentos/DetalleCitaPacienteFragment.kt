@@ -26,36 +26,47 @@ import equipo.dos.citasmedicas.R
 import equipo.dos.citasmedicas.frmPrincipalActivity
 
 
+// Este Fragmento muestra los detalles de una cita médica para un paciente.
+// Aqui se cargan los datos de la cita desde Firebase y se muestra la info en pantalla.
+// Tambien se puede cancelar la cita si esta pendiente.
 class DetalleCitaPacienteFragment : Fragment() {
 
+    // Guardamos el id de la cita q vamos a mostrar
     private var citaId: String = ""
+
+    // Imagen del medico y la receta, si hay
     private lateinit var imgFotoMedicoDetalle: ImageView
     private lateinit var ivRecetaDetallesCitaPaciente: ImageView
-
 
     @SuppressLint("MissingInflatedId")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        // Aqui se infla la vista del fragmento con su xml
         return inflater.inflate(R.layout.fragment_detalle_cita_paciente, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        // Tratamos de obtener el ID de la cita desde argumentos o la sesion (por si ya estaba guardado)
         citaId = (arguments?.getString("citaId")
             ?: sesion.guardadoEmergente
             ?: savedInstanceState?.getString("citaId")
             ?: "").toString()
 
+        // Si si hay citaId lo guardamos por si se necesita luego
         if (citaId.isNotEmpty()) {
             sesion.asignarGuardado(citaId)
         }
 
+        // Buscamos los elementos de la vista
         imgFotoMedicoDetalle = view.findViewById(R.id.imgFotoPerfil)
         ivRecetaDetallesCitaPaciente = view.findViewById(R.id.ivRecetaDetallesCita)
 
+        // Cargamos los datos de la cita desde la BD
         cargarDatosDeCita(citaId)
 
+        // Boton para cancelar la cita
         val cancelar: Button = view.findViewById(R.id.btnCancelarCita)
         cancelar.setOnClickListener {
             mostrarDialogDeCancelacion()
@@ -63,23 +74,28 @@ class DetalleCitaPacienteFragment : Fragment() {
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
+        // Guardamos el id de la cita si hay, por si se reinicia la vista
         super.onSaveInstanceState(outState)
         if (citaId.isNotEmpty()) {
             outState.putString("citaId", citaId)
         }
     }
 
+    // Funcion q se conecta a firebase para traer los datos de la cita y mostrarlos
     private fun cargarDatosDeCita(citaId: String) {
-        val databaseRef =
-            FirebaseDatabase.getInstance().getReference("usuarios").child("citas").child(citaId)
+        val databaseRef = FirebaseDatabase.getInstance()
+            .getReference("usuarios").child("citas").child(citaId)
 
         databaseRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                if (!isAdded) return
+                if (!isAdded) return // pa evitar errores si el fragment ya no esta
+
                 val citaData = snapshot.getValue(cita::class.java)
 
                 if (citaData != null) {
                     val root = requireView()
+
+                    // Obtenemos todos los campos de la vista
                     val nm: TextView = root.findViewById(R.id.tvMedicoD)
                     val esp: TextView = root.findViewById(R.id.tvEspecialidadD)
                     val fecha: TextView = root.findViewById(R.id.tvFechaD)
@@ -89,6 +105,7 @@ class DetalleCitaPacienteFragment : Fragment() {
                     val seccionRecetaPaciente: LinearLayout = root.findViewById(R.id.llSeccionRecetaPaciente)
                     val btnCancelar: Button = root.findViewById(R.id.btnCancelarCita)
 
+                    // Asignamos los datos de la cita a los textviews
                     nm.text = citaData.nombreMedico
                     esp.text = citaData.especialidad
                     fecha.text = citaData.fecha
@@ -96,6 +113,7 @@ class DetalleCitaPacienteFragment : Fragment() {
                     motivo.text = citaData.motivo
                     estado.text = citaData.estado
 
+                    // Si la cita ya fue completada y tiene receta, la mostramos
                     if (citaData.estado == "Completada" && !citaData.urlReceta.isNullOrEmpty()) {
                         Glide.with(this@DetalleCitaPacienteFragment)
                             .load(citaData.urlReceta)
@@ -107,6 +125,7 @@ class DetalleCitaPacienteFragment : Fragment() {
                         ivRecetaDetallesCitaPaciente.visibility = View.GONE
                     }
 
+                    // Dependiendo del estado de la cita, se muestra o se oculta todo lo relacionado
                     when (citaData.estado) {
                         "Pendiente" -> {
                             seccionRecetaPaciente.visibility = View.GONE
@@ -133,12 +152,15 @@ class DetalleCitaPacienteFragment : Fragment() {
                         }
                     }
 
+                    // Ahora traemos los datos del medico para mostrar la foto
                     val idMedico = citaData.idMedico
                     if (!idMedico.isNullOrEmpty()) {
                         val refMedico = FirebaseDatabase.getInstance()
                             .getReference("usuarios/medicos/$idMedico")
                         refMedico.get().addOnSuccessListener { medicoSnapshot ->
                             val medicoData = medicoSnapshot.getValue(medico::class.java)
+
+                            // si hay foto la cargamos, si no, imagen x default
                             medicoData?.fotoPerfil?.let { fotoUrl ->
                                 if (fotoUrl.startsWith("http")) {
                                     Glide.with(this@DetalleCitaPacienteFragment)
@@ -161,6 +183,7 @@ class DetalleCitaPacienteFragment : Fragment() {
                     }
 
                 } else {
+                    // Si no se encontro la cita, se avisa
                     Toast.makeText(
                         requireContext(),
                         "Cita no encontrada en la base de datos.",
@@ -170,6 +193,7 @@ class DetalleCitaPacienteFragment : Fragment() {
             }
 
             override fun onCancelled(error: DatabaseError) {
+                // Si Firebase falla, mostramos error
                 if (!isAdded) return
                 context?.let { ctx ->
                     Toast.makeText(ctx, "Error al cargar.", Toast.LENGTH_SHORT).show()
@@ -178,6 +202,7 @@ class DetalleCitaPacienteFragment : Fragment() {
         })
     }
 
+    // Muestra un dialogo para confirmar si realmente se quiere cancelar la cita
     private fun mostrarDialogDeCancelacion() {
         val dialog = Dialog(requireContext())
         dialog.setContentView(R.layout.dialog_cancelar_cita)
@@ -198,9 +223,11 @@ class DetalleCitaPacienteFragment : Fragment() {
         btnAtras.setOnClickListener {
             dialog.dismiss()
         }
+
         dialog.show()
     }
 
+    // Esta funcion cambia el estado de la cita a Cancelada en firebase
     private fun actualizarCancelado() {
         val databaseRef =
             FirebaseDatabase.getInstance().getReference("usuarios").child("citas").child(citaId)
@@ -213,6 +240,7 @@ class DetalleCitaPacienteFragment : Fragment() {
                     "Cita cancelada con éxito.",
                     Toast.LENGTH_SHORT
                 ).show()
+                // Recargamos los datos para actualizar la vista
                 cargarDatosDeCita(citaId)
             }
             .addOnFailureListener {
@@ -222,6 +250,7 @@ class DetalleCitaPacienteFragment : Fragment() {
             }
     }
 
+    // Cuando el fragment se reanuda, cambiamos el encabezado del activity
     override fun onResume() {
         super.onResume()
         val tvEncabezado: TextView? = (activity as? frmPrincipalActivity)?.findViewById(R.id.encabezadoPrincipal)
