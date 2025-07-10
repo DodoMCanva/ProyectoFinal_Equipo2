@@ -316,6 +316,15 @@
                     android:layout_gravity="center"
                     android:background="@color/white"
                     />
+
+                <ImageView
+                    android:id="@+id/ivRecetaDetallesCita"
+                    android:layout_width="match_parent" android:layout_height="wrap_content" android:adjustViewBounds="true" android:scaleType="fitCenter" android:layout_gravity="center"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="15dp"
+                    android:src="@drawable/receta_detalle_cita_medico"
+                    android:contentDescription="Imagen de la receta subida por el médico"/>
+
             </LinearLayout>
 
         </LinearLayout>

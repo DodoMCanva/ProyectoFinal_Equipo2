@@ -149,6 +149,19 @@ class DetalleCitaMedicoFragment : Fragment() {
                     } else {
                         tvNotasRecetaDetalle.visibility = View.GONE
                     }
+                    // Mostrar la imagen de la receta si existe y la cita está completada
+                    val ivReceta = root.findViewById<ImageView>(R.id.ivRecetaDetallesCita)
+
+                    if (!citaData.urlReceta.isNullOrEmpty() && citaData.estado == "Completada") {
+                        ivReceta.visibility = View.VISIBLE
+                        Glide.with(this@DetalleCitaMedicoFragment)
+                            .load(citaData.urlReceta)
+                            .placeholder(R.drawable.receta_detalle_cita_medico)
+                            .error(R.drawable.receta_detalle_cita_medico)
+                            .into(ivReceta)
+                    } else {
+                        ivReceta.visibility = View.GONE
+                    }
 
                     when (citaData.estado) {
                         "Pendiente" -> {
