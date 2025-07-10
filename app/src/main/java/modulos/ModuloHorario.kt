@@ -181,28 +181,46 @@ class ModuloHorario {
         })
     }
 
-    fun eliminarHorasOcupadas(uidMedico: String, fecha: String, horasDisponibles: MutableList<String>, onResultado: (MutableList<String>) -> Unit) {
+    fun eliminarHorasOcupadas(
+        uidMedico: String,
+        fecha: String,
+        horasDisponibles: MutableList<String>,
+        onResultado: (MutableList<String>) -> Unit
+    ) {
         val ref = FirebaseDatabase.getInstance()
             .getReference("usuarios")
             .child("citas")
+
         val query = ref.orderByChild("idMedico").equalTo(uidMedico)
         query.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                val horasOcupadas = mutableListOf<String>()
+                val horasOcupadas = mutableListOf<LocalTime>()
+                val formatoHora = DateTimeFormatter.ofPattern("h:mm a", Locale.ENGLISH)
+
                 for (citaSnap in snapshot.children) {
                     val cita = citaSnap.getValue(cita::class.java)
-                    val horaActual = LocalTime.now()
                     if (cita != null && cita.fecha == fecha) {
-                        val formatoHora = DateTimeFormatter.ofPattern("hh:mm a", Locale.getDefault())
-                        val horaCita = LocalTime.parse(cita.hora, formatoHora)
-                        if (horaCita.isAfter(horaActual)) {
-                            horasOcupadas.add(cita.hora.toString())
+                        try {
+                            val horaCita = LocalTime.parse(cita.hora?.trim(), formatoHora)
+                            horasOcupadas.add(horaCita)
+                        } catch (e: Exception) {
+                            Log.e("ParseError", "Hora inválida en cita: '${cita.hora}'")
                         }
                     }
                 }
-                val horasRestantes = horasDisponibles.filter { !horasOcupadas.contains(it) }.toMutableList()
+
+                val horasRestantes = horasDisponibles.filter { horaStr ->
+                    try {
+                        val hora = LocalTime.parse(horaStr.trim(), formatoHora)
+                        hora !in horasOcupadas
+                    } catch (e: Exception) {
+                        true
+                    }
+                }.toMutableList()
+
                 onResultado(horasRestantes)
             }
+
             override fun onCancelled(error: DatabaseError) {
                 Log.e("Firebase", "Error al eliminar horas ocupadas: ${error.message}")
                 onResultado(horasDisponibles)
