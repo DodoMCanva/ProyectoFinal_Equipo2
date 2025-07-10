@@ -84,16 +84,22 @@ class AgendarMedicoFragment : Fragment() {
         ).show()
 
         modulo.obtenerConfiguracionDelMedico(id!!) { config ->
-            val monto = config?.costoCita ?: 0.0
-            tvCosto.text = "$%.2f".format(monto)
-            view.findViewById<ImageButton>(R.id.btnCalendario).setOnClickListener {
-                if (config != null) {
-                    deshbilitarHoras()
-                    mostrarSelectorFecha(config)
-                }
+
+            if (config == null) {
+                mostrarDialogoSinHorario()
+                return@obtenerConfiguracionDelMedico
             }
 
-            spHora.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            val monto = config.costoCita ?: 0.0
+            tvCosto.text = "$%.2f".format(monto)
+
+            view.findViewById<ImageButton>(R.id.btnCalendario).setOnClickListener {
+                deshbilitarHoras()
+                mostrarSelectorFecha(config)
+            }
+
+
+        spHora.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
                     parent: AdapterView<*>,
                     view: View?,
@@ -228,6 +234,7 @@ class AgendarMedicoFragment : Fragment() {
     }
 
 
+
     private fun mostrarSelectorFecha(config: ConfiguracionHorario) {
         val calendar = Calendar.getInstance()
         val y = calendar.get(Calendar.YEAR)
@@ -343,4 +350,23 @@ class AgendarMedicoFragment : Fragment() {
             (activity as? frmPrincipalActivity)?.findViewById(R.id.encabezadoPrincipal)
         tvEncabezado?.text = "Agendar"
     }
+
+@RequiresApi(Build.VERSION_CODES.O)
+private fun mostrarDialogoSinHorario() {
+    val dialog = Dialog(requireContext()) // Aquí ya es válido
+    dialog.setContentView(R.layout.dialog_horario_nodisponible)
+    dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+    dialog.setCancelable(false)
+
+    val btnAceptar = dialog.findViewById<Button>(R.id.btnAceptarMensaje)
+    btnAceptar.setOnClickListener {
+        dialog.dismiss()
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.contenedorFragmento, AgendarFragment())
+            .addToBackStack(null)
+            .commit()
+    }
+
+    dialog.show()
+}
 }
