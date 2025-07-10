@@ -82,12 +82,13 @@ class DetalleCitaMedicoFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        citaId = arguments?.getString("citaId") ?: ""
+        citaId = (arguments?.getString("citaId")
+            ?: sesion.guardadoEmergente
+            ?: savedInstanceState?.getString("citaId")
+            ?: "").toString()
 
-        if (citaId == null){
-            citaId = sesion.guardadoEmergente.toString()
-        }else{
-            sesion.asignarGuardado(citaId!!)
+        if (citaId.isNotEmpty()) {
+            sesion.asignarGuardado(citaId)
         }
 
         imgFotoPacienteDetalle = view.findViewById(R.id.imgFotoPerfil)
@@ -119,45 +120,43 @@ class DetalleCitaMedicoFragment : Fragment() {
         databaseRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (!isAdded) return
+
                 val citaData = snapshot.getValue(cita::class.java)
                 if (citaData != null) {
-                    view?.findViewById<TextView>(R.id.tvPacienteDetalleCitaMedico)?.text =
-                        citaData.nombrePaciente
-                    view?.findViewById<TextView>(R.id.tvFechaDetalleCitaMedico)?.text =
-                        citaData.fecha
-                    view?.findViewById<TextView>(R.id.tvHoraDetalleCitaMedico)?.text = citaData.hora
-                    view?.findViewById<TextView>(R.id.tvEstadoDetalleCitaMedico)?.text =
-                        citaData.estado
-                    view?.findViewById<TextView>(R.id.tvMotivoDetalleCitaMedico)?.text =
-                        citaData.motivo
+                    val root = requireView()
 
+                    val tvPacienteDetalle = root.findViewById<TextView>(R.id.tvPacienteDetalleCitaMedico)
+                    val tvFechaDetalle = root.findViewById<TextView>(R.id.tvFechaDetalleCitaMedico)
+                    val tvHoraDetalle = root.findViewById<TextView>(R.id.tvHoraDetalleCitaMedico)
+                    val tvEstadoDetalle = root.findViewById<TextView>(R.id.tvEstadoDetalleCitaMedico)
+                    val tvMotivoDetalle = root.findViewById<TextView>(R.id.tvMotivoDetalleCitaMedico)
+                    val seccionRecetaLinearLayout = root.findViewById<LinearLayout>(R.id.llSeccionRecteaDetalleCita)
+                    val seccionBotones = root.findViewById<LinearLayout>(R.id.llSeccionOpcionesDetallesCita)
+                    val tvNotasRecetaDetalle = root.findViewById<TextView>(R.id.tvNotasRecetaDetalleCita)
+                    val tvEdadDetalle = root.findViewById<TextView>(R.id.tvEdadDetalleCitaMedico)
+                    val tvGeneroDetalle = root.findViewById<TextView>(R.id.tvGeneroDetalleCitaMedico)
+                    val tvTelefonoDetalle = root.findViewById<TextView>(R.id.tvTelefonoDetalleCitaMedico)
 
-                    val seccionRecetaLinearLayout =
-                        view?.findViewById<LinearLayout>(R.id.llSeccionRecteaDetalleCita)
-                    val seccionBotones =
-                        view?.findViewById<LinearLayout>(R.id.llSeccionOpcionesDetallesCita)
+                    tvPacienteDetalle.text = citaData.nombrePaciente
+                    tvFechaDetalle.text = citaData.fecha
+                    tvHoraDetalle.text = citaData.hora
+                    tvEstadoDetalle.text = citaData.estado
+                    tvMotivoDetalle.text = citaData.motivo
 
                     if (!citaData.notas.isNullOrEmpty()) {
                         tvNotasReceta?.text = citaData.notas
-                        tvNotasReceta?.visibility = View.VISIBLE
-                        view?.findViewById<TextView>(R.id.tvNotasRecetaDetalleCita)?.visibility =
-                            View.VISIBLE
+                        tvNotasRecetaDetalle.visibility = View.VISIBLE
                     } else {
-                        tvNotasReceta?.visibility = View.GONE
-                        view?.findViewById<TextView>(R.id.tvNotasRecetaDetalleCita)?.visibility =
-                            View.GONE
+                        tvNotasRecetaDetalle.visibility = View.GONE
                     }
 
                     when (citaData.estado) {
                         "Pendiente" -> {
                             seccionRecetaLinearLayout?.visibility = View.GONE
                             seccionBotones?.visibility = View.VISIBLE
-                            view?.findViewById<Button>(R.id.btnFinalizarDetallesCitaMedico)?.isEnabled =
-                                true
-                            view?.findViewById<Button>(R.id.btnReprogramarDetallesMedico)?.isEnabled =
-                                true
-                            view?.findViewById<Button>(R.id.btnCancelarDetallesMedico)?.isEnabled =
-                                true
+                            root.findViewById<Button>(R.id.btnFinalizarDetallesCitaMedico).isEnabled = true
+                            root.findViewById<Button>(R.id.btnReprogramarDetallesMedico).isEnabled = true
+                            root.findViewById<Button>(R.id.btnCancelarDetallesMedico).isEnabled = true
                         }
 
                         "Completada" -> {
@@ -168,23 +167,18 @@ class DetalleCitaMedicoFragment : Fragment() {
                         "Cancelada" -> {
                             seccionRecetaLinearLayout?.visibility = View.GONE
                             seccionBotones?.visibility = View.GONE
-                            view?.findViewById<Button>(R.id.btnFinalizarDetallesCitaMedico)?.isEnabled =
-                                false
-                            view?.findViewById<Button>(R.id.btnReprogramarDetallesMedico)?.isEnabled =
-                                false
-                            view?.findViewById<Button>(R.id.btnCancelarDetallesMedico)?.isEnabled =
-                                false
+                            root.findViewById<Button>(R.id.btnFinalizarDetallesCitaMedico).isEnabled = false
+                            root.findViewById<Button>(R.id.btnReprogramarDetallesMedico).isEnabled = false
+                            root.findViewById<Button>(R.id.btnCancelarDetallesMedico).isEnabled = false
                         }
                     }
 
-                    val idPaciente =
-                        citaData.idPaciente
+                    val idPaciente = citaData.idPaciente
                     if (!idPaciente.isNullOrEmpty()) {
                         val refPaciente = FirebaseDatabase.getInstance()
                             .getReference("usuarios/pacientes/$idPaciente")
                         refPaciente.get().addOnSuccessListener { pacienteSnapshot ->
-                            val pacienteData =
-                                pacienteSnapshot.getValue(paciente::class.java)
+                            val pacienteData = pacienteSnapshot.getValue(paciente::class.java)
                             pacienteData?.fotoPerfil?.let { fotoUrl ->
                                 Glide.with(this@DetalleCitaMedicoFragment)
                                     .load(fotoUrl)
@@ -192,32 +186,28 @@ class DetalleCitaMedicoFragment : Fragment() {
                                     .error(R.drawable.usuario)
                                     .into(imgFotoPacienteDetalle!!)
                             } ?: run {
-                                imgFotoPacienteDetalle!!.setImageResource(R.drawable.usuario)
+                                imgFotoPacienteDetalle?.setImageResource(R.drawable.usuario)
                             }
 
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                                 val edadCalculada = pacienteData?.calcularEdad() ?: 0
-                                view?.findViewById<TextView>(R.id.tvEdadDetalleCitaMedico)?.text = edadCalculada.toString()
+                                tvEdadDetalle.text = edadCalculada.toString()
                             } else {
-                                view?.findViewById<TextView>(R.id.tvEdadDetalleCitaMedico)?.text = "N/D"
+                                tvEdadDetalle.text = "N/D"
                             }
 
-                            view?.findViewById<TextView>(R.id.tvGeneroDetalleCitaMedico)?.text =
-                                pacienteData?.genero ?: "No disponible"
-
-                            view?.findViewById<TextView>(R.id.tvTelefonoDetalleCitaMedico)?.text =
-                                pacienteData?.telefono ?: "No disponible"
+                            tvGeneroDetalle.text = pacienteData?.genero ?: "No disponible"
+                            tvTelefonoDetalle.text = pacienteData?.telefono ?: "No disponible"
 
                         }.addOnFailureListener {
                             Log.e("Firebase", "Error al cargar datos del paciente: ${it.message}")
-                            imgFotoPacienteDetalle!!.setImageResource(R.drawable.usuario)
+                            imgFotoPacienteDetalle?.setImageResource(R.drawable.usuario)
                         }
                     } else {
-                        imgFotoPacienteDetalle!!.setImageResource(R.drawable.usuario)
+                        imgFotoPacienteDetalle?.setImageResource(R.drawable.usuario)
                     }
                 } else {
-                    Toast.makeText(requireContext(), "Cita no encontrada.", Toast.LENGTH_SHORT)
-                        .show()
+                    Toast.makeText(requireContext(), "Cita no encontrada.", Toast.LENGTH_SHORT).show()
                 }
             }
 
@@ -229,7 +219,6 @@ class DetalleCitaMedicoFragment : Fragment() {
             }
         })
     }
-
 
     private fun mostrarDialogSubirReceta() {
         val dialog = Dialog(requireContext())

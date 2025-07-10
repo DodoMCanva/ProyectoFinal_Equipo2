@@ -28,7 +28,7 @@ import equipo.dos.citasmedicas.frmPrincipalActivity
 
 class DetalleCitaPacienteFragment : Fragment() {
 
-    private lateinit var citaId: String
+    private var citaId: String = ""
     private lateinit var imgFotoMedicoDetalle: ImageView
     private lateinit var ivRecetaDetallesCitaPaciente: ImageView
 
@@ -42,11 +42,13 @@ class DetalleCitaPacienteFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        citaId = arguments?.getString("citaId") ?: ""
-        if (citaId == null){
-            citaId = sesion.guardadoEmergente.toString()
-        }else{
-            sesion.asignarGuardado(citaId!!)
+        citaId = (arguments?.getString("citaId")
+            ?: sesion.guardadoEmergente
+            ?: savedInstanceState?.getString("citaId")
+            ?: "").toString()
+
+        if (citaId.isNotEmpty()) {
+            sesion.asignarGuardado(citaId)
         }
 
         imgFotoMedicoDetalle = view.findViewById(R.id.imgFotoPerfil)
@@ -54,12 +56,17 @@ class DetalleCitaPacienteFragment : Fragment() {
 
         cargarDatosDeCita(citaId)
 
-
         val cancelar: Button = view.findViewById(R.id.btnCancelarCita)
         cancelar.setOnClickListener {
             mostrarDialogDeCancelacion()
         }
+    }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        if (citaId.isNotEmpty()) {
+            outState.putString("citaId", citaId)
+        }
     }
 
     private fun cargarDatosDeCita(citaId: String) {
@@ -72,14 +79,15 @@ class DetalleCitaPacienteFragment : Fragment() {
                 val citaData = snapshot.getValue(cita::class.java)
 
                 if (citaData != null) {
-                    val nm: TextView = view!!.findViewById(R.id.tvMedicoD)
-                    val esp: TextView = view!!.findViewById(R.id.tvEspecialidadD)
-                    val fecha: TextView = view!!.findViewById(R.id.tvFechaD)
-                    val hora: TextView = view!!.findViewById(R.id.tvHoraD)
-                    val estado: TextView = view!!.findViewById(R.id.tvEstadoD)
-                    val motivo: TextView = view!!.findViewById(R.id.tvMotivoD)
-                    val seccionRecetaPaciente: LinearLayout = view!!.findViewById(R.id.llSeccionRecetaPaciente)
-                    val btnCancelar: Button = view!!.findViewById(R.id.btnCancelarCita)
+                    val root = requireView()
+                    val nm: TextView = root.findViewById(R.id.tvMedicoD)
+                    val esp: TextView = root.findViewById(R.id.tvEspecialidadD)
+                    val fecha: TextView = root.findViewById(R.id.tvFechaD)
+                    val hora: TextView = root.findViewById(R.id.tvHoraD)
+                    val estado: TextView = root.findViewById(R.id.tvEstadoD)
+                    val motivo: TextView = root.findViewById(R.id.tvMotivoD)
+                    val seccionRecetaPaciente: LinearLayout = root.findViewById(R.id.llSeccionRecetaPaciente)
+                    val btnCancelar: Button = root.findViewById(R.id.btnCancelarCita)
 
                     nm.text = citaData.nombreMedico
                     esp.text = citaData.especialidad
