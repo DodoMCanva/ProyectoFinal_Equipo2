@@ -78,6 +78,10 @@ class HistorialFragment : Fragment() {
         for (cita in this) {
             val fechaCita = formato.parse(cita.fecha)
             if (fechaCita.before(hoy)) {
+                if (cita.estado.equals("Pendiente")){
+                    //Ocasional y debe actualizar la base de datos
+                    cita.estado = "Completada"
+                }
                 lista.add(cita)
             }
         }
