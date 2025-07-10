@@ -14,7 +14,6 @@
         android:layout_height="35dp"
         android:background="@drawable/fondo_barra" />
 
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -28,13 +27,12 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:fontFamily="@font/quicksandmedium"
+        android:fontFamily="@font/quicksandbold"
         android:layout_gravity="center_horizontal"
         android:textAlignment="center"
         android:text="@string/textResContra"
         android:textColor="@color/azulTexto"
-        android:textSize="22sp" />
-
+        android:textSize="@dimen/text20"/>
 
     <TextView
         android:layout_width="300dp"
@@ -43,7 +41,8 @@
         android:layout_marginTop="50dp"
         android:text="@string/correo"
         android:textColor="@color/azulTexto"
-        android:textSize="22sp" />
+        android:fontFamily="@font/quicksandbold"
+        android:textSize="@dimen/text22" />
 
     <EditText
         android:id="@+id/et_correoResContra"
@@ -64,8 +63,8 @@
         android:background="@drawable/fondo_boton_gradiente"
         android:text="@string/botonEnviarCodigo"
         android:textAllCaps="false"
+        android:fontFamily="@font/quicksandbold"
         android:textColor="@color/whiteBtn"
-        />
-
+        android:textSize="@dimen/text20" />
 
 </LinearLayout>

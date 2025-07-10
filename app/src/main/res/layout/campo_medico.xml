@@ -12,6 +12,7 @@
         android:layout_height="match_parent"
         android:background="@drawable/fondo_campo"
         android:orientation="vertical">
+
         <TextView
             android:id="@+id/medicoEspecialidad"
             android:layout_width="match_parent"
@@ -22,14 +23,17 @@
             android:gravity="center"
             android:textColor="@color/whiteBtn"
             android:text="Cardiologo"/>
+
         <TextView
             android:id="@+id/medicoNombre"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:fontFamily="@font/quicksandmedium"
+            android:fontFamily="@font/quicksandbold"
             android:textSize="@dimen/textcampo16"
             android:textColor="@color/whiteBtn"
             android:text="Emanuel Quiroz Soto"/>
+
     </LinearLayout>
+
 </LinearLayout>

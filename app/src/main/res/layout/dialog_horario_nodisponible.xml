@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:text="@string/dialoghorarioNodisponible"
         android:textColor="@color/whiteBtn"
-        android:textSize="@dimen/textcampo16"
+        android:textSize="@dimen/text22"
         android:fontFamily="@font/quicksandregular"
         android:gravity="center_horizontal"
         android:layout_marginBottom="40dp"/>
