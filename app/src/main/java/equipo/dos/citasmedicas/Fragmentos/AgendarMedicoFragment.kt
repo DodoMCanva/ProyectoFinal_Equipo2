@@ -79,6 +79,8 @@ class AgendarMedicoFragment : Fragment() {
 
         modulo.obtenerConfiguracionDelMedico(id!!) { config ->
 
+            if (!isAdded) return@obtenerConfiguracionDelMedico
+
             if (config == null) {
                 mostrarDialogoSinHorario()
                 return@obtenerConfiguracionDelMedico
@@ -353,6 +355,8 @@ class AgendarMedicoFragment : Fragment() {
 
 @RequiresApi(Build.VERSION_CODES.O)
 private fun mostrarDialogoSinHorario() {
+    if (!isAdded) return
+
     tvFecha.visibility = View.GONE
     tvHoraSeleccionada.visibility = View.GONE
     tvEtiqueta.visibility = View.GONE

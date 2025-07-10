@@ -16,9 +16,11 @@ import androidx.core.content.ContextCompat
 import com.google.firebase.database.FirebaseDatabase
 import Persistencia.ConfiguracionHorario
 import Persistencia.Horario
+import android.os.Build
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.Switch
+import androidx.annotation.RequiresApi
 import com.google.firebase.auth.FirebaseAuth
 import equipo.dos.citasmedicas.R
 import equipo.dos.citasmedicas.frmPrincipalActivity
@@ -40,6 +42,7 @@ class AjusteConsultaFragment : Fragment() {
     private var sabadoTarActivo = false
     private var domingoManActivo = false
     private var domingoTarActivo = false
+    @RequiresApi(Build.VERSION_CODES.O)
     private val modulo = ModuloHorario()
 
     override fun onCreateView(
@@ -49,12 +52,14 @@ class AjusteConsultaFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_ajuste_consulta, container, false)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val uid = sesion.uid
         if (uid != null) {
             modulo.obtenerConfiguracionDelMedico(uid) { config ->
+                if (!isAdded || activity == null) return@obtenerConfiguracionDelMedico
                 if (config != null) {
                     activity?.runOnUiThread {
                         inicializarUIConConfiguracion(view, config)
