@@ -84,7 +84,8 @@ class AgendarMedicoFragment : Fragment() {
         ).show()
 
         modulo.obtenerConfiguracionDelMedico(id!!) { config ->
-            tvCosto.setText(config?.costoCita.toString() ?: "Horario no Configurado")
+            val monto = config?.costoCita ?: 0.0
+            tvCosto.text = "$%.2f".format(monto)
             view.findViewById<ImageButton>(R.id.btnCalendario).setOnClickListener {
                 if (config != null) {
                     deshbilitarHoras()
