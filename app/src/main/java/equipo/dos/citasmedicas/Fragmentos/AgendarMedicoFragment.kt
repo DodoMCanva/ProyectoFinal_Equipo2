@@ -77,12 +77,6 @@ class AgendarMedicoFragment : Fragment() {
 
         deshbilitarHoras()
 
-        Toast.makeText(
-            requireContext(),
-            "Seleccione una fecha primero",
-            Toast.LENGTH_SHORT
-        ).show()
-
         modulo.obtenerConfiguracionDelMedico(id!!) { config ->
 
             if (config == null) {
@@ -92,6 +86,12 @@ class AgendarMedicoFragment : Fragment() {
 
             val monto = config.costoCita ?: 0.0
             tvCosto.text = "$%.2f".format(monto)
+
+            Toast.makeText(
+                requireContext(),
+                "Seleccione una fecha primero",
+                Toast.LENGTH_SHORT
+            ).show()
 
             view.findViewById<ImageButton>(R.id.btnCalendario).setOnClickListener {
                 deshbilitarHoras()
@@ -353,7 +353,15 @@ class AgendarMedicoFragment : Fragment() {
 
 @RequiresApi(Build.VERSION_CODES.O)
 private fun mostrarDialogoSinHorario() {
-    val dialog = Dialog(requireContext()) // Aquí ya es válido
+    tvFecha.visibility = View.GONE
+    tvHoraSeleccionada.visibility = View.GONE
+    tvEtiqueta.visibility = View.GONE
+    spHora.visibility = View.GONE
+    btnConfirmar.visibility = View.GONE
+    view?.findViewById<TextView>(R.id.tvMontoAgendar)?.visibility = View.GONE
+    view?.findViewById<Button>(R.id.btnCancelar)?.visibility = View.GONE
+
+    val dialog = Dialog(requireActivity())
     dialog.setContentView(R.layout.dialog_horario_nodisponible)
     dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
     dialog.setCancelable(false)
@@ -361,9 +369,11 @@ private fun mostrarDialogoSinHorario() {
     val btnAceptar = dialog.findViewById<Button>(R.id.btnAceptarMensaje)
     btnAceptar.setOnClickListener {
         dialog.dismiss()
+
+        parentFragmentManager.popBackStack()
+
         parentFragmentManager.beginTransaction()
             .replace(R.id.contenedorFragmento, AgendarFragment())
-            .addToBackStack(null)
             .commit()
     }
 
