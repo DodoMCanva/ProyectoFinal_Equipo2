@@ -60,14 +60,15 @@
                     android:id="@+id/btnCambiarFoto"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Cambiar Foto"
+                    android:text="Cambiar foto"
                     android:layout_marginLeft="10dp"
                     android:textColor="@color/whiteBtn"
                     android:textAllCaps="false"
+                    android:textSize="@dimen/textcampo16"
                     android:backgroundTint="@color/azulBackMensajes"
                     android:fontFamily="@font/quicksandbold" />
-            </LinearLayout>
 
+            </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"
@@ -76,7 +77,7 @@
                 android:text="@string/nombre"
                 android:textColor="@color/azulTexto"
                 android:fontFamily="@font/quicksandbold"
-                android:textSize="@dimen/text18" />
+                android:textSize="@dimen/text20" />
 
             <EditText
                 android:id="@+id/etEditarNombre"
@@ -89,6 +90,7 @@
                 android:inputType="textPersonName"
                 android:hint="Fernando Jose..."
                 android:textColor="@color/black" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -96,7 +98,8 @@
                 android:text="@string/correo"
                 android:textColor="@color/azulTexto"
                 android:fontFamily="@font/quicksandbold"
-                android:textSize="@dimen/text18" />
+                android:textSize="@dimen/text20" />
+
             <TextView
                 android:id="@+id/tvEditarCorreo"
                 android:layout_marginTop="5dp"
@@ -113,7 +116,7 @@
                 android:text="@string/fechaNacimiento"
                 android:textColor="@color/azulTexto"
                 android:fontFamily="@font/quicksandbold"
-                android:textSize="@dimen/text18" />
+                android:textSize="@dimen/text20" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -138,6 +141,7 @@
                     android:layout_marginEnd="200dp"
                     android:background="@drawable/btncalendario"
                     android:src="@drawable/date24" />
+
             </LinearLayout>
 
             <TextView
@@ -147,7 +151,8 @@
                 android:text="@string/telefono"
                 android:textColor="@color/azulTexto"
                 android:fontFamily="@font/quicksandbold"
-                android:textSize="@dimen/text18" />
+                android:textSize="@dimen/text20" />
+
             <EditText
                 android:id="@+id/etEditarTelefono"
                 android:layout_width="match_parent"
@@ -158,8 +163,7 @@
                 android:background="@color/white"
                 android:inputType="phone"
                 android:hint="644 158 1235"
-                android:textColor="@color/black"
-                />
+                android:textColor="@color/black" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -168,7 +172,8 @@
                 android:text="@string/genero"
                 android:textColor="@color/azulTexto"
                 android:fontFamily="@font/quicksandbold"
-                android:textSize="@dimen/text18" />
+                android:textSize="@dimen/text20" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -208,7 +213,7 @@
                     android:text="@string/especialidadMedica"
                     android:textColor="@color/azulTexto"
                     android:fontFamily="@font/quicksandbold"
-                    android:textSize="@dimen/text18" />
+                    android:textSize="@dimen/text20" />
                 <Spinner
                     android:id="@+id/spEditarEspecialidad"
                     android:layout_width="match_parent"
@@ -227,7 +232,7 @@
                     android:fontFamily="@font/quicksandbold"
                     android:text="@string/cedula"
                     android:textColor="@color/azulTexto"
-                    android:textSize="@dimen/text18" />
+                    android:textSize="@dimen/text20" />
                 <EditText
                     android:id="@+id/etEditarCedula"
                     android:layout_width="match_parent"
@@ -256,7 +261,7 @@
                     android:text="@string/estado"
                     android:textColor="@color/azulTexto"
                     android:fontFamily="@font/quicksandbold"
-                    android:textSize="@dimen/text18" />
+                    android:textSize="@dimen/text20" />
                 <EditText
                     android:id="@+id/etEditarEstado"
                     android:layout_width="match_parent"
@@ -276,7 +281,7 @@
                     android:fontFamily="@font/quicksandbold"
                     android:text="@string/ciudad"
                     android:textColor="@color/azulTexto"
-                    android:textSize="@dimen/text18" />
+                    android:textSize="@dimen/text20" />
 
                 <EditText
                     android:id="@+id/etEditarCiudad"
@@ -299,7 +304,7 @@
                     android:text="@string/calle"
                     android:textColor="@color/azulTexto"
                     android:fontFamily="@font/quicksandbold"
-                    android:textSize="@dimen/text18" />
+                    android:textSize="@dimen/text20" />
                 <EditText
                     android:id="@+id/etEditarCalle"
                     android:layout_width="match_parent"
@@ -319,7 +324,7 @@
                     android:text="@string/numero"
                     android:textColor="@color/azulTexto"
                     android:fontFamily="@font/quicksandbold"
-                    android:textSize="@dimen/text18" />
+                    android:textSize="@dimen/text20" />
                 <EditText
                     android:id="@+id/etEditarNumero"
                     android:layout_width="match_parent"
@@ -339,7 +344,7 @@
                     android:text="@string/codigoPostal"
                     android:textColor="@color/azulTexto"
                     android:fontFamily="@font/quicksandbold"
-                    android:textSize="@dimen/text18" />
+                    android:textSize="@dimen/text20" />
                 <EditText
                     android:id="@+id/etEditarCodigoPostal"
                     android:layout_width="match_parent"
@@ -370,6 +375,7 @@
                     android:background="@drawable/btn_azul_redondeado_si"
                     android:fontFamily="@font/quicksandbold"
                     android:paddingVertical="12dp"
+                    android:textSize="@dimen/text18"
                     android:paddingHorizontal="24dp" />
 
                 <Button
@@ -380,6 +386,7 @@
                 android:textAllCaps="false"
                 android:layout_marginStart="15dp"
                 android:textColor="@color/whiteBtn"
+                android:textSize="@dimen/text18"
                 android:background="@drawable/btn_rojo_redondear_no"
                 android:fontFamily="@font/quicksandbold"
                 android:paddingVertical="12dp"

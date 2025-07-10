@@ -45,7 +45,7 @@
                 android:fontFamily="@font/quicksandbold"
                 android:text="@string/nombre"
                 android:textColor="@color/azulTexto"
-                android:textSize="@dimen/text18" />
+                android:textSize="@dimen/text20" />
 
             <EditText
                 android:id="@+id/etNombreRegistroMedico"
@@ -68,7 +68,7 @@
                 android:fontFamily="@font/quicksandbold"
                 android:text="@string/correo"
                 android:textColor="@color/azulTexto"
-                android:textSize="@dimen/text18" />
+                android:textSize="@dimen/text20" />
 
             <EditText
                 android:id="@+id/etRegistroCorreoMedico"
@@ -91,7 +91,7 @@
                 android:fontFamily="@font/quicksandbold"
                 android:text="@string/fechaNacimiento"
                 android:textColor="@color/azulTexto"
-                android:textSize="@dimen/text18" />
+                android:textSize="@dimen/text20" />
 
             <LinearLayout
             android:layout_width="wrap_content"
@@ -106,7 +106,7 @@
                 android:minHeight="48dp"
                 android:text="dd/mm/aaaa"
                 android:textSize="@dimen/text18"
-                android:gravity="center_vertical"
+                android:gravity="center"
                 android:enabled="false"
                 android:textColor="@color/azulTexto"/>
 
@@ -126,7 +126,7 @@
                 android:fontFamily="@font/quicksandbold"
                 android:text="@string/contrasena"
                 android:textColor="@color/azulTexto"
-                android:textSize="@dimen/text18" />
+                android:textSize="@dimen/text20" />
 
             <EditText
                 android:id="@+id/etContraRegistroMedico"
@@ -150,7 +150,7 @@
                 android:fontFamily="@font/quicksandbold"
                 android:text="@string/confirContrasena"
                 android:textColor="@color/azulTexto"
-                android:textSize="@dimen/text18" />
+                android:textSize="@dimen/text20" />
 
             <EditText
                 android:id="@+id/etnuevaContraRegistroMedico"
@@ -173,7 +173,7 @@
                 android:fontFamily="@font/quicksandbold"
                 android:text="@string/telefono"
                 android:textColor="@color/azulTexto"
-                android:textSize="@dimen/text18" />
+                android:textSize="@dimen/text20" />
 
             <EditText
                 android:id="@+id/etTelefonoRegistroMedico"
@@ -197,7 +197,7 @@
                 android:fontFamily="@font/quicksandbold"
                 android:text="@string/genero"
                 android:textColor="@color/azulTexto"
-                android:textSize="@dimen/text18" />
+                android:textSize="@dimen/text20" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -234,7 +234,7 @@
                 android:fontFamily="@font/quicksandbold"
                 android:text="@string/especialidadMedica"
                 android:textColor="@color/azulTexto"
-                android:textSize="@dimen/text18" />
+                android:textSize="@dimen/text20" />
 
             <Spinner
                 android:id="@+id/spEspecialidad"
@@ -256,7 +256,7 @@
                 android:fontFamily="@font/quicksandbold"
                 android:text="@string/cedula"
                 android:textColor="@color/azulTexto"
-                android:textSize="@dimen/text18" />
+                android:textSize="@dimen/text20" />
 
             <EditText
                 android:id="@+id/etCedulaMedico"
@@ -287,7 +287,7 @@
                 android:fontFamily="@font/quicksandbold"
                 android:text="@string/estado"
                 android:textColor="@color/azulTexto"
-                android:textSize="@dimen/text18" />
+                android:textSize="@dimen/text20" />
 
             <EditText
                 android:id="@+id/etEstadoMedico"
@@ -308,7 +308,7 @@
                 android:fontFamily="@font/quicksandbold"
                 android:text="@string/ciudad"
                 android:textColor="@color/azulTexto"
-                android:textSize="@dimen/text18" />
+                android:textSize="@dimen/text20" />
 
             <EditText
                 android:id="@+id/etCiudadMedico"
@@ -331,7 +331,7 @@
                 android:fontFamily="@font/quicksandbold"
                 android:text="@string/calle"
                 android:textColor="@color/azulTexto"
-                android:textSize="@dimen/text18" />
+                android:textSize="@dimen/text20" />
 
             <EditText
                 android:id="@+id/etCalleMedico"
@@ -353,7 +353,7 @@
                 android:fontFamily="@font/quicksandbold"
                 android:text="@string/numero"
                 android:textColor="@color/azulTexto"
-                android:textSize="@dimen/text18" />
+                android:textSize="@dimen/text20" />
 
             <EditText
                 android:id="@+id/etNumeroMedico"
@@ -375,7 +375,7 @@
                 android:fontFamily="@font/quicksandbold"
                 android:text="@string/codigoPostal"
                 android:textColor="@color/azulTexto"
-                android:textSize="@dimen/text18" />
+                android:textSize="@dimen/text20" />
 
             <EditText
                 android:id="@+id/etCodigoPostalMedico"
@@ -400,7 +400,8 @@
                 android:text="@string/btnRegistrarse"
                 android:textAllCaps="false"
                 android:textColor="@color/whiteBtn"
-                android:textSize="20sp"
+                android:textSize="@dimen/text22"
+                android:fontFamily="@font/quicksandbold"
                 android:layout_gravity="center"/>
 
         </LinearLayout>

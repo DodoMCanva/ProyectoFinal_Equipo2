@@ -134,10 +134,11 @@
         android:layout_marginStart="48dp"
         android:layout_marginTop="48dp"
         android:layout_marginEnd="48dp"
-        android:textColor="@color/whiteBtn"
         android:background="@drawable/fondo_boton_gradiente"
         android:text="Iniciar sesión"
         android:textAllCaps="false"
+        android:fontFamily="@font/quicksandbold"
+        android:textColor="@color/whiteBtn"
         android:textSize="20sp" />
 
     <TextView

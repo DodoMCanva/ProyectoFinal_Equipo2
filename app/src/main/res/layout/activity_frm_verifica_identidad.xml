@@ -41,7 +41,7 @@
         android:text="@string/codigoVerificacion"
         android:fontFamily="@font/quicksandbold"
         android:textColor="@color/azulTexto"
-        android:textSize="@dimen/textomenu25"
+        android:textSize="@dimen/text22"
         android:layout_marginTop="20dp"
         android:layout_gravity="center"/>
 
@@ -62,8 +62,10 @@
         android:textAllCaps="false"
         android:background="@drawable/fondo_boton_gradiente"
         android:text="@string/botonVerificar"
-        android:textColor="@color/whiteBtn"
-        />
+        android:fontFamily="@font/quicksandbold"
+        android:textSize="@dimen/text22"
+        android:textColor="@color/whiteBtn" />
+
     <TextView
         android:id="@+id/tvNoRecibisteCodigo"
         android:layout_width="wrap_content"

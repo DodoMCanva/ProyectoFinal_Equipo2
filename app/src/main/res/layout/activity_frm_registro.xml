@@ -45,7 +45,7 @@
             android:fontFamily="@font/quicksandbold"
             android:text="@string/nombre"
             android:textColor="@color/azulTexto"
-            android:textSize="@dimen/text18" />
+            android:textSize="@dimen/text20" />
 
             <EditText
                 android:id="@+id/etNombreRegistro"
@@ -68,7 +68,7 @@
                 android:fontFamily="@font/quicksandbold"
                 android:text="@string/correo"
                 android:textColor="@color/azulTexto"
-                android:textSize="@dimen/text18" />
+                android:textSize="@dimen/text20" />
 
             <EditText
                 android:id="@+id/etRegistroCorreo"
@@ -91,7 +91,7 @@
                 android:fontFamily="@font/quicksandbold"
                 android:text="@string/fechaNacimiento"
                 android:textColor="@color/azulTexto"
-                android:textSize="@dimen/text18" />
+                android:textSize="@dimen/text20" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -106,7 +106,7 @@
                     android:minHeight="48dp"
                     android:text="29/05/2025"
                     android:textSize="@dimen/text18"
-                    android:gravity="center_vertical"
+                    android:gravity="center"
                     android:enabled="false"
                     android:textColor="@color/azulTexto"/>
 
@@ -126,7 +126,7 @@
                 android:fontFamily="@font/quicksandbold"
                 android:text="@string/contrasena"
                 android:textColor="@color/azulTexto"
-                android:textSize="@dimen/text18" />
+                android:textSize="@dimen/text20" />
 
             <EditText
                 android:id="@+id/etContraRegistro"
@@ -149,7 +149,7 @@
                 android:fontFamily="@font/quicksandbold"
                 android:text="@string/confirContrasena"
                 android:textColor="@color/azulTexto"
-                android:textSize="@dimen/text18" />
+                android:textSize="@dimen/text20" />
 
             <EditText
                 android:id="@+id/etnuevaContraRegistro"
@@ -172,7 +172,7 @@
                 android:fontFamily="@font/quicksandbold"
                 android:text="@string/telefono"
                 android:textColor="@color/azulTexto"
-                android:textSize="@dimen/text18" />
+                android:textSize="@dimen/text20" />
 
             <EditText
                 android:id="@+id/etTelefonoRegistro"
@@ -195,7 +195,7 @@
                 android:fontFamily="@font/quicksandbold"
                 android:text="@string/genero"
                 android:textColor="@color/azulTexto"
-                android:textSize="@dimen/text18" />
+                android:textSize="@dimen/text20" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -236,6 +236,7 @@
                 android:textAllCaps="false"
                 android:textColor="@color/whiteBtn"
                 android:textSize="20sp"
+                android:fontFamily="@font/quicksandbold"
                 android:layout_gravity="center"/>
 
         </LinearLayout>

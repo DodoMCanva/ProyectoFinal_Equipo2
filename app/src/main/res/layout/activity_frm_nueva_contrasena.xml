@@ -86,6 +86,7 @@
         android:background="@drawable/fondo_boton_gradiente"
         android:text="@string/cambiarContra"
         android:textAllCaps="false"
+        android:fontFamily="@font/quicksandbold"
         android:textColor="@color/whiteBtn"
         />
 </LinearLayout>
