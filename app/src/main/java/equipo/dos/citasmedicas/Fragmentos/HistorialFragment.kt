@@ -1,5 +1,6 @@
 package equipo.dos.citasmedicas.Fragmentos
 
+import Persistencia.cita
 import Persistencia.sesion
 import android.os.Build
 import android.os.Bundle
@@ -15,6 +16,10 @@ import androidx.recyclerview.widget.RecyclerView
 import equipo.dos.citasmedicas.R
 import equipo.dos.citasmedicas.frmPrincipalActivity
 import modulos.AdapterHistorial
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 @RequiresApi(Build.VERSION_CODES.O)
 class HistorialFragment : Fragment() {
@@ -53,7 +58,7 @@ class HistorialFragment : Fragment() {
 
     private fun cargarHistorial() {
         sesion.actualizarListaCitas {
-            val listaOrdenada = sesion.listaOrdenada()
+            val listaOrdenada = sesion.listaOrdenada().anteriores()
             adapter?.actualizarDatos(listaOrdenada)
         }
     }
@@ -63,4 +68,22 @@ class HistorialFragment : Fragment() {
         val tvEncabezado: TextView? = (activity as? frmPrincipalActivity)?.findViewById(R.id.encabezadoPrincipal)
         tvEncabezado?.text = "Historial"
     }
+
+    fun ArrayList<cita>.anteriores(): ArrayList<cita> {
+        val lista = ArrayList<cita>()
+        val formato = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        val hoy = formato.parse(
+            LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+        )
+        for (cita in this) {
+            val fechaCita = formato.parse(cita.fecha)
+            if (fechaCita.before(hoy)) {
+                lista.add(cita)
+            }
+        }
+        return lista
+    }
+
+
+
 }
