@@ -52,6 +52,8 @@
     <string name="a">a</string>
     <string name="dialogCancelarTitulo">Cancelar cita</string>
     <string name="dialogCancelarTexto">¿Seguro que desea cancelar su cita?</string>
+    <string name="dialoghorarioNodisponible">Actualmente, este médico no tiene horarios disponibles.</string>
+    <string name="dialoghorarioNodisponibleTitulo">Sin horario disponible</string>
     <string name="btnDialogConfirmar">Confirmar</string>
     <string name="btnDialogAtras">Atrás</string>
     <string name="registro">Registro</string>
