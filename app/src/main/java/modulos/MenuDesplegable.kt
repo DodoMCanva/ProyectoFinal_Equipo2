@@ -222,12 +222,13 @@ object MenuDesplegable {
             is CitasFragment -> "CitasFragment"
             is HistorialFragment -> "HistorialFragment"
             is AgendarFragment -> "AgendarFragment"
-            is AgendarMedicoFragment -> "AgendarMedicoFragment"
+            //descomentarear si se quiere implementar
+            //is AgendarMedicoFragment -> "AgendarMedicoFragment"
             is AjusteConsultaFragment -> "AjusteConsultaFragment"
             is MiPerfilFragment -> "MiPerfilFragment"
             //descomentarear si se quiere implementar
-            is DetalleCitaPacienteFragment -> "DetalleCitaPacienteFragment"
-            is DetalleCitaMedicoFragment -> "DetalleCitaMedicoFragment"
+            //is DetalleCitaPacienteFragment -> "DetalleCitaPacienteFragment"
+            //is DetalleCitaMedicoFragment -> "DetalleCitaMedicoFragment"
             else -> "CitasFragment"
         }
     }

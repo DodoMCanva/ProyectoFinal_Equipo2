@@ -1,5 +1,6 @@
 package equipo.dos.citasmedicas.Fragmentos
 
+import Persistencia.ConfiguracionHorario
 import Persistencia.cita
 import Persistencia.paciente
 import Persistencia.sesion
@@ -17,6 +18,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.DatePicker
@@ -40,6 +42,7 @@ import com.cloudinary.android.callback.ErrorInfo
 import com.cloudinary.android.callback.UploadCallback
 import equipo.dos.citasmedicas.R
 import equipo.dos.citasmedicas.frmPrincipalActivity
+import modulos.ModuloHorario
 import java.util.Locale
 
 
@@ -52,6 +55,8 @@ class DetalleCitaMedicoFragment : Fragment() {
     private var imgFotoPacienteDetalle: ImageView? = null
     private var tvNotasReceta: TextView? = null
     private var imagenRecetaUri: Uri? = null
+    private var medicoId: String? = null
+    var modulo = ModuloHorario()
 
     private val pickImageRecipe =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -136,7 +141,7 @@ class DetalleCitaMedicoFragment : Fragment() {
                     val tvEdadDetalle = root.findViewById<TextView>(R.id.tvEdadDetalleCitaMedico)
                     val tvGeneroDetalle = root.findViewById<TextView>(R.id.tvGeneroDetalleCitaMedico)
                     val tvTelefonoDetalle = root.findViewById<TextView>(R.id.tvTelefonoDetalleCitaMedico)
-
+                    medicoId = citaData.idMedico
                     tvPacienteDetalle.text = citaData.nombrePaciente
                     tvFechaDetalle.text = citaData.fecha
                     tvHoraDetalle.text = citaData.hora
@@ -348,103 +353,134 @@ class DetalleCitaMedicoFragment : Fragment() {
         val btnCompletarReprogramacionDialog = dialog.findViewById<Button>(R.id.btnCompletarRep)
         val btnCancelarReprogramacion = dialog.findViewById<Button>(R.id.btnCancelarRep)
 
-        //0a
-        fun generarHorasCada30Min(): List<String> {
-            val horas = mutableListOf<String>()
-            var hora = 7
-            var minuto = 0
+        modulo.obtenerConfiguracionDelMedico(medicoId!!) { config ->
 
-            while (hora < 19 || (hora == 19 && minuto == 0)) {
-                val amPm = if (hora < 12) "AM" else "PM"
-                val hora12 = if (hora % 12 == 0) 12 else hora % 12
-                val horaFormateada = String.format(Locale.getDefault(), "%d:%02d %s", hora12, minuto, amPm)
-                horas.add(horaFormateada)
+            btnCalendarioDialog.setOnClickListener {
+                val calendario = Calendar.getInstance()
+                val anio = calendario.get(Calendar.YEAR)
+                val mes = calendario.get(Calendar.MONTH)
+                val dia = calendario.get(Calendar.DAY_OF_MONTH)
 
-                minuto += 30
-                if (minuto >= 60) {
-                    minuto = 0
-                    hora++
-                }
+                val datePicker = DatePickerDialog(
+                    requireContext(),
+                    { _, year, month, dayOfMonth ->
+                        val selectedCalendar = Calendar.getInstance().apply {
+                            set(year, month, dayOfMonth)
+                        }
+                        val dow = selectedCalendar.get(Calendar.DAY_OF_WEEK)
+
+                        if (modulo.listaInhabiles(config!!).contains(dow)) {
+                            Toast.makeText(
+                                requireContext(),
+                                "Este día no está disponible",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            return@DatePickerDialog
+                        }
+
+                        val fechaSeleccionada =
+                            String.format("%02d/%02d/%04d", dayOfMonth, month + 1, year)
+                        tvFechaDialog.text = fechaSeleccionada
+
+                        val (mañanaP, tardeP) = modulo.obtenerConfigDelDia(config, dow)
+                        val horas = mutableListOf<String>()
+                        if (mañanaP.first) horas += modulo.generarHorasEnHorario(
+                            mañanaP.second.desde,
+                            mañanaP.second.hasta,
+                            config.duracionConsulta
+                        )
+                        if (tardeP.first) horas += modulo.generarHorasEnHorario(
+                            tardeP.second.desde,
+                            tardeP.second.hasta,
+                            config.duracionConsulta
+                        )
+
+                        if (horas.isEmpty()) {
+                            Toast.makeText(context, "No hay horarios disponibles", Toast.LENGTH_SHORT)
+                                .show()
+                            spHoraDialog.adapter = null
+                        } else {
+                            modulo.eliminarHorasOcupadas(medicoId!!, fechaSeleccionada, horas) { horasRestantes ->
+                                if (horasRestantes.isEmpty()) {
+                                    Toast.makeText(
+                                        context,
+                                        "No hay horarios disponibles",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                    spHoraDialog.adapter = null
+                                } else {
+                                    spHoraDialog.adapter = ArrayAdapter(
+                                        requireContext(),
+                                        android.R.layout.simple_spinner_item,
+                                        horasRestantes
+                                    ).apply {
+                                        setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    anio, mes, dia
+                )
+                datePicker.datePicker.minDate = Calendar.getInstance().timeInMillis
+                val maxDateCalendar = Calendar.getInstance()
+                maxDateCalendar.add(Calendar.YEAR, 5)
+                datePicker.datePicker.maxDate = maxDateCalendar.timeInMillis
+                datePicker.show()
             }
-            return horas
-        }
-        val horasDisponibles = generarHorasCada30Min()
-        val adapterHoras = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, horasDisponibles)
-        adapterHoras.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spHoraDialog.adapter = adapterHoras
-        spHoraDialog.onItemSelectedListener =
-            object : android.widget.AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    p0: android.widget.AdapterView<*>?,
-                    p1: View?,
-                    p2: Int,
-                    p3: Long
-                ) {
-                    tvHoraSeleccionadaDialog.text = p0?.getItemAtPosition(p2).toString()
+
+            spHoraDialog.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                    tvHoraSeleccionadaDialog.text = parent.getItemAtPosition(position).toString()
                 }
 
-                override fun onNothingSelected(p0: android.widget.AdapterView<*>?) {}
+                override fun onNothingSelected(parent: AdapterView<*>) {}
             }
-        btnCalendarioDialog.setOnClickListener {
-            val calendario = Calendar.getInstance()
-            val anio = calendario.get(Calendar.YEAR)
-            val mes = calendario.get(Calendar.MONTH)
-            val dia = calendario.get(Calendar.DAY_OF_MONTH)
 
-            val datePicker = DatePickerDialog(
-                requireContext(),
-                { _: DatePicker, year: Int, month: Int, dayOfMonth: Int ->
-                    val fechaSeleccionada =
-                        String.format("%02d/%02d/%04d", dayOfMonth, month + 1, year)
-                    tvFechaDialog.text = fechaSeleccionada
-                },
-                anio, mes, dia
-            )
-
-            datePicker.datePicker.minDate = Calendar.getInstance().timeInMillis
-            val maxDateCalendar = Calendar.getInstance()
-            maxDateCalendar.add(Calendar.YEAR, 5)
-            datePicker.datePicker.maxDate = maxDateCalendar.timeInMillis
-
-            datePicker.show()
-        }
-        FirebaseDatabase.getInstance().getReference("usuarios/citas").child(citaId)
-            .addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    if (!isAdded) return
-                    val citaData = snapshot.getValue(cita::class.java)
-                    if (citaData != null) {
-                        tvFechaDialog.text = citaData.fecha
-                        tvHoraSeleccionadaDialog.text = citaData.hora
-                        val horaIndex = horasDisponibles.indexOf(citaData.hora)
-                        if (horaIndex != -1) {
-                            spHoraDialog.setSelection(horaIndex)
+            FirebaseDatabase.getInstance().getReference("usuarios/citas").child(citaId)
+                .addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        if (!isAdded) return
+                        val citaData = snapshot.getValue(cita::class.java)
+                        if (citaData != null) {
+                            tvFechaDialog.text = citaData.fecha
+                            tvHoraSeleccionadaDialog.text = citaData.hora
                         }
                     }
-                }
 
-                override fun onCancelled(error: DatabaseError) {
-                    if (!isAdded) return
-                    context?.let { ctx ->
-                        Toast.makeText(ctx, "Error", Toast.LENGTH_SHORT).show()
+                    override fun onCancelled(error: DatabaseError) {
+                        if (!isAdded) return
+                        Toast.makeText(requireContext(), "Error", Toast.LENGTH_SHORT).show()
                     }
+                })
+
+            btnCompletarReprogramacionDialog.setOnClickListener {
+                val nuevaFecha = tvFechaDialog.text.toString()
+                val nuevaHora = tvHoraSeleccionadaDialog.text.toString()
+
+                if (nuevaFecha.isBlank() || nuevaHora.isBlank()) {
+                    Toast.makeText(requireContext(), "Completa todos los campos", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
                 }
-            })
 
+                // Validar disponibilidad de la nueva fecha y hora
+                modulo.validarDiaConsulta(medicoId!!, nuevaFecha, nuevaHora) { disponible ->
+                    if (!isAdded) return@validarDiaConsulta
 
-        btnCancelarReprogramacion?.setOnClickListener { dialog.dismiss() }
-        btnCompletarReprogramacionDialog?.setOnClickListener {
-            val nuevaFecha = tvFechaDialog.text.toString()
-            val nuevaHora = tvHoraSeleccionadaDialog.text.toString()
-            if (nuevaFecha.isEmpty() || nuevaHora.isEmpty() || nuevaFecha == "29/05/2025") {
-                Toast.makeText(requireContext(), "Fecha y hora son obligatorias para reprogramar.", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
+                    if (!disponible) {
+                        Toast.makeText(requireContext(), "Hora no disponible. Elige otra.", Toast.LENGTH_SHORT).show()
+                        return@validarDiaConsulta
+                    }
+
+                    actualizarReprogramar(citaId, nuevaFecha, nuevaHora)
+                    Toast.makeText(requireContext(), "Cita reprogramada correctamente", Toast.LENGTH_SHORT).show()
+                    dialog.dismiss()
+                }
             }
-            actualizarReprogramar(citaId, nuevaFecha, nuevaHora)
-            dialog.dismiss()
-        }
+            btnCancelarReprogramacion.setOnClickListener { dialog.dismiss() }
 
-        dialog.show()
+            dialog.show()
+        }
     }
 
 

@@ -254,8 +254,10 @@ class AgendarMedicoFragment : Fragment() {
             },
             y, m, d
         )
+        datePickerDialog.datePicker.minDate = System.currentTimeMillis()
         datePickerDialog.show()
     }
+
 
 
     private fun configurarSpinnerHoras(
