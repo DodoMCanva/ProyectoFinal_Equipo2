@@ -46,6 +46,7 @@ class HistorialFragment : Fragment() {
             }
             val bundle = Bundle().apply {
                 putString("citaId", citaSeleccionada.idCita)
+                putString("estado", citaSeleccionada.estado)
             }
             fragment.arguments = bundle
             parentFragmentManager.beginTransaction()
@@ -80,7 +81,9 @@ class HistorialFragment : Fragment() {
                 try {
                     val fechaCita = formato.parse("${cita.fecha} ${cita.hora?.trim()}")
                     if (fechaCita.before(hoy)) {
-                        cita.estado = "Completada"
+                        if (cita.estado.equals("Pendiente")){
+                            cita.estado = "Cancelada por Ausencia"
+                        }
                         lista.add(cita)
                     }
                 } catch (e: Exception) {

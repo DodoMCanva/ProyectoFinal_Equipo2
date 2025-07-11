@@ -111,7 +111,7 @@ class DetalleCitaPacienteFragment : Fragment() {
                     fecha.text = citaData.fecha
                     hora.text = citaData.hora
                     motivo.text = citaData.motivo
-                    estado.text = citaData.estado
+                    estado.text = arguments?.getString("estado") ?: "Pasada"
 
                     // Si la cita ya fue completada y tiene receta, la mostramos
                     if (citaData.estado == "Completada" && !citaData.urlReceta.isNullOrEmpty()) {
