@@ -65,29 +65,26 @@ class HistorialFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        val tvEncabezado: TextView? = (activity as? frmPrincipalActivity)?.findViewById(R.id.encabezadoPrincipal)
+        val tvEncabezado: TextView? =
+            (activity as? frmPrincipalActivity)?.findViewById(R.id.encabezadoPrincipal)
         tvEncabezado?.text = "Historial"
     }
 
     fun ArrayList<cita>.anteriores(): ArrayList<cita> {
         val lista = ArrayList<cita>()
-        val formato = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        val formato = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
         val hoy = formato.parse(
-            LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+            LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"))
         )
+
         for (cita in this) {
-            val fechaCita = formato.parse(cita.fecha)
+            val fechaCita = formato.parse("${cita.fecha} ${cita.hora}")
+
             if (fechaCita.before(hoy)) {
-                if (cita.estado.equals("Pendiente")){
-                    //Ocasional y debe actualizar la base de datos
-                    cita.estado = "Completada"
-                }
-                lista.add(cita)
+                cita.estado = "Completada"
             }
         }
         return lista
     }
-
-
 
 }
