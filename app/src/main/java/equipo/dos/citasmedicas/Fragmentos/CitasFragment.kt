@@ -25,6 +25,7 @@ import equipo.dos.citasmedicas.frmPrincipalActivity
 import modulos.AdapterCitaRecycler
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
+import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.util.Calendar
 import java.util.Date
@@ -251,16 +252,22 @@ class CitasFragment : Fragment() {
 
     fun ArrayList<cita>.dia(fecha: String): ArrayList<cita> {
         val lista = ArrayList<cita>()
-        val formato = SimpleDateFormat("dd/MM/yyyyy", Locale.getDefault())
-        val fecha = formato.parse(fecha)
+        val formato = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        val fechaInput = formato.parse(fecha)
+        val horaActual = LocalTime.now()
+
         for (cita in this) {
             val fechaCita = formato.parse(cita.fecha)
-            if (fechaCita == fecha) {
+            if (fechaCita == fechaInput) {
+                if (cita.hora != null && cita.hora?.let { LocalTime.parse(it) }?.isBefore(horaActual) == true) {
+                    cita.estado = "Cancelada por Ausencia"
+                }
                 lista.add(cita)
             }
         }
         return lista
     }
+
 
     fun ArrayList<cita>.actuales(): ArrayList<cita> {
         val lista = ArrayList<cita>()
