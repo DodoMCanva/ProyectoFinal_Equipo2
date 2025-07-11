@@ -47,6 +47,7 @@ class HistorialFragment : Fragment() {
             val bundle = Bundle().apply {
                 putString("citaId", citaSeleccionada.idCita)
                 putString("estado", citaSeleccionada.estado)
+                putString("origen", "Historial")
             }
             fragment.arguments = bundle
             parentFragmentManager.beginTransaction()

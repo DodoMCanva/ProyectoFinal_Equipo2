@@ -105,15 +105,21 @@ class DetalleCitaPacienteFragment : Fragment() {
                     val seccionRecetaPaciente: LinearLayout = root.findViewById(R.id.llSeccionRecetaPaciente)
                     val btnCancelar: Button = root.findViewById(R.id.btnCancelarCita)
 
-                    // Asignamos los datos de la cita a los textviews
                     nm.text = citaData.nombreMedico
                     esp.text = citaData.especialidad
                     fecha.text = citaData.fecha
                     hora.text = citaData.hora
                     motivo.text = citaData.motivo
-                    estado.text = arguments?.getString("estado") ?: "Pasada"
+                    arguments?.let { args ->
+                        if (args.getString("origen") == "Historial") {
+                            estado.text = args.getString("estado") ?: "Pasada"
+                        } else {
+                            estado.text = citaData.estado
+                        }
+                    } ?: run {
+                        estado.text = citaData.estado
+                    }
 
-                    // Si la cita ya fue completada y tiene receta, la mostramos
                     if (citaData.estado == "Completada" && !citaData.urlReceta.isNullOrEmpty()) {
                         Glide.with(this@DetalleCitaPacienteFragment)
                             .load(citaData.urlReceta)

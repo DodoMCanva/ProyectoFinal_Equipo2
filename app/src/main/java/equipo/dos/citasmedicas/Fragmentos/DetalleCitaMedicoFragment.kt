@@ -145,7 +145,16 @@ class DetalleCitaMedicoFragment : Fragment() {
                     tvPacienteDetalle.text = citaData.nombrePaciente
                     tvFechaDetalle.text = citaData.fecha
                     tvHoraDetalle.text = citaData.hora
-                    tvEstadoDetalle.text = arguments?.getString("estado") ?: "Pasada"
+                    arguments?.let { args ->
+                        if (args.getString("origen") == "Historial") {
+                            tvEstadoDetalle.text = args.getString("estado") ?: "Pasada"
+                        } else {
+                            tvEstadoDetalle.text = citaData.estado
+                        }
+                    } ?: run {
+                        tvEstadoDetalle.text = citaData.estado
+                    }
+
                     tvMotivoDetalle.text = citaData.motivo
 
                     if (!citaData.notas.isNullOrEmpty()) {
