@@ -4,6 +4,7 @@ import Persistencia.cita
 import Persistencia.sesion
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -73,13 +74,20 @@ class HistorialFragment : Fragment() {
     fun ArrayList<cita>.anteriores(): ArrayList<cita> {
         val lista = ArrayList<cita>()
         val formato = SimpleDateFormat("dd/MM/yyyy h:mm a", Locale.getDefault())
-
         val hoy = formato.parse(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy h:mm a")))
         for (cita in this) {
-            val fechaCita = formato.parse("${cita.fecha} ${cita.hora}")
-
-            if (fechaCita.before(hoy)) {
-                lista.add(cita)
+            if (!cita.hora.isNullOrEmpty()) {
+                try {
+                    val fechaCita = formato.parse("${cita.fecha} ${cita.hora?.trim()}")
+                    if (fechaCita.before(hoy)) {
+                        cita.estado = "Completada"
+                        lista.add(cita)
+                    }
+                } catch (e: Exception) {
+                    Log.e("ParseError", "Error al parsear la cita: '${cita.fecha} ${cita.hora}'", e)
+                }
+            } else {
+                Log.e("NullError", "La hora de la cita es nula o vacía: '${cita.fecha}'")
             }
         }
         return lista
