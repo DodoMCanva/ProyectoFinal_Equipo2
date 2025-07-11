@@ -11,11 +11,10 @@ data class medico(
     var genero: String? = null,
     var horario: String? = null,
     var contrasena: String? = null,
-    var costoConsulta: Double = 0.0,
     var cedula: String? = null,
     var especialidad: String? = null,
     var direccion: direccion? = null,
     var fotoPerfil: String = ""
 ) : Serializable {
-    constructor() : this("", "", "", "", "", "", "", "", 0.0, "", "", direccion(), "")
+    constructor() : this("", "", "", "", "", "", "", "",  "", "", direccion(), "")
 }
