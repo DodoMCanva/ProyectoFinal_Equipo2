@@ -5,6 +5,7 @@ import Persistencia.sesion
 import android.app.DatePickerDialog
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -27,6 +28,7 @@ import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
+import java.time.format.DateTimeParseException
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
@@ -202,7 +204,11 @@ class CitasFragment : Fragment() {
                         } else {
                             DetalleCitaMedicoFragment()
                         }
-                        val bundle = Bundle().apply { putString("citaId", citaSeleccionada.idCita) }
+                        val bundle = Bundle().apply {
+                            putString("citaId", citaSeleccionada.idCita)
+                            putString("estado", citaSeleccionada.estado)
+                            putString("origen", "Historial")
+                        }
                         fragment.arguments = bundle
                         parentFragmentManager.beginTransaction()
                             .replace(R.id.contenedorFragmento, fragment)
@@ -254,13 +260,24 @@ class CitasFragment : Fragment() {
         val lista = ArrayList<cita>()
         val formato = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
         val fechaInput = formato.parse(fecha)
+
         val horaActual = LocalTime.now()
+
+        val horaFormato = DateTimeFormatter.ofPattern("HH:mm", Locale.getDefault())
 
         for (cita in this) {
             val fechaCita = formato.parse(cita.fecha)
+
             if (fechaCita == fechaInput) {
-                if (cita.hora != null && cita.hora?.let { LocalTime.parse(it) }?.isBefore(horaActual) == true) {
-                    cita.estado = "Cancelada por Ausencia"
+                if (cita.hora != null) {
+                    try {
+                        val horaCita = LocalTime.parse(cita.hora, horaFormato)
+                        if (horaCita.isBefore(horaActual) && cita.estado == "Pendiente") {
+                            cita.estado = "Cancelada por Ausencia"
+                        }
+                    } catch (e: DateTimeParseException) {
+                        Log.e("ParseError", "Error al parsear la hora de la cita: '${cita.hora}'", e)
+                    }
                 }
                 lista.add(cita)
             }
@@ -269,19 +286,39 @@ class CitasFragment : Fragment() {
     }
 
 
+
     fun ArrayList<cita>.actuales(): ArrayList<cita> {
         val lista = ArrayList<cita>()
         val formato = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-        val fechaInicio =
-            formato.parse(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")))
+
+        val fechaInicio = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+        val fechaInicioParsed = formato.parse(fechaInicio)
+
+        val horaFormato = DateTimeFormatter.ofPattern("HH:mm a", Locale.getDefault())
+
         for (cita in this) {
             val fechaCita = formato.parse(cita.fecha)
-            if (!fechaCita.before(fechaInicio)) {
+
+            if (!fechaCita.before(fechaInicioParsed)) {
+                if (cita.hora != null) {
+                    try {
+                        val horaCita = LocalTime.parse(cita.hora, horaFormato)
+                        val horaActual = LocalTime.now()
+
+                        if (horaCita.isBefore(horaActual) && cita.estado == "Pendiente") {
+                            cita.estado = "Cancelada por Ausencia"
+                        }
+                    } catch (e: DateTimeParseException) {
+                        Log.e("ParseError", "Error al parsear la hora de la cita: '${cita.hora}'", e)
+                    }
+                }
                 lista.add(cita)
             }
         }
         return lista
     }
+
+
 
     fun ArrayList<cita>.eliminarCompletadas(): ArrayList<cita> {
         return ArrayList(this.filterNot { it.estado == "Completada" || it.estado == "Cancelada" })
