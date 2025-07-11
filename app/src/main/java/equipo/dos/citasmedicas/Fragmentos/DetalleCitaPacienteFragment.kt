@@ -112,7 +112,7 @@ class DetalleCitaPacienteFragment : Fragment() {
                     motivo.text = citaData.motivo
                     arguments?.let { args ->
                         if (args.getString("origen") == "Historial") {
-                            estado.text = args.getString("estado") ?: "Pasada"
+                            estado.text = args.getString("estado") ?: "Cancelada por Ausencia"
                         } else {
                             estado.text = citaData.estado
                         }
@@ -146,6 +146,12 @@ class DetalleCitaPacienteFragment : Fragment() {
                         }
 
                         "Cancelada" -> {
+                            seccionRecetaPaciente.visibility = View.GONE
+                            btnCancelar.visibility = View.GONE
+                            btnCancelar.isEnabled = false
+                        }
+
+                        "Cancelada por Ausencia" -> {
                             seccionRecetaPaciente.visibility = View.GONE
                             btnCancelar.visibility = View.GONE
                             btnCancelar.isEnabled = false

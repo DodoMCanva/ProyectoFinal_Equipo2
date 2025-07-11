@@ -147,7 +147,7 @@ class DetalleCitaMedicoFragment : Fragment() {
                     tvHoraDetalle.text = citaData.hora
                     arguments?.let { args ->
                         if (args.getString("origen") == "Historial") {
-                            tvEstadoDetalle.text = args.getString("estado") ?: "Pasada"
+                            tvEstadoDetalle.text = args.getString("estado") ?: "Cancelada por Ausencia"
                         } else {
                             tvEstadoDetalle.text = citaData.estado
                         }
@@ -192,6 +192,14 @@ class DetalleCitaMedicoFragment : Fragment() {
                         }
 
                         "Cancelada" -> {
+                            seccionRecetaLinearLayout?.visibility = View.GONE
+                            seccionBotones?.visibility = View.GONE
+                            root.findViewById<Button>(R.id.btnFinalizarDetallesCitaMedico).isEnabled = false
+                            root.findViewById<Button>(R.id.btnReprogramarDetallesMedico).isEnabled = false
+                            root.findViewById<Button>(R.id.btnCancelarDetallesMedico).isEnabled = false
+                        }
+
+                        "Cancelada por Ausencia" -> {
                             seccionRecetaLinearLayout?.visibility = View.GONE
                             seccionBotones?.visibility = View.GONE
                             root.findViewById<Button>(R.id.btnFinalizarDetallesCitaMedico).isEnabled = false
