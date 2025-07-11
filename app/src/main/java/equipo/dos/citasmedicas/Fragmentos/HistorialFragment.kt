@@ -73,8 +73,8 @@ class HistorialFragment : Fragment() {
 
     fun ArrayList<cita>.anteriores(): ArrayList<cita> {
         val lista = ArrayList<cita>()
-        val formato = SimpleDateFormat("dd/MM/yyyy h:mm a", Locale.getDefault())
-        val hoy = formato.parse(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy h:mm a")))
+        val formato = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
+        val hoy = formato.parse(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")))
         for (cita in this) {
             if (!cita.hora.isNullOrEmpty()) {
                 try {

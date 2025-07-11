@@ -132,6 +132,44 @@ object sesion {
         })
         return ArrayList(listaOrdenada)
     }
+
+    fun marcarCitaCompletada(citaId: String, callback: () -> Unit) {
+        val database = FirebaseDatabase.getInstance().getReference("usuarios").child("citas")
+        val query = database.orderByKey().equalTo(citaId)
+        query.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+                    val citaData = snapshot.children.first().getValue(cita::class.java)
+                    if (citaData != null) {
+                        citaData.estado = "Completada"
+                        database.child(snapshot.children.first().key!!).setValue(citaData)
+                            .addOnSuccessListener {
+                                val index = citas.indexOfFirst { it.idCita == citaData.idCita }
+                                if (index != -1) {
+                                    citas[index] = citaData  // Actualizar la cita en la lista local
+                                }
+                                callback()
+                            }
+                            .addOnFailureListener { e ->
+                                Log.e("Firebase", "Error al actualizar cita: ${e.message}")
+                                callback()
+                            }
+                    } else {
+                        Log.e("Firebase", "Cita no encontrada.")
+                        callback()
+                    }
+                } else {
+                    Log.e("Firebase", "No se encontró ninguna cita con ese ID.")
+                    callback()
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("Firebase", "Error al cargar datos: ${error.message}")
+                callback()
+            }
+        })
+    }
 }
 
 
