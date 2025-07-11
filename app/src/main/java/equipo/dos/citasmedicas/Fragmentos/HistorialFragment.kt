@@ -76,12 +76,14 @@ class HistorialFragment : Fragment() {
     fun ArrayList<cita>.anteriores(): ArrayList<cita> {
         val lista = ArrayList<cita>()
         val formato = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
-        val hoy = formato.parse(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")))
+        val hoy = LocalDateTime.now()
+        val rango = hoy.plusHours(2)
+        val limite = formato.parse(rango.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")))
         for (cita in this) {
             if (!cita.hora.isNullOrEmpty()) {
                 try {
                     val fechaCita = formato.parse("${cita.fecha} ${cita.hora?.trim()}")
-                    if (fechaCita.before(hoy)) {
+                    if (fechaCita.before(limite)) {
                         if (cita.estado.equals("Pendiente")){
                             cita.estado = "Cancelada por Ausencia"
                         }
